@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Secret du Conservateur - Folie perçue</title>
+  <link rel="icon" type="image/png" href="../../favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="game" width="640" height="384" aria-label="Musée en vue top-down pixel"></canvas>
+
+    <div id="start-screen" class="overlay visible">
+      <div class="panel intro-panel">
+        <h1>Le Secret du Conservateur</h1>
+        <p>
+          Cette nuit, le conservateur te bloque dans le musée.
+          Son défi : comprendre pourquoi certains artistes furent traités de « fous »
+          par leur époque.
+        </p>
+        <p>
+          Traverse trois salles thématiques, observe les œuvres, lis les biographies,
+          puis réponds aux consoles pour extraire trois mots-clés.
+          Assemble ces mots pour ouvrir la sortie.
+        </p>
+        <ul>
+          <li>Salle 1 : Angoisse intérieure</li>
+          <li>Salle 2 : Rêve et visions</li>
+          <li>Salle 3: Rupture et scandale</li>
+        </ul>
+
+        <div class="controls-list">
+          <span>ZQSD / WASD / Flèches : déplacement</span>
+          <span>Maj : courir</span>
+          <span>E : interagir</span>
+          <span>J : carnet</span>
+          <span>U : mode UV</span>
+          <span>M : son ON/OFF</span>
+        </div>
+
+        <button id="start-btn" class="primary">Entrer dans le musée</button>
+      </div>
+    </div>
+
+    <div id="hud">
+      <div id="objective">Objectif : Explorer la salle Angoisse intérieure.</div>
+      <div id="status-line">
+        <span id="timer">Temps : 00:00</span>
+        <span id="room-indicator">Zone : Salle 1</span>
+        <span id="uv-indicator">UV : OFF</span>
+        <span id="sound-indicator">Son : ON</span>
+      </div>
+      <div id="interaction-prompt" class="hidden">[E] Interagir</div>
+    </div>
+
+    <div id="quick-actions">
+      <span>[E] Interagir / Fermer œuvre</span>
+      <span>[Maj] Courir</span>
+      <span>[J] Carnet</span>
+      <span>[U] UV</span>
+      <span>[M] Son</span>
+    </div>
+
+    <div id="touch-controls" aria-label="Contrôles tactiles">
+      <div class="touch-grid">
+        <button type="button" data-touch="up">UP</button>
+        <button type="button" data-touch="left">L</button>
+        <button type="button" data-touch="down">DN</button>
+        <button type="button" data-touch="right">R</button>
+      </div>
+      <div class="touch-grid">
+        <button type="button" data-touch="interact">E</button>
+        <button type="button" data-touch="notebook">J</button>
+        <button type="button" data-touch="uv">UV</button>
+        <button type="button" data-touch="sound">M</button>
+      </div>
+    </div>
+
+    <div id="notebook" class="overlay-panel hidden" aria-live="polite">
+      <div class="panel">
+        <h2>Carnet du visiteur</h2>
+        <div id="notebook-content"></div>
+        <button id="close-notebook" class="secondary">Fermer (J)</button>
+      </div>
+    </div>
+
+    <div id="modal" class="overlay-panel hidden" aria-live="polite">
+      <div class="panel" id="modal-panel">
+        <button id="modal-close" class="icon-btn" aria-label="Fermer">x</button>
+        <h2 id="modal-title"></h2>
+        <div id="modal-body"></div>
+      </div>
+    </div>
+
+    <div id="artwork-zoom" class="overlay-panel zoom-overlay hidden" aria-live="polite">
+      <div class="panel zoom-panel" id="zoom-panel">
+        <button id="zoom-close" class="icon-btn" aria-label="Fermer le zoom">x</button>
+        <div class="zoom-media-wrap">
+          <img id="zoom-image" class="zoom-image hidden" alt="Vue agrandie de l'œuvre">
+          <div id="zoom-fallback" class="artwork-fallback hidden"></div>
+        </div>
+        <p id="zoom-caption" class="modal-hint"></p>
+      </div>
+    </div>
+
+    <div id="end-screen" class="overlay hidden">
+      <div class="panel intro-panel">
+        <h1>Porte déverrouillée</h1>
+        <p>
+          Tu as compris le fil rouge :
+          la « folie » est souvent un regard social posé sur des artistes qui
+          bousculent les normes.
+        </p>
+        <p id="end-time"></p>
+        <button id="restart-btn" class="primary">Rejouer</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

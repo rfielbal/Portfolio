@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AetherCore is a browser-based STL inspector with hand tracking and high fidelity WebGL rendering."
+    />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <title>AetherCore | Touchless STL Inspector</title>
+    <style>
+      .boot-warning {
+        display: none;
+      }
+
+      html.is-direct-file body,
+      html.is-boot-failed body {
+        min-height: 100vh;
+        margin: 0;
+        background: #070808;
+        color: #eef5f3;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      html.is-direct-file .app-shell,
+      html.is-boot-failed .app-shell {
+        display: none;
+      }
+
+      html.is-direct-file .boot-warning,
+      html.is-boot-failed .boot-warning {
+        display: grid;
+        min-height: 100vh;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .boot-warning__panel {
+        width: min(640px, 100%);
+        padding: 24px;
+        border: 1px solid rgba(232, 239, 238, 0.15);
+        border-radius: 8px;
+        background: rgba(16, 18, 18, 0.9);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.42);
+      }
+
+      .boot-warning__panel p {
+        margin: 0 0 14px;
+        color: #93a29f;
+        line-height: 1.5;
+      }
+
+      .boot-warning__panel strong {
+        display: block;
+        margin-bottom: 12px;
+        color: #eef5f3;
+        font-size: 24px;
+      }
+
+      .boot-warning__panel code {
+        display: block;
+        margin-top: 8px;
+        padding: 10px 12px;
+        border-radius: 6px;
+        background: rgba(70, 224, 210, 0.12);
+        color: #46e0d2;
+        font: 700 14px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+    </style>
+    <script>
+      window.__AETHERCORE_BOOTED__ = false;
+
+      if (window.location.protocol === "file:") {
+        document.documentElement.classList.add("is-direct-file");
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        window.setTimeout(() => {
+          if (!window.__AETHERCORE_BOOTED__) {
+            document.documentElement.classList.add("is-boot-failed");
+          }
+        }, 4000);
+      });
+    </script>
+    <script type="module" crossorigin src="./assets/index-7_KtFsj7.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Cc2K5F3M.css">
+  </head>
+  <body>
+    <section class="boot-warning" aria-live="polite">
+      <div class="boot-warning__panel">
+        <strong>AetherCore ne s'est pas lancé correctement.</strong>
+        <p>
+          Cette page ne doit pas être ouverte directement depuis le fichier
+          <code>index.html</code>
+        </p>
+        <p>
+          Lance le serveur de développement depuis le dossier du projet, puis ouvre l'adresse locale.
+          <code>npm install</code>
+          <code>npm run dev</code>
+          <code>http://localhost:5173/</code>
+        </p>
+        <p>
+          Pour tester la version production, utilise plutôt :
+          <code>npm run build</code>
+          <code>npm run preview</code>
+        </p>
+      </div>
+    </section>
+
+    <div id="app" class="app-shell">
+      <main id="viewport" class="viewport" aria-label="3D viewport"></main>
+
+      <div id="dragOverlay" class="drag-overlay" hidden>
+        <span>Drop STL</span>
+      </div>
+
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AetherCore</p>
+          <h1>Touchless STL Inspector</h1>
+        </div>
+        <div class="system-status" aria-live="polite">
+          <span id="renderState" class="status-chip is-ready">Renderer ready</span>
+          <span id="cameraState" class="status-chip">Camera idle</span>
+        </div>
+      </header>
+
+      <aside class="tool-panel" aria-label="Inspector controls">
+        <section class="panel-section">
+          <div class="section-header">
+            <span>Model</span>
+            <strong id="modelName">No model</strong>
+          </div>
+
+          <input id="fileInput" type="file" accept=".stl,.STL" />
+          <div class="button-stack">
+            <button id="importButton" class="action-button is-primary" type="button" title="Import an STL file">
+              Import STL
+            </button>
+            <button id="demoButton" class="action-button" type="button" title="Load the bundled demo model">
+              Demo model
+            </button>
+            <button id="resetButton" class="action-button" type="button" title="Reset the camera and rotation">
+              Reset view
+            </button>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="section-header">
+            <span>Render</span>
+            <strong id="triangleCount">0 triangles</strong>
+          </div>
+
+          <div class="segmented-control" role="group" aria-label="Render mode">
+            <button class="is-selected" type="button" data-render-mode="hybrid">Hybrid</button>
+            <button type="button" data-render-mode="particles">Points</button>
+            <button type="button" data-render-mode="surface">Surface</button>
+          </div>
+
+          <div class="metric-grid">
+            <div>
+              <span>Points</span>
+              <strong id="pointCount">0</strong>
+            </div>
+            <div>
+              <span>Zoom</span>
+              <strong id="zoomValue">100%</strong>
+            </div>
+            <div>
+              <span>Mode</span>
+              <strong id="controlMode">Mouse</strong>
+            </div>
+            <div>
+              <span>Gesture</span>
+              <strong id="gestureValue">Idle</strong>
+            </div>
+            <div>
+              <span>Size</span>
+              <strong id="sizeValue">n/a</strong>
+            </div>
+            <div>
+              <span>Surface</span>
+              <strong id="surfaceValue">n/a</strong>
+            </div>
+            <div>
+              <span>Volume</span>
+              <strong id="volumeValue">n/a</strong>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <section class="tracking-panel" aria-label="Hand tracking">
+        <video id="cameraPreview" autoplay playsinline muted></video>
+        <div class="tracking-actions">
+          <button id="handToggle" class="icon-button" type="button" title="Enable hand tracking">
+            Hand tracking
+          </button>
+          <button id="zoomLock" class="icon-button" type="button" aria-pressed="false" title="Lock gesture zoom">
+            Zoom lock
+          </button>
+        </div>
+        <div class="gesture-strip" aria-hidden="true">
+          <span id="gestureFist">Fist</span>
+          <span id="gestureOpen">Open</span>
+          <span id="gesturePinch">Pinch</span>
+        </div>
+      </section>
+
+      <div id="handCursor" class="hand-cursor" hidden>
+        <span></span>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    </div>
+
+  </body>
+</html>

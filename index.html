@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Raphaël Coursier. Développeur web et logiciel orienté architecture, design premium et delivery propre.">
+    <meta name="theme-color" content="#050505">
+    <title>Portfolio Raphaël Coursier</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=documents-prives-20260716">
+</head>
+<body>
+    <div class="preloader" id="preloader" aria-hidden="true">
+        <p class="preloader-tag">Chargement du portfolio</p>
+        <p class="preloader-counter" id="preloader-counter">0</p>
+        <div class="preloader-line" aria-hidden="true">
+            <span id="preloader-fill"></span>
+        </div>
+    </div>
+
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursor-follower"></div>
+
+    <div class="grain-effect" aria-hidden="true"></div>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="light-field" aria-hidden="true"></div>
+
+    <header>
+        <nav class="navbar" id="navbar" aria-label="Navigation principale">
+            <a href="#home" class="brand-link" data-magnetic>
+                <img src="favicon.png" alt="Logo Raphaël Coursier" class="nav-logo">
+                <span>RAPHAËL COURSIER</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#manifesto">À propos</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#savoir-faire">Savoir-faire</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <button class="burger-menu" id="btn-open-menu" aria-label="Ouvrir le menu" aria-expanded="false">
+                <span>Menu</span>
+                <span class="burger-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+
+        <div class="fs-menu" id="fs-menu" aria-hidden="true">
+            <button class="close-fs-menu" id="btn-close-menu" aria-label="Fermer le menu">
+                <i class="fas fa-times"></i>
+                Fermer
+            </button>
+
+            <ul class="fs-links">
+                <li><a href="#home" data-text="01. Accueil">01. Accueil</a></li>
+                <li><a href="#manifesto" data-text="02. À propos">02. À propos</a></li>
+                <li><a href="#projects" data-text="03. Projets">03. Projets</a></li>
+                <li><a href="#savoir-faire" data-text="04. Savoir-faire">04. Savoir-faire</a></li>
+                <li><a href="#contact" data-text="05. Contact">05. Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <aside class="story-rail" id="story-rail" aria-label="Progression de section">
+        <div class="story-track">
+            <i id="story-rail-fill"></i>
+        </div>
+        <a href="#home" class="story-dot active" data-target="home">01</a>
+        <a href="#manifesto" class="story-dot" data-target="manifesto">02</a>
+        <a href="#projects" class="story-dot" data-target="projects">03</a>
+        <a href="#savoir-faire" class="story-dot" data-target="savoir-faire">04</a>
+        <a href="#contact" class="story-dot" data-target="contact">05</a>
+    </aside>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-left reveal">
+                    <div class="hero-kicker-row">
+                        <p class="hero-subtitle">BTS SIO — OPTION SLAM</p>
+                    </div>
+
+                    <h1 class="hero-title">
+                        RAPHAËL <span class="outline">COURSIER</span><br>
+                        <span class="highlight">DÉVELOPPEUR</span> WEB<br>
+                        <span class="hero-amp">&amp; FUTUR INGÉNIEUR</span>
+                    </h1>
+
+                    <p class="hero-intro">
+                        Je construis des expériences web solides, avec une direction visuelle forte,
+                        une architecture claire et un code maintenable. Mon objectif: livrer des produits
+                        qui marquent et qui durent.
+                    </p>
+
+                    <div class="hero-signature">
+                        <p class="signature-lead">// craft_over_template = true;</p>
+                        <p class="signature-rotate">
+                            Focus actuel:
+                            <span id="signature-word">Architecture clean</span>
+                        </p>
+                    </div>
+
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn-simple" data-magnetic>
+                            Voir mes projets
+                        </a>
+                        <a href="#contact" class="btn-simple btn-outline" data-magnetic>
+                            Me contacter <i class="fas fa-paper-plane"></i>
+                        </a>
+                    </div>
+
+                    <div class="hero-facts">
+                        <article>
+                            <span class="fact-label">Localisation</span>
+                            <p>Arras, France</p>
+                        </article>
+                        <article>
+                            <span class="fact-label">Stack</span>
+                            <p>HTML, CSS, JS, PHP</p>
+                        </article>
+                        <article>
+                            <span class="fact-label">Objectif</span>
+                            <p>Ingénierie logicielle</p>
+                        </article>
+                    </div>
+
+                    <div class="hero-stats" id="hero-stats">
+                        <article>
+                            <span class="val" data-target="5" data-suffix="+">0</span>
+                            <span class="lbl">Projets construits</span>
+                        </article>
+                        <article>
+                            <span class="val" data-target="4" data-suffix="">0</span>
+                            <span class="lbl">Domaines techniques</span>
+                        </article>
+                        <article>
+                            <span class="val" data-target="100" data-suffix="%">0</span>
+                            <span class="lbl">Exigence qualité</span>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="hero-right reveal delay-1" id="hero-right">
+                    <div class="profile-stage" id="profile-stage">
+                        <div class="stage-grid-lines" aria-hidden="true"></div>
+                        <svg class="terminal-border-track" aria-hidden="true" focusable="false">
+                            <defs>
+                                <linearGradient id="terminal-border-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ccff00"></stop>
+                                    <stop offset="48%" stop-color="#43dfff"></stop>
+                                    <stop offset="100%" stop-color="#ff5f57"></stop>
+                                </linearGradient>
+                            </defs>
+                            <rect class="terminal-border-base" x="2" y="2" width="1" height="1" rx="18" ry="18"></rect>
+                            <rect class="terminal-border-orbit" x="2" y="2" width="1" height="1" rx="18" ry="18" stroke="url(#terminal-border-gradient)"></rect>
+                        </svg>
+
+                        <div class="terminal-card hero-terminal" id="terminal-card" aria-label="Terminal interactif de présentation">
+                            <div class="terminal-top">
+                                <span></span><span></span><span></span>
+                                <p>ask://raphael</p>
+                            </div>
+
+                            <div class="terminal-body interactive-terminal-body">
+                                <div class="terminal-output" id="terminal-output" aria-live="polite"></div>
+
+                                <form class="terminal-form" id="terminal-form" autocomplete="off">
+                                    <label for="terminal-input" class="sr-only">Commande terminal</label>
+                                    <span class="line-prompt" aria-hidden="true">$</span>
+                                    <input id="terminal-input" type="text" placeholder="/help" spellcheck="false">
+                                    <button type="submit" aria-label="Envoyer la commande">
+                                        <i class="fas fa-arrow-turn-down"></i>
+                                    </button>
+                                </form>
+
+                                <div class="terminal-suggestions" aria-label="Commandes rapides">
+                                    <button type="button" data-terminal-command="/about">/about</button>
+                                    <button type="button" data-terminal-command="/skills">/skills</button>
+                                    <button type="button" data-terminal-command="/projects">/projects</button>
+                                    <button type="button" data-terminal-command="/formation">/formation</button>
+                                    <button type="button" data-terminal-command="/contact">/contact</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="command-grid" id="command-grid">
+                        <article>
+                            <p class="cmd-label">Design</p>
+                            <p>Identité visuelle lisible, mémorable.</p>
+                        </article>
+                        <article>
+                            <p class="cmd-label">Code</p>
+                            <p>Base claire, évolutive, maintenable.</p>
+                        </article>
+                        <article>
+                            <p class="cmd-label">Delivery</p>
+                            <p>Du cadrage au résultat concret.</p>
+                        </article>
+                        <article>
+                            <p class="cmd-label">Vision</p>
+                            <p>Un portfolio qui affirme le niveau visé.</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#manifesto" class="btn-scroll" aria-label="Descendre">
+                Explorer <i class="fas fa-chevron-down bounce"></i>
+            </a>
+        </section>
+
+        <div class="marquee-wrap" aria-label="Technologies">
+            <div class="marquee marquee-main">
+                <div class="track">
+                    <div class="content">
+                        <span>HTML</span> <i class="fas fa-star-of-life"></i>
+                        <span>CSS</span> <i class="fas fa-star-of-life"></i>
+                        <span>SQL</span> <i class="fas fa-star-of-life"></i>
+                        <span>PYTHON</span> <i class="fas fa-star-of-life"></i>
+                        <span>JAVASCRIPT</span> <i class="fas fa-star-of-life"></i>
+                        <span>GIT</span> <i class="fas fa-star-of-life"></i>
+                        <span>SYMFONY</span> <i class="fas fa-star-of-life"></i>
+                        <span>PHP</span> <i class="fas fa-star-of-life"></i>
+                        <span>BASH</span> <i class="fas fa-star-of-life"></i>
+                    </div>
+                    <div class="content" aria-hidden="true">
+                        <span>HTML</span> <i class="fas fa-star-of-life"></i>
+                        <span>CSS</span> <i class="fas fa-star-of-life"></i>
+                        <span>SQL</span> <i class="fas fa-star-of-life"></i>
+                        <span>PYTHON</span> <i class="fas fa-star-of-life"></i>
+                        <span>JAVASCRIPT</span> <i class="fas fa-star-of-life"></i>
+                        <span>GIT</span> <i class="fas fa-star-of-life"></i>
+                        <span>SYMFONY</span> <i class="fas fa-star-of-life"></i>
+                        <span>PHP</span> <i class="fas fa-star-of-life"></i>
+                        <span>BASH</span> <i class="fas fa-star-of-life"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="marquee marquee-sub" aria-hidden="true">
+                <div class="track reverse">
+                    <div class="content">
+                        <span>UX</span> <i class="fas fa-plus"></i>
+                        <span>UI</span> <i class="fas fa-plus"></i>
+                        <span>LOGIQUE</span> <i class="fas fa-plus"></i>
+                        <span>PERFORMANCE</span> <i class="fas fa-plus"></i>
+                        <span>ACCESSIBILITÉ</span> <i class="fas fa-plus"></i>
+                        <span>MAINTENANCE</span> <i class="fas fa-plus"></i>
+                    </div>
+                    <div class="content">
+                        <span>UX</span> <i class="fas fa-plus"></i>
+                        <span>UI</span> <i class="fas fa-plus"></i>
+                        <span>LOGIQUE</span> <i class="fas fa-plus"></i>
+                        <span>PERFORMANCE</span> <i class="fas fa-plus"></i>
+                        <span>ACCESSIBILITÉ</span> <i class="fas fa-plus"></i>
+                        <span>MAINTENANCE</span> <i class="fas fa-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section id="manifesto" class="section-pad build-section manifesto-section" data-stage="02">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="num">02</span>
+                    <h2 class="glitch" data-text="ABOUT">À PROPOS</h2>
+                </div>
+
+                <div class="about-layout">
+                    <aside class="about-photo-card reveal delay-1">
+                        <div class="about-photo-frame">
+                            <img src="./images/profile/raphael-coursier.webp" width="900" height="1247" alt="Photo de profil de Raphaël Coursier" loading="lazy" decoding="async">
+                        </div>
+                        <div class="about-tags" aria-label="Profil rapide">
+                            <span>20 ans</span>
+                            <span>BTS SIO</span>
+                            <span>SLAM</span>
+                        </div>
+                        <a href="mailto:contact@rfielbal.fr?subject=Demande%20de%20CV" class="about-cv-link" data-magnetic>
+                            Demander mon CV <i class="fas fa-envelope"></i>
+                        </a>
+                    </aside>
+
+                    <div class="about-scroll-column">
+                        <article class="about-content-card reveal delay-2">
+                            <p class="about-eyebrow">Étudiant SIO au lycée Guy Mollet</p>
+                            <h3>Développeur junior orienté interfaces propres, logique métier et progression continue.</h3>
+
+                            <div class="about-copy">
+                                <p>
+                                    Je m'oriente vers la création d'expériences web qui allient identité visuelle,
+                                    performance et architecture compréhensible. Je cherche à créer des interfaces avec une vraie personnalité,
+                                    sans sacrifier l'ergonomie.
+                                </p>
+                                <p>
+                                    Mon objectif est d'évoluer vers un profil d'ingénieur capable de cadrer un besoin,
+                                    concevoir une base technique propre et livrer un produit clair à maintenir dans le temps.
+                                </p>
+                            </div>
+
+                            <div class="about-stats">
+                                <article>
+                                    <strong>1</strong>
+                                    <span>Année d'exp.</span>
+                                </article>
+                                <article>
+                                    <strong>5+</strong>
+                                    <span>Projets</span>
+                                </article>
+                                <article>
+                                    <strong>100%</strong>
+                                    <span>Motivation</span>
+                                </article>
+                            </div>
+
+                            <div class="about-values">
+                                <article>
+                                    <h4>Rigueur</h4>
+                                    <p>Structure et cohérence technique.</p>
+                                </article>
+                                <article>
+                                    <h4>Créativité</h4>
+                                    <p>Direction artistique assumée.</p>
+                                </article>
+                                <article>
+                                    <h4>Progression</h4>
+                                    <p>Amélioration continue et itérations.</p>
+                                </article>
+                            </div>
+
+                            <div class="buttons about-actions">
+                                <button class="btn-simple" id="btn-skills" data-magnetic type="button">
+                                    COMPÉTENCES <i class="fas fa-code"></i>
+                                </button>
+                                <button class="btn-simple" id="btn-diplomas" data-magnetic type="button">
+                                    DIPLÔMES / CERTIF. <i class="fas fa-graduation-cap"></i>
+                                </button>
+                                <button class="btn-simple" id="btn-school" data-magnetic type="button">
+                                    DOSSIER SCOLAIRE <i class="fas fa-folder-open"></i>
+                                </button>
+                            </div>
+                        </article>
+
+                        <section class="journey-block" id="journey-timeline" aria-labelledby="journey-title">
+                            <div class="journey-heading reveal">
+                                <p>PARCOURS / 2023 - 2027</p>
+                                <h3 id="journey-title">Expériences & formation</h3>
+                            </div>
+
+                            <div class="journey-track" id="journey-track">
+                                <div class="journey-line" aria-hidden="true">
+                                    <span id="journey-progress"></span>
+                                </div>
+
+                                <ol class="journey-list">
+                                    <li class="journey-item journey-item--pro" data-journey-item>
+                                        <span class="journey-dot" aria-hidden="true"></span>
+                                        <article>
+                                            <div class="journey-meta">
+                                                <span class="journey-type">PRO</span>
+                                                <time>Janvier - février 2027</time>
+                                                <span class="journey-status">À venir</span>
+                                            </div>
+                                            <h4>Stage de deuxième année</h4>
+                                            <p>Prochaine expérience professionnelle prévue dans le cadre du BTS SIO.</p>
+                                        </article>
+                                    </li>
+
+                                    <li class="journey-item journey-item--pro" data-journey-item>
+                                        <span class="journey-dot" aria-hidden="true"></span>
+                                        <article>
+                                            <div class="journey-meta">
+                                                <span class="journey-type">PRO</span>
+                                                <time>Mai - juillet 2026</time>
+                                            </div>
+                                            <h4>Stage de première année</h4>
+                                            <p>Habitat Insertion · Conception et développement de l'application métier Wheello.</p>
+                                            <button class="journey-project-link" type="button" data-journey-project="4" data-magnetic>
+                                                Voir Wheello <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                            </button>
+                                        </article>
+                                    </li>
+
+                                    <li class="journey-item journey-item--education" data-journey-item>
+                                        <span class="journey-dot" aria-hidden="true"></span>
+                                        <article>
+                                            <div class="journey-meta">
+                                                <span class="journey-type">ÉDUCATION</span>
+                                                <time>Septembre 2025 - juillet 2027</time>
+                                            </div>
+                                            <h4>BTS SIO · Option SLAM</h4>
+                                            <p>Lycée Guy Mollet · Arras.</p>
+                                        </article>
+                                    </li>
+
+                                    <li class="journey-item journey-item--education" data-journey-item>
+                                        <span class="journey-dot" aria-hidden="true"></span>
+                                        <article>
+                                            <div class="journey-meta">
+                                                <span class="journey-type">ÉDUCATION</span>
+                                                <time>Septembre 2024 - juin 2025</time>
+                                            </div>
+                                            <h4>L1 SID LAS</h4>
+                                            <p>Science de l'information et du document · Licence Accès Santé · Université de Lille.</p>
+                                        </article>
+                                    </li>
+
+                                    <li class="journey-item journey-item--education" data-journey-item>
+                                        <span class="journey-dot" aria-hidden="true"></span>
+                                        <article>
+                                            <div class="journey-meta">
+                                                <span class="journey-type">ÉDUCATION</span>
+                                                <time>Septembre 2023 - juin 2024</time>
+                                            </div>
+                                            <h4>BTS Audiovisuel</h4>
+                                            <p>Formation suivie à Saint-Quentin.</p>
+                                        </article>
+                                    </li>
+
+                                    <li class="journey-item journey-item--education" data-journey-item>
+                                        <span class="journey-dot" aria-hidden="true"></span>
+                                        <article>
+                                            <div class="journey-meta">
+                                                <span class="journey-type">ÉDUCATION</span>
+                                                <time datetime="2023-07">Juillet 2023</time>
+                                            </div>
+                                            <h4>Baccalauréat · Mention assez bien</h4>
+                                            <p>Lycée La Malassise · Longuenesse.</p>
+                                        </article>
+                                    </li>
+                                </ol>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-pad build-section" data-stage="03">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="num">03</span>
+                    <h2 class="glitch" data-text="SELECTED WORKS">MES PROJETS</h2>
+                </div>
+
+                <div class="project-toolbar reveal">
+                    <p>
+                        Sélection de réalisations qui montrent ma progression: sites clients, projets académiques
+                        et projets personnels orientés produit.
+                    </p>
+
+                    <div class="project-filters" id="project-filters">
+                        <button class="filter-btn active" data-filter="all" data-magnetic type="button">Tous</button>
+                        <button class="filter-btn" data-filter="client" data-magnetic type="button">Client</button>
+                        <button class="filter-btn" data-filter="academique" data-magnetic type="button">Académique</button>
+                        <button class="filter-btn" data-filter="perso" data-magnetic type="button">Perso</button>
+                    </div>
+                </div>
+
+                <div class="project-legend reveal delay-1" aria-label="Lecture des projets">
+                    <span><i class="legend-dot client"></i> Client réel</span>
+                    <span><i class="legend-dot academy"></i> Académique</span>
+                    <span><i class="legend-dot perso"></i> Perso</span>
+                </div>
+
+                <div class="projects-grid" id="projects-grid"></div>
+            </div>
+        </section>
+
+        <section id="savoir-faire" class="section-pad build-section capability-section" data-stage="04">
+            <div class="container">
+                <div class="section-title reveal">
+                    <span class="num">04</span>
+                    <h2 class="glitch" data-text="SAVOIR-FAIRE">SAVOIR-FAIRE</h2>
+                </div>
+
+                <div class="capability-heading reveal">
+                    <div>
+                        <p class="capability-overline">// COMPÉTENCES EN ACTION</p>
+                        <h3>Du besoin au produit.</h3>
+                    </div>
+                    <p>
+                        Chaque capacité présentée ici est reliée à une décision technique,
+                        un livrable et un projet que l'on peut réellement examiner.
+                    </p>
+                </div>
+
+                <div class="capability-stage reveal delay-1" id="capability-stage" style="--capability-accent: #43dfff">
+                    <div class="capability-stage-bar" aria-hidden="true">
+                        <span><i></i> evidence://portfolio</span>
+                        <strong id="capability-stage-status">WHEELLO / OPÉRATIONNEL</strong>
+                        <span>04 AXES</span>
+                    </div>
+
+                    <div class="capability-shell">
+                        <div class="capability-tabs" role="tablist" aria-label="Domaines de savoir-faire">
+                            <button class="capability-tab is-active" id="capability-tab-product" type="button" role="tab" aria-selected="true" aria-controls="capability-panel" tabindex="0" data-capability="product">
+                                <span>01</span>
+                                <i class="fas fa-diagram-project" aria-hidden="true"></i>
+                                <strong>Applications métier</strong>
+                                <small>Produit complet</small>
+                            </button>
+                            <button class="capability-tab" id="capability-tab-backend" type="button" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="backend">
+                                <span>02</span>
+                                <i class="fas fa-server" aria-hidden="true"></i>
+                                <strong>Backend&nbsp;&amp;&nbsp;données</strong>
+                                <small>Logique structurée</small>
+                            </button>
+                            <button class="capability-tab" id="capability-tab-interaction" type="button" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="interaction">
+                                <span>03</span>
+                                <i class="fas fa-pen-ruler" aria-hidden="true"></i>
+                                <strong>UI/UX &amp; parcours client</strong>
+                                <small>Image, attention, conversion</small>
+                            </button>
+                            <button class="capability-tab" id="capability-tab-delivery" type="button" role="tab" aria-selected="false" aria-controls="capability-panel" tabindex="-1" data-capability="delivery">
+                                <span>04</span>
+                                <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                                <strong>Qualité &amp; livraison</strong>
+                                <small>Produit transmissible</small>
+                            </button>
+                        </div>
+
+                        <div class="capability-workspace">
+                            <div class="capability-visual" id="capability-visual">
+                                <figure class="capability-media">
+                                    <img id="capability-image" src="./images/projects/wheello/cover.webp" alt="Aperçu de l'application métier Wheello">
+                                    <figcaption>
+                                        <span id="capability-media-type">PROJET CLIENT</span>
+                                        <strong id="capability-media-project">WHEELLO</strong>
+                                    </figcaption>
+                                    <i class="capability-media-scan" aria-hidden="true"></i>
+                                </figure>
+
+                                <div class="capability-map" id="capability-map" role="img" aria-label="Architecture de la capacité active">
+                                    <svg viewBox="0 0 760 170" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                                        <path class="capability-flow capability-flow--one" d="M88 85 C148 85 154 85 214 85"></path>
+                                        <path class="capability-flow capability-flow--two" d="M278 85 C338 85 344 85 404 85"></path>
+                                        <path class="capability-flow capability-flow--three" d="M468 85 C528 85 534 85 594 85"></path>
+                                    </svg>
+
+                                    <div class="capability-node capability-node--one" data-capability-node="0">
+                                        <i class="fas fa-mobile-screen-button" aria-hidden="true"></i>
+                                        <span>Terrain</span>
+                                        <strong>Flutter</strong>
+                                    </div>
+                                    <div class="capability-node capability-node--two" data-capability-node="1">
+                                        <i class="fas fa-key" aria-hidden="true"></i>
+                                        <span>Échange</span>
+                                        <strong>API + JWT</strong>
+                                    </div>
+                                    <div class="capability-node capability-node--three" data-capability-node="2">
+                                        <i class="fab fa-symfony" aria-hidden="true"></i>
+                                        <span>Métier</span>
+                                        <strong>Symfony</strong>
+                                    </div>
+                                    <div class="capability-node capability-node--four" data-capability-node="3">
+                                        <i class="fas fa-database" aria-hidden="true"></i>
+                                        <span>Données</span>
+                                        <strong>MySQL</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <article class="capability-panel" id="capability-panel" role="tabpanel" tabindex="0" aria-labelledby="capability-tab-product" aria-live="polite">
+                                <div class="capability-case-meta">
+                                    <span id="capability-index">01 / 04</span>
+                                    <strong id="capability-context">CLIENT · FULL-STACK</strong>
+                                </div>
+
+                                <h3 id="capability-title">Transformer une contrainte terrain en outil quotidien.</h3>
+                                <p class="capability-summary" id="capability-summary">
+                                    Une application métier doit faire disparaître la complexité sans effacer les règles qui sécurisent le travail.
+                                </p>
+
+                                <dl class="capability-evidence">
+                                    <div>
+                                        <dt>Besoin</dt>
+                                        <dd id="capability-need">Centraliser une flotte, les réservations et les retours sans multiplier les fichiers ni les doubles saisies.</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Décision</dt>
+                                        <dd id="capability-decision">Séparer l'usage terrain sur mobile et l'administration web, reliés par une API sécurisée.</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Preuve</dt>
+                                        <dd id="capability-proof">Back-office Symfony, application Flutter, bilans, notifications et gestion complète du cycle véhicule.</dd>
+                                    </div>
+                                </dl>
+
+                                <div class="capability-techs" id="capability-techs" aria-label="Technologies mobilisées">
+                                    <span>Symfony</span><span>Flutter</span><span>JWT</span><span>Doctrine</span>
+                                </div>
+
+                                <div class="capability-actions">
+                                    <button class="capability-open-project" id="capability-open-project" type="button" data-capability-project="4" data-magnetic>
+                                        Examiner Wheello <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                    </button>
+                                    <p><span>Rôle</span><strong id="capability-role">Conception full-stack</strong></p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <div class="capability-stage-footer" aria-hidden="true">
+                        <span>CONCEVOIR</span>
+                        <i></i>
+                        <span>STRUCTURER</span>
+                        <i></i>
+                        <span>TESTER</span>
+                        <i></i>
+                        <span>LIVRER</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section-pad build-section" data-stage="05">
+            <div class="container">
+                <h2 class="big-text reveal">TRAVAILLONS <br> <span class="hollow">ENSEMBLE</span></h2>
+
+                <div class="contact-wrap">
+                    <aside class="contact-aside reveal" aria-label="Informations de contact">
+                        <p class="contact-eyebrow">Open to work</p>
+                        <h3>Un profil junior, une ambition d'ingénieur.</h3>
+                        <div class="contact-points">
+                            <span><i class="fas fa-location-dot"></i> Hauts-de-France</span>
+                            <span><i class="fas fa-code-branch"></i> Développement full-stack &amp; produit</span>
+                            <span><i class="fas fa-bolt"></i> Projets, alternance, stage</span>
+                        </div>
+                    </aside>
+
+                    <article class="contact-box reveal delay-1" id="contact-box">
+                        <p class="contact-manifesto"><span aria-hidden="true">//</span> Dans chaque réalisation je vise la meilleure version</p>
+                        <p>Disponible pour projets web, collaborations et opportunités professionnelles.</p>
+
+                        <a href="mailto:contact@rfielbal.fr" class="mail-link">contact@rfielbal.fr</a>
+
+                        <div class="social-links">
+                            <div class="networks">
+                                <a href="https://www.linkedin.com/in/raphaël-coursier" target="_blank" rel="noopener noreferrer" data-magnetic>
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="https://github.com/rfielbal" target="_blank" rel="noopener noreferrer" data-magnetic>
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+
+                            <a href="mailto:contact@rfielbal.fr?subject=Demande%20de%20CV" class="btn-cv" data-magnetic>
+                                DEMANDER MON CV <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+
+                        <p class="copyright">© Coursier Raphaël - 2026</p>
+                        <button class="legal-trigger" id="btn-licenses" type="button">Mentions légales</button>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal-overlay" id="modal-licenses" aria-hidden="true">
+        <div class="modal-content md legal-modal">
+            <button class="close-modal" id="close-licenses" aria-label="Fermer la fenêtre mentions légales">
+                <i class="fas fa-times"></i> Fermer
+            </button>
+            <h2>MENTIONS LÉGALES</h2>
+            <div class="text-block">
+                <div class="license-item">
+                    <h4>Éditeur du site</h4>
+                    <p>Ce portfolio est édité par Raphaël Coursier.</p>
+                    <ul>
+                        <li>Responsable de publication : Raphaël Coursier.</li>
+                        <li>Contact : <a href="mailto:contact@rfielbal.fr">contact@rfielbal.fr</a>.</li>
+                        <li>Objet du site : présentation du parcours, des compétences et des projets réalisés.</li>
+                    </ul>
+                </div>
+                <div class="license-item">
+                    <h4>Hébergement</h4>
+                    <p>Ce site est hébergé par OVH SAS.</p>
+                    <ul>
+                        <li>Siège social : 2 rue Kellermann, 59100 Roubaix, France.</li>
+                        <li>RCS Lille Métropole : 424 761 419 00045.</li>
+                        <li>Site internet : <a href="https://www.ovhcloud.com/fr/" target="_blank" rel="noopener noreferrer">www.ovhcloud.com</a>.</li>
+                    </ul>
+                </div>
+                <div class="license-item">
+                    <h4>Conditions d'utilisation</h4>
+                    <p>Le site est consultable gratuitement. L'utilisateur s'engage à ne pas perturber son fonctionnement, tenter d'accéder à des ressources non publiques, copier massivement son contenu ou réutiliser les créations présentées sans autorisation.</p>
+                </div>
+                <div class="license-item">
+                    <h4>Données personnelles</h4>
+                    <p>Le site ne contient pas de formulaire et ne stocke pas directement de données personnelles. En cas de contact par email, les informations transmises sont utilisées uniquement pour répondre à la demande.</p>
+                    <ul>
+                        <li>Finalité : réponse aux messages et échanges professionnels.</li>
+                        <li>Base légale : intérêt légitime à répondre aux demandes reçues.</li>
+                        <li>Destinataire : Raphaël Coursier uniquement.</li>
+                        <li>Durée : le temps nécessaire au traitement de l'échange, sauf obligation ou besoin légitime de conservation.</li>
+                        <li>Droits : accès, rectification, effacement et opposition en écrivant à l'adresse de contact.</li>
+                    </ul>
+                    <p>L'utilisateur peut également introduire une réclamation auprès de la CNIL.</p>
+                </div>
+                <div class="license-item">
+                    <h4>Cookies et traceurs</h4>
+                    <p>Ce site ne dépose pas de cookies publicitaires, de mesure d'audience ou de traceurs de suivi. Aucun bandeau de consentement n'est donc affiché. Les liens vers des plateformes externes, comme LinkedIn ou GitHub, ouvrent des sites tiers soumis à leurs propres politiques.</p>
+                </div>
+                <div class="license-item">
+                    <h4>Propriété intellectuelle</h4>
+                    <p>Les textes, interfaces, choix graphiques, vidéos, images et contenus de ce portfolio sont protégés. Toute reproduction ou réutilisation substantielle nécessite une autorisation préalable, sauf courte citation avec mention de la source.</p>
+                </div>
+                <div class="license-item">
+                    <h4>Crédits techniques</h4>
+                    <ul>
+                        <li>Design et développement : Raphaël Coursier.</li>
+                        <li>Polices : Oswald et Fira Code.</li>
+                        <li>Icônes : Font Awesome Free 6.6.0.</li>
+                        <li>Dernière mise à jour : 14/07/2026.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="project-modal-wrap" id="modal-project" aria-hidden="true">
+        <div class="pm-container">
+            <button class="pm-close" id="close-pm" aria-label="Fermer la fenêtre projet">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="pm-header">
+                <div class="pm-title-row">
+                    <div class="pm-logo-slot" id="pm-logo-slot" aria-label="Identité visuelle du projet">
+                        <img id="pm-logo" class="pm-logo" src="" alt="" hidden>
+                        <span id="pm-logo-fallback" aria-hidden="true">PR</span>
+                    </div>
+                    <div class="pm-title-copy">
+                        <h2 id="pm-title">TITRE</h2>
+                        <div class="pm-title-meta">
+                            <span id="pm-cat" class="highlight">CATÉGORIE</span>
+                            <span class="pm-date-line">
+                                <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                <span id="pm-date">DATE DE CRÉATION</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pm-header-actions" aria-label="Actions du projet">
+                    <a href="javascript:void(0);" target="_blank" rel="noopener noreferrer" id="pm-live" class="btn-simple">
+                        Voir le site <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="javascript:void(0);" target="_blank" rel="noopener noreferrer" id="pm-link" class="btn-simple">
+                        Voir le code <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pm-body">
+                <div class="pm-details">
+                    <div class="pm-desc">
+                        <h4>CONTEXTE</h4>
+                        <p id="pm-text">Description...</p>
+                    </div>
+                    <div class="pm-stack">
+                        <h4>TECHNOLOGIES</h4>
+                        <ul id="pm-techs"></ul>
+                    </div>
+                </div>
+
+                <div id="pm-gallery" class="pm-grid"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Aperçu de la capture">
+        <button class="image-lightbox-close" id="close-image-lightbox" type="button" aria-label="Fermer l'aperçu">
+            <i class="fas fa-times"></i>
+        </button>
+        <figure class="image-lightbox-content">
+            <img id="image-lightbox-img" src="" alt="">
+            <figcaption id="image-lightbox-caption"></figcaption>
+        </figure>
+    </div>
+
+    <div class="modal-overlay" id="modal-skills" aria-hidden="true">
+        <div class="modal-content md">
+            <button class="close-modal" id="close-skills" aria-label="Fermer la fenêtre compétences">
+                <i class="fas fa-times"></i> Fermer
+            </button>
+            <h2>COMPÉTENCES &amp; APPRENTISSAGE</h2>
+            <div class="grid-skills">
+                <div class="card-skill"><i class="fas fa-layer-group"></i><span>Frontend</span><small>HTML, CSS, JavaScript, responsive et animations.</small></div>
+                <div class="card-skill"><i class="fab fa-symfony"></i><span>Symfony</span><small>Back-office, CRUD, formulaires, sécurité et architecture MVC.</small></div>
+                <div class="card-skill"><i class="fas fa-plug"></i><span>API REST</span><small>Endpoints métier, JSON, validation et intégration mobile.</small></div>
+                <div class="card-skill"><i class="fas fa-shield-halved"></i><span>Sécurité</span><small>JWT, rôles, sessions, mots de passe hashés et accès protégés.</small></div>
+                <div class="card-skill"><i class="fas fa-mobile-screen-button"></i><span>Flutter</span><small>Application mobile, écrans métier, stockage sécurisé et APK.</small></div>
+                <div class="card-skill"><i class="fas fa-database"></i><span>Data</span><small>MySQL, Doctrine, migrations, relations et bilans métier.</small></div>
+                <div class="card-skill"><i class="fas fa-vial-circle-check"></i><span>Tests</span><small>Tests unitaires, validation des règles et vérification avant livraison.</small></div>
+                <div class="card-skill"><i class="fas fa-file-shield"></i><span>RGPD</span><small>Conservation, anonymisation, notices et documentation des traitements.</small></div>
+                <div class="card-skill"><i class="fas fa-cubes"></i><span>Assets</span><small>Stimulus, AssetMapper, styles organisés et intégration propre.</small></div>
+                <div class="card-skill"><i class="fab fa-git-alt"></i><span>Git</span><small>Branches, commits, résolution de conflits et livraison.</small></div>
+                <div class="card-skill"><i class="fas fa-terminal"></i><span>DevOps local</span><small>Docker, commandes Symfony, build APK et environnement de test.</small></div>
+                <div class="card-skill"><i class="fas fa-pen-ruler"></i><span>UX/UI</span><small>Parcours simples, hiérarchie visuelle et cohérence graphique.</small></div>
+                <div class="card-skill"><i class="fas fa-book-open"></i><span>Documentation</span><small>Guides utilisateur, admin, déploiement et transfert client.</small></div>
+                <div class="card-skill"><i class="fab fa-figma"></i><span>Design</span><small>Maquettes, direction visuelle et préparation des interfaces.</small></div>
+                <div class="card-skill"><i class="fab fa-php"></i><span>PHP</span><small>Logique serveur, services, contrôleurs et intégration Doctrine.</small></div>
+                <div class="card-skill"><i class="fas fa-code"></i><span>Outils</span><small>VS Code, terminal, debug, analyse et contrôle qualité.</small></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-diplomas" aria-hidden="true">
+        <div class="modal-content sm">
+            <button class="close-modal" id="close-diplomas" aria-label="Fermer la fenêtre diplômes">
+                <i class="fas fa-times"></i> Fermer
+            </button>
+            <h2>DIPLÔMES &amp; CERTIFICATIONS</h2>
+            <div class="diploma-list">
+                <article class="diploma-item">
+                    <div class="diploma-info">
+                        <h4>SOFTWARE ENGINEER - HACKERRANK</h4>
+                        <p>Certification couvrant la résolution de problèmes, SQL et les API REST.</p>
+                    </div>
+                </article>
+
+                <article class="diploma-item">
+                    <div class="diploma-info">
+                        <h4>CERTIFICATION VOLTAIRE</h4>
+                        <p>Orthographe et expression française.</p>
+                    </div>
+                </article>
+
+                <article class="diploma-item">
+                    <div class="diploma-info">
+                        <h4>BACCALAURÉAT (MENTION AB)</h4>
+                        <p>Spécialités HGGSP, LLCE et Maths.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-school" aria-hidden="true">
+        <div class="modal-content sm">
+            <button class="close-modal" id="close-school" aria-label="Fermer la fenêtre dossier scolaire">
+                <i class="fas fa-times"></i> Fermer
+            </button>
+            <h2>MON DOSSIER SCOLAIRE</h2>
+
+            <div class="school-list">
+                <div class="school-item">
+                    <div class="school-info">
+                        <h4>BULLETIN DU SEMESTRE 1</h4>
+                        <p>BTS SIO - 1ère Année</p>
+                    </div>
+                    <a href="mailto:contact@rfielbal.fr?subject=Demande%20du%20bulletin%20du%20semestre%201" class="btn-download">
+                        Demander le bulletin <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+
+                <div class="school-item">
+                    <div class="school-info">
+                        <h4>BULLETIN DU SEMESTRE 2</h4>
+                        <p>BTS SIO - 1ère Année</p>
+                    </div>
+                    <a href="mailto:contact@rfielbal.fr?subject=Demande%20du%20bulletin%20du%20semestre%202" class="btn-download">
+                        Demander le bulletin <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+
+                <div class="school-item">
+                    <div class="school-info">
+                        <h4>BULLETIN DU SEMESTRE 3</h4>
+                        <p>BTS SIO - 2ème Année</p>
+                    </div>
+                    <span class="btn-download is-disabled">À venir <i class="fas fa-lock"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js?v=documents-prives-20260716"></script>
+</body>
+</html>

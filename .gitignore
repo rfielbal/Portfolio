@@ -1,0 +1,10 @@
+.DS_Store
+**/.DS_Store
+
+.playwright-cli/
+output/playwright/
+
+*.log
+
+# Documents personnels conservés uniquement en local
+documents/
