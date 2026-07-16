@@ -1081,10 +1081,10 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/cv": {
                 lines: [
-                    "Mon CV est disponible sur demande.",
-                    "Le bouton ci-dessous prépare directement un email pour le recevoir."
+                    "Mon CV est disponible en PDF.",
+                    "Tu peux l'ouvrir quand tu veux avec le bouton ci-dessous."
                 ],
-                action: { label: "Demander le CV", href: "mailto:contact@rfielbal.fr?subject=Demande%20de%20CV" }
+                action: { label: "Ouvrir le CV", href: "./documents/cv-raphael-coursier.pdf" }
             }
         };
 
