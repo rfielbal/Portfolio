@@ -368,21 +368,64 @@ document.addEventListener("DOMContentLoaded", () => {
             id: 5,
             index: "07",
             filter: "perso",
-            title: "Template Dashboard Produit",
-            category: "Projet perso",
-            year: "2025",
-            created: "Décembre 2025",
-            role: "Interface produit",
-            status: "Concept",
+            title: "Responsiver",
+            category: "Application desktop open source · Projet perso",
+            year: "En cours",
+            dateLabel: "Développement",
+            created: "En cours",
+            role: "Conception produit & pilotage technique",
+            status: "Bêta en cours",
             accent: "#ff5f57",
-            logoMark: "DP",
-            description: "Template d'interface applicative orientée data, lisibilité et navigation rapide.",
-            summary: "Montre un profil orienté produit et UI logicielle.",
-            impact: "Hiérarchie data-first et composants réutilisables.",
-            techs: ["JavaScript", "UI/UX", "CSS"],
-            cover: "./images/projects/dashboard-produit/cover.jpg",
-            images: ["./images/projects/dashboard-produit/cover.jpg"],
-            repoLink: null,
+            logo: "./images/projects/responsiver/logo.png",
+            logoAlt: "Logo de Responsiver",
+            logoMark: "R",
+            description:
+                "Responsiver est une application desktop open source que je conçois pour aider les développeurs à inspecter, corriger et valider la responsivité d'un projet web sans confier leurs sources à un service cloud.\n\nLe produit réunit dans un même workflow des outils habituellement dispersés : import d'un projet local, audit statique et runtime, prévisualisation multi-appareils, inspection de la cascade CSS, composition visuelle, édition Monaco, comparaison avant/après et matrice anti-régression sur plusieurs routes, tailles et états.\n\nLe projet est toujours en développement. Je le pilote comme un produit : cadrage des besoins, arbitrages UX et architecture, développement assisté par IA, contre-audits et validations unitaires/E2E avant intégration. Sa bêta privilégie une approche local-first et réversible : les propositions restent temporaires tant qu'elles n'ont pas été relues, comparées puis explicitement appliquées. Une assistance IA locale via Ollama ou llama.cpp peut aussi compléter le parcours utilisateur, sans compte ni fournisseur cloud imposé.",
+            summary: "Laboratoire desktop local-first pour auditer, corriger et valider un site sur plusieurs écrans.",
+            impact: "Un workflow responsive complet, traçable et réversible, de l'inspection jusqu'à la validation anti-régression.",
+            techs: ["Electron", "React", "TypeScript", "Node.js", "Chromium", "Playwright", "Monaco Editor", "PostCSS"],
+            cover: "./images/projects/responsiver/cover.webp",
+            coverLabel: "Studio responsive multi-écrans",
+            galleryLayout: "case-study",
+            images: [
+                {
+                    src: "./images/projects/responsiver/gallery/studio-multi-ecrans.webp",
+                    alt: "Studio Responsiver affichant cinq formats d'écran synchronisés",
+                    caption: "Studio multi-écrans : jusqu'à cinq viewports, avec pilote, navigation et défilement synchronisés",
+                    group: "Explorer sur tous les formats",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/responsiver/gallery/matrice-anti-regression.webp",
+                    alt: "Matrice responsive comparant plusieurs routes, tailles et états",
+                    caption: "Matrice reproductible : comparaison de la source et du correctif sur mobile, tablette et bureau",
+                    group: "Explorer sur tous les formats",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/responsiver/gallery/atelier-avant-apres.webp",
+                    alt: "Atelier visuel Responsiver en comparaison avant et après",
+                    caption: "Atelier visuel : réglages ciblés, aperçu avant/après, historique et application explicite",
+                    group: "Corriger sans écrire à l'aveugle",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/responsiver/gallery/espace-code-monaco.webp",
+                    alt: "Éditeur Monaco et aperçu responsive intégrés à Responsiver",
+                    caption: "Espace Code : sources locales, diff, aperçu direct et écriture seulement après confirmation",
+                    group: "Corriger sans écrire à l'aveugle",
+                    orientation: "landscape"
+                }
+            ],
+            features: [
+                "Ouverture d'un projet local, d'un localhost ou d'une URL publique avec des niveaux d'accès clairement séparés.",
+                "Studio de un à cinq écrans synchronisés et catalogue local de plus de 60 profils d'appareils.",
+                "Audit responsive statique et runtime, inspection de la cascade CSS et restitution des constats avec leurs preuves.",
+                "Atelier visuel, édition Monaco, aperçu temporaire, diff, undo/redo et écritures atomiques après validation.",
+                "Matrice routes × tailles × états pour vérifier qu'une correction ne crée pas de nouvelle régression.",
+                "Architecture Electron/React/TypeScript testée par des suites unitaires et des parcours E2E Playwright."
+            ],
+            repoLink: "https://github.com/rfielbal/Responsiver",
             liveLink: null
         },
         {
@@ -1006,7 +1049,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "/help": {
                 lines: [
                     "Je peux répondre comme un mini assistant de portfolio.",
-                    "Commandes: /about, /skills, /projects, /minecraft, /formation, /personality, /goals, /contact, /cv, /clear.",
+                    "Commandes: /about, /skills, /projects, /responsiver, /minecraft, /formation, /personality, /goals, /contact, /cv, /clear.",
                     "Tu peux aussi écrire: qui es-tu, quels projets, quelle stack, objectif, contact..."
                 ]
             },
@@ -1028,11 +1071,19 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/projects": {
                 lines: [
-                    "Le portfolio présente 8 projets, avec Wheello en projet client principal et La Citadelle Rouge comme nouvelle map Minecraft automatisée.",
-                    "On y retrouve des projets client, des projets académiques, un jeu web jouable et une démo 3D interactive directement dans le site.",
+                    "Le portfolio présente 8 projets, avec Wheello comme réalisation client principale et Responsiver comme produit desktop open source en développement.",
+                    "On y retrouve des projets client, des projets académiques, une application Electron, un jeu web jouable, une démo 3D et une map Minecraft automatisée.",
                     "La logique: montrer ma progression, pas juste empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
                 ],
                 action: { label: "Voir les projets", target: "#projects" }
+            },
+            "/responsiver": {
+                lines: [
+                    "Responsiver est une application desktop open source en cours de développement pour auditer, corriger et valider la responsivité d'un site.",
+                    "Son Studio compare jusqu'à cinq écrans synchronisés; l'Atelier visuel, Monaco et la Matrice anti-régression encadrent ensuite les corrections.",
+                    "Le projet repose sur Electron, React, TypeScript, Chromium et Playwright, avec une approche local-first: les sources restent sur la machine et rien n'est appliqué sans validation."
+                ],
+                action: { label: "Ouvrir Responsiver", projectId: 5 }
             },
             "/minecraft": {
                 lines: [
@@ -1109,6 +1160,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "/quels projets": "/projects",
             "/tes projets": "/projects",
             "/travaux": "/projects",
+            "/responsiver": "/responsiver",
+            "/responsive": "/responsiver",
+            "/application responsiver": "/responsiver",
             "/minecraft": "/minecraft",
             "/citadelle": "/minecraft",
             "/citadelle rouge": "/minecraft",
@@ -1223,7 +1277,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!entry) {
                 appendLine("error", `Commande inconnue: ${command}`);
-                appendLine("response", "Essaie /help, /about, /skills, /projects ou /contact.");
+                appendLine("response", "Essaie /help, /about, /skills, /projects, /responsiver ou /contact.");
                 return;
             }
 
@@ -1892,7 +1946,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p class="project-impact"><i class="fas fa-bolt"></i>${project.impact}</p>
                             <p class="project-created">
                                 <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-                                <span>Création</span>
+                                <span>${project.dateLabel || "Création"}</span>
                                 <time>${project.created}</time>
                             </p>
 
@@ -1948,7 +2002,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (titleTarget) titleTarget.textContent = data.title;
         if (categoryTarget) categoryTarget.textContent = data.category;
-        if (dateTarget) dateTarget.textContent = `Création\u00a0: ${data.created}`;
+        if (dateTarget) dateTarget.textContent = `${data.dateLabel || "Création"}\u00a0: ${data.created}`;
         if (logoTarget) {
             const showLogoFallback = () => {
                 logoTarget.hidden = true;
