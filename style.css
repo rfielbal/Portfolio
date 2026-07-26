@@ -864,31 +864,6 @@ header {
     position: relative;
 }
 
-.glitch::before,
-.glitch::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.glitch::before {
-    color: rgba(204, 255, 0, 0.4);
-    transform: translateX(-2px);
-}
-
-.glitch::after {
-    color: rgba(255, 255, 255, 0.35);
-    transform: translateX(2px);
-}
-
-.glitch:hover::before,
-.glitch:hover::after {
-    opacity: 1;
-}
-
 .manifesto-section {
     background: linear-gradient(180deg, transparent 0%, rgba(204, 255, 0, 0.04) 100%);
 }
@@ -3707,14 +3682,6 @@ h4,
 
 .glitch {
     font-size: 4rem;
-}
-
-.glitch::before {
-    color: rgba(67, 223, 255, 0.45);
-}
-
-.glitch::after {
-    color: rgba(255, 95, 87, 0.38);
 }
 
 .manifesto-section,
