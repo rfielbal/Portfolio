@@ -231,8 +231,79 @@ document.addEventListener("DOMContentLoaded", () => {
             liveLink: "https://stream-corner.rfielbal.fr"
         },
         {
-            id: 7,
+            id: 9,
             index: "03",
+            filter: "perso",
+            title: "Revaloop",
+            category: "Plateforme open source de recette client · Projet perso",
+            year: "En cours",
+            dateLabel: "Développement",
+            created: "En cours",
+            role: "Conception produit & pilotage technique",
+            status: "Alpha en cours",
+            accent: "#ff5f57",
+            logo: "./images/projects/revaloop/logo.svg",
+            logoAlt: "Logo de Revaloop",
+            logoMark: "R",
+            description:
+                "Revaloop transforme une preview de développement en véritable espace de collaboration entre le développeur et son client. Au lieu de disperser les retours entre e-mails, captures et messages, chaque version dispose d'un environnement de recette dédié, avec son historique et son état de validation.\n\nLe développeur publie une version HTTPS, puis crée une invitation cliente temporaire, à usage unique et révocable. Le client explore le produit sur plusieurs formats, ajoute des retours généraux ou des annotations visuelles et échange dans une discussion persistante. Le workflow suit ensuite chaque remarque de « signalé » à « validé », bloque l'approbation tant qu'un point reste ouvert et conserve la boucle de correction dans le même espace.\n\nRevaloop est toujours en développement, au stade alpha 0.3 pour pilote contrôlé. Je le construis comme un produit : cadrage du besoin, arbitrages UX et sécurité, développement assisté par IA, audits et validation des parcours. Son compagnon Electron sait déjà sélectionner, lancer et surveiller un projet local avec un consentement explicite ; le partage distant automatique de ce localhost reste volontairement présenté comme une prochaine étape, pas comme une fonction terminée.",
+            summary: "Espace de recette client pour partager une version, centraliser les retours et piloter sa validation.",
+            impact: "Une boucle claire et sécurisée entre développeur et client, de l'invitation à l'approbation finale.",
+            techs: ["Next.js", "React", "TypeScript", "Cloudflare Workers", "D1", "Drizzle ORM", "Electron", "Vite"],
+            cover: "./images/projects/revaloop/cover.webp",
+            coverLabel: "Boucle de recette client",
+            galleryLayout: "case-study",
+            images: [
+                {
+                    src: "./images/projects/revaloop/gallery/tableau-de-bord.webp",
+                    alt: "Tableau de bord développeur de Revaloop",
+                    caption: "Tableau de bord : versions, invitations, retours et décisions réunis dans un seul espace",
+                    group: "Piloter la recette",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/revaloop/gallery/discussion-projet.webp",
+                    alt: "Discussion entre développeur et client dans Revaloop",
+                    caption: "Discussion persistante au niveau de la version, sans imposer la création d'un retour",
+                    group: "Piloter la recette",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/revaloop/gallery/espace-revue-client.webp",
+                    alt: "Espace de revue client Revaloop avec une preview intégrée",
+                    caption: "Espace client : exploration de la preview et accès direct aux retours et à la discussion",
+                    group: "Tester et contextualiser",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/revaloop/gallery/annotation-visuelle.webp",
+                    alt: "Mode d'annotation visuelle de Revaloop",
+                    caption: "Annotation visuelle : le retour reste associé à un repère précis dans le viewport testé",
+                    group: "Tester et contextualiser",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/revaloop/gallery/compagnon-local.webp",
+                    alt: "Compagnon desktop Electron de Revaloop",
+                    caption: "Compagnon local : sélection, lancement et surveillance explicites du projet sur la machine du développeur",
+                    group: "Préparer la boucle locale",
+                    orientation: "landscape"
+                }
+            ],
+            features: [
+                "Projets et versions de recette avec historique des retours, messages et décisions.",
+                "Invitations clientes à usage unique, expirantes et révocables, échangées contre une session sécurisée.",
+                "Preview HTTPS responsive, retours généraux, annotations visuelles et discussion persistante.",
+                "Workflow signalé, en cours, à revalider puis validé, avec approbation bloquée tant qu'un retour reste ouvert.",
+                "Compagnon Electron sandboxé pour sélectionner, lancer, surveiller et arrêter explicitement un projet local.",
+                "Architecture Cloudflare Workers et D1 avec isolation des organisations, limites de débit et migrations versionnées."
+            ],
+            repoLink: "https://github.com/rfielbal/Revaloop",
+            liveLink: null
+        },
+        {
+            id: 7,
+            index: "08",
             filter: "perso",
             title: "AetherCore",
             category: "Inspecteur 3D multimodal · Projet perso",
@@ -339,7 +410,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 2,
-            index: "06",
+            index: "07",
             filter: "academique",
             title: "Chicken Louisiane Steakhouse",
             category: "Projet académique",
@@ -366,7 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 5,
-            index: "07",
+            index: "06",
             filter: "perso",
             title: "Responsiver",
             category: "Application desktop open source · Projet perso",
@@ -430,7 +501,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 8,
-            index: "08",
+            index: "09",
             filter: "perso",
             title: "La Citadelle Rouge",
             category: "Map aventure Minecraft Bedrock · Projet perso",
@@ -1049,7 +1120,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "/help": {
                 lines: [
                     "Je peux répondre comme un mini assistant de portfolio.",
-                    "Commandes: /about, /skills, /projects, /responsiver, /minecraft, /formation, /personality, /goals, /contact, /cv, /clear.",
+                    "Commandes: /about, /skills, /projects, /revaloop, /responsiver, /minecraft, /formation, /personality, /goals, /contact, /cv, /clear.",
                     "Tu peux aussi écrire: qui es-tu, quels projets, quelle stack, objectif, contact..."
                 ]
             },
@@ -1071,11 +1142,19 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/projects": {
                 lines: [
-                    "Le portfolio présente 8 projets, avec Wheello comme réalisation client principale et Responsiver comme produit desktop open source en développement.",
-                    "On y retrouve des projets client, des projets académiques, une application Electron, un jeu web jouable, une démo 3D et une map Minecraft automatisée.",
+                    "Le portfolio présente 9 projets, avec Wheello comme réalisation client principale et Revaloop comme nouvelle plateforme open source en développement.",
+                    "On y retrouve des projets client, des projets académiques, deux produits Electron, un jeu web jouable, une démo 3D et une map Minecraft automatisée.",
                     "La logique: montrer ma progression, pas juste empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
                 ],
                 action: { label: "Voir les projets", target: "#projects" }
+            },
+            "/revaloop": {
+                lines: [
+                    "Revaloop est une plateforme open source de recette client actuellement en alpha.",
+                    "Elle rassemble une preview HTTPS, des invitations temporaires, des annotations visuelles, une discussion et un workflow de revalidation jusqu'à l'approbation finale.",
+                    "Son compagnon Electron lance et surveille déjà un projet local de façon explicite. Le tunnel de partage distant reste une étape à venir, clairement séparée des fonctions déjà opérationnelles."
+                ],
+                action: { label: "Ouvrir Revaloop", projectId: 9 }
             },
             "/responsiver": {
                 lines: [
@@ -1160,6 +1239,10 @@ document.addEventListener("DOMContentLoaded", () => {
             "/quels projets": "/projects",
             "/tes projets": "/projects",
             "/travaux": "/projects",
+            "/revaloop": "/revaloop",
+            "/recette": "/revaloop",
+            "/recette client": "/revaloop",
+            "/validation client": "/revaloop",
             "/responsiver": "/responsiver",
             "/responsive": "/responsiver",
             "/application responsiver": "/responsiver",
@@ -1277,7 +1360,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!entry) {
                 appendLine("error", `Commande inconnue: ${command}`);
-                appendLine("response", "Essaie /help, /about, /skills, /projects, /responsiver ou /contact.");
+                appendLine("response", "Essaie /help, /about, /skills, /projects, /revaloop, /responsiver ou /contact.");
                 return;
             }
 
@@ -1908,11 +1991,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!projectGrid) return;
 
         const isCompact = filter === "all";
+        const orderedProjects = [...projects].sort(
+            (first, second) => Number.parseInt(first.index, 10) - Number.parseInt(second.index, 10)
+        );
 
         const visibleProjects =
             isCompact
-                ? projects
-                : projects.filter((project) => project.filter === filter);
+                ? orderedProjects
+                : orderedProjects.filter((project) => project.filter === filter);
 
         if (!visibleProjects.length) {
             projectGrid.classList.remove("is-compact");
