@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Jessica Dew · Passion Photographie",
             category: "Site vitrine & parcours de contact · Client",
             year: "2025 - 2026",
-            dateLabel: "Refonte",
+            dateLabel: "Création",
             created: "Juillet 2026",
             role: "Direction artistique & développement full-stack",
             status: "Préproduction",
@@ -397,12 +397,12 @@ document.addEventListener("DOMContentLoaded", () => {
             logoAlt: "Monogramme Jessica Dew",
             logoMark: "JD",
             description:
-                "Refonte complète du site de Jessica Dewerdt, photographe dans l'Audomarois. L'objectif était de traduire son univers doux et éditorial dans une expérience claire, immersive et rassurante, sans laisser les informations pratiques prendre le dessus sur les images.\n\nLa nouvelle version construit un véritable parcours client : une hero expressive, six univers de séances, des pages détaillées avec tarifs, un portfolio, des avis, des cartes cadeaux, des offres temporaires et des appels à l'action cohérents jusqu'à la prise de contact.\n\nLe formulaire est intégré à une application Symfony et ne se limite pas à un simple envoi d'e-mail. Il préremplit le type de séance selon le parcours, valide les données côté navigateur et serveur, bloque les soumissions automatisées avec un challenge signé et un honeypot, limite les abus et évite les doublons grâce à une clé d'idempotence. Les demandes sont ensuite transmises par Brevo avec une adresse d'envoi authentifiée et l'adresse du visiteur en réponse directe.\n\nL'ensemble a été conçu pour rester fluide et lisible du mobile au grand écran, avec une navigation accessible, des carrousels contrôlables, une prise en charge de la réduction des animations et des tests dédiés aux parcours critiques.",
+                "Création complète du site de Jessica Dewerdt, photographe dans l'Audomarois. L'objectif était de traduire son univers doux et éditorial dans une expérience claire, immersive et rassurante, sans laisser les informations pratiques prendre le dessus sur les images.\n\nLe site construit un véritable parcours client : une hero expressive, six univers de séances, des pages détaillées avec tarifs, un portfolio, des avis, des cartes cadeaux, des offres temporaires et des appels à l'action cohérents jusqu'à la prise de contact.\n\nLe formulaire est intégré à une application Symfony et ne se limite pas à un simple envoi d'e-mail. Il préremplit le type de séance selon le parcours, valide les données côté navigateur et serveur, bloque les soumissions automatisées avec un challenge signé et un honeypot, limite les abus et évite les doublons grâce à une clé d'idempotence. Les demandes sont ensuite transmises par Brevo avec une adresse d'envoi authentifiée et l'adresse du visiteur en réponse directe.\n\nL'ensemble a été conçu pour rester fluide et lisible du mobile au grand écran, avec une navigation accessible, des carrousels contrôlables, une prise en charge de la réduction des animations et des tests dédiés aux parcours critiques.",
             summary: "Un site photographique complet qui transforme un univers visuel en parcours de découverte et de prise de contact.",
             impact: "Six prestations, portfolio éditorial, contenus commerciaux et formulaire Symfony sécurisé relié à la messagerie cliente.",
             techs: ["Symfony 7.4", "PHP 8.2", "Twig", "JavaScript", "HTML", "CSS", "Brevo SMTP", "PHPUnit"],
             cover: "./images/projects/jessica-dew/cover.webp",
-            coverLabel: "Refonte éditoriale & parcours client",
+            coverLabel: "Création éditoriale & parcours client",
             galleryLayout: "case-study",
             images: [
                 {
@@ -697,7 +697,7 @@ document.addEventListener("DOMContentLoaded", () => {
             proof: "Hero immersive, prestations détaillées, portfolio, contenus commerciaux et chaîne de contact Symfony sécurisée.",
             techs: ["UI/UX", "Symfony", "JavaScript", "Responsive"],
             image: "./images/projects/jessica-dew/cover.webp",
-            imageAlt: "Nouvelle hero du site Jessica Dew Passion Photographie",
+            imageAlt: "Hero du site Jessica Dew Passion Photographie",
             imagePosition: "center",
             projectId: "1",
             action: "Examiner Jessica Dew",
