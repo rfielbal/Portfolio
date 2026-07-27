@@ -7807,3 +7807,153 @@ header {
         width: min(100%, 300px);
     }
 }
+
+/* Jessica Dew uses an editorial mosaic instead of the standard project grid. */
+.pm-editorial-showcase {
+    display: grid;
+    gap: clamp(20px, 3vw, 32px);
+    padding: clamp(8px, 1vw, 14px) 0 clamp(26px, 4vw, 42px);
+    border-top: 1px solid color-mix(in srgb, var(--project-accent, var(--cyan)) 32%, transparent);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pm-editorial-heading {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.35fr) minmax(0, 1fr);
+    align-items: end;
+    gap: clamp(18px, 3vw, 36px);
+}
+
+.pm-editorial-heading > span {
+    color: var(--project-accent, var(--cyan));
+    font-family: var(--font-code);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+}
+
+.pm-editorial-heading h4 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-family: var(--font-head);
+    font-size: clamp(1.55rem, 3vw, 2.8rem);
+    letter-spacing: 0;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.pm-editorial-heading p {
+    max-width: 70ch;
+    margin: 0;
+    color: var(--modal-text-soft);
+    font-size: 0.78rem;
+    line-height: 1.65;
+}
+
+.pm-editorial-mosaic {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(14px, 2vw, 22px);
+}
+
+.pm-editorial-frame {
+    min-width: 0;
+    margin: 0;
+}
+
+.pm-editorial-frame .pm-image-zoom {
+    width: 100%;
+    border: 1px solid color-mix(in srgb, var(--project-accent, var(--cyan)) 38%, rgba(255, 255, 255, 0.12));
+    border-radius: 6px;
+    background: transparent;
+}
+
+.pm-editorial-frame .pm-image-zoom img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    object-fit: contain;
+}
+
+.pm-editorial-frame figcaption {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 11px 2px 0;
+}
+
+.pm-editorial-frame figcaption > span {
+    color: var(--project-accent, var(--cyan));
+    font-family: var(--font-code);
+    font-size: 0.56rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.pm-editorial-frame figcaption p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.68rem;
+    line-height: 1.45;
+}
+
+.pm-editorial-slot-1 {
+    grid-column: 1 / -1;
+}
+
+.pm-editorial-slot-2,
+.pm-editorial-slot-4 {
+    grid-column: 1 / 8;
+}
+
+.pm-editorial-slot-3 {
+    grid-column: 8 / -1;
+    grid-row: 2 / span 2;
+}
+
+.pm-editorial-slot-5 {
+    grid-column: 1 / 7;
+}
+
+.pm-editorial-slot-6 {
+    grid-column: 7 / -1;
+}
+
+@media (max-width: 760px) {
+    .pm-editorial-heading {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 10px;
+    }
+
+    .pm-editorial-mosaic {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+    }
+
+    .pm-editorial-slot-1,
+    .pm-editorial-slot-2,
+    .pm-editorial-slot-3,
+    .pm-editorial-slot-4,
+    .pm-editorial-slot-5,
+    .pm-editorial-slot-6 {
+        width: 100%;
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .pm-editorial-slot-3 {
+        width: min(100%, 300px);
+        justify-self: center;
+    }
+
+    .pm-editorial-frame figcaption {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+}

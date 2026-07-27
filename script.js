@@ -390,59 +390,77 @@ document.addEventListener("DOMContentLoaded", () => {
             year: "2025 - 2026",
             dateLabel: "Création",
             created: "Août 2026",
-            role: "Direction artistique & développement full-stack",
+            role: "Conception, développement & exploitation",
             status: "Préproduction",
             accent: "#43dfff",
             logo: "./images/projects/jessica-dew/logo.png",
             logoAlt: "Monogramme Jessica Dew",
             logoMark: "JD",
             description:
-                "Création complète du site de Jessica Dewerdt, photographe dans l'Audomarois. L'objectif était de traduire son univers doux et éditorial dans une expérience claire, immersive et rassurante, sans laisser les informations pratiques prendre le dessus sur les images.\n\nLe site construit un véritable parcours client : une hero expressive, six univers de séances, des pages détaillées avec tarifs, un portfolio, des avis, des cartes cadeaux, des offres temporaires et des appels à l'action cohérents jusqu'à la prise de contact.\n\nLe formulaire est intégré à une application Symfony et ne se limite pas à un simple envoi d'e-mail. Il préremplit le type de séance selon le parcours, valide les données côté navigateur et serveur, bloque les soumissions automatisées avec un challenge signé et un honeypot, limite les abus et évite les doublons grâce à une clé d'idempotence. Les demandes sont ensuite transmises par Brevo avec une adresse d'envoi authentifiée et l'adresse du visiteur en réponse directe.\n\nL'ensemble a été conçu pour rester fluide et lisible du mobile au grand écran, avec une navigation accessible, des carrousels contrôlables, une prise en charge de la réduction des animations et des tests dédiés aux parcours critiques.",
-            summary: "Un site photographique complet qui transforme un univers visuel en parcours de découverte et de prise de contact.",
-            impact: "Six prestations, portfolio éditorial, contenus commerciaux et formulaire Symfony sécurisé relié à la messagerie cliente.",
-            techs: ["Symfony 7.4", "PHP 8.2", "Twig", "JavaScript", "HTML", "CSS", "Brevo SMTP", "PHPUnit"],
+                "J'ai pris en charge la création complète du site de Jessica Dewerdt, photographe dans l'Audomarois, depuis la définition du parcours jusqu'à son exploitation technique. L'objectif était de traduire son univers doux et éditorial dans une expérience claire, immersive et rassurante, sans laisser les informations pratiques prendre le dessus sur les images.\n\nJ'ai construit un véritable parcours client : une hero expressive, six univers de séances, des pages détaillées avec tarifs, un portfolio, des avis, des cartes cadeaux, des offres temporaires et des appels à l'action cohérents jusqu'à la prise de contact.\n\nLe formulaire repose sur une application Symfony et ne se limite pas à un simple envoi d'e-mail. Il préremplit le type de séance, valide les données côté navigateur et serveur, bloque les soumissions automatisées avec un challenge signé et un honeypot, limite les abus et évite les doublons. Les demandes sont ensuite transmises par Brevo avec une identité d'envoi authentifiée et l'adresse du visiteur configurée en réponse directe.\n\nJe pilote également toute la chaîne d'exploitation : configuration OVHcloud et PHP, isolation de la racine web, HTTPS et DNS, secrets d'environnement, authentification SMTP, construction des releases, recette avant bascule, surveillance des erreurs, purge des journaux et procédure de retour arrière. Les corrections, contenus et évolutions restent ainsi sous mon contrôle, de la configuration initiale à la maintenance après mise en ligne.",
+            summary: "Site photographique conçu, déployé et maintenu de bout en bout, du parcours client à l'infrastructure de production.",
+            impact: "Six prestations, portfolio éditorial, formulaire sécurisé et exploitation OVHcloud entièrement pilotée.",
+            techs: ["Symfony 7.4", "PHP 8.4", "JavaScript", "HTML / CSS", "Brevo SMTP", "OVHcloud", "Apache", "DNS / TLS", "PHPUnit"],
             cover: "./images/projects/jessica-dew/cover.webp",
             coverLabel: "Création éditoriale & parcours client",
-            galleryLayout: "case-study",
+            galleryLayout: "editorial",
+            galleryTitle: "Une expérience pensée comme un magazine photographique",
+            gallerySummary: "Les écrans alternent respiration, séries d'images et contenus utiles pour guider le regard sans uniformiser le parcours.",
             images: [
                 {
+                    src: "./images/projects/jessica-dew/gallery/identite-carrousel.webp",
+                    alt: "Présentation de Jessica Dew et carrousel photographique sur la page d'accueil",
+                    caption: "Identité personnelle, récit de marque et carrousel réunis dans une composition éditoriale",
+                    label: "01 / Identité",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/jessica-dew/gallery/portfolio-photographique.webp",
+                    alt: "Portfolio photographique actualisé du site Jessica Dew",
+                    caption: "Galerie vivante, rail photographique et sélection éditoriale des séries",
+                    label: "02 / Portfolio",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/jessica-dew/gallery/mobile-home.webp",
+                    alt: "Hero du site Jessica Dew affichée sur mobile",
+                    caption: "Une direction artistique conservée sur mobile, sans sacrifier la lisibilité ni les actions",
+                    label: "03 / Mobile",
+                    orientation: "portrait"
+                },
+                {
                     src: "./images/projects/jessica-dew/gallery/catalogue-prestations.webp",
-                    alt: "Catalogue des prestations photographiques du site Jessica Dew",
-                    caption: "Six univers de séances structurés pour guider chaque besoin",
-                    group: "Découvrir l'univers",
+                    alt: "Catalogue actualisé des prestations photographiques du site Jessica Dew",
+                    caption: "Six univers de séances immédiatement identifiables grâce aux nouvelles séries",
+                    label: "04 / Prestations",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/jessica-dew/gallery/portfolio-editorial.webp",
-                    alt: "Portfolio éditorial du site Jessica Dew",
-                    caption: "Portfolio immersif mêlant sélection horizontale et composition éditoriale",
-                    group: "Découvrir l'univers",
-                    orientation: "landscape"
-                },
-                {
-                    src: "./images/projects/jessica-dew/gallery/seance-naissance.webp",
-                    alt: "Page consacrée aux séances naissance sur le site Jessica Dew",
-                    caption: "Page prestation avec récit, galerie contrôlable et accès aux tarifs",
-                    group: "Du contenu à la demande",
+                    src: "./images/projects/jessica-dew/gallery/reportage-mariage.webp",
+                    alt: "Page consacrée au reportage de mariage sur le site Jessica Dew",
+                    caption: "Chaque prestation associe récit, galerie contrôlable, tarifs et prise de contact",
+                    label: "05 / Parcours",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/jessica-dew/gallery/formulaire-contact.webp",
                     alt: "Formulaire de contact du site Jessica Dew",
-                    caption: "Formulaire contextuel, accessible et relié à une chaîne d'envoi sécurisée",
-                    group: "Du contenu à la demande",
+                    caption: "Le parcours se termine par un formulaire contextuel relié à une chaîne d'envoi sécurisée",
+                    label: "06 / Conversion",
                     orientation: "landscape"
                 }
             ],
             features: [
                 "Hero immersive, identité éditoriale sur mesure et navigation responsive commune à l'ensemble du site.",
                 "Six univers de séances avec contenus, galeries, tarifs et appels à l'action adaptés.",
-                "Portfolio, avis clients, cartes cadeaux et offres temporaires réunis dans un parcours cohérent.",
-                "Carrousels accessibles, navigation clavier, états de focus et réduction des animations prise en charge.",
+                "Portfolio, visionneuse, avis clients, cartes cadeaux et offres temporaires réunis dans un parcours cohérent.",
+                "Carrousels accessibles, navigation clavier, états de focus et réduction des animations pris en charge.",
                 "Formulaire prérempli selon la séance, validation client/serveur et conservation des saisies en cas d'erreur.",
                 "Protection par challenge signé, honeypot, limites de débit, contrôle d'origine et idempotence.",
                 "Envoi transactionnel via Brevo, sans base de données ni cookie pour traiter les demandes.",
-                "Tests PHPUnit des parcours critiques et préparation du déploiement sur l'hébergement de la cliente."
+                "Configuration complète d'OVHcloud : PHP 8.4, racine web public/, HTTPS, DNS, secrets, droits et caches.",
+                "Mise en production par release avec recette, surveillance, purge des journaux et retour arrière documenté.",
+                "Maintenance continue des contenus, des photographies, des dépendances, de la sécurité et du référencement."
             ],
             repoLink: null,
             liveLink: "https://jessicadewerdt.fr",
@@ -695,14 +713,14 @@ document.addEventListener("DOMContentLoaded", () => {
             summary: "Une interface réussie capte l'attention, rend l'offre compréhensible et accompagne naturellement jusqu'à la prise de contact.",
             need: "Présenter six univers photographiques sans perdre la douceur de la marque ni les informations attendues avant une réservation.",
             decision: "Associer une direction éditoriale centrée sur l'image à des pages structurées, des actions cohérentes et un formulaire contextuel.",
-            proof: "Hero immersive, prestations détaillées, portfolio, contenus commerciaux et chaîne de contact Symfony sécurisée.",
-            techs: ["UI/UX", "Symfony", "JavaScript", "Responsive"],
+            proof: "Hero immersive, prestations détaillées, portfolio, chaîne de contact sécurisée et exploitation OVHcloud.",
+            techs: ["UI/UX", "Symfony", "OVHcloud", "Responsive"],
             image: "./images/projects/jessica-dew/cover.webp",
             imageAlt: "Hero du site Jessica Dew Passion Photographie",
             imagePosition: "center",
             projectId: "1",
             action: "Examiner Jessica Dew",
-            role: "Direction artistique & développement",
+            role: "Conception, développement & exploitation",
             nodes: [
                 { label: "Attention", value: "Hero éditoriale", icon: "fas fa-eye" },
                 { label: "Parcours", value: "6 univers", icon: "fas fa-route" },
@@ -1815,7 +1833,45 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderProjectModalMedia = (data) => {
         let imageMarkup = "";
 
-        if (data.galleryLayout === "case-study") {
+        if (data.galleryLayout === "editorial") {
+            const editorialImages = (data.images || []).map((image, index) => (
+                typeof image === "string"
+                    ? {
+                        src: image,
+                        alt: `Aperçu ${data.title}`,
+                        caption: "Capture du projet",
+                        label: `${String(index + 1).padStart(2, "0")} / Écran`,
+                        orientation: "landscape"
+                    }
+                    : image
+            ));
+
+            imageMarkup = `
+                <section class="pm-editorial-showcase">
+                    <div class="pm-editorial-heading">
+                        <span>PARCOURS VISUEL</span>
+                        <div>
+                            <h4>${data.galleryTitle || "Une expérience construite écran par écran"}</h4>
+                            <p>${data.gallerySummary || "Une sélection de vues représentatives du projet."}</p>
+                        </div>
+                    </div>
+                    <div class="pm-editorial-mosaic">
+                        ${editorialImages.map((image, index) => `
+                            <figure class="pm-editorial-frame pm-editorial-slot-${index + 1} is-${image.orientation || "landscape"}">
+                                <button class="pm-image-zoom js-image-zoom" type="button" data-src="${image.src}" data-alt="${image.alt || `Aperçu ${data.title}`}" data-caption="${image.caption || "Capture du projet"}" aria-label="Afficher cette capture en grand">
+                                    <img src="${image.src}" alt="${image.alt || `Aperçu ${data.title}`}" loading="lazy" decoding="async">
+                                    <span><i class="fas fa-up-right-and-down-left-from-center"></i> Agrandir</span>
+                                </button>
+                                <figcaption>
+                                    <span>${image.label || `${String(index + 1).padStart(2, "0")} / Écran`}</span>
+                                    <p>${image.caption || "Capture du projet"}</p>
+                                </figcaption>
+                            </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "case-study") {
             const imagesByGroup = (data.images || []).reduce((groups, image) => {
                 const item = typeof image === "string"
                     ? { src: image, alt: `Aperçu ${data.title}`, caption: "Capture du projet", group: "Captures", orientation: "landscape" }
