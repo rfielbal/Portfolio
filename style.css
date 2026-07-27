@@ -7957,3 +7957,854 @@ header {
         gap: 5px;
     }
 }
+
+/* Distinct project narratives share the same readable heading and lightbox controls. */
+.pm-project-gallery {
+    min-width: 0;
+    display: grid;
+    gap: clamp(22px, 3vw, 36px);
+    padding: clamp(10px, 1.4vw, 18px) 0 clamp(28px, 4vw, 46px);
+    border-top: 1px solid color-mix(in srgb, var(--project-accent, var(--cyan)) 34%, transparent);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pm-gallery-heading {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.34fr) minmax(0, 1fr);
+    align-items: end;
+    gap: clamp(18px, 3vw, 38px);
+}
+
+.pm-gallery-heading > span {
+    color: var(--project-accent, var(--cyan));
+    font-family: var(--font-code);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+}
+
+.pm-gallery-heading h4 {
+    max-width: 22ch;
+    margin: 0 0 9px;
+    color: #fff;
+    font-family: var(--font-head);
+    font-size: 2.65rem;
+    letter-spacing: 0;
+    line-height: 0.98;
+    text-transform: uppercase;
+}
+
+.pm-gallery-heading p {
+    max-width: 76ch;
+    margin: 0;
+    color: var(--modal-text-soft);
+    font-size: 0.78rem;
+    line-height: 1.65;
+}
+
+.pm-project-gallery .pm-image-zoom {
+    width: 100%;
+    border: 1px solid color-mix(in srgb, var(--project-accent, var(--cyan)) 34%, rgba(255, 255, 255, 0.12));
+    border-radius: 6px;
+    background: transparent;
+}
+
+.pm-project-gallery .pm-image-zoom img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    object-fit: contain;
+}
+
+/* Revaloop: the screenshots form the same loop used by developer and client. */
+.pm-review-flow {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 28px clamp(24px, 4vw, 52px);
+}
+
+.pm-review-flow::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    bottom: 12px;
+    left: 50%;
+    width: 1px;
+    background: color-mix(in srgb, var(--project-accent, var(--red)) 54%, rgba(255, 255, 255, 0.12));
+}
+
+.pm-review-step {
+    position: relative;
+    min-width: 0;
+    margin: 0;
+}
+
+.pm-review-step:nth-child(odd):not(:last-child) {
+    grid-column: 1 / 7;
+}
+
+.pm-review-step:nth-child(even) {
+    grid-column: 7 / -1;
+}
+
+.pm-review-step:last-child {
+    grid-column: 3 / 11;
+    padding: 20px;
+    border: 1px solid color-mix(in srgb, var(--project-accent, var(--red)) 34%, rgba(255, 255, 255, 0.12));
+    border-radius: 8px;
+    background: #0b1015;
+}
+
+.pm-review-step::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #080c10;
+    border-radius: 50%;
+    background: var(--project-accent, var(--red));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--project-accent, var(--red)) 72%, #fff);
+}
+
+.pm-review-step:nth-child(odd):not(:last-child)::before {
+    right: calc(clamp(24px, 4vw, 52px) / -2 - 5px);
+}
+
+.pm-review-step:nth-child(even)::before {
+    left: calc(clamp(24px, 4vw, 52px) / -2 - 5px);
+}
+
+.pm-review-step:last-child::before {
+    top: -6px;
+    left: calc(50% - 5px);
+}
+
+.pm-review-step-head {
+    min-height: 26px;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 9px;
+    padding: 0 2px;
+}
+
+.pm-review-step-head span,
+.pm-review-step figcaption {
+    font-family: var(--font-code);
+}
+
+.pm-review-step-head span {
+    color: var(--project-accent, var(--red));
+    font-size: 0.56rem;
+    letter-spacing: 0.06em;
+}
+
+.pm-review-step-head strong {
+    color: #f4f6f8;
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.pm-review-step figcaption {
+    margin-top: 9px;
+    padding: 0 2px;
+    color: var(--muted);
+    font-size: 0.62rem;
+    line-height: 1.55;
+}
+
+/* Le Secret du Conservateur: a restrained museum wall and room-by-room route. */
+.pm-museum-tour {
+    padding-inline: clamp(14px, 2vw, 26px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background: #0b0e12;
+}
+
+.pm-museum-route {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.pm-museum-route::before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    right: 8%;
+    left: 8%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.pm-museum-route span {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-family: var(--font-code);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+}
+
+.pm-museum-route i {
+    z-index: 1;
+    width: 14px;
+    height: 14px;
+    border: 3px solid #0b0e12;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.32);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.24);
+}
+
+.pm-museum-route .active i {
+    background: var(--project-accent, var(--acid));
+    box-shadow: 0 0 0 1px var(--project-accent, var(--acid));
+}
+
+.pm-museum-rooms {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(18px, 2.6vw, 32px);
+}
+
+.pm-museum-room {
+    min-width: 0;
+    margin: 0;
+}
+
+.pm-museum-room-1 {
+    grid-column: 1 / -1;
+}
+
+.pm-museum-room-2 {
+    grid-column: 1 / 8;
+}
+
+.pm-museum-room-3 {
+    grid-column: 8 / -1;
+    margin-top: clamp(34px, 5vw, 68px);
+}
+
+.pm-museum-frame {
+    padding: clamp(7px, 1vw, 12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: #e6e9ed;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+}
+
+.pm-museum-frame .pm-image-zoom {
+    border-color: #161a20;
+    border-radius: 2px;
+}
+
+.pm-museum-frame .pm-image-zoom img {
+    border-radius: 1px;
+}
+
+.pm-museum-room figcaption {
+    width: min(100%, 520px);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 5px 14px;
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-left: 2px solid var(--project-accent, var(--acid));
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.pm-museum-room figcaption span {
+    grid-row: 1 / span 2;
+    color: var(--project-accent, var(--acid));
+    font-family: var(--font-code);
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+}
+
+.pm-museum-room figcaption strong {
+    color: #f4f5f6;
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.pm-museum-room figcaption p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.65rem;
+    line-height: 1.5;
+}
+
+/* Responsiver: a desktop workbench with observable stages and readouts. */
+.pm-responsive-lab {
+    padding-inline: clamp(12px, 1.8vw, 24px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #090e11;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+
+.pm-lab-readouts,
+.pm-inspection-readouts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    background: #0c1216;
+}
+
+.pm-lab-readouts > div,
+.pm-inspection-readouts > div {
+    min-width: 0;
+    display: grid;
+    gap: 4px;
+    padding: 13px 15px;
+}
+
+.pm-lab-readouts > div + div,
+.pm-inspection-readouts > div + div {
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pm-lab-readouts span,
+.pm-inspection-readouts span {
+    color: var(--project-accent, var(--red));
+    font-family: var(--font-code);
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.pm-lab-readouts strong,
+.pm-inspection-readouts strong {
+    overflow-wrap: anywhere;
+    color: #f1f4f5;
+    font-size: 0.68rem;
+    font-weight: 600;
+}
+
+.pm-lab-stage {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(16px, 2vw, 24px);
+}
+
+.pm-lab-panel {
+    min-width: 0;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background: #0b1014;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+}
+
+.pm-lab-panel-1 {
+    grid-column: 1 / -1;
+}
+
+.pm-lab-panel-2 {
+    grid-column: 1 / 8;
+}
+
+.pm-lab-panel-3 {
+    grid-column: 8 / -1;
+}
+
+.pm-lab-panel-4 {
+    grid-column: 2 / 12;
+}
+
+.pm-lab-panel-bar {
+    min-height: 34px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 0 5px 8px;
+}
+
+.pm-lab-panel-bar span {
+    color: var(--project-accent, var(--red));
+    font-family: var(--font-code);
+    font-size: 0.53rem;
+}
+
+.pm-lab-panel-bar strong {
+    overflow: hidden;
+    color: #e9edef;
+    font-size: 0.67rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pm-lab-panel-bar i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--project-accent, var(--red));
+    box-shadow: 0 0 12px color-mix(in srgb, var(--project-accent, var(--red)) 65%, transparent);
+}
+
+.pm-lab-panel figcaption {
+    padding: 9px 4px 3px;
+    color: var(--muted);
+    font-size: 0.63rem;
+    line-height: 1.5;
+}
+
+/* AetherCore: an instrument panel with a restrained animated scan. */
+.pm-inspection-console {
+    padding-inline: clamp(12px, 1.8vw, 24px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: #06090b;
+}
+
+.pm-inspection-stage {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(16px, 2vw, 24px);
+}
+
+.pm-inspection-view {
+    min-width: 0;
+    margin: 0;
+    padding: 8px;
+    border: 1px solid color-mix(in srgb, var(--project-accent, var(--red)) 30%, rgba(255, 255, 255, 0.12));
+    border-radius: 6px;
+    background: #080c0e;
+}
+
+.pm-inspection-view-1 {
+    grid-column: 1 / 9;
+}
+
+.pm-inspection-view-2 {
+    grid-column: 9 / -1;
+    margin-top: clamp(70px, 8vw, 130px);
+}
+
+.pm-inspection-view-head {
+    min-height: 32px;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    padding: 0 4px 7px;
+}
+
+.pm-inspection-view-head span,
+.pm-inspection-view-head i {
+    color: var(--project-accent, var(--red));
+    font-family: var(--font-code);
+    font-size: 0.5rem;
+    font-style: normal;
+    letter-spacing: 0.06em;
+}
+
+.pm-inspection-view-head strong {
+    overflow: hidden;
+    color: #f0f4f4;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pm-inspection-view-head i {
+    padding: 4px 6px;
+    border: 1px solid color-mix(in srgb, var(--project-accent, var(--red)) 42%, rgba(255, 255, 255, 0.12));
+    border-radius: 3px;
+}
+
+.pm-inspection-media {
+    position: relative;
+    overflow: hidden;
+}
+
+.pm-inspection-scan {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 1px;
+    background: var(--project-accent, var(--red));
+    box-shadow: 0 0 12px var(--project-accent, var(--red));
+    opacity: 0.75;
+    pointer-events: none;
+    animation: pm-inspection-scan 5.4s linear infinite;
+}
+
+.pm-inspection-view figcaption {
+    padding: 9px 4px 3px;
+    color: var(--muted);
+    font-family: var(--font-code);
+    font-size: 0.59rem;
+    line-height: 1.5;
+}
+
+@keyframes pm-inspection-scan {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: 100%;
+    }
+}
+
+/* La Citadelle Rouge: layers are linked like the Redstone circuit under the map. */
+.pm-redstone-layers {
+    position: relative;
+    display: grid;
+    gap: clamp(34px, 5vw, 58px);
+    padding-left: 54px;
+}
+
+.pm-redstone-layers::before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    bottom: 9px;
+    left: 16px;
+    width: 2px;
+    background: color-mix(in srgb, var(--project-accent, var(--red)) 62%, rgba(255, 255, 255, 0.14));
+}
+
+.pm-redstone-layers::after {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 12px;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #080c10;
+    background: var(--project-accent, var(--red));
+    box-shadow: 0 0 14px var(--project-accent, var(--red));
+    animation: pm-redstone-pulse 6.5s linear infinite;
+}
+
+.pm-redstone-layer {
+    position: relative;
+    min-width: 0;
+}
+
+.pm-redstone-layer::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: -44px;
+    width: 14px;
+    height: 14px;
+    border: 3px solid #080c10;
+    background: var(--project-accent, var(--red));
+    box-shadow: 0 0 0 1px var(--project-accent, var(--red));
+}
+
+.pm-redstone-layer-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.pm-redstone-layer-head > span {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--project-accent, var(--red)) 46%, rgba(255, 255, 255, 0.12));
+    color: var(--project-accent, var(--red));
+    font-family: var(--font-code);
+    font-size: 0.58rem;
+}
+
+.pm-redstone-layer-head h5 {
+    margin: 0 0 4px;
+    color: #f5f6f7;
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.pm-redstone-layer-head p {
+    max-width: 72ch;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.68rem;
+    line-height: 1.55;
+}
+
+.pm-redstone-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(14px, 2vw, 22px);
+}
+
+.pm-redstone-node {
+    min-width: 0;
+    margin: 0;
+}
+
+.pm-redstone-grid.has-2 .pm-redstone-node-1 {
+    grid-column: 1 / 8;
+}
+
+.pm-redstone-grid.has-2 .pm-redstone-node-2 {
+    grid-column: 8 / -1;
+    margin-top: clamp(24px, 4vw, 52px);
+}
+
+.pm-redstone-grid.has-3 .pm-redstone-node-1 {
+    grid-column: 1 / -1;
+}
+
+.pm-redstone-grid.has-3 .pm-redstone-node-2 {
+    grid-column: 1 / 7;
+}
+
+.pm-redstone-grid.has-3 .pm-redstone-node-3 {
+    grid-column: 7 / -1;
+}
+
+.pm-redstone-node figcaption {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+.pm-redstone-node figcaption span {
+    color: var(--project-accent, var(--red));
+    font-family: var(--font-code);
+    font-size: 0.54rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.pm-redstone-node figcaption p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.64rem;
+    line-height: 1.5;
+}
+
+@keyframes pm-redstone-pulse {
+    from {
+        top: 9px;
+    }
+
+    to {
+        top: calc(100% - 19px);
+    }
+}
+
+@media (max-width: 900px) {
+    .pm-gallery-heading h4 {
+        font-size: 2.1rem;
+    }
+
+    .pm-review-flow {
+        grid-template-columns: minmax(0, 1fr);
+        padding-left: 30px;
+    }
+
+    .pm-review-flow::before {
+        top: 8px;
+        bottom: 8px;
+        left: 7px;
+    }
+
+    .pm-review-step:nth-child(odd):not(:last-child),
+    .pm-review-step:nth-child(even),
+    .pm-review-step:last-child {
+        grid-column: 1;
+    }
+
+    .pm-review-step:nth-child(odd):not(:last-child)::before,
+    .pm-review-step:nth-child(even)::before,
+    .pm-review-step:last-child::before {
+        top: 7px;
+        left: -27px;
+    }
+
+    .pm-review-step:last-child {
+        padding: 14px;
+    }
+
+    .pm-museum-room-2,
+    .pm-museum-room-3,
+    .pm-inspection-view-1,
+    .pm-inspection-view-2 {
+        grid-column: 1 / -1;
+    }
+
+    .pm-museum-room-3,
+    .pm-inspection-view-2 {
+        margin-top: 0;
+    }
+
+    .pm-lab-readouts,
+    .pm-inspection-readouts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pm-lab-readouts > div:nth-child(3),
+    .pm-inspection-readouts > div:nth-child(3) {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 0;
+    }
+
+    .pm-lab-readouts > div:nth-child(4),
+    .pm-inspection-readouts > div:nth-child(4) {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pm-lab-panel-2,
+    .pm-lab-panel-3,
+    .pm-lab-panel-4 {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 760px) {
+    .pm-gallery-heading {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 10px;
+    }
+
+    .pm-gallery-heading h4 {
+        max-width: none;
+        font-size: 1.55rem;
+    }
+
+    .pm-museum-tour,
+    .pm-responsive-lab,
+    .pm-inspection-console {
+        padding-inline: 12px;
+    }
+
+    .pm-museum-route {
+        gap: 6px;
+    }
+
+    .pm-museum-route span {
+        font-size: 0.46rem;
+    }
+
+    .pm-museum-rooms,
+    .pm-lab-stage,
+    .pm-inspection-stage,
+    .pm-redstone-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pm-museum-room-1,
+    .pm-museum-room-2,
+    .pm-museum-room-3,
+    .pm-lab-panel-1,
+    .pm-lab-panel-2,
+    .pm-lab-panel-3,
+    .pm-lab-panel-4,
+    .pm-inspection-view-1,
+    .pm-inspection-view-2,
+    .pm-redstone-grid.has-2 .pm-redstone-node-1,
+    .pm-redstone-grid.has-2 .pm-redstone-node-2,
+    .pm-redstone-grid.has-3 .pm-redstone-node-1,
+    .pm-redstone-grid.has-3 .pm-redstone-node-2,
+    .pm-redstone-grid.has-3 .pm-redstone-node-3 {
+        width: 100%;
+        grid-column: 1;
+        margin-top: 0;
+    }
+
+    .pm-museum-room figcaption,
+    .pm-redstone-node figcaption {
+        grid-template-columns: 1fr;
+    }
+
+    .pm-museum-room figcaption span {
+        grid-row: auto;
+    }
+
+    .pm-lab-readouts,
+    .pm-inspection-readouts {
+        grid-template-columns: 1fr;
+    }
+
+    .pm-lab-readouts > div + div,
+    .pm-lab-readouts > div:nth-child(3),
+    .pm-inspection-readouts > div + div,
+    .pm-inspection-readouts > div:nth-child(3) {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-left: 0;
+    }
+
+    .pm-lab-panel-bar,
+    .pm-inspection-view-head {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .pm-lab-panel-bar i,
+    .pm-inspection-view-head i {
+        display: none;
+    }
+
+    .pm-demo-launch {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    .pm-redstone-layers {
+        padding-left: 34px;
+    }
+
+    .pm-redstone-layers::before {
+        left: 8px;
+    }
+
+    .pm-redstone-layers::after {
+        left: 4px;
+    }
+
+    .pm-redstone-layer::before {
+        left: -32px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pm-inspection-scan,
+    .pm-redstone-layers::after {
+        animation: none;
+    }
+}

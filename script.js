@@ -252,41 +252,49 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["Next.js", "React", "TypeScript", "Cloudflare Workers", "D1", "Drizzle ORM", "Electron", "Vite"],
             cover: "./images/projects/revaloop/cover.webp",
             coverLabel: "Boucle de recette client",
-            galleryLayout: "case-study",
+            galleryLayout: "review-loop",
+            galleryEyebrow: "BOUCLE DE RECETTE",
+            galleryTitle: "Du partage de la version à la décision finale",
+            gallerySummary: "Le parcours matérialise chaque étape de la collaboration pour que le contexte, les corrections et la validation restent dans un seul espace.",
             images: [
                 {
                     src: "./images/projects/revaloop/gallery/tableau-de-bord.webp",
                     alt: "Tableau de bord développeur de Revaloop",
                     caption: "Tableau de bord : versions, invitations, retours et décisions réunis dans un seul espace",
-                    group: "Piloter la recette",
-                    orientation: "landscape"
-                },
-                {
-                    src: "./images/projects/revaloop/gallery/discussion-projet.webp",
-                    alt: "Discussion entre développeur et client dans Revaloop",
-                    caption: "Discussion persistante au niveau de la version, sans imposer la création d'un retour",
-                    group: "Piloter la recette",
+                    label: "01 / Préparer",
+                    title: "Cadrer la version",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/revaloop/gallery/espace-revue-client.webp",
                     alt: "Espace de revue client Revaloop avec une preview intégrée",
                     caption: "Espace client : exploration de la preview et accès direct aux retours et à la discussion",
-                    group: "Tester et contextualiser",
+                    label: "02 / Explorer",
+                    title: "Ouvrir la recette",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/revaloop/gallery/annotation-visuelle.webp",
                     alt: "Mode d'annotation visuelle de Revaloop",
                     caption: "Annotation visuelle : le retour reste associé à un repère précis dans le viewport testé",
-                    group: "Tester et contextualiser",
+                    label: "03 / Signaler",
+                    title: "Conserver le contexte",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/revaloop/gallery/discussion-projet.webp",
+                    alt: "Discussion entre développeur et client dans Revaloop",
+                    caption: "Discussion persistante au niveau de la version, sans imposer la création d'un retour",
+                    label: "04 / Décider",
+                    title: "Arbitrer ensemble",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/revaloop/gallery/compagnon-local.webp",
                     alt: "Compagnon desktop Electron de Revaloop",
                     caption: "Compagnon local : sélection, lancement et surveillance explicites du projet sur la machine du développeur",
-                    group: "Préparer la boucle locale",
+                    label: "05 / Connecter",
+                    title: "Relier le projet local",
                     orientation: "landscape"
                 }
             ],
@@ -322,9 +330,33 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["Vite", "JavaScript", "Three.js", "MediaPipe", "WebGL", "STLLoader", "STL", "UX temps réel"],
             cover: "./images/projects/aethercore/cover.webp",
             demoPreview: "./images/projects/aethercore/cover.webp",
+            galleryLayout: "inspection-console",
+            galleryEyebrow: "POSTE D'INSPECTION",
+            galleryTitle: "Lire un fichier STL comme une pièce à analyser",
+            gallerySummary: "L'interface garde le modèle au centre tout en rendant les modes de rendu, les mesures et les interactions immédiatement contrôlables.",
+            galleryStats: [
+                { label: "Entrée", value: "STL local" },
+                { label: "Rendus", value: "3 modes" },
+                { label: "Mesures", value: "Dimensions · surface · volume" },
+                { label: "Contrôle", value: "Souris · tactile · main" }
+            ],
             images: [
-                "./images/projects/aethercore/gallery/interface-principale.png",
-                "./images/projects/aethercore/gallery/mode-surface.png"
+                {
+                    src: "./images/projects/aethercore/gallery/interface-principale.png",
+                    alt: "Interface principale d'AetherCore avec modèle STL en rendu hybride",
+                    caption: "Vue principale : modèle, modes de rendu, mesures et état du suivi réunis dans un poste unique",
+                    label: "SCAN / 01",
+                    title: "Inspection hybride",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/aethercore/gallery/mode-surface.png",
+                    alt: "Mode surface du visualiseur STL AetherCore",
+                    caption: "Le mode surface complète les lectures hybride et points pour contrôler la géométrie",
+                    label: "SCAN / 02",
+                    title: "Lecture de surface",
+                    orientation: "landscape"
+                }
             ],
             demoEmbed: "./demos/aether-core/index.html",
             demoTitle: "DÉMO INTERACTIVE 3D",
@@ -361,10 +393,35 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["HTML", "CSS", "JavaScript", "Canvas", "Web Audio", "Electron", "Game design", "UX pédagogique"],
             cover: "./images/projects/secret-conservateur/cover.webp",
             demoPreview: "./images/projects/secret-conservateur/cover.webp",
+            galleryLayout: "museum-tour",
+            galleryEyebrow: "VISITE NOCTURNE",
+            galleryTitle: "Explorer, observer puis interpréter",
+            gallerySummary: "Les captures suivent la progression du joueur : comprendre le musée, se déplacer dans les salles puis examiner une œuvre pour résoudre l'énigme.",
             images: [
-                "./images/projects/secret-conservateur/gallery/vue-generale-musee.png",
-                "./images/projects/secret-conservateur/gallery/exploration-musee.png",
-                "./images/projects/secret-conservateur/gallery/detail-oeuvre-le-cri.png"
+                {
+                    src: "./images/projects/secret-conservateur/gallery/vue-generale-musee.png",
+                    alt: "Vue générale des trois salles du musée dans Le Secret du Conservateur",
+                    caption: "Trois salles, trois lectures de la folie et une progression guidée par l'observation",
+                    label: "SALLE 00",
+                    title: "Comprendre le terrain",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/secret-conservateur/gallery/exploration-musee.png",
+                    alt: "Exploration nocturne du musée dans Le Secret du Conservateur",
+                    caption: "Déplacements, interactions et indices construisent une exploration active du musée",
+                    label: "SALLE 01",
+                    title: "Parcourir l'exposition",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/secret-conservateur/gallery/detail-oeuvre-le-cri.png",
+                    alt: "Analyse de l'œuvre Le Cri dans Le Secret du Conservateur",
+                    caption: "Chaque œuvre devient une pièce de l'énigme grâce à une lecture contextualisée",
+                    label: "SALLE 02",
+                    title: "Interpréter l'œuvre",
+                    orientation: "landscape"
+                }
             ],
             demoEmbed: "./demos/escape-game/index.html",
             demoTitle: "LANCER L'ESCAPE GAME",
@@ -515,34 +572,47 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["Electron", "React", "TypeScript", "Node.js", "Chromium", "Playwright", "Monaco Editor", "PostCSS"],
             cover: "./images/projects/responsiver/cover.webp",
             coverLabel: "Studio responsive multi-écrans",
-            galleryLayout: "case-study",
+            galleryLayout: "responsive-lab",
+            galleryEyebrow: "WORKBENCH LOCAL-FIRST",
+            galleryTitle: "Voir, corriger, comparer, valider",
+            gallerySummary: "Chaque écran correspond à une étape du même workflow : observer le comportement réel, préparer une correction réversible puis vérifier son impact.",
+            galleryStats: [
+                { label: "Studio", value: "1 à 5 écrans" },
+                { label: "Catalogue", value: "60+ appareils" },
+                { label: "Validation", value: "Routes × tailles × états" },
+                { label: "Écriture", value: "Après confirmation" }
+            ],
             images: [
                 {
                     src: "./images/projects/responsiver/gallery/studio-multi-ecrans.webp",
                     alt: "Studio Responsiver affichant cinq formats d'écran synchronisés",
                     caption: "Studio multi-écrans : jusqu'à cinq viewports, avec pilote, navigation et défilement synchronisés",
-                    group: "Explorer sur tous les formats",
-                    orientation: "landscape"
-                },
-                {
-                    src: "./images/projects/responsiver/gallery/matrice-anti-regression.webp",
-                    alt: "Matrice responsive comparant plusieurs routes, tailles et états",
-                    caption: "Matrice reproductible : comparaison de la source et du correctif sur mobile, tablette et bureau",
-                    group: "Explorer sur tous les formats",
+                    label: "01 / Observer",
+                    title: "Studio multi-écrans",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/responsiver/gallery/atelier-avant-apres.webp",
                     alt: "Atelier visuel Responsiver en comparaison avant et après",
                     caption: "Atelier visuel : réglages ciblés, aperçu avant/après, historique et application explicite",
-                    group: "Corriger sans écrire à l'aveugle",
+                    label: "02 / Corriger",
+                    title: "Atelier avant / après",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/responsiver/gallery/matrice-anti-regression.webp",
+                    alt: "Matrice responsive comparant plusieurs routes, tailles et états",
+                    caption: "Matrice reproductible : comparaison de la source et du correctif sur mobile, tablette et bureau",
+                    label: "03 / Valider",
+                    title: "Matrice anti-régression",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/responsiver/gallery/espace-code-monaco.webp",
                     alt: "Éditeur Monaco et aperçu responsive intégrés à Responsiver",
                     caption: "Espace Code : sources locales, diff, aperçu direct et écriture seulement après confirmation",
-                    group: "Corriger sans écrire à l'aveugle",
+                    label: "04 / Appliquer",
+                    title: "Code sous contrôle",
                     orientation: "landscape"
                 }
             ],
@@ -577,13 +647,22 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["Minecraft Bedrock", "Redstone", "Blocs de commande", "Level design", "Game design", "Automatisation"],
             cover: "./images/projects/citadelle-rouge/cover.webp",
             coverLabel: "Map aventure automatisée",
-            galleryLayout: "case-study",
+            galleryLayout: "redstone-system",
+            galleryEyebrow: "SYSTÈME SOUS LA MAP",
+            galleryTitle: "L'aventure visible, la logique cachée",
+            gallerySummary: "Le parcours révèle les deux faces du projet : les épreuves vécues par le joueur et l'infrastructure Redstone qui orchestre chaque salle sans intervention.",
+            galleryGroups: {
+                "Expérience joueur": "Ruines, indices et salles verrouillées composent la couche visible du donjon.",
+                "Automatisation Redstone": "Déclencheurs, circuits et blocs de commande forment le moteur caché de la progression.",
+                "Commandes Bedrock": "Les commandes spécialisées restaurent les zones et distribuent les récompenses au bon moment."
+            },
             images: [
                 {
                     src: "./images/projects/citadelle-rouge/gallery/citadelle-en-ruine.png",
                     alt: "Forteresse en ruine de la map La Citadelle Rouge",
                     caption: "La citadelle en ruine, point de départ de l'aventure",
                     group: "Expérience joueur",
+                    label: "Entrée",
                     orientation: "landscape"
                 },
                 {
@@ -591,6 +670,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alt: "Salle d'épreuves décorée de La Citadelle Rouge",
                     caption: "Une salle scénarisée mêlant exploration, indices et accès verrouillés",
                     group: "Expérience joueur",
+                    label: "Épreuve",
                     orientation: "landscape"
                 },
                 {
@@ -598,6 +678,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alt: "Vue d'ensemble des circuits Redstone et blocs de commande",
                     caption: "Architecture générale du système caché sous la map",
                     group: "Automatisation Redstone",
+                    label: "Architecture",
                     orientation: "landscape"
                 },
                 {
@@ -605,6 +686,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alt: "Réseau de Redstone reliant les blocs de commande",
                     caption: "Circuit principal reliant déclencheurs, séquences et réinitialisations",
                     group: "Automatisation Redstone",
+                    label: "Réseau",
                     orientation: "landscape"
                 },
                 {
@@ -612,6 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alt: "Matrice de blocs de commande de La Citadelle Rouge",
                     caption: "Blocs de commande enchaînés pour automatiser les mécaniques de jeu",
                     group: "Automatisation Redstone",
+                    label: "Séquence",
                     orientation: "landscape"
                 },
                 {
@@ -619,6 +702,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alt: "Commande clone utilisée pour restaurer une zone Minecraft",
                     caption: "Commande /clone pour remettre une zone dans son état de référence",
                     group: "Commandes Bedrock",
+                    label: "Restaurer",
                     orientation: "landscape"
                 },
                 {
@@ -626,6 +710,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     alt: "Commande give utilisée pour distribuer un objet Minecraft",
                     caption: "Commande /give pour distribuer l'équipement au joueur",
                     group: "Commandes Bedrock",
+                    label: "Récompenser",
                     orientation: "landscape"
                 }
             ],
@@ -1830,6 +1915,42 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     };
 
+    const normalizeProjectGalleryImages = (data) => (data.images || []).map((image, index) => (
+        typeof image === "string"
+            ? {
+                src: image,
+                alt: `Aperçu ${data.title}`,
+                caption: "Capture du projet",
+                label: `${String(index + 1).padStart(2, "0")} / Écran`,
+                title: `Vue ${String(index + 1).padStart(2, "0")}`,
+                orientation: "landscape"
+            }
+            : {
+                label: `${String(index + 1).padStart(2, "0")} / Écran`,
+                title: `Vue ${String(index + 1).padStart(2, "0")}`,
+                caption: "Capture du projet",
+                orientation: "landscape",
+                ...image
+            }
+    ));
+
+    const renderProjectGalleryHeading = (data, fallbackEyebrow) => `
+        <div class="pm-gallery-heading">
+            <span>${data.galleryEyebrow || fallbackEyebrow}</span>
+            <div>
+                <h4>${data.galleryTitle || "Une expérience construite écran par écran"}</h4>
+                <p>${data.gallerySummary || "Une sélection de vues représentatives du projet."}</p>
+            </div>
+        </div>
+    `;
+
+    const renderProjectGalleryImage = (data, image, extraClass = "") => `
+        <button class="pm-image-zoom js-image-zoom ${extraClass}" type="button" data-src="${image.src}" data-alt="${image.alt || `Aperçu ${data.title}`}" data-caption="${image.caption}" aria-label="Afficher cette capture en grand">
+            <img src="${image.src}" alt="${image.alt || `Aperçu ${data.title}`}" loading="lazy" decoding="async">
+            <span><i class="fas fa-up-right-and-down-left-from-center"></i> Agrandir</span>
+        </button>
+    `;
+
     const renderProjectModalMedia = (data) => {
         let imageMarkup = "";
 
@@ -1867,6 +1988,161 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <p>${image.caption || "Capture du projet"}</p>
                                 </figcaption>
                             </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "review-loop") {
+            const reviewImages = normalizeProjectGalleryImages(data);
+
+            imageMarkup = `
+                <section class="pm-project-gallery pm-review-loop">
+                    ${renderProjectGalleryHeading(data, "BOUCLE DE RECETTE")}
+                    <div class="pm-review-flow">
+                        ${reviewImages.map((image, index) => `
+                            <figure class="pm-review-step pm-review-step-${index + 1}">
+                                <div class="pm-review-step-head">
+                                    <span>${image.label}</span>
+                                    <strong>${image.title}</strong>
+                                </div>
+                                ${renderProjectGalleryImage(data, image)}
+                                <figcaption>${image.caption}</figcaption>
+                            </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "museum-tour") {
+            const museumImages = normalizeProjectGalleryImages(data);
+
+            imageMarkup = `
+                <section class="pm-project-gallery pm-museum-tour">
+                    ${renderProjectGalleryHeading(data, "VISITE NOCTURNE")}
+                    <div class="pm-museum-route" aria-hidden="true">
+                        ${museumImages.map((image, index) => `
+                            <span class="${index === 0 ? "active" : ""}">
+                                <i></i>
+                                ${image.label}
+                            </span>
+                        `).join("")}
+                    </div>
+                    <div class="pm-museum-rooms">
+                        ${museumImages.map((image, index) => `
+                            <figure class="pm-museum-room pm-museum-room-${index + 1}">
+                                <div class="pm-museum-frame">
+                                    ${renderProjectGalleryImage(data, image)}
+                                </div>
+                                <figcaption>
+                                    <span>${image.label}</span>
+                                    <strong>${image.title}</strong>
+                                    <p>${image.caption}</p>
+                                </figcaption>
+                            </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "responsive-lab") {
+            const labImages = normalizeProjectGalleryImages(data);
+            const labStats = (data.galleryStats || []).map((stat) => (
+                typeof stat === "string" ? { label: "Signal", value: stat } : stat
+            ));
+
+            imageMarkup = `
+                <section class="pm-project-gallery pm-responsive-lab">
+                    ${renderProjectGalleryHeading(data, "WORKBENCH LOCAL-FIRST")}
+                    <div class="pm-lab-readouts">
+                        ${labStats.map((stat) => `
+                            <div>
+                                <span>${stat.label}</span>
+                                <strong>${stat.value}</strong>
+                            </div>
+                        `).join("")}
+                    </div>
+                    <div class="pm-lab-stage">
+                        ${labImages.map((image, index) => `
+                            <figure class="pm-lab-panel pm-lab-panel-${index + 1}">
+                                <div class="pm-lab-panel-bar">
+                                    <span>${image.label}</span>
+                                    <strong>${image.title}</strong>
+                                    <i aria-hidden="true"></i>
+                                </div>
+                                ${renderProjectGalleryImage(data, image)}
+                                <figcaption>${image.caption}</figcaption>
+                            </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "inspection-console") {
+            const inspectionImages = normalizeProjectGalleryImages(data);
+            const inspectionStats = (data.galleryStats || []).map((stat) => (
+                typeof stat === "string" ? { label: "Mesure", value: stat } : stat
+            ));
+
+            imageMarkup = `
+                <section class="pm-project-gallery pm-inspection-console">
+                    ${renderProjectGalleryHeading(data, "POSTE D'INSPECTION")}
+                    <div class="pm-inspection-readouts">
+                        ${inspectionStats.map((stat) => `
+                            <div>
+                                <span>${stat.label}</span>
+                                <strong>${stat.value}</strong>
+                            </div>
+                        `).join("")}
+                    </div>
+                    <div class="pm-inspection-stage">
+                        ${inspectionImages.map((image, index) => `
+                            <figure class="pm-inspection-view pm-inspection-view-${index + 1}">
+                                <div class="pm-inspection-view-head">
+                                    <span>${image.label}</span>
+                                    <strong>${image.title}</strong>
+                                    <i>${index === 0 ? "LIVE" : "MODE"}</i>
+                                </div>
+                                <div class="pm-inspection-media">
+                                    ${renderProjectGalleryImage(data, image)}
+                                    ${index === 0 ? '<span class="pm-inspection-scan" aria-hidden="true"></span>' : ""}
+                                </div>
+                                <figcaption>${image.caption}</figcaption>
+                            </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "redstone-system") {
+            const redstoneImages = normalizeProjectGalleryImages(data);
+            const redstoneGroups = redstoneImages.reduce((groups, image) => {
+                const groupName = image.group || "Système";
+                groups[groupName] = groups[groupName] || [];
+                groups[groupName].push(image);
+                return groups;
+            }, {});
+
+            imageMarkup = `
+                <section class="pm-project-gallery pm-redstone-system">
+                    ${renderProjectGalleryHeading(data, "SYSTÈME SOUS LA MAP")}
+                    <div class="pm-redstone-layers">
+                        ${Object.entries(redstoneGroups).map(([groupName, images], groupIndex) => `
+                            <section class="pm-redstone-layer pm-redstone-layer-${groupIndex + 1}">
+                                <div class="pm-redstone-layer-head">
+                                    <span>${String(groupIndex + 1).padStart(2, "0")}</span>
+                                    <div>
+                                        <h5>${groupName}</h5>
+                                        <p>${data.galleryGroups?.[groupName] || "Une couche essentielle du système de jeu."}</p>
+                                    </div>
+                                </div>
+                                <div class="pm-redstone-grid has-${images.length}">
+                                    ${images.map((image, imageIndex) => `
+                                        <figure class="pm-redstone-node pm-redstone-node-${imageIndex + 1}">
+                                            ${renderProjectGalleryImage(data, image)}
+                                            <figcaption>
+                                                <span>${image.label}</span>
+                                                <p>${image.caption}</p>
+                                            </figcaption>
+                                        </figure>
+                                    `).join("")}
+                                </div>
+                            </section>
                         `).join("")}
                     </div>
                 </section>
