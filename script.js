@@ -391,34 +391,34 @@ document.addEventListener("DOMContentLoaded", () => {
             summary: "Escape game pédagogique en JavaScript autour de l'art, de l'observation et de la folie perçue par la société.",
             impact: "Jeu web jouable directement, canvas, audio, énigmes, narration et version desktop Electron.",
             techs: ["HTML", "CSS", "JavaScript", "Canvas", "Web Audio", "Electron", "Game design", "UX pédagogique"],
-            cover: "./images/projects/secret-conservateur/cover.webp",
-            demoPreview: "./images/projects/secret-conservateur/cover.webp",
+            cover: "./images/projects/secret-conservateur/cover.webp?v=day-20260727",
+            demoPreview: "./images/projects/secret-conservateur/cover.webp?v=day-20260727",
             galleryLayout: "museum-tour",
-            galleryEyebrow: "VISITE NOCTURNE",
+            galleryEyebrow: "PARCOURS D'ENQUÊTE",
             galleryTitle: "Explorer, observer puis interpréter",
-            gallerySummary: "Les captures suivent la progression du joueur : comprendre le musée, se déplacer dans les salles puis examiner une œuvre pour résoudre l'énigme.",
+            gallerySummary: "Les captures suivent la progression du joueur : découvrir les trois salles, révéler certains indices en mode UV puis examiner une œuvre pour résoudre l'énigme.",
             images: [
                 {
-                    src: "./images/projects/secret-conservateur/gallery/vue-generale-musee.png",
-                    alt: "Vue générale des trois salles du musée dans Le Secret du Conservateur",
-                    caption: "Trois salles, trois lectures de la folie et une progression guidée par l'observation",
-                    label: "SALLE 00",
-                    title: "Comprendre le terrain",
+                    src: "./images/projects/secret-conservateur/gallery/exploration-musee.png?v=day-20260727",
+                    alt: "Vue principale des trois salles du musée dans Le Secret du Conservateur",
+                    caption: "La vue principale présente les trois salles et leurs œuvres avant l'activation des modes d'observation",
+                    label: "SALLE 01",
+                    title: "Découvrir le musée",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/secret-conservateur/gallery/exploration-musee.png",
-                    alt: "Exploration nocturne du musée dans Le Secret du Conservateur",
-                    caption: "Déplacements, interactions et indices construisent une exploration active du musée",
-                    label: "SALLE 01",
-                    title: "Parcourir l'exposition",
+                    src: "./images/projects/secret-conservateur/gallery/vue-generale-musee.png",
+                    alt: "Mode UV nocturne dans les trois salles du Secret du Conservateur",
+                    caption: "Le mode UV nocturne modifie l'éclairage du musée pour faire apparaître certains indices dissimulés",
+                    label: "SALLE 02",
+                    title: "Révéler les indices",
                     orientation: "landscape"
                 },
                 {
                     src: "./images/projects/secret-conservateur/gallery/detail-oeuvre-le-cri.png",
                     alt: "Analyse de l'œuvre Le Cri dans Le Secret du Conservateur",
                     caption: "Chaque œuvre devient une pièce de l'énigme grâce à une lecture contextualisée",
-                    label: "SALLE 02",
+                    label: "SALLE 03",
                     title: "Interpréter l'œuvre",
                     orientation: "landscape"
                 }
@@ -479,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/jessica-dew/gallery/mobile-home.webp",
+                    src: "./images/projects/jessica-dew/gallery/mobile-home.webp?v=home-20260727",
                     alt: "Hero du site Jessica Dew affichée sur mobile",
                     caption: "Une direction artistique conservée sur mobile, sans sacrifier la lisibilité ni les actions",
                     label: "03 / Mobile",
@@ -1533,7 +1533,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         appendLine("response", "Bienvenue. Je peux répondre sur mon profil, ma stack, mes projets et mon parcours.");
-        appendLine("response", "Tape /help ou pose une question courte.");
+        appendLine("response", "Tape /help pour commencer");
     };
 
     const bindCapabilityExplorer = () => {

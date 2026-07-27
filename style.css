@@ -8021,10 +8021,11 @@ header {
 
 /* Revaloop: the screenshots form the same loop used by developer and client. */
 .pm-review-flow {
+    --pm-review-column-gap: clamp(24px, 4vw, 52px);
     position: relative;
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 28px clamp(24px, 4vw, 52px);
+    gap: 28px var(--pm-review-column-gap);
 }
 
 .pm-review-flow::before {
@@ -8033,8 +8034,16 @@ header {
     top: 12px;
     bottom: 12px;
     left: 50%;
-    width: 1px;
-    background: color-mix(in srgb, var(--project-accent, var(--red)) 54%, rgba(255, 255, 255, 0.12));
+    width: 2px;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        color-mix(in srgb, var(--project-accent, var(--red)) 72%, rgba(255, 255, 255, 0.12)) 7%,
+        color-mix(in srgb, var(--project-accent, var(--red)) 52%, rgba(255, 255, 255, 0.12)) 93%,
+        transparent
+    );
+    box-shadow: 0 0 14px color-mix(in srgb, var(--project-accent, var(--red)) 13%, transparent);
+    transform: translateX(-50%);
 }
 
 .pm-review-step {
@@ -8064,20 +8073,22 @@ header {
     position: absolute;
     z-index: 2;
     top: 7px;
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     border: 2px solid #080c10;
     border-radius: 50%;
     background: var(--project-accent, var(--red));
-    box-shadow: 0 0 0 1px color-mix(in srgb, var(--project-accent, var(--red)) 72%, #fff);
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--project-accent, var(--red)) 72%, #fff),
+        0 0 12px color-mix(in srgb, var(--project-accent, var(--red)) 24%, transparent);
 }
 
 .pm-review-step:nth-child(odd):not(:last-child)::before {
-    right: calc(clamp(24px, 4vw, 52px) / -2 - 5px);
+    right: calc(var(--pm-review-column-gap) / -2 - 5px);
 }
 
 .pm-review-step:nth-child(even)::before {
-    left: calc(clamp(24px, 4vw, 52px) / -2 - 5px);
+    left: calc(var(--pm-review-column-gap) / -2 - 5px);
 }
 
 .pm-review-step:last-child::before {
@@ -8639,7 +8650,7 @@ header {
     .pm-review-flow::before {
         top: 8px;
         bottom: 8px;
-        left: 7px;
+        left: 8px;
     }
 
     .pm-review-step:nth-child(odd):not(:last-child),
