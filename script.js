@@ -389,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
             category: "Site vitrine & parcours de contact · Client",
             year: "2025 - 2026",
             dateLabel: "Création",
-            created: "Juillet 2026",
+            created: "Août 2026",
             role: "Direction artistique & développement full-stack",
             status: "Préproduction",
             accent: "#43dfff",
@@ -444,8 +444,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Envoi transactionnel via Brevo, sans base de données ni cookie pour traiter les demandes.",
                 "Tests PHPUnit des parcours critiques et préparation du déploiement sur l'hébergement de la cliente."
             ],
-            repoLink: "https://github.com/rfielbal/Jessica-Dew-Passion-Photographie",
-            liveLink: null
+            repoLink: null,
+            liveLink: "https://jessicadewerdt.fr",
+            liveLabel: "Voir le site"
         },
         {
             id: 2,
