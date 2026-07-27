@@ -448,7 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
             dateLabel: "Création",
             created: "Août 2026",
             role: "Conception, développement & exploitation",
-            status: "Préproduction",
+            status: "Livré",
             accent: "#43dfff",
             logo: "./images/projects/jessica-dew/logo.png",
             logoAlt: "Monogramme Jessica Dew",
@@ -517,7 +517,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Envoi transactionnel via Brevo, sans base de données ni cookie pour traiter les demandes.",
                 "Configuration complète d'OVHcloud : PHP 8.4, racine web public/, HTTPS, DNS, secrets, droits et caches.",
                 "Mise en production par release avec recette, surveillance, purge des journaux et retour arrière documenté.",
-                "Maintenance continue des contenus, des photographies, des dépendances, de la sécurité et du référencement."
+                "Site livré et maintenance continue des contenus, des photographies, des dépendances, de la sécurité et du référencement."
             ],
             repoLink: null,
             liveLink: "https://jessicadewerdt.fr",
@@ -789,7 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         interaction: {
             accent: "#43dfff",
-            status: "Jessica Dew / préproduction",
+            status: "Jessica Dew / livré",
             index: "03 / 04",
             context: "Client · UX & développement",
             mediaType: "Site photographique complet",
@@ -814,29 +814,29 @@ document.addEventListener("DOMContentLoaded", () => {
             ]
         },
         delivery: {
-            accent: "#43dfff",
-            status: "Wheello / livré",
+            accent: "#ff5f57",
+            status: "Jessica livré · Revaloop alpha",
             index: "04 / 04",
-            context: "Client · Transmission",
-            mediaType: "Livraison client",
-            project: "Wheello",
-            title: "Livrer un produit que d'autres peuvent réellement reprendre.",
-            summary: "La qualité se mesure aussi après le développement\u00a0: sécurité, conformité, documentation et procédure de déploiement font partie du produit.",
-            need: "Remettre une solution exploitable par l'association, avec des données sensibles et plusieurs profils utilisateurs.",
-            decision: "Intégrer tests, rôles, conservation des données, RGPD, documentation et préparation du déploiement dès la conception.",
-            proof: "Guides administrateur et utilisateur, procédure de mise en production, APK, archivage et anonymisation documentés.",
-            techs: ["PHPUnit", "RGPD", "Docker", "Documentation"],
-            image: "./images/projects/wheello/gallery/back-office/bilan-kilometrique.png",
-            imageAlt: "Bilan kilométrique dans le back-office Wheello",
+            context: "Client + produit · Qualité continue",
+            mediaType: "Recette & validation",
+            project: "Revaloop",
+            title: "Mettre la qualité sous contrôle, jusqu'après la mise en ligne.",
+            summary: "Un produit fiable ne se résume pas à une version terminée\u00a0: sa recette, sa sécurité, sa livraison et son exploitation doivent rester maîtrisées.",
+            need: "Livrer Jessica Dew en production tout en structurant, avec Revaloop, une boucle de validation claire entre développeur et client.",
+            decision: "Industrialiser les releases, la recette, le monitoring et le retour arrière côté Jessica\u00a0; versionner les retours, sécuriser les invitations et bloquer l'approbation tant qu'un point reste ouvert côté Revaloop.",
+            proof: "Jessica Dew est déployé et maintenu sur OVHcloud. Revaloop centralise déjà versions, annotations, discussions et décisions dans une alpha à accès contrôlé.",
+            techs: ["Recette versionnée", "Accès sécurisés", "Monitoring", "Rollback"],
+            image: "./images/projects/revaloop/cover.webp",
+            imageAlt: "Tableau de bord de recette du projet Revaloop",
             imagePosition: "center",
-            projectId: "4",
-            action: "Voir la livraison Wheello",
-            role: "Livraison & documentation",
+            projectId: "9",
+            action: "Examiner Revaloop",
+            role: "Qualité produit & exploitation",
             nodes: [
-                { label: "Contrôle", value: "PHPUnit", icon: "fas fa-vial-circle-check" },
-                { label: "Conformité", value: "RGPD", icon: "fas fa-user-shield" },
-                { label: "Déploiement", value: "Docker + APK", icon: "fas fa-box-open" },
-                { label: "Transmission", value: "Documentation", icon: "fas fa-book-open" }
+                { label: "Publier", value: "Release contrôlée", icon: "fas fa-code-branch" },
+                { label: "Inviter", value: "Accès temporaire", icon: "fas fa-user-lock" },
+                { label: "Valider", value: "Retours traçables", icon: "fas fa-list-check" },
+                { label: "Exploiter", value: "Monitoring + rollback", icon: "fas fa-shield-halved" }
             ]
         }
     };
