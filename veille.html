@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Veille technologique de Raphaël Coursier : intelligence artificielle, développement web, interfaces, écosystème Apple et expérimentation produit.">
+    <meta name="theme-color" content="#050709">
+    <link rel="canonical" href="https://rfielbal.fr/veille.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Veille technologique · Raphaël Coursier">
+    <meta property="og:description" content="Des signaux repérés, vérifiés, testés puis transformés en décisions concrètes.">
+    <meta property="og:url" content="https://rfielbal.fr/veille.html">
+    <meta property="og:image" content="https://rfielbal.fr/images/projects/revaloop/cover.webp">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <title>Veille technologique · Raphaël Coursier</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="veille.css?v=20260727">
+    <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="watch-grid" aria-hidden="true"></div>
+    <div class="watch-lines" aria-hidden="true">
+        <i></i>
+        <i></i>
+    </div>
+
+    <header class="watch-header">
+        <nav class="watch-nav" id="watch-nav" aria-label="Navigation principale">
+            <a class="watch-brand" href="index.html#home">
+                <img src="favicon.png" alt="">
+                <span>RAPHAËL COURSIER</span>
+            </a>
+
+            <ul class="watch-nav-links">
+                <li><a href="index.html#manifesto">À propos</a></li>
+                <li><a href="index.html#projects">Projets</a></li>
+                <li><a href="index.html#savoir-faire">Savoir-faire</a></li>
+                <li><a href="#top" class="is-current" aria-current="page">Veille</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+
+            <button class="watch-menu-button" id="watch-menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="watch-mobile-menu">
+                <span>Menu</span>
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+        </nav>
+
+        <div class="watch-mobile-menu" id="watch-mobile-menu" role="dialog" aria-modal="true" aria-label="Menu principal" aria-hidden="true">
+            <button class="watch-menu-close" id="watch-menu-close" type="button" aria-label="Fermer le menu">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                <span>Fermer</span>
+            </button>
+            <nav aria-label="Navigation mobile">
+                <a href="index.html#home">01. Accueil</a>
+                <a href="index.html#manifesto">02. À propos</a>
+                <a href="index.html#projects">03. Projets</a>
+                <a href="index.html#savoir-faire">04. Savoir-faire</a>
+                <a href="#top" aria-current="page">05. Veille</a>
+                <a href="index.html#contact">06. Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="contenu">
+        <section class="watch-hero" id="top" aria-labelledby="watch-title">
+            <div class="watch-container">
+                <div class="watch-hero-meta" data-reveal>
+                    <p><span class="status-light" aria-hidden="true"></span> Veille active</p>
+                    <p>Dernière synthèse · 27 juillet 2026</p>
+                </div>
+
+                <h1 id="watch-title" data-reveal>
+                    VEILLE
+                    <span>TECHNOLOGIQUE</span>
+                </h1>
+
+                <div class="watch-hero-copy" data-reveal>
+                    <p class="watch-hero-lead">
+                        Je ne garde pas un sujet parce qu'il fait du bruit. Je pars d'un signal,
+                        je remonte à la source, je le confronte au réel et je conserve seulement
+                        ce qui améliore une décision, un produit ou ma façon de travailler.
+                    </p>
+                    <dl class="watch-hero-facts">
+                        <div>
+                            <dt>9</dt>
+                            <dd>axes classés dans ma bibliothèque</dd>
+                        </div>
+                        <div>
+                            <dt>3</dt>
+                            <dd>niveaux de validation</dd>
+                        </div>
+                        <div>
+                            <dt>1</dt>
+                            <dd>règle : tester avant d'adopter</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <ol class="watch-cycle" aria-label="Cycle de veille" data-reveal>
+                    <li>
+                        <span>01</span>
+                        <strong>Signal</strong>
+                        <small>Repérer</small>
+                    </li>
+                    <li>
+                        <span>02</span>
+                        <strong>Source</strong>
+                        <small>Vérifier</small>
+                    </li>
+                    <li>
+                        <span>03</span>
+                        <strong>Test</strong>
+                        <small>Expérimenter</small>
+                    </li>
+                    <li>
+                        <span>04</span>
+                        <strong>Décision</strong>
+                        <small>Intégrer ou écarter</small>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="watch-section watch-method" id="methode" aria-labelledby="method-title">
+            <div class="watch-container method-layout">
+                <div class="section-heading method-intro" data-reveal>
+                    <p class="section-kicker">01 / Ma méthode</p>
+                    <h2 id="method-title">DE LA CURIOSITÉ À UNE DÉCISION UTILE.</h2>
+                    <p>
+                        X me sert de radar, pas de vérité. Une annonce, une démonstration ou un
+                        thread déclenche une question ; la documentation, les limites et un essai
+                        personnel déterminent ensuite si l'idée mérite d'entrer dans mon travail.
+                    </p>
+                    <blockquote>
+                        Un repost signale un intérêt. Une veille commence lorsque je cherche
+                        à comprendre, comparer et appliquer.
+                    </blockquote>
+                </div>
+
+                <div class="method-track" id="method-track">
+                    <i class="method-progress" id="method-progress" aria-hidden="true"></i>
+                    <ol>
+                        <li data-method-step data-reveal>
+                            <span>01</span>
+                            <div>
+                                <p>Détection</p>
+                                <h3>Repérer le signal faible</h3>
+                                <p>Annonces d'éditeurs, démonstrations, discussions de développeurs, conférences et ressources partagées alimentent une première file de lecture.</p>
+                            </div>
+                        </li>
+                        <li data-method-step data-reveal>
+                            <span>02</span>
+                            <div>
+                                <p>Qualification</p>
+                                <h3>Revenir à la source primaire</h3>
+                                <p>Je vérifie l'annonce dans la documentation officielle, les notes de version, les standards ou le dépôt d'origine, puis je relève les limites et les prérequis.</p>
+                            </div>
+                        </li>
+                        <li data-method-step data-reveal>
+                            <span>03</span>
+                            <div>
+                                <p>Expérimentation</p>
+                                <h3>Tester dans un contexte maîtrisé</h3>
+                                <p>Prototype isolé, branche dédiée, comparaison avant/après, tests, comportement responsive, sécurité et confidentialité : l'idée doit résister à autre chose qu'une démo.</p>
+                            </div>
+                        </li>
+                        <li data-method-step data-reveal>
+                            <span>04</span>
+                            <div>
+                                <p>Capitalisation</p>
+                                <h3>Transformer l'essai en décision</h3>
+                                <p>J'intègre ce qui apporte une vraie valeur, je documente le choix dans Notion ou le projet, et j'écarte le reste sans forcer une technologie dans le produit.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="watch-section watch-signals" id="signaux" aria-labelledby="signals-title">
+            <div class="watch-container">
+                <div class="section-heading section-heading-wide" data-reveal>
+                    <p class="section-kicker">02 / Sélection récente</p>
+                    <h2 id="signals-title">CE QUE JE SURVEILLE, ET POURQUOI.</h2>
+                    <p>
+                        Cette sélection ne reproduit pas mon fil X. Elle montre les questions
+                        techniques que j'en retire, le niveau de confiance de chaque information
+                        et l'action qui suit.
+                    </p>
+                </div>
+
+                <div class="signal-toolbar" data-reveal>
+                    <div class="signal-filters" role="group" aria-label="Filtrer les sujets de veille">
+                        <button type="button" class="is-active" data-signal-filter="all" aria-pressed="true">Tous</button>
+                        <button type="button" data-signal-filter="ia" aria-pressed="false">IA &amp; agents</button>
+                        <button type="button" data-signal-filter="web" aria-pressed="false">Web &amp; UI</button>
+                        <button type="button" data-signal-filter="apple" aria-pressed="false">Apple</button>
+                        <button type="button" data-signal-filter="outils" aria-pressed="false">Outils</button>
+                    </div>
+                    <p id="signal-count" aria-live="polite">8 signaux affichés</p>
+                </div>
+
+                <div class="signal-grid">
+                    <article class="signal-card signal-card--cyan" data-signal-card data-topics="ia outils" data-reveal>
+                        <header>
+                            <p><i class="fa-brands fa-x-twitter" aria-hidden="true"></i> OpenAI sur X</p>
+                            <time datetime="2026-07-09">09.07.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--tested">Testé dans mes workflows</p>
+                        <h3>Les agents passent de la réponse à l'action.</h3>
+                        <p>
+                            Le signal : des agents annoncés capables d'agir dans des applications,
+                            des fichiers et des tâches longues. La vraie question n'est pas seulement
+                            leur puissance, mais le cadre qui rend leur travail contrôlable.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Permissions, contexte, traces, limites et sécurité.</dd></div>
+                            <div><dt>J'applique</dt><dd>Plan explicite, Git, tests et validation humaine avant livraison.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://x.com/OpenAI/status/2075274271845404744" target="_blank" rel="noopener noreferrer">
+                                Voir le signal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://openai.com/index/running-codex-safely/" target="_blank" rel="noopener noreferrer">
+                                Source officielle
+                            </a>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--acid" data-signal-card data-topics="ia outils" data-reveal>
+                        <header>
+                            <p><i class="fa-solid fa-terminal" aria-hidden="true"></i> Atelier Claude Code</p>
+                            <time datetime="2026-04-26">26.04.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--verified">Documentation croisée</p>
+                        <h3>Apprendre l'outil par un cas complet.</h3>
+                        <p>
+                            Un atelier pratique est plus utile qu'une succession d'astuces. Je
+                            compare les démonstrations aux commandes, modes de permission et
+                            recommandations officielles, puis je reproduis le parcours sur un projet isolé.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>CLI, modes de permission, reprise de contexte et sorties structurées.</dd></div>
+                            <div><dt>J'applique</dt><dd>Expériences courtes, objectif mesurable et contre-vérification du résultat.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://x.com/subvoxAI/status/2048469437309739294" target="_blank" rel="noopener noreferrer">
+                                Voir le signal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer">
+                                Documentation
+                            </a>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--red" data-signal-card data-topics="ia apple outils" data-reveal>
+                        <header>
+                            <p><i class="fa-solid fa-compass" aria-hidden="true"></i> Aside</p>
+                            <time datetime="2026-06-23">23.06.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--watch">Promesses à auditer</p>
+                        <h3>Un navigateur agentique, local et orienté produit.</h3>
+                        <p>
+                            Le produit rapproche interface inspirée de l'écosystème Apple,
+                            navigation par agent et promesse de traitement local chiffré. Ces
+                            arguments m'intéressent, mais restent des déclarations éditeur tant
+                            que l'architecture et les flux réseau ne sont pas vérifiés.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Politique de données, permissions, stockage et appels distants.</dd></div>
+                            <div><dt>J'observe</dt><dd>La manière dont l'IA est intégrée sans effacer l'interface.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://x.com/hyojun_at/status/2069497198879048131" target="_blank" rel="noopener noreferrer">
+                                Voir le signal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <span>Signal secondaire</span>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--cyan" data-signal-card data-topics="ia web" data-reveal>
+                        <header>
+                            <p><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Design assisté par LLM</p>
+                            <time datetime="2026-07-26">26.07.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--tested">Exploration active</p>
+                        <h3>L'IA comme partenaire d'exploration, pas comme directeur artistique.</h3>
+                        <p>
+                            Les modèles peuvent accélérer les variantes, la recherche de structure
+                            et la formalisation d'un design system. Je garde cependant les décisions
+                            de hiérarchie, de marque, d'accessibilité et de cohérence côté humain.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Contraste, adaptation mobile, composants, états et performance réelle.</dd></div>
+                            <div><dt>J'applique</dt><dd>Plusieurs pistes comparées, puis une direction assumée et nettoyée.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://x.com/iFeyz2/status/2081445104506519752" target="_blank" rel="noopener noreferrer">
+                                Voir la discussion <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <span>Signal communautaire</span>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--acid" data-signal-card data-topics="web outils" data-reveal>
+                        <header>
+                            <p><i class="fa-solid fa-wave-square" aria-hidden="true"></i> Motion web</p>
+                            <time datetime="2026-07-02">02.07.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--tested">Prototype isolé</p>
+                        <h3>Comprendre l'effet avant de le réutiliser.</h3>
+                        <p>
+                            Une animation impressionnante devient pertinente lorsqu'elle soutient
+                            une transition, un retour d'état ou une hiérarchie. Je remonte au code,
+                            isole le principe et vérifie son comportement sur mobile et avec
+                            <code>prefers-reduced-motion</code>.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Coût de rendu, continuité, focus et réduction des mouvements.</dd></div>
+                            <div><dt>J'écarte</dt><dd>Tout effet qui ralentit la lecture ou masque une interaction.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://x.com/iFeyz2/status/2072691442456162547" target="_blank" rel="noopener noreferrer">
+                                Voir la ressource <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <span>Code à examiner</span>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--red" data-signal-card data-topics="apple ia outils" data-reveal>
+                        <header>
+                            <p><i class="fa-brands fa-apple" aria-hidden="true"></i> Apple Developer</p>
+                            <time datetime="2026-06-08">08–12.06.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--verified">Source officielle</p>
+                        <h3>WWDC : plateformes, intelligence et qualité d'expérience.</h3>
+                        <p>
+                            Je suis l'écosystème Apple au-delà des annonces grand public :
+                            SwiftUI, Safari, accessibilité, confidentialité, performance et
+                            intelligence de code sont autant de signaux sur la manière dont les
+                            usages et les outils de développement évoluent.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Sessions développeurs, documentation et disponibilité réelle des API.</dd></div>
+                            <div><dt>Je relie</dt><dd>Les choix de plateforme aux contraintes web, desktop et mobile.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://developer.apple.com/wwdc26/" target="_blank" rel="noopener noreferrer">
+                                Explorer WWDC26 <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <span>Apple Developer</span>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--cyan" data-signal-card data-topics="web" data-reveal>
+                        <header>
+                            <p><i class="fa-brands fa-firefox-browser" aria-hidden="true"></i> MDN Web Docs</p>
+                            <time datetime="2026-07-27">Référence continue</time>
+                        </header>
+                        <p class="signal-state signal-state--verified">Source de référence</p>
+                        <h3>La performance fait partie de l'expérience.</h3>
+                        <p>
+                            Temps de chargement, réponse aux interactions, fluidité du scroll,
+                            poids des médias et perception utilisateur se mesurent. MDN me sert de
+                            base pour distinguer une interface spectaculaire d'une interface
+                            réellement efficace.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Chargement, rendu, médias, JavaScript et confort de navigation.</dd></div>
+                            <div><dt>J'applique</dt><dd>Images adaptées, mouvements sobres et fonctionnalités progressives.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/Performance" target="_blank" rel="noopener noreferrer">
+                                Lire la référence <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <span>Référence technique</span>
+                        </footer>
+                    </article>
+
+                    <article class="signal-card signal-card--acid" data-signal-card data-topics="outils web" data-reveal>
+                        <header>
+                            <p><i class="fa-brands fa-github" aria-hidden="true"></i> Présentation open source</p>
+                            <time datetime="2026-05-21">21.05.2026</time>
+                        </header>
+                        <p class="signal-state signal-state--watch">À expérimenter</p>
+                        <h3>Un dépôt doit aussi expliquer le produit.</h3>
+                        <p>
+                            Une animation dans un README peut attirer l'attention, mais la priorité
+                            reste la compréhension : promesse, installation, captures utiles,
+                            limites et état du projet. La forme doit renforcer la preuve, pas la remplacer.
+                        </p>
+                        <dl class="signal-decision">
+                            <div><dt>Je vérifie</dt><dd>Compatibilité GitHub, poids, lisibilité et solution de repli.</dd></div>
+                            <div><dt>J'applique</dt><dd>Une documentation centrée sur l'usage et la reproductibilité.</dd></div>
+                        </dl>
+                        <footer>
+                            <a href="https://x.com/LottieFiles/status/2057280288997384685" target="_blank" rel="noopener noreferrer">
+                                Voir le signal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                            </a>
+                            <span>Présentation technique</span>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="watch-section watch-impact" id="impact" aria-labelledby="impact-title">
+            <div class="watch-container">
+                <div class="section-heading section-heading-wide" data-reveal>
+                    <p class="section-kicker">03 / Du signal au produit</p>
+                    <h2 id="impact-title">LA VEILLE LAISSE DES TRACES DANS LE CODE.</h2>
+                    <p>
+                        Je ne mesure pas ma veille au nombre de liens sauvegardés, mais aux choix
+                        qu'elle rend plus précis. Voici trois endroits où cette méthode devient visible.
+                    </p>
+                </div>
+            </div>
+
+            <article class="impact-story" data-reveal>
+                <div class="impact-visual">
+                    <img src="images/projects/revaloop/cover.webp" alt="Interface de revue client de Revaloop" loading="lazy">
+                    <p>Revaloop · Produit en développement</p>
+                </div>
+                <div class="impact-copy">
+                    <p class="impact-index">CAS 01 · IA, sécurité &amp; gouvernance</p>
+                    <h3>ENCADRER L'AGENT, PAS SEULEMENT L'UTILISER.</h3>
+                    <p>
+                        Ma veille sur les agents de développement nourrit surtout une question de
+                        contrôle. Dans Revaloop, cela se traduit par des versions identifiables,
+                        des invitations temporaires, des retours traçables et une approbation
+                        impossible tant qu'un point reste ouvert.
+                    </p>
+                    <ul>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Accès limités, révocables et explicitement autorisés.</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Décisions client conservées avec la version concernée.</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Fonctions terminées et prochaines étapes clairement séparées.</li>
+                    </ul>
+                    <a href="index.html#projects">Voir Revaloop dans les projets <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <article class="impact-story impact-story--reverse" data-reveal>
+                <div class="impact-visual">
+                    <img src="images/projects/responsiver/cover.webp" alt="Studio multi-écrans de Responsiver" loading="lazy">
+                    <p>Responsiver · Application desktop</p>
+                </div>
+                <div class="impact-copy">
+                    <p class="impact-index">CAS 02 · Local-first &amp; validation</p>
+                    <h3>REMPLACER L'INTUITION PAR UNE RÉGRESSION REPRODUCTIBLE.</h3>
+                    <p>
+                        Les outils repérés dans ma veille ne sont intéressants que s'ils rendent
+                        le diagnostic plus fiable. Responsiver garde les sources sur la machine,
+                        compare plusieurs écrans et transforme une correction visuelle en scénario
+                        vérifiable sur plusieurs routes, tailles et états.
+                    </p>
+                    <ul>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Sources locales et propositions réversibles.</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Comparaison avant/après avant toute écriture.</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Matrice Playwright pour limiter les régressions.</li>
+                    </ul>
+                    <a href="index.html#projects">Voir Responsiver dans les projets <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+
+            <article class="impact-story" data-reveal>
+                <div class="impact-visual">
+                    <img src="images/projects/jessica-dew/cover.webp" alt="Page d'accueil du site Jessica Dew Passion Photographie" loading="lazy">
+                    <p>Jessica Dew · Site client livré</p>
+                </div>
+                <div class="impact-copy">
+                    <p class="impact-index">CAS 03 · UI, sécurité &amp; exploitation</p>
+                    <h3>FAIRE DE L'INSPIRATION UN PRODUIT MAINTENU.</h3>
+                    <p>
+                        Les bibliothèques UI et les références visuelles élargissent les pistes ;
+                        elles ne décident pas à la place de la marque. Le site Jessica Dew associe
+                        ainsi une direction éditoriale propre à un formulaire sécurisé, une
+                        configuration OVHcloud maîtrisée et une procédure de mise en ligne réversible.
+                    </p>
+                    <ul>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Identité visuelle adaptée au métier de la cliente.</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Validation serveur, anti-abus et envoi SMTP authentifié.</li>
+                        <li><i class="fa-solid fa-check" aria-hidden="true"></i> Recette, surveillance et retour arrière après livraison.</li>
+                    </ul>
+                    <a href="index.html#projects">Voir Jessica Dew dans les projets <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </article>
+        </section>
+
+        <section class="watch-section watch-sources" id="sources" aria-labelledby="sources-title">
+            <div class="watch-container">
+                <div class="section-heading section-heading-wide" data-reveal>
+                    <p class="section-kicker">04 / Fiabilité</p>
+                    <h2 id="sources-title">TOUTES LES SOURCES N'ONT PAS LE MÊME POIDS.</h2>
+                    <p>
+                        Je garde une hiérarchie simple pour ne pas confondre découverte,
+                        confirmation et preuve d'usage.
+                    </p>
+                </div>
+
+                <ol class="source-levels">
+                    <li data-reveal>
+                        <span>01</span>
+                        <p>Radar</p>
+                        <h3>Signal public</h3>
+                        <p>X, conférence, vidéo, article expert ou dépôt repéré. Utile pour découvrir vite, insuffisant pour conclure.</p>
+                    </li>
+                    <li data-reveal>
+                        <span>02</span>
+                        <p>Contrôle</p>
+                        <h3>Source primaire</h3>
+                        <p>Documentation officielle, note de version, standard, code d'origine ou politique de sécurité.</p>
+                    </li>
+                    <li data-reveal>
+                        <span>03</span>
+                        <p>Preuve</p>
+                        <h3>Test personnel</h3>
+                        <p>Prototype, logs, mesures, tests et observation sur mobile ou dans un vrai parcours projet.</p>
+                    </li>
+                </ol>
+
+                <div class="official-sources" data-reveal>
+                    <p>Références de confiance suivies</p>
+                    <div>
+                        <a href="https://openai.com/index/introducing-the-codex-app/" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-code" aria-hidden="true"></i>
+                            <span><strong>OpenAI</strong><small>Agents &amp; Codex</small></span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-terminal" aria-hidden="true"></i>
+                            <span><strong>Anthropic</strong><small>Claude Code</small></span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://developer.apple.com/wwdc26/" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-apple" aria-hidden="true"></i>
+                            <span><strong>Apple Developer</strong><small>Plateformes &amp; WWDC</small></span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://developer.mozilla.org/en-US/" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-brands fa-firefox-browser" aria-hidden="true"></i>
+                            <span><strong>MDN</strong><small>Référence web</small></span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="watch-section watch-library" id="bibliotheque" aria-labelledby="library-title">
+            <div class="watch-container library-layout">
+                <div class="section-heading" data-reveal>
+                    <p class="section-kicker">05 / Capitalisation</p>
+                    <h2 id="library-title">UNE BIBLIOTHÈQUE DE TRAVAIL, PAS UN CIMETIÈRE DE LIENS.</h2>
+                    <p>
+                        Ma base Notion classe les ressources par usage. Je peux ainsi retrouver une
+                        référence au moment d'un besoin précis, compléter une note et supprimer ce
+                        qui n'apporte plus rien.
+                    </p>
+                    <p class="library-note">
+                        Les signets privés et les notes brutes restent dans mon espace de travail.
+                        Cette page n'en publie que la synthèse utile et les sources publiques.
+                    </p>
+                </div>
+
+                <div class="library-console" data-reveal>
+                    <div class="library-console-head">
+                        <span></span><span></span><span></span>
+                        <p>ressources://veille</p>
+                    </div>
+                    <div class="library-topics" aria-label="Axes de classement">
+                        <span>Inspirations</span>
+                        <span>Développement &amp; outils</span>
+                        <span>Documentation</span>
+                        <span>Design &amp; UI</span>
+                        <span>Animation &amp; effets</span>
+                        <span>Apprentissage</span>
+                        <span>Bibliothèque</span>
+                        <span>Intelligence artificielle</span>
+                        <span>Produit &amp; économie</span>
+                    </div>
+                    <ul class="library-links">
+                        <li><a href="https://developer.mozilla.org/" target="_blank" rel="noopener noreferrer"><span>MDN Web Docs</span><small>Documentation web</small><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+                        <li><a href="https://refactoring.guru/fr/design-patterns" target="_blank" rel="noopener noreferrer"><span>Refactoring.Guru</span><small>Design patterns</small><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+                        <li><a href="https://threejs.org/" target="_blank" rel="noopener noreferrer"><span>Three.js</span><small>3D dans le navigateur</small><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+                        <li><a href="https://excalidraw.com/" target="_blank" rel="noopener noreferrer"><span>Excalidraw</span><small>Architecture visuelle</small><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+                        <li><a href="https://roadmap.sh/full-stack" target="_blank" rel="noopener noreferrer"><span>roadmap.sh</span><small>Parcours full-stack</small><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="watch-closing" aria-labelledby="closing-title">
+            <div class="watch-container" data-reveal>
+                <p>// La curiosité ouvre une piste. La preuve décide si elle reste.</p>
+                <h2 id="closing-title">UNE TECHNOLOGIE N'A DE VALEUR QUE LORSQU'ELLE AMÉLIORE LE PRODUIT.</h2>
+                <div>
+                    <a class="button-primary" href="index.html#projects">Voir les projets <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    <a class="button-secondary" href="mailto:contact@rfielbal.fr">Échanger avec moi <i class="fa-solid fa-envelope" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="watch-footer">
+        <div class="watch-container">
+            <p>© Raphaël Coursier · 2026</p>
+            <div>
+                <a href="https://x.com/Umbraphi" target="_blank" rel="noopener noreferrer" aria-label="Profil X de Raphaël Coursier"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>
+                <a href="https://github.com/rfielbal" target="_blank" rel="noopener noreferrer" aria-label="Profil GitHub de Raphaël Coursier"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/raphaël-coursier" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn de Raphaël Coursier"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+            </div>
+            <a href="index.html#contact">Contact &amp; mentions légales</a>
+        </div>
+    </footer>
+
+    <script src="veille.js?v=20260727"></script>
+</body>
+</html>

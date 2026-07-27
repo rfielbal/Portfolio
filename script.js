@@ -1263,8 +1263,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "/help": {
                 lines: [
                     "Je peux répondre comme un mini assistant de portfolio.",
-                    "Commandes: /about, /skills, /projects, /revaloop, /responsiver, /minecraft, /formation, /personality, /goals, /contact, /cv, /clear.",
-                    "Tu peux aussi écrire: qui es-tu, quels projets, quelle stack, objectif, contact..."
+                    "Commandes: /about, /skills, /projects, /revaloop, /responsiver, /minecraft, /formation, /veille, /personality, /goals, /contact, /cv, /clear.",
+                    "Tu peux aussi écrire: qui es-tu, quels projets, quelle stack, quelle veille, objectif, contact..."
                 ]
             },
             "/about": {
@@ -1322,6 +1322,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Point de départ: baccalauréat obtenu avec mention assez bien au lycée La Malassise en juillet 2023."
                 ],
                 action: { label: "Voir mon parcours", target: "#journey-timeline" }
+            },
+            "/veille": {
+                lines: [
+                    "Ma veille couvre l'IA et les agents, le développement web, les interfaces, l'écosystème Apple et les outils de conception.",
+                    "Je pars de signaux repérés sur X ou dans ma bibliothèque Notion, puis je remonte aux sources officielles avant de tester l'idée dans un contexte maîtrisé.",
+                    "La page dédiée montre la méthode, les sujets récents et leur impact concret sur Revaloop, Responsiver et Jessica Dew."
+                ],
+                action: { label: "Ouvrir la veille technologique", href: "./veille.html" }
             },
             "/personality": {
                 lines: [
@@ -1398,6 +1406,11 @@ document.addEventListener("DOMContentLoaded", () => {
             "/école": "/formation",
             "/formation scolaire": "/formation",
             "/parcours": "/formation",
+            "/veille": "/veille",
+            "/veille techno": "/veille",
+            "/veille technologique": "/veille",
+            "/quelle veille": "/veille",
+            "/technologie": "/veille",
             "/personnalite": "/personality",
             "/personnalité": "/personality",
             "/qualites": "/personality",
@@ -1503,7 +1516,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!entry) {
                 appendLine("error", `Commande inconnue: ${command}`);
-                appendLine("response", "Essaie /help, /about, /skills, /projects, /revaloop, /responsiver ou /contact.");
+                appendLine("response", "Essaie /help, /about, /skills, /projects, /veille, /revaloop, /responsiver ou /contact.");
                 return;
             }
 
