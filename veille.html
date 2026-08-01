@@ -21,13 +21,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="veille.css?v=ux-editorial-20260802">
+    <link rel="stylesheet" href="veille.css?v=ux-unified-20260802">
     <script>
         document.documentElement.classList.add("js");
     </script>
 </head>
 <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-follower" id="cursor-follower" aria-hidden="true"></div>
 
     <div class="watch-grid" aria-hidden="true"></div>
     <div class="watch-lines" aria-hidden="true">
@@ -94,28 +97,6 @@
                     </p>
                 </div>
 
-                <ol class="watch-cycle" aria-label="Cycle de veille" data-reveal>
-                    <li>
-                        <span>01</span>
-                        <strong>Signal</strong>
-                        <small>Repérer</small>
-                    </li>
-                    <li>
-                        <span>02</span>
-                        <strong>Source</strong>
-                        <small>Vérifier</small>
-                    </li>
-                    <li>
-                        <span>03</span>
-                        <strong>Test</strong>
-                        <small>Expérimenter</small>
-                    </li>
-                    <li>
-                        <span>04</span>
-                        <strong>Décision</strong>
-                        <small>Intégrer ou écarter</small>
-                    </li>
-                </ol>
             </div>
         </section>
 
@@ -195,7 +176,7 @@
                         <button type="button" data-signal-filter="apple" aria-pressed="false">Apple</button>
                         <button type="button" data-signal-filter="outils" aria-pressed="false">Outils</button>
                     </div>
-                    <p id="signal-count" aria-live="polite">8 signaux affichés</p>
+                    <p id="signal-count" aria-live="polite">7 signaux affichés</p>
                 </div>
 
                 <div class="signal-grid">
@@ -221,32 +202,6 @@
                             </a>
                             <a href="https://openai.com/index/running-codex-safely/" target="_blank" rel="noopener noreferrer">
                                 Source officielle
-                            </a>
-                        </footer>
-                    </article>
-
-                    <article class="signal-card signal-card--acid" data-signal-card data-topics="ia outils" data-reveal>
-                        <header>
-                            <p><i class="fa-solid fa-terminal" aria-hidden="true"></i> Atelier Claude Code</p>
-                            <time datetime="2026-04-26">26.04.2026</time>
-                        </header>
-                        <p class="signal-state signal-state--verified">Documentation croisée</p>
-                        <h3>Apprendre l'outil par un cas complet.</h3>
-                        <p>
-                            Un atelier pratique est plus utile qu'une succession d'astuces. Je
-                            compare les démonstrations aux commandes, modes de permission et
-                            recommandations officielles, puis je reproduis le parcours sur un projet isolé.
-                        </p>
-                        <dl class="signal-decision">
-                            <div><dt>Je vérifie</dt><dd>CLI, modes de permission, reprise de contexte et sorties structurées.</dd></div>
-                            <div><dt>J'applique</dt><dd>Expériences courtes, objectif mesurable et contre-vérification du résultat.</dd></div>
-                        </dl>
-                        <footer>
-                            <a href="https://x.com/subvoxAI/status/2048469437309739294" target="_blank" rel="noopener noreferrer">
-                                Voir le signal <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                            </a>
-                            <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer">
-                                Documentation
                             </a>
                         </footer>
                     </article>
@@ -611,6 +566,6 @@
     </footer>
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
-    <script src="veille.js?v=ux-polish-20260801"></script>
+    <script src="veille.js?v=ux-unified-20260802"></script>
 </body>
 </html>

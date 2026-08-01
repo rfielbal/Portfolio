@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const root = document.documentElement;
     const body = document.body;
+    const skipLink = document.querySelector(".skip-link");
     const nav = document.getElementById("watch-nav");
     const menu = document.getElementById("watch-mobile-menu");
     const menuButton = document.getElementById("watch-menu-button");
@@ -13,9 +15,114 @@ document.addEventListener("DOMContentLoaded", () => {
     const pageMain = document.querySelector("main");
     const pageFooter = document.querySelector(".watch-footer");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const cursor = document.getElementById("cursor");
+    const follower = document.getElementById("cursor-follower");
 
     let previousFocus = null;
     let scrollFrame = null;
+
+    const clearRestoredSkipFocus = () => {
+        if (document.activeElement === skipLink && !root.classList.contains("keyboard-navigation")) {
+            skipLink.blur();
+        }
+    };
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Tab") {
+            root.classList.add("keyboard-navigation");
+        }
+    }, { capture: true });
+
+    document.addEventListener("pointerdown", () => {
+        root.classList.remove("keyboard-navigation");
+    }, { capture: true, passive: true });
+
+    document.addEventListener("click", (event) => {
+        const homeSectionLink = event.target.closest?.('a[href^="index.html#"]');
+        if (!homeSectionLink) return;
+
+        try {
+            sessionStorage.setItem("rfielbal:skip-next-preloader:v1", "1");
+        } catch {
+            /* Le stockage de session peut être bloqué en navigation privée. */
+        }
+    }, { capture: true });
+
+    window.addEventListener("pageshow", () => {
+        requestAnimationFrame(clearRestoredSkipFocus);
+    });
+    requestAnimationFrame(clearRestoredSkipFocus);
+
+    if (cursor && follower && isFinePointer && !reducedMotion) {
+        root.classList.add("watch-cursor-enabled");
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let followerX = mouseX;
+        let followerY = mouseY;
+        let cursorFrame = null;
+        let lastCursorTimestamp = 0;
+
+        const renderCursor = (timestamp) => {
+            cursorFrame = null;
+            const deltaSeconds = lastCursorTimestamp
+                ? Math.min(0.05, (timestamp - lastCursorTimestamp) / 1000)
+                : 1 / 60;
+            const followAlpha = 1 - Math.exp(-10.5 * deltaSeconds);
+            lastCursorTimestamp = timestamp;
+            followerX += (mouseX - followerX) * followAlpha;
+            followerY += (mouseY - followerY) * followAlpha;
+
+            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
+
+            if (Math.abs(mouseX - followerX) > 0.1 || Math.abs(mouseY - followerY) > 0.1) {
+                cursorFrame = requestAnimationFrame(renderCursor);
+            } else {
+                lastCursorTimestamp = 0;
+            }
+        };
+
+        const scheduleCursor = () => {
+            if (!cursorFrame && !document.hidden) {
+                cursorFrame = requestAnimationFrame(renderCursor);
+            }
+        };
+
+        window.addEventListener("mousemove", (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            scheduleCursor();
+        }, { passive: true });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden && cursorFrame) {
+                cancelAnimationFrame(cursorFrame);
+                cursorFrame = null;
+                return;
+            }
+
+            scheduleCursor();
+        });
+
+        const isInteractive = (element) => Boolean(element?.closest("a, button"));
+
+        document.addEventListener("pointerover", (event) => {
+            if (isInteractive(event.target)) {
+                body.classList.add("hovering");
+            }
+        });
+
+        document.addEventListener("pointerout", (event) => {
+            if (!isInteractive(event.target)) return;
+            if (!isInteractive(event.relatedTarget)) {
+                body.classList.remove("hovering");
+            }
+        });
+
+        scheduleCursor();
+    }
 
     const getMenuFocusable = () => {
         if (!menu) return [];

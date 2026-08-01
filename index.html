@@ -13,11 +13,51 @@
             root.classList.add("js");
 
             const navigation = performance.getEntriesByType?.("navigation")?.[0];
-            const isHistoryRestore = navigation?.type === "back_forward";
-            const shouldPlayPreloader = !window.location.hash && !isHistoryRestore;
+            const legacyNavigationType = performance.navigation?.type;
+            const navigationType = navigation?.type
+                || (legacyNavigationType === 1
+                    ? "reload"
+                    : legacyNavigationType === 2
+                        ? "back_forward"
+                        : "navigate");
+            const isReload = navigationType === "reload";
+            const isHistoryRestore = navigationType === "back_forward";
+            const oneShotSkipKey = "rfielbal:skip-next-preloader:v1";
+            let shouldSkipOnce = false;
+            let referrerUrl = null;
+
+            try {
+                shouldSkipOnce = window.sessionStorage.getItem(oneShotSkipKey) === "1";
+                if (shouldSkipOnce) window.sessionStorage.removeItem(oneShotSkipKey);
+            } catch {
+                shouldSkipOnce = false;
+            }
+
+            try {
+                referrerUrl = document.referrer ? new URL(document.referrer) : null;
+            } catch {
+                referrerUrl = null;
+            }
+
+            const isWatchReturn = Boolean(
+                window.location.hash
+                && referrerUrl?.origin === window.location.origin
+                && /\/veille(?:\.html)?\/?$/i.test(referrerUrl.pathname)
+            );
+            const shouldPlayPreloader = isReload || (!isHistoryRestore && !shouldSkipOnce && !isWatchReturn);
 
             window.__portfolioShouldPlayPreloader = shouldPlayPreloader;
+            window.__portfolioPreloaderReason = isReload
+                ? "reload"
+                : isHistoryRestore
+                    ? "history"
+                    : shouldSkipOnce
+                        ? "one-shot-skip"
+                        : isWatchReturn
+                            ? "watch-return"
+                            : "entry";
             root.classList.toggle("preloader-skip", !shouldPlayPreloader);
+            root.dataset.preloaderMode = window.__portfolioPreloaderReason;
         })();
 
         window.setTimeout(() => {
@@ -34,15 +74,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=ux-final-20260802">
+    <link rel="stylesheet" href="style.css?v=ux-loader-20260802">
     <link rel="stylesheet" href="cinematic.css?v=ux-final-20260802">
 </head>
 <body>
     <div class="preloader" id="preloader" aria-hidden="true">
-        <p class="preloader-tag">Chargement du portfolio</p>
-        <p class="preloader-counter" id="preloader-counter">0</p>
-        <div class="preloader-line" aria-hidden="true">
-            <span id="preloader-fill"></span>
+        <div class="preloader-panel">
+            <p class="preloader-brand"><strong>RC</strong><span>// PORTFOLIO</span></p>
+            <p class="preloader-tag">Initialisation de l’expérience</p>
+            <div class="preloader-readout">
+                <p class="preloader-counter" id="preloader-counter">0</p>
+                <span aria-hidden="true">%</span>
+            </div>
+            <div class="preloader-line" aria-hidden="true">
+                <span id="preloader-fill"></span>
+            </div>
+            <p class="preloader-status"><i aria-hidden="true"></i> Chargement du portfolio</p>
         </div>
     </div>
 
@@ -1064,7 +1111,7 @@
                         <p>BTS SIO - 1ère Année</p>
                     </div>
                     <a href="./documents/bulletins-public/bts-sio-semestre-1.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
-                        Voir le bulletin anonymisé <i class="fas fa-file-pdf"></i>
+                        Voir le bulletin <i class="fas fa-file-pdf"></i>
                     </a>
                 </div>
 
@@ -1074,7 +1121,7 @@
                         <p>BTS SIO - 1ère Année</p>
                     </div>
                     <a href="./documents/bulletins-public/bts-sio-semestre-2.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
-                        Voir le bulletin anonymisé <i class="fas fa-file-pdf"></i>
+                        Voir le bulletin <i class="fas fa-file-pdf"></i>
                     </a>
                 </div>
 
@@ -1091,7 +1138,7 @@
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
     <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=ux-final-20260802"></script>
+    <script src="script.js?v=ux-loader-20260802"></script>
     <script src="cinematic.js?v=ux-refine-20260801"></script>
 </body>
 </html>

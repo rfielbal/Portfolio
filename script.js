@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const preloader = document.getElementById("preloader");
     const preloaderCounter = document.getElementById("preloader-counter");
     const preloaderFill = document.getElementById("preloader-fill");
-    let preloaderInterval = null;
+    let preloaderFrame = null;
     let preloaderExitTimer = null;
     let preloaderHideTimer = null;
 
@@ -1090,18 +1090,32 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const clearPreloaderTimers = () => {
-        if (preloaderInterval !== null) window.clearInterval(preloaderInterval);
+        if (preloaderFrame !== null) window.cancelAnimationFrame(preloaderFrame);
         if (preloaderExitTimer !== null) window.clearTimeout(preloaderExitTimer);
         if (preloaderHideTimer !== null) window.clearTimeout(preloaderHideTimer);
-        preloaderInterval = null;
+        preloaderFrame = null;
         preloaderExitTimer = null;
         preloaderHideTimer = null;
     };
 
+    const setPreloaderProgress = (value) => {
+        const progress = Math.max(0, Math.min(100, Math.round(value)));
+        preloaderCounter.textContent = String(progress);
+        preloaderFill.style.width = `${progress}%`;
+    };
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Tab" && body.classList.contains("preloader-active")) {
+            event.preventDefault();
+        }
+    }, { capture: true });
+
     const hidePreloader = ({ immediate = false } = {}) => {
         if (!preloader) return;
         clearPreloaderTimers();
+        body.classList.remove("preloader-active");
         preloader.classList.add("hide");
+        preloader.dataset.state = immediate ? "hidden" : "exiting";
 
         if (immediate) {
             preloader.hidden = true;
@@ -1110,6 +1124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         preloaderHideTimer = window.setTimeout(() => {
             preloader.hidden = true;
+            preloader.dataset.state = "hidden";
             preloaderHideTimer = null;
         }, 720);
     };
@@ -1117,29 +1132,51 @@ document.addEventListener("DOMContentLoaded", () => {
     const runPreloader = () => {
         if (!preloader || !preloaderCounter || !preloaderFill) return;
 
-        if (window.__portfolioShouldPlayPreloader !== true || prefersReducedMotion) {
-            preloaderCounter.textContent = "100";
-            preloaderFill.style.width = "100%";
+        if (
+            window.__portfolioShouldPlayPreloader !== true
+            || document.documentElement.classList.contains("js-failed-open")
+        ) {
+            setPreloaderProgress(100);
             hidePreloader({ immediate: true });
             return;
         }
 
-        let count = 0;
-        preloaderInterval = window.setInterval(() => {
-            count += Math.floor(Math.random() * 10) + 2;
-            if (count > 100) count = 100;
+        preloader.hidden = false;
+        preloader.classList.remove("hide");
+        preloader.dataset.state = "running";
+        body.classList.add("preloader-active");
+        setPreloaderProgress(0);
 
-            preloaderCounter.textContent = String(count);
-            preloaderFill.style.width = `${count}%`;
+        if (prefersReducedMotion) {
+            setPreloaderProgress(100);
+            preloaderExitTimer = window.setTimeout(() => hidePreloader(), 560);
+            return;
+        }
 
-            if (count === 100) {
-                window.clearInterval(preloaderInterval);
-                preloaderInterval = null;
-                preloaderExitTimer = window.setTimeout(() => {
-                    hidePreloader();
-                }, 280);
+        const duration = 1080;
+        const startTime = performance.now();
+        let renderedProgress = -1;
+
+        const renderProgress = (timestamp) => {
+            const elapsedRatio = Math.min(1, (timestamp - startTime) / duration);
+            const easedRatio = 1 - Math.pow(1 - elapsedRatio, 2.35);
+            const nextProgress = elapsedRatio >= 1 ? 100 : Math.floor(easedRatio * 99);
+
+            if (nextProgress !== renderedProgress) {
+                renderedProgress = nextProgress;
+                setPreloaderProgress(nextProgress);
             }
-        }, 48);
+
+            if (elapsedRatio < 1) {
+                preloaderFrame = window.requestAnimationFrame(renderProgress);
+                return;
+            }
+
+            preloaderFrame = null;
+            preloaderExitTimer = window.setTimeout(() => hidePreloader(), 220);
+        };
+
+        preloaderFrame = window.requestAnimationFrame(renderProgress);
     };
 
     window.addEventListener("pageshow", (event) => {
