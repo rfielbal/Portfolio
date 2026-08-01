@@ -331,21 +331,28 @@ header {
 }
 
 .fs-links {
+    width: min(100%, 760px);
+    display: grid;
+    justify-items: center;
+    gap: clamp(5px, 0.7vh, 9px);
+    padding: 72px 24px 32px;
     list-style: none;
     text-align: center;
 }
 
 .fs-links li + li {
-    margin-top: 12px;
+    margin-top: 0;
 }
 
 .fs-links a {
+    display: block;
     color: transparent;
     text-decoration: none;
     font-family: var(--font-head);
     text-transform: uppercase;
     letter-spacing: 0.02em;
-    font-size: clamp(2.2rem, 7vw, 5rem);
+    font-size: clamp(2.35rem, 4.7vw, 4.35rem);
+    line-height: 1.06;
     -webkit-text-stroke: 1px var(--text);
     transition: color 0.25s ease, -webkit-text-stroke 0.25s ease, transform 0.25s ease;
 }
@@ -355,7 +362,51 @@ header {
 .fs-links a.active {
     color: var(--acid);
     -webkit-text-stroke: 0 transparent;
-    transform: scale(1.04);
+    transform: scale(1.025);
+}
+
+.fs-links a:focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 6px;
+    border-radius: 3px;
+}
+
+@media (max-width: 760px) {
+    .fs-menu {
+        padding: max(68px, env(safe-area-inset-top)) 14px max(20px, env(safe-area-inset-bottom));
+    }
+
+    .fs-links {
+        width: 100%;
+        gap: 4px;
+        padding: 0 10px;
+    }
+
+    .fs-links a {
+        font-size: clamp(1.9rem, 10.2vw, 2.65rem);
+        line-height: 1.08;
+    }
+
+    .fs-links a:hover,
+    .fs-links a:focus-visible,
+    .fs-links a.active {
+        transform: none;
+    }
+
+    .close-fs-menu {
+        top: max(18px, env(safe-area-inset-top));
+        right: max(18px, env(safe-area-inset-right));
+    }
+}
+
+@media (max-width: 760px) and (max-height: 440px) {
+    .fs-links {
+        max-height: calc(100svh - 88px);
+        padding-block: 8px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+    }
 }
 
 .story-rail {
@@ -3013,8 +3064,8 @@ header {
     --acid-soft: #e2ff68;
     --cyan: #43dfff;
     --violet: #9b7cff;
-    --personal: var(--violet);
-    --personal-rgb: 155, 124, 255;
+    --personal: #ff5f57;
+    --personal-rgb: 255, 95, 87;
     --gold: #ffc95f;
     --gray: rgba(255, 255, 255, 0.14);
     --line: rgba(255, 255, 255, 0.12);
@@ -6292,6 +6343,10 @@ header {
     --lanyard-x: 0px;
     --lanyard-y: 0px;
     --lanyard-swing: 0deg;
+    --lanyard-release-x: 42px;
+    --lanyard-release-y: -18px;
+    --lanyard-reveal-x: 38px;
+    --lanyard-reveal-y: -12px;
     --lanyard-release-angle: 52deg;
     --lanyard-back-angle: -38deg;
     --lanyard-return-angle: 13deg;
@@ -6312,7 +6367,7 @@ header {
     position: relative;
     width: min(100%, 320px);
     opacity: 0;
-    transform: translate3d(42px, -18px, 0) rotate(var(--lanyard-release-angle));
+    transform: translate3d(var(--lanyard-release-x), var(--lanyard-release-y), 0) rotate(var(--lanyard-release-angle));
     transform-origin: 50% 0;
 }
 
@@ -6350,14 +6405,7 @@ header {
 }
 
 .lanyard-cord::after {
-    content: "";
-    position: absolute;
-    right: 1px;
-    top: 42%;
-    width: 2px;
-    height: 22px;
-    border-radius: 2px;
-    background: var(--lanyard-acid);
+    content: none;
 }
 
 .lanyard-cord span {
@@ -6403,12 +6451,16 @@ header {
 .profile-pass {
     position: relative;
     z-index: 1;
+    isolation: isolate;
     width: 100%;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 11px;
     background: #050708;
-    box-shadow: 0 30px 58px rgba(0, 0, 0, 0.52), 0 0 34px rgba(67, 223, 255, 0.045);
+    box-shadow:
+        0 30px 58px rgba(0, 0, 0, 0.52),
+        0 0 34px rgba(67, 223, 255, 0.045),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .profile-pass::before {
@@ -6420,6 +6472,27 @@ header {
     width: 42px;
     height: 3px;
     background: var(--lanyard-cyan);
+}
+
+.profile-pass::after {
+    content: "";
+    position: absolute;
+    z-index: 6;
+    inset: 1px;
+    pointer-events: none;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background: linear-gradient(
+        138deg,
+        rgba(255, 255, 255, 0.42) 0%,
+        rgba(255, 255, 255, 0.1) 14%,
+        transparent 34%,
+        transparent 76%,
+        rgba(204, 255, 0, 0.13) 100%
+    ) border-box;
+    -webkit-mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
 }
 
 .profile-pass-visual {
@@ -6624,11 +6697,11 @@ header {
 @keyframes lanyard-drop {
     0% {
         opacity: 0;
-        transform: translate3d(42px, -18px, 0) rotate(var(--lanyard-release-angle));
+        transform: translate3d(var(--lanyard-release-x), var(--lanyard-release-y), 0) rotate(var(--lanyard-release-angle));
     }
     9% {
         opacity: 1;
-        transform: translate3d(38px, -12px, 0) rotate(var(--lanyard-release-angle));
+        transform: translate3d(var(--lanyard-reveal-x), var(--lanyard-reveal-y), 0) rotate(var(--lanyard-release-angle));
     }
     38% {
         opacity: 1;
@@ -7044,10 +7117,14 @@ header {
     }
 
     .about-lanyard-stage {
-        --lanyard-release-angle: 36deg;
-        --lanyard-back-angle: -25deg;
-        --lanyard-return-angle: 9deg;
-        --lanyard-settle-angle: -3deg;
+        --lanyard-release-x: 4px;
+        --lanyard-release-y: -10px;
+        --lanyard-reveal-x: 3px;
+        --lanyard-reveal-y: -6px;
+        --lanyard-release-angle: 4deg;
+        --lanyard-back-angle: -4deg;
+        --lanyard-return-angle: 2deg;
+        --lanyard-settle-angle: -1deg;
         padding: 0 5px 22px;
     }
 

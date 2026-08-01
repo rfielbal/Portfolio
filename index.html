@@ -10,21 +10,11 @@
     <script>
         (() => {
             const root = document.documentElement;
-            const storageKey = "rfielbal:preloader-seen:v1";
             root.classList.add("js");
 
-            let hasSeenSite = false;
-
-            try {
-                hasSeenSite = sessionStorage.getItem(storageKey) === "1";
-                sessionStorage.setItem(storageKey, "1");
-            } catch (_error) {
-                // Le hash et Navigation Timing restent disponibles si le stockage est bloqué.
-            }
-
             const navigation = performance.getEntriesByType?.("navigation")?.[0];
-            const isRestoredNavigation = navigation?.type === "reload" || navigation?.type === "back_forward";
-            const shouldPlayPreloader = !hasSeenSite && !window.location.hash && !isRestoredNavigation;
+            const isHistoryRestore = navigation?.type === "back_forward";
+            const shouldPlayPreloader = !window.location.hash && !isHistoryRestore;
 
             window.__portfolioShouldPlayPreloader = shouldPlayPreloader;
             root.classList.toggle("preloader-skip", !shouldPlayPreloader);
@@ -44,8 +34,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=ux-axis-palette-20260801">
-    <link rel="stylesheet" href="cinematic.css?v=ux-coherence-20260801">
+    <link rel="stylesheet" href="style.css?v=ux-final-20260802">
+    <link rel="stylesheet" href="cinematic.css?v=ux-final-20260802">
 </head>
 <body>
     <div class="preloader" id="preloader" aria-hidden="true">
@@ -576,7 +566,7 @@
                             </div>
                         </article>
 
-                        <article class="cinema-card" data-cinema-card data-project-id="9" style="--card-accent: #9b7cff; --card-rgb: 155, 124, 255;">
+                        <article class="cinema-card" data-cinema-card data-project-id="9" style="--card-accent: #ff5f57; --card-rgb: 255, 95, 87;">
                             <div class="cinema-card-shell">
                                 <figure class="cinema-card-media">
                                     <img src="./images/projects/revaloop/cover.webp" width="1600" height="1000" alt="Interface de la plateforme de recette client Revaloop" loading="lazy" decoding="async">
@@ -1073,8 +1063,8 @@
                         <h4>BULLETIN DU SEMESTRE 1</h4>
                         <p>BTS SIO - 1ère Année</p>
                     </div>
-                    <a href="./documents/bulletins/bts-sio-semestre-1.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
-                        Voir le bulletin <i class="fas fa-file-pdf"></i>
+                    <a href="./documents/bulletins-public/bts-sio-semestre-1.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
+                        Voir le bulletin anonymisé <i class="fas fa-file-pdf"></i>
                     </a>
                 </div>
 
@@ -1083,8 +1073,8 @@
                         <h4>BULLETIN DU SEMESTRE 2</h4>
                         <p>BTS SIO - 1ère Année</p>
                     </div>
-                    <a href="./documents/bulletins/bts-sio-semestre-2.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
-                        Voir le bulletin <i class="fas fa-file-pdf"></i>
+                    <a href="./documents/bulletins-public/bts-sio-semestre-2.pdf" target="_blank" rel="noopener noreferrer" class="btn-download">
+                        Voir le bulletin anonymisé <i class="fas fa-file-pdf"></i>
                     </a>
                 </div>
 
@@ -1101,7 +1091,7 @@
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
     <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=ux-coherence-20260801"></script>
+    <script src="script.js?v=ux-final-20260802"></script>
     <script src="cinematic.js?v=ux-refine-20260801"></script>
 </body>
 </html>

@@ -3,9 +3,14 @@
 
 .playwright-cli/
 output/playwright/
+output/pdf/
 
 *.log
 
-# Le CV public est livré avec le portfolio ; les autres documents restent locaux.
+# Seuls le CV et les copies anonymisées des bulletins sont livrés avec le portfolio.
 documents/*
 !documents/cv-raphael-coursier.pdf
+!documents/bulletins-public/
+documents/bulletins-public/*
+!documents/bulletins-public/bts-sio-semestre-1.pdf
+!documents/bulletins-public/bts-sio-semestre-2.pdf
