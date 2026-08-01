@@ -136,7 +136,7 @@ code {
 .watch-lines i:last-child {
     top: 74%;
     left: -18%;
-    background: rgba(105, 215, 231, 0.1);
+    background: rgba(242, 238, 229, 0.055);
     transform: rotate(8deg);
 }
 
@@ -543,8 +543,10 @@ code {
 }
 
 .method-track {
+    --method-axis-x: 8px;
+    --method-gutter: 42px;
     position: relative;
-    padding-left: 42px;
+    padding-left: var(--method-gutter);
 }
 
 .method-track::before,
@@ -552,7 +554,7 @@ code {
     position: absolute;
     top: 18px;
     bottom: 18px;
-    left: 7px;
+    left: calc(var(--method-axis-x) - 1px);
     width: 2px;
     content: "";
 }
@@ -591,13 +593,14 @@ code {
     content: "";
     position: absolute;
     top: 13px;
-    left: -41px;
+    left: calc(var(--method-axis-x) - var(--method-gutter));
     z-index: 2;
     width: 14px;
     height: 14px;
     border: 2px solid var(--watch-violet);
     border-radius: 50%;
     background: var(--watch-bg);
+    transform: translateX(-50%);
     transition: background 220ms ease, box-shadow 220ms ease;
 }
 
@@ -640,7 +643,7 @@ code {
 
 .watch-signals {
     background:
-        linear-gradient(180deg, rgba(159, 134, 255, 0.035), transparent 24%),
+        linear-gradient(180deg, rgba(242, 238, 229, 0.018), transparent 24%),
         rgba(9, 8, 13, 0.72);
 }
 
@@ -673,14 +676,14 @@ code {
 
 .signal-filters button:hover,
 .signal-filters button:focus-visible {
-    border-color: var(--watch-line-strong);
-    color: #fff;
+    border-color: var(--watch-violet-line);
+    color: var(--watch-text);
 }
 
 .signal-filters button.is-active {
-    border-color: var(--watch-violet);
-    background: var(--watch-violet);
-    color: #07060a;
+    border-color: var(--watch-violet-line);
+    background: var(--watch-violet-soft);
+    color: var(--watch-text);
 }
 
 #signal-count {
@@ -707,7 +710,7 @@ code {
     border: 1px solid var(--watch-line);
     border-radius: 6px;
     background:
-        linear-gradient(145deg, rgba(159, 134, 255, 0.035), transparent 38%),
+        linear-gradient(145deg, rgba(242, 238, 229, 0.018), transparent 38%),
         rgba(5, 5, 7, 0.9);
     overflow: hidden;
     transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
@@ -729,7 +732,7 @@ code {
 .signal-card:hover {
     border-color: rgba(159, 134, 255, 0.42);
     background:
-        linear-gradient(145deg, rgba(159, 134, 255, 0.07), transparent 42%),
+        linear-gradient(145deg, rgba(159, 134, 255, 0.035), transparent 42%),
         rgba(10, 9, 14, 0.97);
     transform: translateY(-4px);
 }
@@ -782,6 +785,7 @@ code {
     padding: 6px 9px;
     border: 1px solid var(--watch-line);
     border-radius: 3px;
+    background: rgba(242, 238, 229, 0.025);
     color: var(--watch-muted);
     font-size: 0.6rem;
     font-weight: 700;
@@ -789,18 +793,25 @@ code {
 }
 
 .signal-state--tested {
-    border-color: rgba(105, 215, 231, 0.34);
-    color: var(--watch-cyan);
+    border-color: var(--watch-violet-line);
+    background: var(--watch-violet-soft);
+    color: #d8cffd;
 }
 
 .signal-state--verified {
-    border-color: rgba(201, 244, 90, 0.32);
-    color: var(--watch-acid);
+    border-color: var(--watch-line-strong);
+    color: var(--watch-text);
 }
 
 .signal-state--watch {
-    border-color: var(--watch-violet-line);
-    color: var(--watch-violet);
+    border-color: rgba(159, 134, 255, 0.22);
+    border-style: dashed;
+    background: transparent;
+    color: #c3b9dd;
+}
+
+.watch-signals code {
+    color: #d8cffd;
 }
 
 .signal-card h3 {
@@ -840,7 +851,7 @@ code {
 }
 
 .signal-decision dd {
-    color: #c6cdd3;
+    color: #cbc6c0;
     font-family: var(--watch-sans);
     font-size: 0.84rem;
     line-height: 1.5;
@@ -1665,12 +1676,8 @@ code {
     }
 
     .method-track {
-        padding-left: 28px;
-    }
-
-    .method-track::before,
-    .method-progress {
-        left: 5px;
+        --method-axis-x: 6px;
+        --method-gutter: 28px;
     }
 
     .method-track li {
@@ -1682,9 +1689,8 @@ code {
 
     .method-track li::before {
         top: 8px;
-        left: -29px;
-        width: 11px;
-        height: 11px;
+        width: 12px;
+        height: 12px;
     }
 
     .method-track li > span {

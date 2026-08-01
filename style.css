@@ -7237,18 +7237,23 @@ header {
 }
 
 .journey-track {
+    --journey-axis-x: 8px;
+    --journey-axis-width: 2px;
+    --journey-dot-size: 14px;
     position: relative;
     min-width: 0;
 }
 
 .journey-line {
+    box-sizing: border-box;
     position: absolute;
     top: 31px;
     bottom: 31px;
-    left: 7px;
-    width: 2px;
+    left: var(--journey-axis-x);
+    width: var(--journey-axis-width);
     overflow: hidden;
     background: rgba(255, 255, 255, 0.12);
+    transform: translateX(-50%);
 }
 
 .journey-line span {
@@ -7291,18 +7296,19 @@ header {
 }
 
 .journey-dot {
+    box-sizing: border-box;
     position: absolute;
     top: 27px;
-    left: 1px;
+    left: var(--journey-axis-x);
     z-index: 2;
-    width: 14px;
-    height: 14px;
+    width: var(--journey-dot-size);
+    height: var(--journey-dot-size);
     border: 3px solid #090c10;
     border-radius: 50%;
     background: var(--journey-accent);
     box-shadow: 0 0 0 1px var(--journey-accent), 0 0 20px color-mix(in srgb, var(--journey-accent) 55%, transparent);
     opacity: var(--journey-opacity);
-    transform: scale(var(--journey-dot-scale));
+    transform: translateX(-50%) scale(var(--journey-dot-scale));
 }
 
 .journey-item article {
@@ -8155,6 +8161,8 @@ header {
 /* Revaloop: the screenshots form the same loop used by developer and client. */
 .pm-review-flow {
     --pm-review-column-gap: clamp(24px, 4vw, 52px);
+    --pm-review-axis-x: 50%;
+    --pm-review-marker-size: 10px;
     position: relative;
     display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -8163,10 +8171,11 @@ header {
 
 .pm-review-flow::before {
     content: "";
+    box-sizing: border-box;
     position: absolute;
     top: 12px;
     bottom: 12px;
-    left: 50%;
+    left: var(--pm-review-axis-x);
     width: 2px;
     background: linear-gradient(
         180deg,
@@ -8203,11 +8212,12 @@ header {
 
 .pm-review-step::before {
     content: "";
+    box-sizing: border-box;
     position: absolute;
     z-index: 2;
     top: 7px;
-    width: 10px;
-    height: 10px;
+    width: var(--pm-review-marker-size);
+    height: var(--pm-review-marker-size);
     border: 2px solid #080c10;
     border-radius: 50%;
     background: var(--project-accent, var(--personal));
@@ -8217,16 +8227,19 @@ header {
 }
 
 .pm-review-step:nth-child(odd):not(:last-child)::before {
-    right: calc(var(--pm-review-column-gap) / -2 - 5px);
+    right: calc(var(--pm-review-column-gap) / -2);
+    transform: translateX(50%);
 }
 
 .pm-review-step:nth-child(even)::before {
-    left: calc(var(--pm-review-column-gap) / -2 - 5px);
+    left: calc(var(--pm-review-column-gap) / -2);
+    transform: translateX(-50%);
 }
 
 .pm-review-step:last-child::before {
     top: -6px;
-    left: calc(50% - 5px);
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .pm-review-step-head {
@@ -8276,6 +8289,7 @@ header {
 }
 
 .pm-museum-route {
+    --pm-museum-marker-size: 14px;
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -8284,12 +8298,14 @@ header {
 
 .pm-museum-route::before {
     content: "";
+    box-sizing: border-box;
     position: absolute;
-    top: 7px;
+    top: calc(var(--pm-museum-marker-size) / 2);
     right: 8%;
     left: 8%;
     height: 1px;
     background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-50%);
 }
 
 .pm-museum-route span {
@@ -8304,9 +8320,10 @@ header {
 }
 
 .pm-museum-route i {
+    box-sizing: border-box;
     z-index: 1;
-    width: 14px;
-    height: 14px;
+    width: var(--pm-museum-marker-size);
+    height: var(--pm-museum-marker-size);
     border: 3px solid #0b0e12;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.32);
@@ -8621,32 +8638,40 @@ header {
 
 /* La Citadelle Rouge: layers are linked like the Redstone circuit under the map. */
 .pm-redstone-layers {
+    --pm-redstone-axis-x: 17px;
+    --pm-redstone-content-indent: 54px;
+    --pm-redstone-marker-size: 14px;
+    --pm-redstone-pulse-size: 10px;
     position: relative;
     display: grid;
     gap: clamp(34px, 5vw, 58px);
-    padding-left: 54px;
+    padding-left: var(--pm-redstone-content-indent);
 }
 
 .pm-redstone-layers::before {
     content: "";
+    box-sizing: border-box;
     position: absolute;
     top: 9px;
     bottom: 9px;
-    left: 16px;
+    left: var(--pm-redstone-axis-x);
     width: 2px;
     background: color-mix(in srgb, var(--project-accent, var(--personal)) 62%, rgba(255, 255, 255, 0.14));
+    transform: translateX(-50%);
 }
 
 .pm-redstone-layers::after {
     content: "";
+    box-sizing: border-box;
     position: absolute;
     top: 9px;
-    left: 12px;
-    width: 10px;
-    height: 10px;
+    left: var(--pm-redstone-axis-x);
+    width: var(--pm-redstone-pulse-size);
+    height: var(--pm-redstone-pulse-size);
     border: 2px solid #080c10;
     background: var(--project-accent, var(--personal));
     box-shadow: 0 0 14px var(--project-accent, var(--personal));
+    transform: translateX(-50%);
     animation: pm-redstone-pulse 6.5s linear infinite;
 }
 
@@ -8657,14 +8682,16 @@ header {
 
 .pm-redstone-layer::before {
     content: "";
+    box-sizing: border-box;
     position: absolute;
     top: 5px;
-    left: -44px;
-    width: 14px;
-    height: 14px;
+    left: calc(var(--pm-redstone-axis-x) - var(--pm-redstone-content-indent));
+    width: var(--pm-redstone-marker-size);
+    height: var(--pm-redstone-marker-size);
     border: 3px solid #080c10;
     background: var(--project-accent, var(--personal));
     box-shadow: 0 0 0 1px var(--project-accent, var(--personal));
+    transform: translateX(-50%);
 }
 
 .pm-redstone-layer-head {
@@ -8776,14 +8803,16 @@ header {
     }
 
     .pm-review-flow {
+        --pm-review-axis-x: 8px;
+        --pm-review-mobile-indent: 30px;
         grid-template-columns: minmax(0, 1fr);
-        padding-left: 30px;
+        padding-left: var(--pm-review-mobile-indent);
     }
 
     .pm-review-flow::before {
         top: 8px;
         bottom: 8px;
-        left: 8px;
+        left: var(--pm-review-axis-x);
     }
 
     .pm-review-step:nth-child(odd):not(:last-child),
@@ -8796,7 +8825,8 @@ header {
     .pm-review-step:nth-child(even)::before,
     .pm-review-step:last-child::before {
         top: 7px;
-        left: -27px;
+        left: calc(var(--pm-review-axis-x) - var(--pm-review-mobile-indent));
+        transform: translateX(-50%);
     }
 
     .pm-review-step:last-child {
@@ -8930,19 +8960,8 @@ header {
     }
 
     .pm-redstone-layers {
-        padding-left: 34px;
-    }
-
-    .pm-redstone-layers::before {
-        left: 8px;
-    }
-
-    .pm-redstone-layers::after {
-        left: 4px;
-    }
-
-    .pm-redstone-layer::before {
-        left: -32px;
+        --pm-redstone-axis-x: 9px;
+        --pm-redstone-content-indent: 34px;
     }
 }
 
