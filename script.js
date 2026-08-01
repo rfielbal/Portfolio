@@ -4,9 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const preloader = document.getElementById("preloader");
     const preloaderCounter = document.getElementById("preloader-counter");
     const preloaderFill = document.getElementById("preloader-fill");
+    let preloaderInterval = null;
+    let preloaderExitTimer = null;
+    let preloaderHideTimer = null;
 
     const navbar = document.getElementById("navbar");
     const homeSection = document.getElementById("home");
+    const ambientGrid = document.querySelector(".ambient-grid");
+    const lightField = document.querySelector(".light-field");
     const sectionTitles = document.querySelectorAll(".section-title");
     const signatureWord = document.getElementById("signature-word");
     const terminalOutput = document.getElementById("terminal-output");
@@ -32,6 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const journeyProgress = document.getElementById("journey-progress");
     const journeyItems = document.querySelectorAll("[data-journey-item]");
     const journeyProjectLinks = document.querySelectorAll("[data-journey-project]");
+    const aboutLanyardStage = document.querySelector("[data-lanyard-stage]");
+    const aboutLanyardMotion = document.querySelector("[data-lanyard-motion]");
 
     const capabilityStage = document.getElementById("capability-stage");
     const capabilityTabs = Array.from(document.querySelectorAll("[data-capability]"));
@@ -52,8 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const capabilityTechs = document.getElementById("capability-techs");
     const capabilityOpenProject = document.getElementById("capability-open-project");
     const capabilityRole = document.getElementById("capability-role");
-
-    const heroStats = document.getElementById("hero-stats");
 
     const projectGrid = document.getElementById("projects-grid");
     const filterButtons = document.querySelectorAll(".filter-btn");
@@ -241,7 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
             created: "En cours",
             role: "Conception produit & pilotage technique",
             status: "Alpha en cours",
-            accent: "#ff5f57",
+            accent: "#9b7cff",
             logo: "./images/projects/revaloop/logo.svg",
             logoAlt: "Logo de Revaloop",
             logoMark: "R",
@@ -319,7 +324,7 @@ document.addEventListener("DOMContentLoaded", () => {
             created: "11 février 2026",
             role: "Prototype 3D & WebGL",
             status: "Prototype jouable",
-            accent: "#ff5f57",
+            accent: "#9b7cff",
             logo: "./images/projects/aethercore/logo.png",
             logoAlt: "Symbole AetherCore",
             logoMark: "AC",
@@ -446,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
             category: "Site vitrine & parcours de contact · Client",
             year: "2025 - 2026",
             dateLabel: "Création",
-            created: "Août 2026",
+            created: "Juillet - Août 2026",
             role: "Conception, développement & exploitation",
             status: "Livré",
             accent: "#43dfff",
@@ -561,7 +566,7 @@ document.addEventListener("DOMContentLoaded", () => {
             created: "En cours",
             role: "Conception produit & pilotage technique",
             status: "Bêta en cours",
-            accent: "#ff5f57",
+            accent: "#9b7cff",
             logo: "./images/projects/responsiver/logo.png",
             logoAlt: "Logo de Responsiver",
             logoMark: "R",
@@ -637,7 +642,7 @@ document.addEventListener("DOMContentLoaded", () => {
             created: "Juillet 2019",
             role: "Game design & automatisation",
             status: "Archivé",
-            accent: "#ff5f57",
+            accent: "#9b7cff",
             logo: "./images/projects/citadelle-rouge/logo.svg",
             logoMark: "CR",
             description:
@@ -814,7 +819,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ]
         },
         delivery: {
-            accent: "#ff5f57",
+            accent: "#9b7cff",
             status: "Jessica livré · Revaloop alpha",
             index: "04 / 04",
             context: "Client + produit · Qualité continue",
@@ -845,42 +850,132 @@ document.addEventListener("DOMContentLoaded", () => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isFinePointer = window.matchMedia("(pointer: fine)").matches;
 
-    let activeStageId = "home";
+    const motionEngine = window.portfolioMotionEngine;
+
     let lockedScrollY = 0;
     let restoreScrollBehaviorFrame = null;
     let scrollBehaviorBeforeRestore = null;
-    let scrollAnimationFrame = null;
-    let scrollInterruptHandlers = [];
-    let pageMotionFrame = null;
     let terminalBorderResizeObserver = null;
+
+    const managedLayers = Array.from(
+        document.querySelectorAll(".modal-overlay, .project-modal-wrap, .image-lightbox, .fs-menu")
+    );
+    const layerStack = [];
+    const temporaryInertStates = new Map();
+    const focusableSelector = [
+        'a[href]:not([tabindex="-1"])',
+        'button:not([disabled]):not([tabindex="-1"])',
+        'input:not([disabled]):not([tabindex="-1"])',
+        'select:not([disabled]):not([tabindex="-1"])',
+        'textarea:not([disabled]):not([tabindex="-1"])',
+        '[tabindex]:not([tabindex="-1"])'
+    ].join(",");
+
+    managedLayers.forEach((layer) => {
+        if (!layer.classList.contains("active")) {
+            layer.inert = true;
+        }
+    });
 
     const getOpenLayers = () =>
         document.querySelectorAll(".modal-overlay.active, .project-modal-wrap.active, .image-lightbox.active, .fs-menu.active").length;
 
-    const clearScrollInterrupts = () => {
-        scrollInterruptHandlers.forEach(([type, handler]) => {
-            window.removeEventListener(type, handler, true);
+    const getTopLayer = () => layerStack[layerStack.length - 1]?.layer || null;
+
+    const getFocusableElements = (layer) => Array.from(layer.querySelectorAll(focusableSelector)).filter((element) => {
+        const styles = window.getComputedStyle(element);
+        return !element.hidden && styles.display !== "none" && styles.visibility !== "hidden" && element.getClientRects().length > 0;
+    });
+
+    const focusInitialElement = (layer) => {
+        const target = layer.querySelector("[data-autofocus]") || getFocusableElements(layer)[0] || layer;
+
+        if (target === layer && !layer.hasAttribute("tabindex")) {
+            layer.setAttribute("tabindex", "-1");
+        }
+
+        target.focus({ preventScroll: true });
+    };
+
+    const scheduleInitialFocus = (layer) => {
+        const focusIfTopLayer = () => {
+            if (getTopLayer() === layer && layer.classList.contains("active")) {
+                focusInitialElement(layer);
+            }
+        };
+
+        requestAnimationFrame(() => {
+            focusIfTopLayer();
+
+            if (!layer.contains(document.activeElement)) {
+                window.setTimeout(focusIfTopLayer, 260);
+            }
         });
-        scrollInterruptHandlers = [];
+    };
+
+    const restoreTemporaryInertStates = () => {
+        temporaryInertStates.forEach((wasInert, element) => {
+            element.inert = wasInert;
+        });
+        temporaryInertStates.clear();
+    };
+
+    const setTemporarilyInert = (element) => {
+        if (!temporaryInertStates.has(element)) {
+            temporaryInertStates.set(element, element.inert);
+        }
+        element.inert = true;
+    };
+
+    const syncBackgroundInertState = () => {
+        restoreTemporaryInertStates();
+
+        const topLayer = getTopLayer();
+        if (!topLayer) return;
+        topLayer.inert = false;
+
+        let current = topLayer;
+        while (current && current !== body) {
+            const parent = current.parentElement;
+            if (!parent) break;
+
+            Array.from(parent.children).forEach((sibling) => {
+                if (sibling !== current && sibling instanceof HTMLElement) {
+                    setTemporarilyInert(sibling);
+                }
+            });
+
+            current = parent;
+        }
+    };
+
+    const trapLayerFocus = (event) => {
+        const topLayer = getTopLayer();
+        if (!topLayer) return;
+
+        const focusableElements = getFocusableElements(topLayer);
+        if (!focusableElements.length) {
+            event.preventDefault();
+            focusInitialElement(topLayer);
+            return;
+        }
+
+        const first = focusableElements[0];
+        const last = focusableElements[focusableElements.length - 1];
+        const activeElement = document.activeElement;
+
+        if (event.shiftKey && (activeElement === first || !topLayer.contains(activeElement))) {
+            event.preventDefault();
+            last.focus({ preventScroll: true });
+        } else if (!event.shiftKey && (activeElement === last || !topLayer.contains(activeElement))) {
+            event.preventDefault();
+            first.focus({ preventScroll: true });
+        }
     };
 
     const cancelSmoothScroll = () => {
-        if (scrollAnimationFrame) {
-            cancelAnimationFrame(scrollAnimationFrame);
-            scrollAnimationFrame = null;
-        }
-
-        clearScrollInterrupts();
-    };
-
-    const watchScrollInterrupts = () => {
-        clearScrollInterrupts();
-
-        ["wheel", "touchstart", "keydown"].forEach((type) => {
-            const handler = () => cancelSmoothScroll();
-            window.addEventListener(type, handler, { capture: true, passive: true, once: true });
-            scrollInterruptHandlers.push([type, handler]);
-        });
+        window.SiteSmoothScroll?.cancel();
+        window.scrollTo({ top: window.scrollY, left: 0, behavior: "auto" });
     };
 
     const restoreScrollInstantly = (scrollY) => {
@@ -934,32 +1029,103 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const openLayer = (layer) => {
+    const openLayer = (layer, opener = document.activeElement) => {
         if (!layer) return;
+
+        const existingEntry = layerStack.find((entry) => entry.layer === layer);
+        if (existingEntry) {
+            scheduleInitialFocus(layer);
+            return;
+        }
+
+        const returnFocus = opener instanceof HTMLElement && opener !== body && opener.isConnected
+            ? opener
+            : null;
+
+        layer.inert = false;
         layer.classList.add("active");
         layer.setAttribute("aria-hidden", "false");
+        layerStack.push({ layer, returnFocus });
+        syncBackgroundInertState();
         syncScrollState();
+        scheduleInitialFocus(layer);
     };
 
     const closeLayer = (layer) => {
         if (!layer) return;
-        layer.classList.remove("active");
-        layer.setAttribute("aria-hidden", "true");
+
+        const entryIndex = layerStack.findIndex((entry) => entry.layer === layer);
+        const closingEntries = entryIndex >= 0
+            ? layerStack.splice(entryIndex)
+            : [{ layer, returnFocus: null }];
+        const returnFocus = closingEntries[0].returnFocus;
+        const activeElement = document.activeElement;
+
+        if (
+            activeElement instanceof HTMLElement
+            && closingEntries.some((entry) => entry.layer.contains(activeElement))
+        ) {
+            activeElement.blur();
+        }
+
+        closingEntries.slice().reverse().forEach((entry) => {
+            entry.layer.classList.remove("active");
+            entry.layer.setAttribute("aria-hidden", "true");
+            entry.layer.inert = true;
+        });
+
+        syncBackgroundInertState();
         syncScrollState();
+
+        const expectedTopLayer = getTopLayer();
+        requestAnimationFrame(() => {
+            if (getTopLayer() !== expectedTopLayer) return;
+
+            if (returnFocus?.isConnected && !returnFocus.closest("[inert]")) {
+                returnFocus.focus({ preventScroll: true });
+            } else if (expectedTopLayer) {
+                focusInitialElement(expectedTopLayer);
+            }
+        });
+    };
+
+    const clearPreloaderTimers = () => {
+        if (preloaderInterval !== null) window.clearInterval(preloaderInterval);
+        if (preloaderExitTimer !== null) window.clearTimeout(preloaderExitTimer);
+        if (preloaderHideTimer !== null) window.clearTimeout(preloaderHideTimer);
+        preloaderInterval = null;
+        preloaderExitTimer = null;
+        preloaderHideTimer = null;
+    };
+
+    const hidePreloader = ({ immediate = false } = {}) => {
+        if (!preloader) return;
+        clearPreloaderTimers();
+        preloader.classList.add("hide");
+
+        if (immediate) {
+            preloader.hidden = true;
+            return;
+        }
+
+        preloaderHideTimer = window.setTimeout(() => {
+            preloader.hidden = true;
+            preloaderHideTimer = null;
+        }, 720);
     };
 
     const runPreloader = () => {
         if (!preloader || !preloaderCounter || !preloaderFill) return;
 
-        if (prefersReducedMotion) {
+        if (window.__portfolioShouldPlayPreloader !== true || prefersReducedMotion) {
             preloaderCounter.textContent = "100";
             preloaderFill.style.width = "100%";
-            preloader.classList.add("hide");
+            hidePreloader({ immediate: true });
             return;
         }
 
         let count = 0;
-        const interval = setInterval(() => {
+        preloaderInterval = window.setInterval(() => {
             count += Math.floor(Math.random() * 10) + 2;
             if (count > 100) count = 100;
 
@@ -967,13 +1133,19 @@ document.addEventListener("DOMContentLoaded", () => {
             preloaderFill.style.width = `${count}%`;
 
             if (count === 100) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    preloader.classList.add("hide");
+                window.clearInterval(preloaderInterval);
+                preloaderInterval = null;
+                preloaderExitTimer = window.setTimeout(() => {
+                    hidePreloader();
                 }, 280);
             }
         }, 48);
     };
+
+    window.addEventListener("pageshow", (event) => {
+        if (!event.persisted) return;
+        hidePreloader({ immediate: true });
+    });
 
     const rotateSignature = () => {
         if (!signatureWord || prefersReducedMotion) return;
@@ -985,23 +1157,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1800);
     };
 
-    const updateSectionMotion = () => {
-        if (!sectionTitles.length || prefersReducedMotion) return;
-
-        const viewportMid = window.innerHeight * 0.5;
-
-        sectionTitles.forEach((title) => {
-            const rect = title.getBoundingClientRect();
-            const delta = (rect.top - viewportMid) / viewportMid;
-            const shift = Math.max(-12, Math.min(12, -delta * 12));
-            const energy = Math.max(0, 1 - Math.abs(delta));
-            const borderAlpha = 0.2 + energy * 0.45;
-
-            title.style.transform = `translateX(${shift}px)`;
-            title.style.borderColor = `rgba(204, 255, 0, ${borderAlpha.toFixed(2)})`;
-        });
-    };
-
     const setActiveNavById = (id) => {
         navAnchors.forEach((anchor) => {
             const href = anchor.getAttribute("href") || "";
@@ -1009,125 +1164,234 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const updateBuildScroll = () => {
-        if (!buildSections.length && !homeSection) return;
+    const railSections = [homeSection, ...Array.from(buildSections)].filter(Boolean);
+    const titleElements = Array.from(sectionTitles);
+    const journeyElements = Array.from(journeyItems);
+    const titleRenderCache = new WeakMap();
+    const journeyRenderCache = new WeakMap();
+    let pageMotionGeometry = null;
+    let renderedStageId = "";
+    let renderedNavbarSticky = null;
+    let renderedStoryRatio = -1;
+    let renderedGridOffset = null;
+    let renderedJourneyProgress = "";
 
-        const vh = window.innerHeight;
-        const railSections = [homeSection, ...Array.from(buildSections)].filter(Boolean);
-        const activationLine = vh * 0.34;
+    const measurePageMotionGeometry = (state) => {
+        const measure = (element) => {
+            const rect = element.getBoundingClientRect();
+            const top = rect.top + state.scrollY;
+            return { element, top, bottom: top + rect.height, height: rect.height };
+        };
 
-        let activeId = homeSection ? "home" : buildSections[0]?.id || "";
-        let closest = Infinity;
-        let sectionAtActivationLine = null;
-
-        railSections.forEach((section) => {
-            const rect = section.getBoundingClientRect();
-            const distance = Math.abs(rect.top - activationLine);
-
-            if (rect.top <= activationLine && rect.bottom > activationLine) {
-                sectionAtActivationLine = section;
-            }
-
-            if (distance < closest) {
-                closest = distance;
-                activeId = section.id;
-            }
-        });
-
-        if (sectionAtActivationLine) {
-            activeId = sectionAtActivationLine.id;
-        }
-
-        if (activeId !== activeStageId) {
-            activeStageId = activeId;
-            setActiveNavById(activeId);
-        }
-
-        buildSections.forEach((section) => {
-            section.classList.toggle("stage-active", section.id === activeId);
-        });
-
-        if (storyRail && storyRailFill) {
-            const first = railSections[0];
-            const last = railSections[railSections.length - 1];
-            const firstY = first.offsetTop;
-            const lastY = last.offsetTop + last.offsetHeight;
-            const currentY = window.scrollY;
-            const ratio = clamp((currentY - firstY) / Math.max(1, lastY - firstY), 0, 1);
-            storyRailFill.style.transform = `scaleY(${ratio})`;
-
-            storyDots.forEach((dot) => {
-                dot.classList.toggle("active", dot.dataset.target === activeId);
-            });
-        }
+        pageMotionGeometry = {
+            layoutVersion: state.layoutVersion,
+            titles: titleElements.map(measure),
+            sections: railSections.map(measure),
+            journeyTrack: journeyTrack ? measure(journeyTrack) : null,
+            journeyItems: journeyElements.map(measure)
+        };
     };
 
-    const updateJourneyProgress = () => {
-        if (!journeyTrack || !journeyProgress) return;
+    const buildJourneyFrame = (state, geometry) => {
+        if (!geometry.journeyTrack || !journeyProgress) return null;
 
         if (prefersReducedMotion) {
-            journeyProgress.style.transform = "scaleY(1)";
-            journeyItems.forEach((item) => {
-                item.style.setProperty("--journey-opacity", "1");
-                item.style.setProperty("--journey-shift", "0px");
-                item.style.setProperty("--journey-scale", "1");
-                item.style.setProperty("--journey-dot-scale", "1");
-                item.classList.add("is-journey-visible");
+            return {
+                mode: "after",
+                progress: 1,
+                items: geometry.journeyItems.map(({ element }) => ({ element, progress: 1 }))
+            };
+        }
+
+        const { scrollY, viewportHeight } = state;
+        const track = geometry.journeyTrack;
+        const before = scrollY + (viewportHeight * 0.92) < track.top;
+        const after = scrollY + (viewportHeight * 0.28) > track.bottom;
+
+        if (before || after) {
+            const progress = after ? 1 : 0;
+            return {
+                mode: after ? "after" : "before",
+                progress,
+                items: geometry.journeyItems.map(({ element }) => ({ element, progress }))
+            };
+        }
+
+        const startAnchor = viewportHeight * 0.72;
+        const endAnchor = viewportHeight * 0.34;
+        const travel = Math.max(1, track.height + startAnchor - endAnchor);
+        const progress = clamp((startAnchor - (track.top - scrollY)) / travel, 0, 1);
+        const revealStart = viewportHeight * 0.9;
+        const revealEnd = viewportHeight * 0.56;
+        const revealDistance = Math.max(1, revealStart - revealEnd);
+
+        return {
+            mode: "active",
+            progress,
+            items: geometry.journeyItems.map(({ element, top }) => {
+                const rawProgress = clamp((revealStart - (top - scrollY)) / revealDistance, 0, 1);
+                const itemProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
+                return { element, progress: itemProgress };
+            })
+        };
+    };
+
+    const readPageMotion = (state) => {
+        const pointerFrame = state.pointer && lightField
+            ? {
+                x: ((state.pointerX / Math.max(1, state.viewportWidth)) - 0.5) * 16,
+                y: ((state.pointerY / Math.max(1, state.viewportHeight)) - 0.5) * 12
+            }
+            : null;
+
+        if (!(state.scroll || state.layout || state.force)) {
+            return { pointerFrame };
+        }
+
+        if (!pageMotionGeometry || pageMotionGeometry.layoutVersion !== state.layoutVersion) {
+            measurePageMotionGeometry(state);
+        }
+
+        const geometry = pageMotionGeometry;
+        const activationY = state.scrollY + (state.viewportHeight * 0.34);
+        let activeId = geometry.sections[0]?.element.id || "";
+        let closestDistance = Infinity;
+
+        geometry.sections.forEach((section) => {
+            if (section.top <= activationY && section.bottom > activationY) {
+                activeId = section.element.id;
+                closestDistance = -1;
+                return;
+            }
+
+            if (closestDistance < 0) return;
+            const distance = Math.abs(section.top - activationY);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                activeId = section.element.id;
+            }
+        });
+
+        const viewportMid = state.viewportHeight * 0.5;
+        const titles = prefersReducedMotion
+            ? []
+            : geometry.titles.flatMap(({ element, top }) => {
+                const viewportTop = top - state.scrollY;
+                if (viewportTop < -state.viewportHeight || viewportTop > state.viewportHeight * 1.8) return [];
+                const delta = (viewportTop - viewportMid) / Math.max(1, viewportMid);
+                return [{ element, transform: `translate3d(${clamp(-delta * 12, -12, 12).toFixed(2)}px, 0, 0)` }];
             });
+
+        const firstSection = geometry.sections[0];
+        const lastSection = geometry.sections[geometry.sections.length - 1];
+        const storyRatio = firstSection && lastSection
+            ? clamp((state.scrollY - firstSection.top) / Math.max(1, lastSection.bottom - firstSection.top), 0, 1)
+            : 0;
+
+        return {
+            pointerFrame,
+            navbarSticky: state.scrollY > 20,
+            gridOffset: isFinePointer ? -((state.scrollY * 0.025) % 72) : 0,
+            activeId,
+            storyRatio,
+            titles,
+            journey: buildJourneyFrame(state, geometry)
+        };
+    };
+
+    const writePageMotion = (_state, frame) => {
+        if (!frame) return;
+
+        if (frame.pointerFrame && lightField) {
+            lightField.style.transform = `translate3d(${frame.pointerFrame.x.toFixed(2)}px, ${frame.pointerFrame.y.toFixed(2)}px, 0)`;
+        }
+
+        if (typeof frame.navbarSticky !== "boolean") return;
+
+        if (navbar && frame.navbarSticky !== renderedNavbarSticky) {
+            renderedNavbarSticky = frame.navbarSticky;
+            navbar.classList.toggle("sticky", frame.navbarSticky);
+        }
+
+        if (ambientGrid && frame.gridOffset !== renderedGridOffset) {
+            renderedGridOffset = frame.gridOffset;
+            ambientGrid.style.transform = `translate3d(0, ${frame.gridOffset.toFixed(2)}px, 0)`;
+        }
+
+        frame.titles.forEach(({ element, transform }) => {
+            if (titleRenderCache.get(element) === transform) return;
+            titleRenderCache.set(element, transform);
+            element.style.transform = transform;
+        });
+
+        if (frame.activeId !== renderedStageId) {
+            renderedStageId = frame.activeId;
+            setActiveNavById(frame.activeId);
+            buildSections.forEach((section) => {
+                section.classList.toggle("stage-active", section.id === frame.activeId);
+            });
+            storyDots.forEach((dot) => {
+                dot.classList.toggle("active", dot.dataset.target === frame.activeId);
+            });
+        }
+
+        if (storyRail && storyRailFill && Math.abs(frame.storyRatio - renderedStoryRatio) > 0.0005) {
+            renderedStoryRatio = frame.storyRatio;
+            storyRailFill.style.transform = `scaleY(${frame.storyRatio.toFixed(4)})`;
+        }
+
+        if (!frame.journey) return;
+
+        const journeyProgressValue = `scaleY(${frame.journey.progress.toFixed(4)})`;
+        if (journeyProgressValue !== renderedJourneyProgress) {
+            renderedJourneyProgress = journeyProgressValue;
+            journeyProgress.style.transform = journeyProgressValue;
+        }
+
+        frame.journey.items.forEach(({ element, progress }) => {
+            const next = {
+                opacity: progress.toFixed(4),
+                shift: `${((1 - progress) * 58).toFixed(2)}px`,
+                scale: (0.975 + progress * 0.025).toFixed(4),
+                dotScale: (0.62 + progress * 0.38).toFixed(4),
+                visible: progress > 0.04
+            };
+            const previous = journeyRenderCache.get(element);
+
+            if (!previous || previous.opacity !== next.opacity) element.style.setProperty("--journey-opacity", next.opacity);
+            if (!previous || previous.shift !== next.shift) element.style.setProperty("--journey-shift", next.shift);
+            if (!previous || previous.scale !== next.scale) element.style.setProperty("--journey-scale", next.scale);
+            if (!previous || previous.dotScale !== next.dotScale) element.style.setProperty("--journey-dot-scale", next.dotScale);
+            if (!previous || previous.visible !== next.visible) element.classList.toggle("is-journey-visible", next.visible);
+
+            journeyRenderCache.set(element, next);
+        });
+    };
+
+    const setupMarqueeVisibility = () => {
+        const marqueeWrap = document.querySelector(".marquee-wrap");
+        if (!marqueeWrap) return;
+
+        if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+            marqueeWrap.classList.add("is-motion-visible");
             return;
         }
 
-        const rect = journeyTrack.getBoundingClientRect();
-        const startAnchor = window.innerHeight * 0.72;
-        const endAnchor = window.innerHeight * 0.34;
-        const travel = Math.max(1, rect.height + startAnchor - endAnchor);
-        const progress = clamp((startAnchor - rect.top) / travel, 0, 1);
+        const marqueeObserver = new IntersectionObserver(([entry]) => {
+            marqueeWrap.classList.toggle("is-motion-visible", entry.isIntersecting);
+        }, { rootMargin: "120px 0px", threshold: 0 });
 
-        journeyProgress.style.transform = `scaleY(${progress.toFixed(4)})`;
-
-        const revealStart = window.innerHeight * 0.9;
-        const revealEnd = window.innerHeight * 0.56;
-        const revealDistance = Math.max(1, revealStart - revealEnd);
-
-        journeyItems.forEach((item) => {
-            const itemTop = item.getBoundingClientRect().top;
-            const rawProgress = clamp((revealStart - itemTop) / revealDistance, 0, 1);
-            const itemProgress = rawProgress * rawProgress * (3 - 2 * rawProgress);
-
-            item.style.setProperty("--journey-opacity", itemProgress.toFixed(4));
-            item.style.setProperty("--journey-shift", `${((1 - itemProgress) * 58).toFixed(2)}px`);
-            item.style.setProperty("--journey-scale", (0.975 + itemProgress * 0.025).toFixed(4));
-            item.style.setProperty("--journey-dot-scale", (0.62 + itemProgress * 0.38).toFixed(4));
-            item.classList.toggle("is-journey-visible", itemProgress > 0.04);
-        });
+        marqueeObserver.observe(marqueeWrap);
     };
 
-    const updateNavbar = () => {
-        if (navbar) {
-            navbar.classList.toggle("sticky", window.scrollY > 20);
-        }
-
-        if (isFinePointer) {
-            body.style.setProperty("--grid-y", `${window.scrollY * -0.025}px`);
-        }
-
-        updateSectionMotion();
-        updateBuildScroll();
-        updateJourneyProgress();
-    };
-
-    const schedulePageMotion = () => {
-        if (pageMotionFrame) return;
-
-        pageMotionFrame = requestAnimationFrame(() => {
-            pageMotionFrame = null;
-            updateNavbar();
-        });
-    };
+    motionEngine.register({
+        read: readPageMotion,
+        write: writePageMotion
+    });
 
     const openMenu = () => {
         if (!fsMenu || !openMenuBtn) return;
-        openLayer(fsMenu);
+        openLayer(fsMenu, openMenuBtn);
         openMenuBtn.setAttribute("aria-expanded", "true");
     };
 
@@ -1150,58 +1414,6 @@ document.addEventListener("DOMContentLoaded", () => {
             link.addEventListener("click", closeMenu);
         });
     }
-
-    const smoothScrollTo = (targetY) => {
-        cancelSmoothScroll();
-
-        const to = Math.max(0, targetY);
-
-        if (prefersReducedMotion) {
-            window.scrollTo(0, to);
-            return;
-        }
-
-        const from = window.scrollY;
-        const distance = to - from;
-        if (Math.abs(distance) < 4) return;
-
-        const duration = clamp(360 + Math.abs(distance) * 0.36, 560, 1020);
-        let startTime = null;
-
-        watchScrollInterrupts();
-
-        const frame = (timestamp) => {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min(1, (timestamp - startTime) / duration);
-            const eased = 0.5 - Math.cos(progress * Math.PI) / 2;
-
-            window.scrollTo(0, from + distance * eased);
-
-            if (progress < 1) {
-                scrollAnimationFrame = requestAnimationFrame(frame);
-            } else {
-                scrollAnimationFrame = null;
-                clearScrollInterrupts();
-            }
-        };
-
-        scrollAnimationFrame = requestAnimationFrame(frame);
-    };
-
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", (event) => {
-            const href = anchor.getAttribute("href");
-            if (!href || href === "#") return;
-
-            const target = document.querySelector(href);
-            if (!target) return;
-
-            event.preventDefault();
-            const offset = href === "#home" ? 0 : (window.innerWidth > 980 ? 88 : 72);
-            const top = target.getBoundingClientRect().top + window.scrollY - offset;
-            smoothScrollTo(top);
-        });
-    });
 
     const setupTerminalBorderOrbit = () => {
         const track = document.querySelector(".terminal-border-track");
@@ -1495,9 +1707,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const target = document.querySelector(selector);
             if (!target) return;
 
-            const offset = window.innerWidth > 980 ? 88 : 72;
-            const top = target.getBoundingClientRect().top + window.scrollY - offset;
-            smoothScrollTo(top);
+            if (window.SiteSmoothScroll) {
+                window.SiteSmoothScroll.toElement(target, { hash: selector });
+                return;
+            }
+
+            target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth" });
         };
 
         const runTerminalCommand = (rawValue, echo = true) => {
@@ -1722,6 +1937,125 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    const setupAboutLanyard = () => {
+        if (!aboutLanyardStage || !aboutLanyardMotion) return;
+
+        let isActive = false;
+        let hasRevealed = false;
+        let lastScrollY = window.scrollY;
+        let settleTimer = null;
+        let pointerInside = false;
+        let pointerBounds = null;
+        let pointerSwing = 0;
+        const renderedMotion = {
+            x: "",
+            y: "",
+            swing: ""
+        };
+
+        const revealLanyard = () => {
+            if (hasRevealed) return;
+            hasRevealed = true;
+            aboutLanyardStage.classList.add("is-lanyard-visible");
+        };
+
+        const setActive = (active) => {
+            isActive = active;
+            aboutLanyardStage.classList.toggle("is-lanyard-active", active);
+            if (active) revealLanyard();
+        };
+
+        if (prefersReducedMotion) {
+            revealLanyard();
+            return;
+        }
+
+        if (!("IntersectionObserver" in window)) {
+            setActive(true);
+        } else {
+            const lanyardObserver = new IntersectionObserver(
+                ([entry]) => setActive(entry.isIntersecting),
+                { threshold: 0.08, rootMargin: "100px 0px 100px 0px" }
+            );
+            lanyardObserver.observe(aboutLanyardStage);
+        }
+
+        if (!motionEngine) return;
+
+        const resetPointer = () => {
+            pointerInside = false;
+            pointerBounds = null;
+            pointerSwing = 0;
+            motionEngine.request();
+        };
+
+        if (isFinePointer) {
+            aboutLanyardStage.addEventListener("pointerenter", () => {
+                pointerBounds = aboutLanyardStage.getBoundingClientRect();
+                pointerInside = true;
+                motionEngine.request();
+            });
+            aboutLanyardStage.addEventListener("pointerleave", resetPointer);
+            aboutLanyardStage.addEventListener("blur", resetPointer, true);
+        }
+
+        motionEngine.register({
+            read(state) {
+                const scrollDelta = state.scroll ? state.scrollY - lastScrollY : 0;
+                lastScrollY = state.scrollY;
+                if (!isActive) return null;
+                if (!state.scroll && !state.force && !(pointerInside && state.pointer)) return null;
+
+                let localX = 0;
+                let localY = 0;
+
+                if (pointerInside && pointerBounds && (state.pointer || state.force)) {
+                    const ratioX = clamp((state.pointerX - pointerBounds.left) / Math.max(1, pointerBounds.width), 0, 1);
+                    const ratioY = clamp((state.pointerY - pointerBounds.top) / Math.max(1, pointerBounds.height), 0, 1);
+                    localX = (ratioX - 0.5) * 2;
+                    localY = (ratioY - 0.5) * 2;
+                }
+
+                pointerSwing = localX * 0.48;
+
+                return {
+                    x: localX * 2,
+                    y: localY * 0.8,
+                    swing: clamp(pointerSwing + scrollDelta * 0.045, -3.6, 3.6),
+                    hasScrollKick: Math.abs(scrollDelta) > 0.25
+                };
+            },
+            write(_state, frame) {
+                if (!frame) return;
+
+                const x = `${frame.x.toFixed(2)}px`;
+                const y = `${frame.y.toFixed(2)}px`;
+                const swing = `${frame.swing.toFixed(2)}deg`;
+
+                if (x !== renderedMotion.x) {
+                    renderedMotion.x = x;
+                    aboutLanyardStage.style.setProperty("--lanyard-x", x);
+                }
+                if (y !== renderedMotion.y) {
+                    renderedMotion.y = y;
+                    aboutLanyardStage.style.setProperty("--lanyard-y", y);
+                }
+                if (swing !== renderedMotion.swing) {
+                    renderedMotion.swing = swing;
+                    aboutLanyardStage.style.setProperty("--lanyard-swing", swing);
+                }
+
+                if (!frame.hasScrollKick) return;
+                window.clearTimeout(settleTimer);
+                settleTimer = window.setTimeout(() => {
+                    const settledSwing = `${pointerSwing.toFixed(2)}deg`;
+                    renderedMotion.swing = settledSwing;
+                    aboutLanyardStage.style.setProperty("--lanyard-swing", settledSwing);
+                }, 90);
+            }
+        });
+    };
+
     const bindMagnetic = (scope = document) => {
         if (!isFinePointer || prefersReducedMotion) return;
 
@@ -1822,55 +2156,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const animateStats = () => {
-        if (!heroStats) return;
-
-        const counters = heroStats.querySelectorAll(".val[data-target]");
-        if (!counters.length) return;
-
-        if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-            counters.forEach((counter) => {
-                counter.textContent = `${counter.dataset.target || "0"}${counter.dataset.suffix || ""}`;
-                counter.dataset.done = "1";
-            });
-            return;
-        }
-
-        const counterObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (!entry.isIntersecting) return;
-
-                    counters.forEach((counter) => {
-                        if (counter.dataset.done === "1") return;
-
-                        const target = Number(counter.dataset.target || "0");
-                        const suffix = counter.dataset.suffix || "";
-                        let value = 0;
-                        const step = Math.max(1, Math.ceil(target / 36));
-
-                        const timer = setInterval(() => {
-                            value += step;
-                            if (value >= target) {
-                                value = target;
-                                clearInterval(timer);
-                                counter.dataset.done = "1";
-                            }
-                            counter.textContent = `${value}${suffix}`;
-                        }, 32);
-                    });
-
-                    counterObserver.unobserve(entry.target);
-                });
-            },
-            {
-                threshold: 0.45
-            }
-        );
-
-        counterObserver.observe(heroStats);
-    };
-
     const syncMissionPanel = (step) => {
         if (!step) return;
 
@@ -1914,9 +2199,12 @@ document.addEventListener("DOMContentLoaded", () => {
         manifestoSteps.forEach((step) => stepObserver.observe(step));
     };
 
-    const renderProjectVisual = (project) => {
+    const renderProjectVisual = (project, compact = false) => {
         if (project.cover) {
-            return `<img src="${project.cover}" alt="Aperçu du projet ${project.title}" loading="lazy" decoding="async">`;
+            const source = compact
+                ? project.cover.replace(/cover\.webp(?=([?#]|$))/, "thumb.webp")
+                : project.cover;
+            return `<img src="${source}" alt="Aperçu du projet ${project.title}" loading="lazy" decoding="async">`;
         }
 
         return `
@@ -2388,6 +2676,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!visibleProjects.length) {
             projectGrid.classList.remove("is-compact");
             projectGrid.innerHTML = '<p class="empty-projects">Aucun projet sur ce filtre pour le moment.</p>';
+            motionEngine.invalidateLayout();
             return;
         }
 
@@ -2396,12 +2685,8 @@ document.addEventListener("DOMContentLoaded", () => {
         projectGrid.innerHTML = visibleProjects
             .map((project, idx) => {
                 const reverseClass = !isCompact && idx % 2 === 1 ? "reverse" : "";
-                const buttonContent = isCompact
-                    ? "Voir le projet"
-                    : reverseClass
-                        ? '<i class="fas fa-arrow-left"></i> Voir le projet'
-                        : 'Voir le projet <i class="fas fa-arrow-right"></i>';
-                const visualContent = renderProjectVisual(project);
+                const buttonContent = '<span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>';
+                const visualContent = renderProjectVisual(project, isCompact);
 
                 return `
                     <article class="project-card reveal ${reverseClass}" data-id="${project.id}" style="--project-accent: ${project.accent}">
@@ -2432,7 +2717,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </ul>
 
                             <div class="project-actions">
-                                <button class="btn-simple open-project" data-id="${project.id}" type="button" data-magnetic>
+                                <button class="btn-simple open-project project-cta" data-id="${project.id}" type="button">
                                     ${buttonContent}
                                 </button>
                             </div>
@@ -2450,6 +2735,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bindRevealElements();
         bindMagnetic(projectGrid);
         bindProjectTilt();
+        motionEngine.invalidateLayout();
     };
 
     const openProject = (id) => {
@@ -2499,7 +2785,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 showLogoFallback();
             }
         }
-        if (textTarget) textTarget.textContent = data.description;
+        if (textTarget) {
+            const paragraphs = data.description
+                .split(/\n{2,}/)
+                .map((paragraph) => paragraph.trim())
+                .filter(Boolean)
+                .map((paragraph) => {
+                    const element = document.createElement("p");
+                    element.textContent = paragraph;
+                    return element;
+                });
+
+            textTarget.replaceChildren(...paragraphs);
+        }
 
         if (techsTarget) {
             techsTarget.innerHTML = data.techs.map((tech) => `<li>${tech}</li>`).join("");
@@ -2523,7 +2821,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 liveTarget.style.display = "inline-flex";
                 liveTarget.href = data.liveLink;
                 liveTarget.setAttribute("href", data.liveLink);
-                liveTarget.innerHTML = `${data.liveLabel || "Voir le site"} <i class="fas fa-external-link-alt"></i>`;
+                liveTarget.innerHTML = `<span>${data.liveLabel || "Voir le site"}</span><i class="fas fa-external-link-alt"></i>`;
                 if (data.demoEmbed) {
                     liveTarget.classList.add("js-demo-launch");
                     liveTarget.dataset.demoUrl = data.demoEmbed;
@@ -2536,7 +2834,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 liveTarget.style.display = "none";
                 liveTarget.setAttribute("href", "javascript:void(0);");
-                liveTarget.innerHTML = 'Voir le site <i class="fas fa-external-link-alt"></i>';
+                liveTarget.innerHTML = '<span>Voir le site</span><i class="fas fa-external-link-alt"></i>';
                 liveTarget.classList.remove("js-demo-launch");
                 delete liveTarget.dataset.demoUrl;
                 delete liveTarget.dataset.demoTitle;
@@ -2558,6 +2856,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         openLayer(projectModal);
     };
+
+    document.addEventListener("portfolio:open-project", (event) => {
+        openProject(event.detail?.id);
+    });
 
     if (projectGrid) {
         projectGrid.addEventListener("click", (event) => {
@@ -2607,7 +2909,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 imageLightboxImg.src = imageTrigger.dataset.src || "";
                 imageLightboxImg.alt = imageTrigger.dataset.alt || "Capture du projet";
                 imageLightboxCaption.textContent = imageTrigger.dataset.caption || "";
-                openLayer(imageLightbox);
+                openLayer(imageLightbox, imageTrigger);
                 return;
             }
 
@@ -2639,7 +2941,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         openBtn.addEventListener("click", (event) => {
             event.preventDefault();
-            openLayer(modal);
+            openLayer(modal, openBtn);
         });
 
         closeBtn.addEventListener("click", () => closeLayer(modal));
@@ -2666,61 +2968,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("keydown", (event) => {
+        if (event.key === "Tab") {
+            trapLayerFocus(event);
+            return;
+        }
+
         if (event.key !== "Escape") return;
 
-        if (imageLightbox?.classList.contains("active")) {
-            closeLayer(imageLightbox);
-            return;
-        }
+        const topLayer = getTopLayer();
+        if (!topLayer) return;
 
-        if (projectModal?.classList.contains("active")) {
-            closeLayer(projectModal);
-            return;
-        }
-
-        if (fsMenu?.classList.contains("active")) {
+        event.preventDefault();
+        if (topLayer === fsMenu) {
             closeMenu();
             return;
         }
 
-        const activeModal = document.querySelector(".modal-overlay.active");
-        if (activeModal) {
-            closeLayer(activeModal);
-        }
+        closeLayer(topLayer);
     });
-
-    if (isFinePointer && !prefersReducedMotion) {
-        let rafId = null;
-        let lastPointerEvent = null;
-
-        window.addEventListener(
-            "pointermove",
-            (event) => {
-                lastPointerEvent = event;
-                if (rafId) return;
-
-                rafId = requestAnimationFrame(() => {
-                    if (!lastPointerEvent) {
-                        rafId = null;
-                        return;
-                    }
-
-                    const x = (lastPointerEvent.clientX / window.innerWidth) * 100;
-                    const y = (lastPointerEvent.clientY / window.innerHeight) * 100;
-                    const fieldX = (x - 50) * 0.16;
-                    const fieldY = (y - 50) * 0.12;
-
-                    body.style.setProperty("--pointer-x", `${x}%`);
-                    body.style.setProperty("--pointer-y", `${y}%`);
-                    body.style.setProperty("--field-x", `${fieldX}px`);
-                    body.style.setProperty("--field-y", `${fieldY}px`);
-
-                    rafId = null;
-                });
-            },
-            { passive: true }
-        );
-    }
 
     if (contactBox && isFinePointer && !prefersReducedMotion) {
         let contactFrame = null;
@@ -2767,17 +3032,25 @@ document.addEventListener("DOMContentLoaded", () => {
         let followerX = mouseX;
         let followerY = mouseY;
         let cursorFrame = null;
+        let lastCursorTimestamp = 0;
 
-        const renderCursor = () => {
+        const renderCursor = (timestamp) => {
             cursorFrame = null;
-            followerX += (mouseX - followerX) * 0.16;
-            followerY += (mouseY - followerY) * 0.16;
+            const deltaSeconds = lastCursorTimestamp
+                ? Math.min(0.05, (timestamp - lastCursorTimestamp) / 1000)
+                : 1 / 60;
+            const followAlpha = 1 - Math.exp(-10.5 * deltaSeconds);
+            lastCursorTimestamp = timestamp;
+            followerX += (mouseX - followerX) * followAlpha;
+            followerY += (mouseY - followerY) * followAlpha;
 
             cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
             follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
 
             if (Math.abs(mouseX - followerX) > 0.1 || Math.abs(mouseY - followerY) > 0.1) {
                 cursorFrame = requestAnimationFrame(renderCursor);
+            } else {
+                lastCursorTimestamp = 0;
             }
         };
 
@@ -2831,13 +3104,12 @@ document.addEventListener("DOMContentLoaded", () => {
     setupTerminalBorderOrbit();
     setupInteractiveTerminal();
     bindRevealElements();
+    setupAboutLanyard();
     bindCapabilityExplorer();
     bindMagnetic();
     bindManifestoFlow();
-    animateStats();
+    setupMarqueeVisibility();
     renderProjects("all");
-    updateNavbar();
-
-    window.addEventListener("scroll", schedulePageMotion, { passive: true });
-    window.addEventListener("resize", schedulePageMotion);
+    motionEngine.invalidateLayout();
+    document.documentElement.classList.add("portfolio-ready");
 });

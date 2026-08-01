@@ -7,6 +7,36 @@
     <meta name="theme-color" content="#050505">
     <title>Portfolio Raphaël Coursier</title>
 
+    <script>
+        (() => {
+            const root = document.documentElement;
+            const storageKey = "rfielbal:preloader-seen:v1";
+            root.classList.add("js");
+
+            let hasSeenSite = false;
+
+            try {
+                hasSeenSite = sessionStorage.getItem(storageKey) === "1";
+                sessionStorage.setItem(storageKey, "1");
+            } catch (_error) {
+                // Le hash et Navigation Timing restent disponibles si le stockage est bloqué.
+            }
+
+            const navigation = performance.getEntriesByType?.("navigation")?.[0];
+            const isRestoredNavigation = navigation?.type === "reload" || navigation?.type === "back_forward";
+            const shouldPlayPreloader = !hasSeenSite && !window.location.hash && !isRestoredNavigation;
+
+            window.__portfolioShouldPlayPreloader = shouldPlayPreloader;
+            root.classList.toggle("preloader-skip", !shouldPlayPreloader);
+        })();
+
+        window.setTimeout(() => {
+            if (!document.documentElement.classList.contains("portfolio-ready")) {
+                document.documentElement.classList.add("js-failed-open");
+            }
+        }, 4000);
+    </script>
+
     <link rel="icon" type="image/png" href="favicon.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +44,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=media-polish-20260727">
+    <link rel="stylesheet" href="style.css?v=ux-coherence-20260801">
+    <link rel="stylesheet" href="cinematic.css?v=ux-coherence-20260801">
 </head>
 <body>
     <div class="preloader" id="preloader" aria-hidden="true">
@@ -31,7 +62,6 @@
     <div class="grain-effect" aria-hidden="true"></div>
     <div class="ambient-grid" aria-hidden="true"></div>
     <div class="light-field" aria-hidden="true"></div>
-
     <header>
         <nav class="navbar" id="navbar" aria-label="Navigation principale">
             <a href="#home" class="brand-link" data-magnetic>
@@ -40,6 +70,7 @@
             </a>
 
             <ul class="nav-links">
+                <li><a href="#home">Accueil</a></li>
                 <li><a href="#manifesto">À propos</a></li>
                 <li><a href="#projects">Projets</a></li>
                 <li><a href="#savoir-faire">Savoir-faire</a></li>
@@ -47,13 +78,13 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
-            <button class="burger-menu" id="btn-open-menu" aria-label="Ouvrir le menu" aria-expanded="false">
+            <button class="burger-menu" id="btn-open-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="fs-menu" aria-haspopup="dialog">
                 <span>Menu</span>
                 <span class="burger-icon" aria-hidden="true"></span>
             </button>
         </nav>
 
-        <div class="fs-menu" id="fs-menu" aria-hidden="true">
+        <div class="fs-menu" id="fs-menu" role="dialog" aria-modal="true" aria-label="Menu de navigation" aria-hidden="true" inert>
             <button class="close-fs-menu" id="btn-close-menu" aria-label="Fermer le menu">
                 <i class="fas fa-times"></i>
                 Fermer
@@ -83,16 +114,22 @@
 
     <main>
         <section id="home" class="hero">
+            <canvas class="cinematic-canvas" id="cinematic-canvas" aria-hidden="true"></canvas>
+            <div class="cinematic-vignette" aria-hidden="true"></div>
+
             <div class="container hero-grid">
                 <div class="hero-left reveal">
                     <div class="hero-kicker-row">
                         <p class="hero-subtitle">BTS SIO — OPTION SLAM</p>
                     </div>
 
-                    <h1 class="hero-title">
-                        RAPHAËL <span class="outline">COURSIER</span><br>
-                        <span class="highlight">DÉVELOPPEUR</span> WEB<br>
-                        <span class="hero-amp">&amp; FUTUR INGÉNIEUR</span>
+                    <h1 class="hero-title" aria-label="Raphaël Coursier, développeur web">
+                        <span class="hero-title-line hero-title-line--one">
+                            <span>RAPHAËL</span> <span class="outline">COURSIER</span>
+                        </span>
+                        <span class="hero-title-line hero-title-line--two">
+                            <span>DÉVELOPPEUR</span> <span>WEB</span>
+                        </span>
                     </h1>
 
                     <p class="hero-intro">
@@ -133,23 +170,30 @@
                         </article>
                     </div>
 
-                    <div class="hero-stats" id="hero-stats">
-                        <article>
-                            <span class="val" data-target="5" data-suffix="+">0</span>
-                            <span class="lbl">Projets construits</span>
-                        </article>
-                        <article>
-                            <span class="val" data-target="4" data-suffix="">0</span>
-                            <span class="lbl">Domaines techniques</span>
-                        </article>
-                        <article>
-                            <span class="val" data-target="100" data-suffix="%">0</span>
-                            <span class="lbl">Exigence qualité</span>
-                        </article>
-                    </div>
                 </div>
 
                 <div class="hero-right reveal delay-1" id="hero-right">
+                    <div class="project-orbit" id="project-orbit" aria-hidden="true">
+                        <figure class="orbit-card orbit-card--wheello">
+                            <img src="./images/projects/wheello/thumb.webp" alt="" width="480" height="274" loading="eager" fetchpriority="low" decoding="async">
+                            <figcaption><span>CLIENT</span> Wheello</figcaption>
+                        </figure>
+                        <figure class="orbit-card orbit-card--jessica">
+                            <img src="./images/projects/jessica-dew/thumb.webp" alt="" width="480" height="270" loading="eager" fetchpriority="low" decoding="async">
+                            <figcaption><span>CLIENT</span> Jessica Dew</figcaption>
+                        </figure>
+                        <figure class="orbit-card orbit-card--streamcorner">
+                            <img src="./images/projects/streamcorner/thumb.webp" alt="" width="480" height="272" loading="eager" fetchpriority="low" decoding="async">
+                            <figcaption><span>ACADÉMIQUE</span> StreamCorner</figcaption>
+                        </figure>
+                        <figure class="orbit-card orbit-card--revaloop">
+                            <img src="./images/projects/revaloop/thumb.webp" alt="" width="480" height="270" loading="eager" fetchpriority="low" decoding="async">
+                            <figcaption><span>PRODUCT</span> Revaloop</figcaption>
+                        </figure>
+                        <span class="orbit-axis orbit-axis--x"></span>
+                        <span class="orbit-axis orbit-axis--y"></span>
+                    </div>
+
                     <div class="profile-stage" id="profile-stage">
                         <div class="stage-grid-lines" aria-hidden="true"></div>
                         <svg class="terminal-border-track" aria-hidden="true" focusable="false">
@@ -157,7 +201,7 @@
                                 <linearGradient id="terminal-border-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="#ccff00"></stop>
                                     <stop offset="48%" stop-color="#43dfff"></stop>
-                                    <stop offset="100%" stop-color="#ff5f57"></stop>
+                                    <stop offset="100%" stop-color="#ccff00"></stop>
                                 </linearGradient>
                             </defs>
                             <rect class="terminal-border-base" x="2" y="2" width="1" height="1" rx="18" ry="18"></rect>
@@ -212,12 +256,11 @@
                             <p>Un portfolio qui affirme le niveau visé.</p>
                         </article>
                     </div>
+
                 </div>
+
             </div>
 
-            <a href="#manifesto" class="btn-scroll" aria-label="Descendre">
-                Explorer <i class="fas fa-chevron-down bounce"></i>
-            </a>
         </section>
 
         <div class="marquee-wrap" aria-label="Technologies">
@@ -278,18 +321,42 @@
                 </div>
 
                 <div class="about-layout">
-                    <aside class="about-photo-card reveal delay-1">
-                        <div class="about-photo-frame">
-                            <img src="./images/profile/raphael-coursier.webp" width="900" height="1247" alt="Photo de profil de Raphaël Coursier" loading="lazy" decoding="async">
+                    <aside class="about-lanyard-stage" data-lanyard-stage aria-label="Carte de profil de Raphaël Coursier">
+                        <div class="lanyard-entry">
+                            <div class="lanyard-motion" data-lanyard-motion>
+                                <div class="lanyard-pendulum">
+                                    <div class="lanyard-cord" aria-hidden="true">
+                                        <span>RC · PORTFOLIO</span>
+                                    </div>
+                                    <div class="lanyard-ring" aria-hidden="true"></div>
+                                    <div class="lanyard-hook" aria-hidden="true"></div>
+
+                                    <article class="profile-pass" aria-labelledby="profile-pass-name">
+                                        <div class="profile-pass-visual">
+                                            <div class="profile-pass-photo">
+                                                <img src="./images/profile/raphael-coursier.webp" width="900" height="1247" alt="Portrait de Raphaël Coursier" loading="lazy" decoding="async">
+                                            </div>
+                                            <span class="profile-pass-brand" aria-hidden="true">
+                                                <b>RC</b>
+                                                <small>CREATIVE<br>DEVELOPER</small>
+                                            </span>
+                                            <strong class="profile-pass-vertical" aria-hidden="true">RAPHAËL</strong>
+                                        </div>
+
+                                        <a href="./documents/cv-raphael-coursier.pdf" class="profile-pass-identity about-cv-link" target="_blank" rel="noopener noreferrer" aria-label="Voir le CV de Raphaël Coursier au format PDF dans un nouvel onglet">
+                                            <span class="profile-pass-id-copy">
+                                                <small>BTS SIO · SLAM</small>
+                                                <h3 id="profile-pass-name">Raphaël Coursier</h3>
+                                                <span>Développeur web &amp; logiciel</span>
+                                            </span>
+                                            <span class="profile-pass-cv" aria-hidden="true">
+                                                CV <i class="fas fa-arrow-up-right-from-square"></i>
+                                            </span>
+                                        </a>
+                                    </article>
+                                </div>
+                            </div>
                         </div>
-                        <div class="about-tags" aria-label="Profil rapide">
-                            <span>20 ans</span>
-                            <span>BTS SIO</span>
-                            <span>SLAM</span>
-                        </div>
-                        <a href="./documents/cv-raphael-coursier.pdf" class="about-cv-link" target="_blank" rel="noopener noreferrer" data-magnetic>
-                            Voir mon CV <i class="fas fa-file-download"></i>
-                        </a>
                     </aside>
 
                     <div class="about-scroll-column">
@@ -307,21 +374,6 @@
                                     Mon objectif est d'évoluer vers un profil d'ingénieur capable de cadrer un besoin,
                                     concevoir une base technique propre et livrer un produit clair à maintenir dans le temps.
                                 </p>
-                            </div>
-
-                            <div class="about-stats">
-                                <article>
-                                    <strong>1</strong>
-                                    <span>Année d'exp.</span>
-                                </article>
-                                <article>
-                                    <strong>9</strong>
-                                    <span>Projets</span>
-                                </article>
-                                <article>
-                                    <strong>100%</strong>
-                                    <span>Motivation</span>
-                                </article>
                             </div>
 
                             <div class="about-values">
@@ -447,8 +499,120 @@
             </div>
         </section>
 
-        <section id="projects" class="section-pad build-section" data-stage="03">
-            <div class="container">
+        <section id="projects" class="section-pad build-section cinematic-projects" data-stage="03">
+            <a class="cinema-skip" href="#projects-index">Passer la scène cinématique</a>
+
+            <div class="project-cinema" id="project-cinema" aria-labelledby="cinema-title">
+                <div class="cinema-sticky">
+                    <div class="cinema-ambient" aria-hidden="true">
+                        <span class="cinema-orb cinema-orb--one"></span>
+                        <span class="cinema-orb cinema-orb--two"></span>
+                        <span class="cinema-grid"></span>
+                    </div>
+
+                    <header class="cinema-heading">
+                        <p><span>03</span> / SELECTED PROJETS</p>
+                        <h2 id="cinema-title">MES PROJETS</h2>
+                    </header>
+
+                    <div class="cinema-stage" id="cinema-stage">
+                        <article class="cinema-card" data-cinema-card data-project-id="4" style="--card-accent: #43dfff; --card-rgb: 67, 223, 255;">
+                            <div class="cinema-card-shell">
+                                <figure class="cinema-card-media">
+                                    <img src="./images/projects/wheello/cover.webp" width="1600" height="1000" alt="Interfaces web et mobile de l’application métier Wheello" loading="lazy" decoding="async">
+                                    <span class="cinema-media-scan" aria-hidden="true"></span>
+                                </figure>
+                                <div class="cinema-card-copy">
+                                    <p class="cinema-card-index">01 / APPLICATION MÉTIER</p>
+                                    <h3>WHEELLO</h3>
+                                    <p>Piloter une flotte, les réservations et les usages terrain dans un même système.</p>
+                                    <div class="cinema-card-meta">
+                                        <span>SYMFONY</span><span>FLUTTER</span><span>API</span>
+                                    </div>
+                                    <button class="cinema-open project-cta" type="button" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
+                                        <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cinema-card" data-cinema-card data-project-id="1" style="--card-accent: #43dfff; --card-rgb: 67, 223, 255;">
+                            <div class="cinema-card-shell">
+                                <figure class="cinema-card-media">
+                                    <img src="./images/projects/jessica-dew/cover.webp" width="1600" height="1000" alt="Accueil éditorial du site de la photographe Jessica Dew" loading="lazy" decoding="async">
+                                    <span class="cinema-media-scan" aria-hidden="true"></span>
+                                </figure>
+                                <div class="cinema-card-copy">
+                                    <p class="cinema-card-index">02 / EXPÉRIENCE CLIENT</p>
+                                    <h3>JESSICA DEW</h3>
+                                    <p>Une expérience photographique douce, éditoriale et construite jusqu’à la production.</p>
+                                    <div class="cinema-card-meta">
+                                        <span>SYMFONY</span><span>UX</span><span>OVHCLOUD</span>
+                                    </div>
+                                    <button class="cinema-open project-cta" type="button" data-cinema-open="1" aria-haspopup="dialog" aria-controls="modal-project">
+                                        <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cinema-card" data-cinema-card data-project-id="3" style="--card-accent: #ccff00; --card-rgb: 204, 255, 0;">
+                            <div class="cinema-card-shell">
+                                <figure class="cinema-card-media">
+                                    <img src="./images/projects/streamcorner/cover.webp" width="1600" height="1000" alt="Accueil de la boutique e-commerce StreamCorner" loading="lazy" decoding="async">
+                                    <span class="cinema-media-scan" aria-hidden="true"></span>
+                                </figure>
+                                <div class="cinema-card-copy">
+                                    <p class="cinema-card-index">03 / E-COMMERCE FULL-STACK</p>
+                                    <h3>STREAMCORNER</h3>
+                                    <p>Un parcours e-commerce complet, du catalogue au back-office.</p>
+                                    <div class="cinema-card-meta">
+                                        <span>SYMFONY</span><span>DOCTRINE</span><span>MYSQL</span>
+                                    </div>
+                                    <button class="cinema-open project-cta" type="button" data-cinema-open="3" aria-haspopup="dialog" aria-controls="modal-project">
+                                        <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="cinema-card" data-cinema-card data-project-id="9" style="--card-accent: #9b7cff; --card-rgb: 155, 124, 255;">
+                            <div class="cinema-card-shell">
+                                <figure class="cinema-card-media">
+                                    <img src="./images/projects/revaloop/cover.webp" width="1600" height="1000" alt="Interface de la plateforme de recette client Revaloop" loading="lazy" decoding="async">
+                                    <span class="cinema-media-scan" aria-hidden="true"></span>
+                                </figure>
+                                <div class="cinema-card-copy">
+                                    <p class="cinema-card-index">04 / PRODUIT OPEN SOURCE</p>
+                                    <h3>REVALOOP</h3>
+                                    <p>Transformer une preview en espace de décision partagé entre développeur et client.</p>
+                                    <div class="cinema-card-meta">
+                                        <span>NEXT.JS</span><span>CLOUDFLARE</span><span>ELECTRON</span>
+                                    </div>
+                                    <button class="cinema-open project-cta" type="button" data-cinema-open="9" aria-haspopup="dialog" aria-controls="modal-project">
+                                        <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="cinema-controls" aria-label="Contrôles du projet sélectionné">
+                        <p><span id="cinema-current">01</span> / 04</p>
+                        <div class="cinema-progress"><i id="cinema-progress-fill"></i></div>
+                        <p id="cinema-status">WHEELLO / CLIENT SYSTEM</p>
+                        <button class="cinema-direct-open project-cta" id="cinema-direct-open" type="button" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
+                            <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <p class="cinema-scroll-hint" aria-hidden="true">
+                        <span></span> SCROLL TO DIRECT
+                    </p>
+                </div>
+            </div>
+
+            <div class="container" id="projects-index">
                 <div class="section-title reveal">
                     <span class="num">03</span>
                     <h2 class="glitch" data-text="SELECTED WORKS">MES PROJETS</h2>
@@ -474,7 +638,52 @@
                     <span><i class="legend-dot perso"></i> Perso</span>
                 </div>
 
+                <div class="no-js-projects js-fallback-projects">
+                    <h3>Projets sélectionnés</h3>
+                    <ul>
+                        <li><strong>Wheello</strong> — application métier Symfony et Flutter livrée à Habitat Insertion.</li>
+                        <li><strong>Revaloop</strong> — plateforme open source de recette et de validation client.</li>
+                        <li><strong>Jessica Dew</strong> — expérience photographique conçue, déployée et maintenue de bout en bout.</li>
+                        <li><strong>Responsiver</strong> — laboratoire desktop local-first pour auditer et corriger le responsive.</li>
+                        <li><strong>AetherCore</strong> — inspecteur de modèles 3D WebGL avec mesures et interactions optionnelles.</li>
+                    </ul>
+                    <p>Activez JavaScript pour filtrer les neuf projets et ouvrir leurs études de cas complètes.</p>
+                </div>
+
                 <div class="projects-grid" id="projects-grid"></div>
+
+                <aside class="watch-portal reveal" aria-labelledby="watch-portal-title">
+                    <div class="watch-portal-copy">
+                        <h3 id="watch-portal-title">
+                            Je ne suis pas les tendances.<br>
+                            <em>Je les mets à l’épreuve.</em>
+                        </h3>
+                        <p class="watch-portal-intro">
+                            IA, web, interfaces et écosystème Apple&nbsp;: je transforme les signaux repérés
+                            en sources vérifiées, tests personnels et décisions utiles.
+                        </p>
+                        <ul class="watch-portal-topics" aria-label="Sujets de veille suivis">
+                            <li>IA &amp; agents</li>
+                            <li>Web &amp; motion</li>
+                            <li>Apple &amp; outils</li>
+                        </ul>
+                    </div>
+
+                    <div class="watch-portal-radar" aria-hidden="true">
+                        <span class="watch-radar-sweep"></span>
+                        <span class="watch-radar-ring watch-radar-ring--one"></span>
+                        <span class="watch-radar-ring watch-radar-ring--two"></span>
+                        <span class="watch-radar-ring watch-radar-ring--three"></span>
+                        <i class="watch-radar-cross watch-radar-cross--x"></i>
+                        <i class="watch-radar-cross watch-radar-cross--y"></i>
+                        <b></b>
+                    </div>
+
+                    <a class="watch-portal-link" href="./veille.html" data-watch-arrow>
+                        <strong>Explorer ma veille technologique</strong>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </aside>
             </div>
         </section>
 
@@ -661,7 +870,7 @@
                             </a>
                         </div>
 
-                        <p class="copyright">© Coursier Raphaël - 2026</p>
+                        <p class="copyright">© Coursier Raphaël · <time data-current-year datetime="2026">2026</time></p>
                         <button class="legal-trigger" id="btn-licenses" type="button">Mentions légales</button>
                     </article>
                 </div>
@@ -669,12 +878,12 @@
         </section>
     </main>
 
-    <div class="modal-overlay" id="modal-licenses" aria-hidden="true">
+    <div class="modal-overlay" id="modal-licenses" role="dialog" aria-modal="true" aria-labelledby="modal-licenses-title" aria-hidden="true" inert>
         <div class="modal-content md legal-modal">
             <button class="close-modal" id="close-licenses" aria-label="Fermer la fenêtre mentions légales">
                 <i class="fas fa-times"></i> Fermer
             </button>
-            <h2>MENTIONS LÉGALES</h2>
+            <h2 id="modal-licenses-title">MENTIONS LÉGALES</h2>
             <div class="text-block">
                 <div class="license-item">
                     <h4>Éditeur du site</h4>
@@ -731,7 +940,7 @@
         </div>
     </div>
 
-    <div class="project-modal-wrap" id="modal-project" aria-hidden="true">
+    <div class="project-modal-wrap" id="modal-project" role="dialog" aria-modal="true" aria-labelledby="pm-title" aria-hidden="true" inert>
         <div class="pm-container">
             <button class="pm-close" id="close-pm" aria-label="Fermer la fenêtre projet">
                 <i class="fas fa-times"></i>
@@ -756,11 +965,11 @@
                 </div>
 
                 <div class="pm-header-actions" aria-label="Actions du projet">
-                    <a href="javascript:void(0);" target="_blank" rel="noopener noreferrer" id="pm-live" class="btn-simple">
-                        Voir le site <i class="fas fa-external-link-alt"></i>
+                    <a href="javascript:void(0);" target="_blank" rel="noopener noreferrer" id="pm-live" class="btn-simple project-cta">
+                        <span>Voir le site</span><i class="fas fa-external-link-alt"></i>
                     </a>
-                    <a href="javascript:void(0);" target="_blank" rel="noopener noreferrer" id="pm-link" class="btn-simple">
-                        Voir le code <i class="fab fa-github"></i>
+                    <a href="javascript:void(0);" target="_blank" rel="noopener noreferrer" id="pm-link" class="btn-simple project-cta">
+                        <span>Voir le code</span><i class="fab fa-github"></i>
                     </a>
                 </div>
             </div>
@@ -769,7 +978,7 @@
                 <div class="pm-details">
                     <div class="pm-desc">
                         <h4>CONTEXTE</h4>
-                        <p id="pm-text">Description...</p>
+                        <div id="pm-text" class="pm-description-copy"><p>Description...</p></div>
                     </div>
                     <div class="pm-stack">
                         <h4>TECHNOLOGIES</h4>
@@ -783,7 +992,7 @@
         </div>
     </div>
 
-    <div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Aperçu de la capture">
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Aperçu de la capture" inert>
         <button class="image-lightbox-close" id="close-image-lightbox" type="button" aria-label="Fermer l'aperçu">
             <i class="fas fa-times"></i>
         </button>
@@ -793,12 +1002,12 @@
         </figure>
     </div>
 
-    <div class="modal-overlay" id="modal-skills" aria-hidden="true">
+    <div class="modal-overlay" id="modal-skills" role="dialog" aria-modal="true" aria-labelledby="modal-skills-title" aria-hidden="true" inert>
         <div class="modal-content md">
             <button class="close-modal" id="close-skills" aria-label="Fermer la fenêtre compétences">
                 <i class="fas fa-times"></i> Fermer
             </button>
-            <h2>COMPÉTENCES &amp; APPRENTISSAGE</h2>
+            <h2 id="modal-skills-title">COMPÉTENCES &amp; APPRENTISSAGE</h2>
             <div class="grid-skills">
                 <div class="card-skill"><i class="fas fa-layer-group"></i><span>Frontend</span><small>HTML, CSS, JavaScript, responsive et animations.</small></div>
                 <div class="card-skill"><i class="fab fa-symfony"></i><span>Symfony</span><small>Back-office, CRUD, formulaires, sécurité et architecture MVC.</small></div>
@@ -820,12 +1029,12 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-diplomas" aria-hidden="true">
+    <div class="modal-overlay" id="modal-diplomas" role="dialog" aria-modal="true" aria-labelledby="modal-diplomas-title" aria-hidden="true" inert>
         <div class="modal-content sm">
             <button class="close-modal" id="close-diplomas" aria-label="Fermer la fenêtre diplômes">
                 <i class="fas fa-times"></i> Fermer
             </button>
-            <h2>DIPLÔMES &amp; CERTIFICATIONS</h2>
+            <h2 id="modal-diplomas-title">DIPLÔMES &amp; CERTIFICATIONS</h2>
             <div class="diploma-list">
                 <article class="diploma-item">
                     <div class="diploma-info">
@@ -851,12 +1060,12 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-school" aria-hidden="true">
+    <div class="modal-overlay" id="modal-school" role="dialog" aria-modal="true" aria-labelledby="modal-school-title" aria-hidden="true" inert>
         <div class="modal-content sm">
             <button class="close-modal" id="close-school" aria-label="Fermer la fenêtre dossier scolaire">
                 <i class="fas fa-times"></i> Fermer
             </button>
-            <h2>MON DOSSIER SCOLAIRE</h2>
+            <h2 id="modal-school-title">MON DOSSIER SCOLAIRE</h2>
 
             <div class="school-list">
                 <div class="school-item">
@@ -890,6 +1099,9 @@
         </div>
     </div>
 
-    <script src="script.js?v=media-polish-20260727"></script>
+    <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
+    <script src="motion-engine.js?v=ux-refine-20260801"></script>
+    <script src="script.js?v=ux-coherence-20260801"></script>
+    <script src="cinematic.js?v=ux-refine-20260801"></script>
 </body>
 </html>

@@ -6,5 +6,6 @@ output/playwright/
 
 *.log
 
-# Documents personnels conservés uniquement en local
-documents/
+# Le CV public est livré avec le portfolio ; les autres documents restent locaux.
+documents/*
+!documents/cv-raphael-coursier.pdf

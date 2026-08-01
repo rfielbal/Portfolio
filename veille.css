@@ -1,14 +1,16 @@
 :root {
-    --watch-bg: #050709;
-    --watch-panel: #0b0f14;
-    --watch-panel-strong: #0e1319;
-    --watch-text: #f3f0e8;
-    --watch-muted: #9ea7b0;
-    --watch-line: rgba(255, 255, 255, 0.14);
-    --watch-line-strong: rgba(255, 255, 255, 0.24);
-    --watch-acid: #ccff00;
-    --watch-cyan: #43dfff;
-    --watch-red: #ff5f57;
+    --watch-bg: #050507;
+    --watch-panel: #0a0910;
+    --watch-panel-strong: #100e18;
+    --watch-text: #f2eee5;
+    --watch-muted: #aaa5b0;
+    --watch-line: rgba(242, 238, 229, 0.12);
+    --watch-line-strong: rgba(242, 238, 229, 0.22);
+    --watch-violet: #9f86ff;
+    --watch-violet-soft: rgba(159, 134, 255, 0.1);
+    --watch-violet-line: rgba(159, 134, 255, 0.32);
+    --watch-acid: #c9f45a;
+    --watch-cyan: #69d7e7;
     --watch-head: "Oswald", sans-serif;
     --watch-code: "Fira Code", monospace;
     --watch-sans: "Space Grotesk", sans-serif;
@@ -22,7 +24,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scroll-padding-top: 96px;
 }
 
@@ -65,12 +67,12 @@ code {
 }
 
 ::selection {
-    background: var(--watch-acid);
-    color: #050709;
+    background: var(--watch-violet);
+    color: #07060a;
 }
 
 :focus-visible {
-    outline: 2px solid var(--watch-acid);
+    outline: 2px solid var(--watch-violet);
     outline-offset: 4px;
 }
 
@@ -80,8 +82,8 @@ code {
     left: 12px;
     z-index: 3000;
     padding: 10px 14px;
-    background: var(--watch-acid);
-    color: #050709;
+    background: var(--watch-violet);
+    color: #07060a;
     font-size: 0.75rem;
     font-weight: 700;
     transform: translateY(-160%);
@@ -103,8 +105,8 @@ code {
     z-index: -3;
     pointer-events: none;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        linear-gradient(rgba(242, 238, 229, 0.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(242, 238, 229, 0.026) 1px, transparent 1px);
     background-size: 64px 64px;
 }
 
@@ -114,7 +116,7 @@ code {
     z-index: -2;
     overflow: hidden;
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.32;
 }
 
 .watch-lines i {
@@ -127,14 +129,14 @@ code {
 .watch-lines i:first-child {
     top: 22%;
     left: -10%;
-    background: rgba(204, 255, 0, 0.18);
+    background: rgba(159, 134, 255, 0.2);
     transform: rotate(-11deg);
 }
 
 .watch-lines i:last-child {
     top: 74%;
     left: -18%;
-    background: rgba(67, 223, 255, 0.14);
+    background: rgba(105, 215, 231, 0.1);
     transform: rotate(8deg);
 }
 
@@ -159,7 +161,7 @@ code {
     gap: 28px;
     border: 1px solid transparent;
     border-radius: 999px;
-    background: rgba(7, 9, 13, 0.38);
+    background: rgba(7, 6, 10, 0.48);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
     -webkit-backdrop-filter: blur(18px) saturate(130%);
     backdrop-filter: blur(18px) saturate(130%);
@@ -173,12 +175,11 @@ code {
 
 .watch-nav.is-scrolled {
     width: min(1100px, calc(100vw - 48px));
-    background: rgba(7, 9, 13, 0.9);
-    border-color: rgba(204, 255, 0, 0.62);
+    background: rgba(7, 6, 10, 0.92);
+    border-color: var(--watch-violet-line);
     box-shadow:
-        inset 0 0 0 1px rgba(204, 255, 0, 0.1),
-        0 18px 60px rgba(0, 0, 0, 0.34),
-        0 0 28px rgba(204, 255, 0, 0.08);
+        inset 0 0 0 1px rgba(159, 134, 255, 0.05),
+        0 18px 60px rgba(0, 0, 0, 0.34);
 }
 
 .watch-brand {
@@ -224,8 +225,7 @@ code {
 }
 
 .watch-nav-links a.is-current {
-    color: var(--watch-acid);
-    text-shadow: 0 0 18px rgba(204, 255, 0, 0.42);
+    color: var(--watch-violet);
 }
 
 .watch-menu-button {
@@ -249,9 +249,9 @@ code {
 
 .watch-menu-button:hover,
 .watch-menu-button:focus-visible {
-    border-color: var(--watch-acid);
-    background: var(--watch-acid);
-    color: #050709;
+    border-color: var(--watch-violet);
+    background: var(--watch-violet);
+    color: #07060a;
 }
 
 .watch-mobile-menu {
@@ -262,9 +262,9 @@ code {
     place-items: center;
     padding: 32px;
     background:
-        linear-gradient(rgba(204, 255, 0, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(204, 255, 0, 0.035) 1px, transparent 1px),
-        rgba(5, 7, 9, 0.98);
+        linear-gradient(rgba(159, 134, 255, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(159, 134, 255, 0.035) 1px, transparent 1px),
+        rgba(5, 5, 7, 0.98);
     background-size: 56px 56px;
     opacity: 0;
     visibility: hidden;
@@ -301,7 +301,7 @@ code {
 .watch-mobile-menu nav a:hover,
 .watch-mobile-menu nav a:focus-visible,
 .watch-mobile-menu nav a[aria-current="page"] {
-    color: var(--watch-acid);
+    color: var(--watch-violet);
     -webkit-text-stroke: 0 transparent;
 }
 
@@ -328,6 +328,9 @@ code {
     display: flex;
     align-items: center;
     border-bottom: 1px solid var(--watch-line);
+    background:
+        radial-gradient(circle at 78% 30%, rgba(159, 134, 255, 0.095), transparent 32%),
+        linear-gradient(180deg, rgba(159, 134, 255, 0.025), transparent 52%);
     isolation: isolate;
 }
 
@@ -347,7 +350,7 @@ code {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    color: var(--watch-acid);
+    color: var(--watch-violet);
 }
 
 .status-light {
@@ -355,7 +358,7 @@ code {
     height: 8px;
     border-radius: 50%;
     background: var(--watch-acid);
-    box-shadow: 0 0 18px rgba(204, 255, 0, 0.74);
+    box-shadow: 0 0 14px rgba(201, 244, 90, 0.42);
     animation: status-pulse 2s ease-in-out infinite;
 }
 
@@ -372,7 +375,7 @@ code {
 .watch-hero h1 span {
     display: block;
     color: transparent;
-    -webkit-text-stroke: 2px var(--watch-acid);
+    -webkit-text-stroke: 2px var(--watch-violet);
 }
 
 .watch-hero-copy {
@@ -404,7 +407,7 @@ code {
 }
 
 .watch-hero-facts dt {
-    color: var(--watch-acid);
+    color: var(--watch-violet);
     font-family: var(--watch-head);
     font-size: 2.4rem;
     font-weight: 700;
@@ -437,8 +440,8 @@ code {
     left: 0;
     width: 18%;
     height: 2px;
-    background: var(--watch-cyan);
-    box-shadow: 0 0 20px rgba(67, 223, 255, 0.7);
+    background: var(--watch-violet);
+    box-shadow: 0 0 18px rgba(159, 134, 255, 0.38);
     animation: cycle-scan 5.5s linear infinite;
 }
 
@@ -457,7 +460,7 @@ code {
 
 .watch-cycle span {
     grid-row: 1 / 3;
-    color: var(--watch-cyan);
+    color: var(--watch-violet);
     font-family: var(--watch-head);
     font-size: 1.7rem;
     font-weight: 700;
@@ -495,7 +498,7 @@ code {
 
 .section-kicker {
     margin-bottom: 20px;
-    color: var(--watch-acid);
+    color: var(--watch-violet);
     font-size: 0.7rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -533,7 +536,7 @@ code {
 .method-intro blockquote {
     margin-top: 42px;
     padding: 22px 0 22px 24px;
-    border-left: 2px solid var(--watch-acid);
+    border-left: 2px solid var(--watch-violet);
     color: #dfe4e8;
     font-family: var(--watch-sans);
     font-size: 1.05rem;
@@ -560,8 +563,8 @@ code {
 
 .method-progress {
     z-index: 1;
-    background: var(--watch-acid);
-    box-shadow: 0 0 18px rgba(204, 255, 0, 0.34);
+    background: var(--watch-violet);
+    box-shadow: 0 0 16px rgba(159, 134, 255, 0.22);
     transform: scaleY(0);
     transform-origin: top;
 }
@@ -592,15 +595,15 @@ code {
     z-index: 2;
     width: 14px;
     height: 14px;
-    border: 2px solid var(--watch-acid);
+    border: 2px solid var(--watch-violet);
     border-radius: 50%;
     background: var(--watch-bg);
     transition: background 220ms ease, box-shadow 220ms ease;
 }
 
 .method-track li.is-active::before {
-    background: var(--watch-acid);
-    box-shadow: 0 0 18px rgba(204, 255, 0, 0.54);
+    background: var(--watch-violet);
+    box-shadow: 0 0 16px rgba(159, 134, 255, 0.34);
 }
 
 .method-track li > span {
@@ -636,7 +639,9 @@ code {
 }
 
 .watch-signals {
-    background: rgba(9, 12, 16, 0.72);
+    background:
+        linear-gradient(180deg, rgba(159, 134, 255, 0.035), transparent 24%),
+        rgba(9, 8, 13, 0.72);
 }
 
 .signal-toolbar {
@@ -673,9 +678,9 @@ code {
 }
 
 .signal-filters button.is-active {
-    border-color: var(--watch-acid);
-    background: var(--watch-acid);
-    color: #050709;
+    border-color: var(--watch-violet);
+    background: var(--watch-violet);
+    color: #07060a;
 }
 
 #signal-count {
@@ -693,7 +698,7 @@ code {
 }
 
 .signal-card {
-    --signal-accent: var(--watch-acid);
+    --signal-accent: var(--watch-violet);
     position: relative;
     min-width: 0;
     padding: 28px;
@@ -701,7 +706,9 @@ code {
     flex-direction: column;
     border: 1px solid var(--watch-line);
     border-radius: 6px;
-    background: rgba(5, 7, 9, 0.86);
+    background:
+        linear-gradient(145deg, rgba(159, 134, 255, 0.035), transparent 38%),
+        rgba(5, 5, 7, 0.9);
     overflow: hidden;
     transition: transform 220ms ease, border-color 220ms ease, background 220ms ease;
 }
@@ -720,8 +727,10 @@ code {
 }
 
 .signal-card:hover {
-    border-color: color-mix(in srgb, var(--signal-accent) 52%, transparent);
-    background: rgba(10, 14, 18, 0.96);
+    border-color: rgba(159, 134, 255, 0.42);
+    background:
+        linear-gradient(145deg, rgba(159, 134, 255, 0.07), transparent 42%),
+        rgba(10, 9, 14, 0.97);
     transform: translateY(-4px);
 }
 
@@ -730,15 +739,15 @@ code {
 }
 
 .signal-card--cyan {
-    --signal-accent: var(--watch-cyan);
+    --signal-accent: var(--watch-violet);
 }
 
-.signal-card--red {
-    --signal-accent: var(--watch-red);
+.signal-card--violet {
+    --signal-accent: var(--watch-violet);
 }
 
 .signal-card--acid {
-    --signal-accent: var(--watch-acid);
+    --signal-accent: var(--watch-violet);
 }
 
 .signal-card[hidden] {
@@ -780,18 +789,18 @@ code {
 }
 
 .signal-state--tested {
-    border-color: rgba(67, 223, 255, 0.4);
+    border-color: rgba(105, 215, 231, 0.34);
     color: var(--watch-cyan);
 }
 
 .signal-state--verified {
-    border-color: rgba(204, 255, 0, 0.4);
+    border-color: rgba(201, 244, 90, 0.32);
     color: var(--watch-acid);
 }
 
 .signal-state--watch {
-    border-color: rgba(255, 95, 87, 0.42);
-    color: var(--watch-red);
+    border-color: var(--watch-violet-line);
+    color: var(--watch-violet);
 }
 
 .signal-card h3 {
@@ -875,7 +884,7 @@ code {
     display: grid;
     grid-template-columns: minmax(0, 1.08fr) minmax(430px, 0.92fr);
     border-top: 1px solid var(--watch-line);
-    background: rgba(5, 7, 9, 0.88);
+    background: rgba(5, 5, 7, 0.9);
 }
 
 .impact-story--reverse .impact-visual {
@@ -890,9 +899,10 @@ code {
     place-items: center;
     border-right: 1px solid var(--watch-line);
     background:
-        linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-        #080b0f;
+        linear-gradient(rgba(242, 238, 229, 0.026) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(242, 238, 229, 0.026) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(159, 134, 255, 0.06), transparent 48%),
+        #08070b;
     background-size: 48px 48px;
 }
 
@@ -928,7 +938,7 @@ code {
 }
 
 .impact-index {
-    color: var(--watch-cyan);
+    color: var(--watch-violet);
     font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -987,11 +997,13 @@ code {
 .impact-copy > a:hover,
 .impact-copy > a:focus-visible {
     gap: 15px;
-    color: var(--watch-acid);
+    color: var(--watch-violet);
 }
 
 .watch-sources {
-    background: rgba(9, 12, 16, 0.72);
+    background:
+        linear-gradient(180deg, rgba(159, 134, 255, 0.03), transparent 26%),
+        rgba(9, 8, 13, 0.72);
 }
 
 .source-levels {
@@ -1024,7 +1036,7 @@ code {
 
 .source-levels li > p:first-of-type {
     margin-top: 24px;
-    color: var(--watch-cyan);
+    color: var(--watch-violet);
     font-size: 0.66rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1081,8 +1093,8 @@ code {
 
 .official-sources a:hover,
 .official-sources a:focus-visible {
-    background: rgba(204, 255, 0, 0.06);
-    color: var(--watch-acid);
+    background: var(--watch-violet-soft);
+    color: var(--watch-violet);
 }
 
 .official-sources a > i:first-child {
@@ -1119,7 +1131,7 @@ code {
 
 .library-note {
     padding-left: 20px;
-    border-left: 2px solid var(--watch-red);
+    border-left: 2px solid var(--watch-violet);
     font-size: 0.9rem !important;
 }
 
@@ -1127,7 +1139,9 @@ code {
     min-width: 0;
     border: 1px solid var(--watch-line-strong);
     border-radius: 6px;
-    background: rgba(5, 7, 9, 0.94);
+    background:
+        linear-gradient(145deg, rgba(159, 134, 255, 0.045), transparent 38%),
+        rgba(5, 5, 7, 0.95);
     box-shadow: 0 30px 100px rgba(0, 0, 0, 0.38);
     overflow: hidden;
 }
@@ -1145,15 +1159,15 @@ code {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--watch-red);
+    background: var(--watch-violet);
 }
 
 .library-console-head > span:nth-child(2) {
-    background: #ffd166;
+    background: var(--watch-cyan);
 }
 
 .library-console-head > span:nth-child(3) {
-    background: #72ef9d;
+    background: var(--watch-acid);
 }
 
 .library-console-head p {
@@ -1199,7 +1213,7 @@ code {
 
 .library-links a:hover,
 .library-links a:focus-visible {
-    background: rgba(67, 223, 255, 0.06);
+    background: var(--watch-violet-soft);
 }
 
 .library-links span {
@@ -1214,18 +1228,34 @@ code {
 }
 
 .library-links i {
-    color: var(--watch-cyan);
+    color: var(--watch-violet);
     font-size: 0.7rem;
 }
 
 .watch-closing {
-    padding: 110px 0;
+    padding: 96px 0;
     border-bottom: 1px solid var(--watch-line);
-    background: var(--watch-acid);
-    color: #050709;
+    background:
+        linear-gradient(180deg, rgba(159, 134, 255, 0.025), transparent 54%),
+        #050507;
+    color: var(--watch-text);
+}
+
+.watch-closing .watch-container {
+    position: relative;
+    padding: clamp(36px, 5vw, 72px);
+    overflow: hidden;
+    border: 1px solid var(--watch-violet-line);
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 88% 10%, rgba(159, 134, 255, 0.16), transparent 34%),
+        linear-gradient(145deg, rgba(159, 134, 255, 0.075), transparent 42%),
+        var(--watch-panel);
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.32);
 }
 
 .watch-closing p {
+    color: var(--watch-violet);
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -1234,8 +1264,8 @@ code {
 .watch-closing h2 {
     max-width: 1160px;
     margin-top: 20px;
-    color: #050709;
-    font-size: 5rem;
+    color: var(--watch-text);
+    font-size: 4.7rem;
 }
 
 .watch-closing .watch-container > div {
@@ -1253,7 +1283,7 @@ code {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    border: 1px solid #050709;
+    border: 1px solid var(--watch-violet-line);
     border-radius: 4px;
     font-size: 0.68rem;
     font-weight: 700;
@@ -1262,30 +1292,33 @@ code {
 }
 
 .button-primary {
-    background: #050709;
-    color: var(--watch-text);
+    border-color: var(--watch-violet);
+    background: var(--watch-violet);
+    color: #08070b;
 }
 
 .button-secondary {
-    background: transparent;
-    color: #050709;
+    background: rgba(255, 255, 255, 0.025);
+    color: var(--watch-text);
 }
 
 .button-primary:hover,
 .button-primary:focus-visible {
-    background: #fff;
-    color: #050709;
+    border-color: var(--watch-text);
+    background: var(--watch-text);
+    color: #08070b;
 }
 
 .button-secondary:hover,
 .button-secondary:focus-visible {
-    background: #050709;
-    color: #fff;
+    border-color: var(--watch-violet);
+    background: var(--watch-violet-soft);
+    color: var(--watch-text);
 }
 
 .watch-footer {
     padding: 28px 0;
-    background: #030405;
+    background: #030304;
 }
 
 .watch-footer .watch-container {
@@ -1317,8 +1350,8 @@ code {
 
 .watch-footer .watch-container > div a:hover,
 .watch-footer .watch-container > div a:focus-visible {
-    border-color: var(--watch-acid);
-    color: var(--watch-acid);
+    border-color: var(--watch-violet);
+    color: var(--watch-violet);
 }
 
 .watch-footer .watch-container > a {
@@ -1327,7 +1360,7 @@ code {
 
 .watch-footer .watch-container > a:hover,
 .watch-footer .watch-container > a:focus-visible {
-    color: var(--watch-acid);
+    color: var(--watch-violet);
 }
 
 .js [data-reveal] {
@@ -1427,11 +1460,11 @@ code {
         grid-template-columns: auto auto;
         gap: 14px;
         padding: 6px 8px 6px 10px;
-        background: rgba(7, 9, 13, 0.92);
+        background: rgba(7, 6, 10, 0.92);
     }
 
     .watch-nav.is-scrolled {
-        border-color: rgba(204, 255, 0, 0.62);
+        border-color: var(--watch-violet-line);
     }
 
     .watch-brand span,
@@ -1781,6 +1814,11 @@ code {
 
     .watch-closing {
         padding: 76px 0;
+    }
+
+    .watch-closing .watch-container {
+        padding: 34px 22px;
+        border-radius: 16px;
     }
 
     .watch-closing h2 {

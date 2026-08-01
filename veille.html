@@ -21,8 +21,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="veille.css?v=20260727">
-    <script>document.documentElement.classList.add("js");</script>
+    <link rel="stylesheet" href="veille.css?v=ux-coherence-20260801">
+    <script>
+        document.documentElement.classList.add("js");
+        try {
+            sessionStorage.setItem("rfielbal:preloader-seen:v1", "1");
+        } catch {
+            /* sessionStorage peut être indisponible dans certains contextes privés. */
+        }
+    </script>
 </head>
 <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
@@ -35,12 +42,13 @@
 
     <header class="watch-header">
         <nav class="watch-nav" id="watch-nav" aria-label="Navigation principale">
-            <a class="watch-brand" href="index.html#home">
+            <a class="watch-brand" href="index.html#home" aria-label="Accueil — Raphaël Coursier">
                 <img src="favicon.png" alt="">
                 <span>RAPHAËL COURSIER</span>
             </a>
 
             <ul class="watch-nav-links">
+                <li><a href="index.html#home">Accueil</a></li>
                 <li><a href="index.html#manifesto">À propos</a></li>
                 <li><a href="index.html#projects">Projets</a></li>
                 <li><a href="index.html#savoir-faire">Savoir-faire</a></li>
@@ -262,7 +270,7 @@
                         </footer>
                     </article>
 
-                    <article class="signal-card signal-card--red" data-signal-card data-topics="ia apple outils" data-reveal>
+                    <article class="signal-card signal-card--violet" data-signal-card data-topics="ia apple outils" data-reveal>
                         <header>
                             <p><i class="fa-solid fa-compass" aria-hidden="true"></i> Aside</p>
                             <time datetime="2026-06-23">23.06.2026</time>
@@ -336,7 +344,7 @@
                         </footer>
                     </article>
 
-                    <article class="signal-card signal-card--red" data-signal-card data-topics="apple ia outils" data-reveal>
+                    <article class="signal-card signal-card--violet" data-signal-card data-topics="apple ia outils" data-reveal>
                         <header>
                             <p><i class="fa-brands fa-apple" aria-hidden="true"></i> Apple Developer</p>
                             <time datetime="2026-06-08">08–12.06.2026</time>
@@ -612,7 +620,7 @@
 
     <footer class="watch-footer">
         <div class="watch-container">
-            <p>© Raphaël Coursier · 2026</p>
+            <p>© Raphaël Coursier · <time data-current-year datetime="2026">2026</time></p>
             <div>
                 <a href="https://github.com/rfielbal" target="_blank" rel="noopener noreferrer" aria-label="Profil GitHub de Raphaël Coursier"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
                 <a href="https://www.linkedin.com/in/raphaël-coursier" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn de Raphaël Coursier"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
@@ -621,6 +629,7 @@
         </div>
     </footer>
 
-    <script src="veille.js?v=20260727"></script>
+    <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
+    <script src="veille.js?v=ux-polish-20260801"></script>
 </body>
 </html>
