@@ -7,6 +7,7 @@
     --watch-line: rgba(242, 238, 229, 0.12);
     --watch-line-strong: rgba(242, 238, 229, 0.22);
     --watch-violet: #9f86ff;
+    --watch-violet-rgb: 159, 134, 255;
     --watch-violet-soft: rgba(159, 134, 255, 0.1);
     --watch-violet-line: rgba(159, 134, 255, 0.32);
     --watch-head: "Oswald", sans-serif;
@@ -84,15 +85,24 @@ code {
     color: #07060a;
     font-size: 0.75rem;
     font-weight: 700;
-    transform: translateY(-160%);
-    transition: transform 180ms ease;
+    opacity: 0;
+    pointer-events: none;
+    clip-path: inset(50%);
+    transform: translateY(-8px);
+    transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .keyboard-navigation .skip-link:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+    clip-path: none;
     transform: translateY(0);
 }
 
 html:not(.js) .skip-link:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+    clip-path: none;
     transform: translateY(0);
 }
 
@@ -384,19 +394,121 @@ body.hovering .cursor-follower {
     isolation: isolate;
 }
 
-.watch-hero::before {
-    content: "";
+.watch-hero-radar {
     position: absolute;
+    z-index: 0;
     right: clamp(-210px, -9vw, -92px);
     top: clamp(110px, 18vh, 190px);
     width: clamp(330px, 38vw, 620px);
     aspect-ratio: 1;
-    border: 1px solid rgba(159, 134, 255, 0.15);
+    overflow: hidden;
+    isolation: isolate;
+    contain: paint;
+    border: 1px solid rgba(var(--watch-violet-rgb), 0.18);
     border-radius: 50%;
+    background:
+        radial-gradient(circle, rgba(var(--watch-violet-rgb), 0.075), transparent 59%),
+        rgba(5, 5, 7, 0.16);
     box-shadow:
-        inset 0 0 0 56px rgba(159, 134, 255, 0.014),
-        inset 0 0 0 122px rgba(159, 134, 255, 0.01);
+        inset 0 0 90px rgba(var(--watch-violet-rgb), 0.035),
+        0 0 0 22px rgba(var(--watch-violet-rgb), 0.012);
     pointer-events: none;
+}
+
+.watch-radar-sweep,
+.watch-radar-ring,
+.watch-radar-cross,
+.watch-hero-radar b {
+    position: absolute;
+}
+
+.watch-radar-sweep {
+    inset: 3.5%;
+    z-index: 1;
+    border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        transparent 0 306deg,
+        rgba(var(--watch-violet-rgb), 0.025) 321deg,
+        rgba(var(--watch-violet-rgb), 0.34) 354deg,
+        transparent 360deg
+    );
+    animation: watch-hero-radar-sweep 5.6s linear infinite paused;
+    will-change: auto;
+}
+
+.watch-hero-radar.is-active .watch-radar-sweep {
+    animation-play-state: running;
+    will-change: transform;
+}
+
+.watch-radar-ring {
+    z-index: 2;
+    inset: 50%;
+    aspect-ratio: 1;
+    border: 1px solid rgba(var(--watch-violet-rgb), 0.15);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.watch-radar-ring--one {
+    width: 31%;
+}
+
+.watch-radar-ring--two {
+    width: 60%;
+}
+
+.watch-radar-ring--three {
+    width: 89%;
+}
+
+.watch-radar-cross {
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    opacity: 0.36;
+    background: rgba(var(--watch-violet-rgb), 0.2);
+    transform: translate(-50%, -50%);
+}
+
+.watch-radar-cross--x {
+    width: 89%;
+    height: 1px;
+}
+
+.watch-radar-cross--y {
+    width: 1px;
+    height: 89%;
+}
+
+.watch-hero-radar b {
+    z-index: 3;
+    top: 30%;
+    left: 60%;
+    width: 11px;
+    height: 11px;
+    border: 2px solid #07060a;
+    border-radius: 50%;
+    background: var(--watch-violet);
+    box-shadow:
+        0 0 0 7px rgba(var(--watch-violet-rgb), 0.1),
+        0 0 20px rgba(var(--watch-violet-rgb), 0.74);
+}
+
+.watch-hero-radar b::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border: 1px solid rgba(var(--watch-violet-rgb), 0.78);
+    border-radius: 50%;
+    opacity: 0;
+    animation: watch-hero-radar-signal 2.8s ease-out infinite paused;
+}
+
+.watch-hero-radar.is-active b::after {
+    animation-play-state: running;
+    will-change: transform, opacity;
 }
 
 .watch-hero .watch-container {
@@ -1518,6 +1630,27 @@ body.hovering .cursor-follower {
     }
 }
 
+@keyframes watch-hero-radar-sweep {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes watch-hero-radar-signal {
+    0%,
+    28% {
+        opacity: 0;
+        transform: scale(0.42);
+    }
+    38% {
+        opacity: 0.88;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(2.45);
+    }
+}
+
 @media (max-width: 1180px) {
     .watch-hero h1 {
         font-size: 6.4rem;
@@ -1597,6 +1730,13 @@ body.hovering .cursor-follower {
     .watch-hero {
         min-height: min(740px, 86svh);
         padding-top: 112px;
+    }
+
+    .watch-hero-radar {
+        right: -150px;
+        top: 138px;
+        width: min(52vw, 450px);
+        opacity: 0.62;
     }
 
     .watch-hero h1 {
@@ -1704,6 +1844,17 @@ body.hovering .cursor-follower {
     .watch-hero {
         min-height: 0;
         padding: 102px 0 32px;
+    }
+
+    .watch-hero-radar {
+        right: clamp(-158px, -38vw, -120px);
+        top: 134px;
+        width: min(92vw, 370px);
+        opacity: 0.38;
+    }
+
+    .watch-hero-radar b {
+        left: 50%;
     }
 
     .watch-hero-meta {
@@ -1959,6 +2110,12 @@ body.hovering .cursor-follower {
     .cursor,
     .cursor-follower {
         display: none !important;
+    }
+
+    .watch-radar-sweep,
+    .watch-hero-radar b::after {
+        animation: none !important;
+        will-change: auto;
     }
 
     .js [data-reveal] {

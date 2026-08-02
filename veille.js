@@ -14,10 +14,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const methodSteps = Array.from(document.querySelectorAll("[data-method-step]"));
     const pageMain = document.querySelector("main");
     const pageFooter = document.querySelector(".watch-footer");
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const reducedMotion = reducedMotionQuery.matches;
     const isFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const cursor = document.getElementById("cursor");
     const follower = document.getElementById("cursor-follower");
+    const heroRadar = document.querySelector("[data-watch-hero-radar]");
 
     let previousFocus = null;
     let scrollFrame = null;
@@ -55,12 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(clearRestoredSkipFocus);
 
     if (cursor && follower && isFinePointer && !reducedMotion) {
-        root.classList.add("watch-cursor-enabled");
-
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let followerX = mouseX;
-        let followerY = mouseY;
+        let cursorActivated = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
         let cursorFrame = null;
         let lastCursorTimestamp = 0;
 
@@ -90,7 +91,25 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
+        const activateCursor = (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            followerX = mouseX;
+            followerY = mouseY;
+
+            const initialTransform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            cursor.style.transform = initialTransform;
+            follower.style.transform = initialTransform;
+            cursorActivated = true;
+            root.classList.add("watch-cursor-enabled");
+        };
+
         window.addEventListener("mousemove", (event) => {
+            if (!cursorActivated) {
+                activateCursor(event);
+                return;
+            }
+
             mouseX = event.clientX;
             mouseY = event.clientY;
             scheduleCursor();
@@ -103,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            scheduleCursor();
+            if (cursorActivated) scheduleCursor();
         });
 
         const isInteractive = (element) => Boolean(element?.closest("a, button"));
@@ -120,9 +139,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 body.classList.remove("hovering");
             }
         });
-
-        scheduleCursor();
     }
+
+    const setupHeroRadarMotion = () => {
+        if (!heroRadar) return;
+
+        let radarVisible = !("IntersectionObserver" in window);
+        const syncRadarMotion = () => {
+            heroRadar.classList.toggle(
+                "is-active",
+                radarVisible && !reducedMotionQuery.matches && !document.hidden
+            );
+        };
+
+        if ("IntersectionObserver" in window) {
+            const radarObserver = new IntersectionObserver(([entry]) => {
+                radarVisible = entry.isIntersecting;
+                syncRadarMotion();
+            }, {
+                rootMargin: "120px 0px",
+                threshold: 0.06
+            });
+            radarObserver.observe(heroRadar);
+        } else {
+            syncRadarMotion();
+        }
+
+        reducedMotionQuery.addEventListener?.("change", syncRadarMotion);
+        document.addEventListener("visibilitychange", syncRadarMotion);
+    };
+
+    setupHeroRadarMotion();
 
     const getMenuFocusable = () => {
         if (!menu) return [];
