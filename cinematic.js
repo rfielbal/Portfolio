@@ -29,6 +29,7 @@
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         const coarsePointer = window.matchMedia("(hover: none), (pointer: coarse)");
         const desktopCinema = window.matchMedia("(min-width: 1181px) and (hover: hover) and (pointer: fine)");
+        const compactCinema = window.matchMedia("(max-width: 1180px), (hover: none), (pointer: coarse)");
         const saveData = Boolean(navigator.connection?.saveData);
         const cardStatus = [
             "WHEELLO / CLIENT SYSTEM",
@@ -69,7 +70,7 @@
                 cinemaMediaObserver ||
                 saveData ||
                 reducedMotion.matches ||
-                !desktopCinema.matches
+                (!desktopCinema.matches && !compactCinema.matches)
             ) return;
 
             if (!("IntersectionObserver" in window)) {
@@ -87,6 +88,7 @@
         };
 
         let cinemaEnabled = false;
+        let cinemaCompact = false;
         let activeCardIndex = -1;
         let cachedLayoutVersion = -1;
         let geometry = null;
@@ -132,14 +134,17 @@
         };
 
         const syncCinemaMode = () => {
-            const nextEnabled = desktopCinema.matches && !reducedMotion.matches;
-            if (nextEnabled === cinemaEnabled) return;
+            const nextEnabled = (desktopCinema.matches || compactCinema.matches) && !reducedMotion.matches;
+            const nextCompact = nextEnabled && !desktopCinema.matches;
+            if (nextEnabled === cinemaEnabled && nextCompact === cinemaCompact) return;
 
+            resetCinemaCards();
             cinemaEnabled = nextEnabled;
+            cinemaCompact = nextCompact;
             root.classList.toggle("cinematic-ready", cinemaEnabled);
+            root.classList.toggle("cinematic-compact", cinemaCompact);
 
             if (cinemaEnabled) setCardAccessibility(0);
-            else resetCinemaCards();
 
             cachedLayoutVersion = -1;
             motionEngine.invalidateLayout();
@@ -165,8 +170,36 @@
             cachedLayoutVersion = state.layoutVersion;
         };
 
-        const computeCardFrame = (position, index) => {
+        const computeCardFrame = (position, index, state) => {
             const delta = index - position;
+
+            if (cinemaCompact) {
+                const exit = clamp(-delta, 0, 1);
+                const depth = clamp(delta, 0, 3);
+                const copyDistance = Math.abs(delta);
+                const compactTravel = Math.min(state.viewportHeight * 0.13, 112);
+                const x = (-state.viewportWidth * 0.1 * exit) + (depth * 2);
+                const y = (-compactTravel * exit) + (depth * 18);
+                const z = (-120 * exit) - (depth * 70);
+                const rotateY = -4 * exit;
+                const rotateZ = (-2.5 * exit) + (depth * 0.35);
+                const scale = Math.max(0.82, 1 - (exit * 0.06) - (depth * 0.035));
+                const opacity = delta < 0
+                    ? clamp(1 - (exit * 1.25))
+                    : Math.max(0.18, 1 - (depth * 0.28));
+                const copyOpacity = 1 - clamp((copyDistance - 0.12) / 0.58);
+                const imageScale = 1.03 + (Math.min(copyDistance, 1) * 0.025);
+
+                return {
+                    transform: `translate3d(-50%, -50%, 0) translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateY(${rotateY.toFixed(2)}deg) rotateZ(${rotateZ.toFixed(2)}deg) scale(${scale.toFixed(4)})`,
+                    opacity: opacity.toFixed(4),
+                    zIndex: String(1000 - index),
+                    imageTransform: `scale(${imageScale.toFixed(4)})`,
+                    copyOpacity: copyOpacity.toFixed(4),
+                    copyTransform: `translate3d(0, ${Math.min(copyDistance, 1) * 10}px, 0)`
+                };
+            }
+
             const visualDelta = clamp(delta, -1.05, 2.2);
             let x = 0;
             let y = 0;
@@ -180,9 +213,9 @@
 
             if (visualDelta < 0) {
                 const exit = clamp(-visualDelta);
-                const travel = Math.min(window.innerWidth * 0.78, 1280);
+                const travel = Math.min(state.viewportWidth * 0.78, 1280);
                 x = -travel * Math.pow(exit, 0.82);
-                y = -window.innerHeight * 0.12 * exit;
+                y = -state.viewportHeight * 0.12 * exit;
                 z = -310 * exit;
                 rotateX = 3 * exit;
                 rotateY = -24 * exit;
@@ -253,7 +286,7 @@
                 cinemaFrame = {
                     rawProgress,
                     activeIndex: nextActiveIndex,
-                    cards: cards.map((_card, index) => computeCardFrame(position, index))
+                    cards: cards.map((_card, index) => computeCardFrame(position, index, state))
                 };
             }
 
@@ -312,8 +345,12 @@
             if (Math.abs(rawProgress - renderedCinemaProgress) > 0.0005) {
                 renderedCinemaProgress = rawProgress;
                 if (cinemaHeading) {
-                    cinemaHeading.style.opacity = (0.78 - (rawProgress * 0.38)).toFixed(4);
-                    cinemaHeading.style.transform = `translate3d(0, ${(rawProgress * -34).toFixed(2)}px, 0)`;
+                    const headingOpacity = cinemaCompact
+                        ? 0.92 - (rawProgress * 0.12)
+                        : 0.78 - (rawProgress * 0.38);
+                    const headingTravel = cinemaCompact ? -8 : -34;
+                    cinemaHeading.style.opacity = headingOpacity.toFixed(4);
+                    cinemaHeading.style.transform = `translate3d(0, ${(rawProgress * headingTravel).toFixed(2)}px, 0)`;
                 }
                 if (cinemaProgressFill) {
                     cinemaProgressFill.style.transform = `scaleX(${rawProgress.toFixed(4)})`;
@@ -610,8 +647,10 @@
 
         reducedMotion.addEventListener?.("change", syncCinemaMode);
         desktopCinema.addEventListener?.("change", syncCinemaMode);
+        compactCinema.addEventListener?.("change", syncCinemaMode);
         reducedMotion.addEventListener?.("change", armCinemaMedia);
         desktopCinema.addEventListener?.("change", armCinemaMedia);
+        compactCinema.addEventListener?.("change", armCinemaMedia);
         syncCinemaMode();
         armCinemaMedia();
         setupWatchPortalMotion();

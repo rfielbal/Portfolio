@@ -74,8 +74,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=ux-loader-20260802">
-    <link rel="stylesheet" href="cinematic.css?v=ux-final-20260802">
+    <link rel="stylesheet" href="style.css?v=ux-mobile-demos-20260802">
+    <link rel="stylesheet" href="cinematic.css?v=ux-mobile-demos-20260802">
 </head>
 <body>
     <div class="preloader" id="preloader" aria-hidden="true">
@@ -184,11 +184,11 @@
                     </div>
 
                     <div class="hero-actions">
-                        <a href="#projects" class="btn-simple" data-magnetic>
-                            Voir mes projets
+                        <a href="#projects" class="btn-simple project-cta">
+                            <span>Voir mes projets</span>
                         </a>
-                        <a href="#contact" class="btn-simple btn-outline" data-magnetic>
-                            Me contacter <i class="fas fa-paper-plane"></i>
+                        <a href="#contact" class="btn-simple btn-outline project-cta">
+                            <span>Me contacter</span><i class="fas fa-paper-plane"></i>
                         </a>
                     </div>
 
@@ -548,7 +548,7 @@
                     </div>
 
                     <header class="cinema-heading">
-                        <p><span>03</span> / SELECTED PROJETS</p>
+                        <p><span>03</span> / SELECTED PROJECTS</p>
                         <h2 id="cinema-title">MES PROJETS</h2>
                     </header>
 
@@ -556,7 +556,10 @@
                         <article class="cinema-card" data-cinema-card data-project-id="4" style="--card-accent: #43dfff; --card-rgb: 67, 223, 255;">
                             <div class="cinema-card-shell">
                                 <figure class="cinema-card-media">
-                                    <img src="./images/projects/wheello/cover.webp" width="1600" height="1000" alt="Interfaces web et mobile de l’application métier Wheello" loading="lazy" decoding="async">
+                                    <picture>
+                                        <source media="(max-width: 700px)" srcset="./images/projects/wheello/thumb.webp">
+                                        <img src="./images/projects/wheello/cover.webp" width="1600" height="1000" alt="Interfaces web et mobile de l’application métier Wheello" loading="lazy" decoding="async">
+                                    </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
                                 <div class="cinema-card-copy">
@@ -576,7 +579,10 @@
                         <article class="cinema-card" data-cinema-card data-project-id="1" style="--card-accent: #43dfff; --card-rgb: 67, 223, 255;">
                             <div class="cinema-card-shell">
                                 <figure class="cinema-card-media">
-                                    <img src="./images/projects/jessica-dew/cover.webp" width="1600" height="1000" alt="Accueil éditorial du site de la photographe Jessica Dew" loading="lazy" decoding="async">
+                                    <picture>
+                                        <source media="(max-width: 700px)" srcset="./images/projects/jessica-dew/thumb.webp">
+                                        <img src="./images/projects/jessica-dew/cover.webp" width="1600" height="1000" alt="Accueil éditorial du site de la photographe Jessica Dew" loading="lazy" decoding="async">
+                                    </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
                                 <div class="cinema-card-copy">
@@ -596,7 +602,10 @@
                         <article class="cinema-card" data-cinema-card data-project-id="3" style="--card-accent: #ccff00; --card-rgb: 204, 255, 0;">
                             <div class="cinema-card-shell">
                                 <figure class="cinema-card-media">
-                                    <img src="./images/projects/streamcorner/cover.webp" width="1600" height="1000" alt="Accueil de la boutique e-commerce StreamCorner" loading="lazy" decoding="async">
+                                    <picture>
+                                        <source media="(max-width: 700px)" srcset="./images/projects/streamcorner/thumb.webp">
+                                        <img src="./images/projects/streamcorner/cover.webp" width="1600" height="1000" alt="Accueil de la boutique e-commerce StreamCorner" loading="lazy" decoding="async">
+                                    </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
                                 <div class="cinema-card-copy">
@@ -616,7 +625,10 @@
                         <article class="cinema-card" data-cinema-card data-project-id="9" style="--card-accent: #ff5f57; --card-rgb: 255, 95, 87;">
                             <div class="cinema-card-shell">
                                 <figure class="cinema-card-media">
-                                    <img src="./images/projects/revaloop/cover.webp" width="1600" height="1000" alt="Interface de la plateforme de recette client Revaloop" loading="lazy" decoding="async">
+                                    <picture>
+                                        <source media="(max-width: 700px)" srcset="./images/projects/revaloop/thumb.webp">
+                                        <img src="./images/projects/revaloop/cover.webp" width="1600" height="1000" alt="Interface de la plateforme de recette client Revaloop" loading="lazy" decoding="async">
+                                    </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
                                 <div class="cinema-card-copy">
@@ -634,7 +646,7 @@
                         </article>
                     </div>
 
-                    <div class="cinema-controls" aria-label="Contrôles du projet sélectionné">
+                    <div class="cinema-controls" aria-label="Contrôles du projet sélectionné" aria-live="polite" aria-atomic="true">
                         <p><span id="cinema-current">01</span> / 04</p>
                         <div class="cinema-progress"><i id="cinema-progress-fill"></i></div>
                         <p id="cinema-status">WHEELLO / CLIENT SYSTEM</p>
@@ -644,7 +656,7 @@
                     </div>
 
                     <p class="cinema-scroll-hint" aria-hidden="true">
-                        <span></span> SCROLL TO DIRECT
+                        <span></span> SCROLL TO EXPLORE
                     </p>
                 </div>
             </div>
@@ -1138,7 +1150,7 @@
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
     <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=ux-loader-20260802"></script>
-    <script src="cinematic.js?v=ux-refine-20260801"></script>
+    <script src="script.js?v=ux-mobile-demos-20260802"></script>
+    <script src="cinematic.js?v=ux-mobile-demos-20260802"></script>
 </body>
 </html>

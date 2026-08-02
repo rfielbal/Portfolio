@@ -525,6 +525,12 @@ body .hero-right > .command-grid {
     background: #030507;
 }
 
+.cinema-card-media picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .cinema-card-media::after {
     content: "";
     position: absolute;
@@ -705,6 +711,10 @@ body .hero-right > .command-grid {
 .project-card .project-cta,
 .project-modal-wrap .project-cta {
     --cta-accent: var(--project-accent, var(--cinema-acid));
+}
+
+.hero-actions .project-cta {
+    --cta-accent: var(--cinema-acid);
 }
 
 .cinema-open {
@@ -1312,10 +1322,6 @@ html.cinematic-ready .cinema-scroll-hint {
         opacity: 1;
     }
 
-    .cinema-skip {
-        display: none;
-    }
-
     body .hero-title {
         max-width: 820px;
         font-size: clamp(4rem, 11.8vw, 7rem);
@@ -1385,8 +1391,7 @@ html.cinematic-ready .cinema-scroll-hint {
         perspective: none;
     }
 
-    html.cinematic-ready .cinema-card,
-    .cinema-card {
+    html:not(.cinematic-ready) .cinema-card {
         position: relative;
         top: auto;
         left: auto;
@@ -1598,6 +1603,314 @@ html.cinematic-ready .cinema-scroll-hint {
 
     .cinematic-projects > .container {
         padding-top: 90px;
+    }
+}
+
+/* Compact scrollytelling: vertical, tactile and compositor-only. */
+@media (prefers-reduced-motion: no-preference) {
+    html.cinematic-ready.cinematic-compact body {
+        overflow-x: clip;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinematic-projects {
+        overflow: visible;
+    }
+
+    html.cinematic-ready.cinematic-compact .project-cinema {
+        height: 440vh;
+        height: 440svh;
+        padding: 0;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        height: 100svh;
+        min-height: 0;
+        overflow: clip;
+        border-top: 1px solid rgba(255, 255, 255, 0.09);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+        background:
+            radial-gradient(circle at 72% 42%, rgba(var(--cinema-rgb), 0.1), transparent 33%),
+            linear-gradient(160deg, #05070a, #020304 75%);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-ambient {
+        display: block;
+        opacity: 0.72;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-heading {
+        position: absolute;
+        inset: max(72px, calc(env(safe-area-inset-top) + 54px)) 16px auto;
+        z-index: 12;
+        display: flex;
+        align-items: flex-start;
+        width: auto;
+        margin: 0;
+        padding: 0;
+        pointer-events: none;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-heading h2 {
+        opacity: 0.15;
+        font-size: clamp(3.2rem, 12vw, 7rem);
+        text-align: right;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-stage {
+        position: absolute;
+        inset: clamp(132px, 18vh, 166px) 14px clamp(68px, 9vh, 84px);
+        inset: clamp(132px, 18svh, 166px) 14px clamp(68px, 9svh, 84px);
+        display: block;
+        width: auto;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+        perspective: 1200px;
+        pointer-events: none;
+        touch-action: pan-y pinch-zoom;
+        overscroll-behavior-inline: auto;
+        scroll-snap-type: none;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: min(calc(100vw - 28px), 840px);
+        height: min(68vh, 650px);
+        height: min(68svh, 650px);
+        min-height: 0;
+        margin: 0;
+        scroll-snap-align: none;
+        transform-style: preserve-3d;
+        transform-origin: center;
+        will-change: transform, opacity;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card.is-front {
+        pointer-events: auto;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card::before,
+    html.cinematic-ready.cinematic-compact .cinema-card::after {
+        display: none;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-shell {
+        height: 100%;
+        min-height: 0;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-media-scan,
+    html.cinematic-ready.cinematic-compact .cinema-scroll-hint {
+        display: none;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-controls {
+        position: absolute;
+        right: 14px;
+        bottom: max(12px, env(safe-area-inset-bottom));
+        left: 14px;
+        z-index: 24;
+        display: grid;
+        grid-template-columns: auto minmax(56px, 1fr) auto;
+        align-items: center;
+        gap: 12px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-controls #cinema-status {
+        display: none;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-direct-open {
+        display: inline-flex;
+        min-height: 44px;
+        padding-inline: 15px;
+    }
+}
+
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+    html.cinematic-ready.cinematic-compact .cinema-heading {
+        inset: max(78px, calc(env(safe-area-inset-top) + 58px)) 4.5vw auto;
+        display: block;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-heading > p {
+        margin: 0 0 8px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-heading h2 {
+        font-size: clamp(2.85rem, 13vw, 4.25rem);
+        line-height: 0.82;
+        text-align: left;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-stage {
+        inset: clamp(148px, 20vh, 174px) 0 clamp(72px, 9vh, 84px);
+        inset: clamp(148px, 20svh, 174px) 0 clamp(72px, 9svh, 84px);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card {
+        width: min(91vw, 430px);
+        height: 100%;
+        max-height: 610px;
+        border-radius: 22px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-shell {
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(190px, 43%) minmax(0, 57%);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-media {
+        min-height: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy {
+        gap: 12px;
+        min-height: 0;
+        padding: 18px 20px 20px;
+        overflow: hidden;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy::before {
+        width: 42px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy h3 {
+        font-size: clamp(2.45rem, 13vw, 4rem);
+        line-height: 0.86;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy > p:not(.cinema-card-index) {
+        display: -webkit-box;
+        overflow: hidden;
+        font-size: 0.86rem;
+        line-height: 1.5;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-meta {
+        gap: 6px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-meta span {
+        min-height: 25px;
+        padding-inline: 8px;
+        font-size: 0.52rem;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-open {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-controls {
+        right: 4.5vw;
+        left: 4.5vw;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-direct-open {
+        min-width: 132px;
+    }
+}
+
+@media (max-width: 700px) and (max-height: 740px) and (prefers-reduced-motion: no-preference) {
+    html.cinematic-ready.cinematic-compact .cinema-heading {
+        inset-block-start: max(82px, calc(env(safe-area-inset-top) + 58px));
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-heading h2 {
+        font-size: clamp(2.35rem, 11vw, 3.3rem);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-stage {
+        inset-block: 124px 68px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-shell {
+        grid-template-rows: minmax(150px, 48%) minmax(0, 52%);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy {
+        gap: 9px;
+        padding: 14px 18px 16px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy::before,
+    html.cinematic-ready.cinematic-compact .cinema-card-meta,
+    html.cinematic-ready.cinematic-compact .cinema-card-copy > p:not(.cinema-card-index) {
+        display: none;
+    }
+}
+
+@media (max-height: 600px) and (orientation: landscape) and (prefers-reduced-motion: no-preference) {
+    html.cinematic-ready.cinematic-compact .cinema-heading {
+        inset-block-start: max(84px, calc(env(safe-area-inset-top) + 58px));
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-heading h2 {
+        font-size: clamp(2.35rem, 6vw, 3.2rem);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-stage {
+        inset: 102px 14px 58px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card {
+        width: min(calc(100vw - 28px), 840px);
+        height: min(58vh, 360px);
+        height: min(58svh, 360px);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-shell {
+        grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+        grid-template-rows: minmax(0, 1fr);
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-media,
+    html.cinematic-ready.cinematic-compact .cinema-card-copy {
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-media {
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 0;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy {
+        gap: 8px;
+        padding: 14px 18px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy::before {
+        width: 34px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-copy h3 {
+        font-size: clamp(2.1rem, 6vw, 3.4rem);
+        line-height: 0.86;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-card-meta,
+    html.cinematic-ready.cinematic-compact .cinema-card-copy > p:not(.cinema-card-index) {
+        display: none;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-open {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    html.cinematic-ready.cinematic-compact .cinema-controls {
+        bottom: max(8px, env(safe-area-inset-bottom));
     }
 }
 

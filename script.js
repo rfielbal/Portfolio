@@ -364,6 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             ],
             demoEmbed: "./demos/aether-core/index.html",
+            demoPublicUrl: "https://rfielbal.fr/demos/aether-core/index.html",
             demoTitle: "DÉMO INTERACTIVE 3D",
             demoDescription: "La démo charge un modèle STL et reste utilisable sans caméra. Le suivi de main peut être activé dans l'application si le navigateur l'autorise.",
             features: [
@@ -429,8 +430,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             ],
             demoEmbed: "./demos/escape-game/index.html",
+            demoPublicUrl: "https://rfielbal.fr/demos/escape-game/index.html",
             demoTitle: "LANCER L'ESCAPE GAME",
-            demoDescription: "La démo s'ouvre dans une fenêtre dédiée pour garder tout l'espace à l'exploration. Clique sur Play pour lancer le jeu.",
+            demoDescription: "La démo s'ouvre dans un nouvel onglet pour garder tout l'espace à l'exploration. Clique sur Play pour lancer le jeu.",
             demoLabel: "Tester le jeu",
             features: [
                 "Exploration d'un musée en vue top-down avec déplacements clavier et contrôles tactiles.",
@@ -2619,6 +2621,9 @@ document.addEventListener("DOMContentLoaded", () => {
             : "";
 
         const demoPreview = data.demoPreview || data.cover || (data.images || [])[0] || "";
+        const demoUrl = window.location.protocol === "file:" && data.demoPublicUrl
+            ? data.demoPublicUrl
+            : data.demoEmbed;
         const demoMarkup = data.demoEmbed
             ? `
                 <section class="pm-showcase pm-demo-showcase">
@@ -2628,13 +2633,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             <p>${data.demoDescription || "Le jeu est intégré directement dans le portfolio. Clique dans la fenêtre avant d'utiliser le clavier."}</p>
                         </div>
                     </div>
-                    <button class="pm-demo-launch js-demo-launch" type="button" data-demo-url="${data.demoEmbed}" data-demo-title="${data.title}" style="--demo-preview: url('${demoPreview}')">
+                    <a class="pm-demo-launch" href="${demoUrl}" target="_blank" rel="noopener noreferrer" aria-label="${data.demoLabel || "Lancer la démo"} ${data.title} dans un nouvel onglet" style="--demo-preview: url('${demoPreview}')">
                         <span class="pm-demo-launch-media" aria-hidden="true"></span>
                         <span class="pm-demo-launch-content">
                             <span class="pm-demo-play"><i class="fas fa-play"></i></span>
                             <strong>${data.demoLabel || "Lancer la démo"}</strong>
                         </span>
-                    </button>
+                    </a>
                 </section>
             `
             : "";
@@ -2657,44 +2662,6 @@ document.addEventListener("DOMContentLoaded", () => {
             : "";
 
         return [videoMarkup, demoMarkup, imageMarkup, slotMarkup, featureMarkup, vlogMarkup].filter(Boolean).join("");
-    };
-
-    const openInteractiveDemo = (url, title = "demo") => {
-        if (!url) return;
-
-        const absoluteUrl = new URL(url, window.location.href).href;
-        const width = window.screen?.availWidth || window.innerWidth || 1280;
-        const height = window.screen?.availHeight || window.innerHeight || 820;
-        const windowName = `demo-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") || "interactive"}`;
-        const features = [
-            "popup=yes",
-            "fullscreen=yes",
-            "resizable=yes",
-            "scrollbars=no",
-            "menubar=no",
-            "toolbar=no",
-            "location=no",
-            "status=no",
-            "left=0",
-            "top=0",
-            `width=${Math.floor(width)}`,
-            `height=${Math.floor(height)}`
-        ].join(",");
-
-        const demoWindow = window.open(absoluteUrl, windowName, features);
-
-        if (demoWindow) {
-            demoWindow.focus();
-            try {
-                demoWindow.moveTo(0, 0);
-                demoWindow.resizeTo(width, height);
-            } catch (_error) {
-                // Certains navigateurs limitent le redimensionnement des fenêtres.
-            }
-            return;
-        }
-
-        window.open(absoluteUrl, "_blank", "noopener,noreferrer");
     };
 
     const renderProjects = (filter = "all") => {
@@ -2855,26 +2822,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (liveTarget) {
             if (data.liveLink) {
+                const liveUrl = window.location.protocol === "file:" && data.demoPublicUrl
+                    ? data.demoPublicUrl
+                    : data.liveLink;
                 liveTarget.style.display = "inline-flex";
-                liveTarget.href = data.liveLink;
-                liveTarget.setAttribute("href", data.liveLink);
+                liveTarget.href = liveUrl;
+                liveTarget.setAttribute("href", liveUrl);
+                liveTarget.setAttribute("target", "_blank");
+                liveTarget.setAttribute("rel", "noopener noreferrer");
                 liveTarget.innerHTML = `<span>${data.liveLabel || "Voir le site"}</span><i class="fas fa-external-link-alt"></i>`;
-                if (data.demoEmbed) {
-                    liveTarget.classList.add("js-demo-launch");
-                    liveTarget.dataset.demoUrl = data.demoEmbed;
-                    liveTarget.dataset.demoTitle = data.title;
-                } else {
-                    liveTarget.classList.remove("js-demo-launch");
-                    delete liveTarget.dataset.demoUrl;
-                    delete liveTarget.dataset.demoTitle;
-                }
             } else {
                 liveTarget.style.display = "none";
-                liveTarget.setAttribute("href", "javascript:void(0);");
+                liveTarget.removeAttribute("href");
                 liveTarget.innerHTML = '<span>Voir le site</span><i class="fas fa-external-link-alt"></i>';
-                liveTarget.classList.remove("js-demo-launch");
-                delete liveTarget.dataset.demoUrl;
-                delete liveTarget.dataset.demoTitle;
             }
         }
 
@@ -2930,14 +2890,6 @@ document.addEventListener("DOMContentLoaded", () => {
         closeProjectModal.addEventListener("click", () => closeLayer(projectModal));
 
         projectModal.addEventListener("click", (event) => {
-            const demoTrigger = event.target.closest(".js-demo-launch");
-            if (demoTrigger) {
-                event.preventDefault();
-                event.stopPropagation();
-                openInteractiveDemo(demoTrigger.dataset.demoUrl || demoTrigger.getAttribute("href"), demoTrigger.dataset.demoTitle || "demo");
-                return;
-            }
-
             const imageTrigger = event.target.closest(".js-image-zoom");
             if (imageTrigger && imageLightbox && imageLightboxImg && imageLightboxCaption) {
                 event.preventDefault();
