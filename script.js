@@ -69,6 +69,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeImageLightbox = document.getElementById("close-image-lightbox");
     const imageLightboxImg = document.getElementById("image-lightbox-img");
     const imageLightboxCaption = document.getElementById("image-lightbox-caption");
+    const imageLightboxContent = document.querySelector(".image-lightbox-content");
+    const imageLightboxPrev = document.getElementById("image-lightbox-prev");
+    const imageLightboxNext = document.getElementById("image-lightbox-next");
+    const imageLightboxCurrent = document.getElementById("image-lightbox-current");
+    const imageLightboxTotal = document.getElementById("image-lightbox-total");
+    const imageLightboxStatus = document.getElementById("image-lightbox-status");
 
     const pmTitle = document.getElementById("pm-title");
     const pmCat = document.getElementById("pm-cat");
@@ -858,6 +864,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let restoreScrollBehaviorFrame = null;
     let scrollBehaviorBeforeRestore = null;
     let terminalBorderResizeObserver = null;
+    let lightboxItems = [];
+    let lightboxIndex = 0;
+    let lightboxSwipeStart = null;
 
     const managedLayers = Array.from(
         document.querySelectorAll(".modal-overlay, .project-modal-wrap, .image-lightbox, .fs-menu")
@@ -2291,6 +2300,102 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
     `;
 
+    const prepareProjectGalleryTriggers = (container) => {
+        if (!container) return [];
+
+        const triggers = Array.from(container.querySelectorAll(".js-image-zoom"));
+        const total = triggers.length;
+
+        triggers.forEach((trigger, index) => {
+            const caption = trigger.dataset.caption || trigger.dataset.alt || "Capture du projet";
+            trigger.dataset.galleryIndex = String(index);
+            trigger.setAttribute(
+                "aria-label",
+                `Afficher l’image ${index + 1} sur ${total} en grand : ${caption}`
+            );
+        });
+
+        return triggers;
+    };
+
+    const collectLightboxItems = () => prepareProjectGalleryTriggers(pmGallery).map((trigger) => ({
+        trigger,
+        src: trigger.dataset.src || "",
+        alt: trigger.dataset.alt || "Capture du projet",
+        caption: trigger.dataset.caption || "Capture du projet"
+    }));
+
+    const preloadLightboxNeighbors = () => {
+        if (lightboxItems.length < 2) return;
+
+        const neighborIndexes = [
+            (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length,
+            (lightboxIndex + 1) % lightboxItems.length
+        ];
+
+        neighborIndexes.forEach((index) => {
+            const source = lightboxItems[index]?.src;
+            if (!source) return;
+            const preload = new Image();
+            preload.decoding = "async";
+            preload.src = source;
+        });
+    };
+
+    const showLightboxImage = (index) => {
+        if (
+            !lightboxItems.length
+            || !imageLightbox
+            || !imageLightboxImg
+            || !imageLightboxCaption
+        ) return;
+
+        const total = lightboxItems.length;
+        lightboxIndex = ((index % total) + total) % total;
+        const item = lightboxItems[lightboxIndex];
+        const currentLabel = String(lightboxIndex + 1).padStart(2, "0");
+        const totalLabel = String(total).padStart(2, "0");
+
+        imageLightboxImg.classList.remove("is-changing");
+        imageLightboxImg.src = item.src;
+        imageLightboxImg.alt = item.alt;
+        imageLightboxCaption.textContent = item.caption;
+
+        if (!prefersReducedMotion) {
+            void imageLightboxImg.offsetWidth;
+            imageLightboxImg.classList.add("is-changing");
+        }
+
+        if (imageLightboxCurrent) imageLightboxCurrent.textContent = currentLabel;
+        if (imageLightboxTotal) imageLightboxTotal.textContent = totalLabel;
+        if (imageLightboxStatus) {
+            imageLightboxStatus.textContent = `Image ${lightboxIndex + 1} sur ${total} — ${item.caption}`;
+        }
+
+        const hasMultipleImages = total > 1;
+        if (imageLightboxPrev) {
+            imageLightboxPrev.hidden = !hasMultipleImages;
+            imageLightboxPrev.setAttribute(
+                "aria-label",
+                `Image précédente (${((lightboxIndex - 1 + total) % total) + 1} sur ${total})`
+            );
+        }
+        if (imageLightboxNext) {
+            imageLightboxNext.hidden = !hasMultipleImages;
+            imageLightboxNext.setAttribute(
+                "aria-label",
+                `Image suivante (${((lightboxIndex + 1) % total) + 1} sur ${total})`
+            );
+        }
+
+        const layerEntry = layerStack.find((entry) => entry.layer === imageLightbox);
+        if (layerEntry && item.trigger?.isConnected) {
+            layerEntry.returnFocus = item.trigger;
+        }
+
+        preloadLightboxNeighbors();
+    };
+
     const renderProjectModalMedia = (data) => {
         let imageMarkup = "";
 
@@ -2518,13 +2623,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 `)
                 .join("");
         } else {
-            imageMarkup = (data.images || [])
-                .map((image) => {
-                    const src = typeof image === "string" ? image : image.src;
-                    const alt = typeof image === "string" ? `Aperçu ${data.title}` : image.alt || `Aperçu ${data.title}`;
-                    return `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
-                })
-                .join("");
+            const genericImages = normalizeProjectGalleryImages(data);
+
+            imageMarkup = genericImages.length
+                ? `
+                    <section class="pm-showcase pm-image-showcase">
+                        <h4>CAPTURES DU PROJET</h4>
+                        <div class="pm-image-grid has-landscape">
+                            ${genericImages.map((image) => `
+                                <figure class="pm-image-card is-${image.orientation || "landscape"}">
+                                    ${renderProjectGalleryImage(data, image)}
+                                    <figcaption>${image.caption}</figcaption>
+                                </figure>
+                            `).join("")}
+                        </div>
+                    </section>
+                `
+                : "";
         }
 
         const slotMarkup = (data.imageSlots || [])
@@ -2748,8 +2863,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = projects.find((project) => project.id === Number(id));
         if (!data) return;
 
-        projectModal.style.setProperty("--project-accent", data.accent || "#ccff00");
+        const projectAccent = data.accent || "#ccff00";
+        projectModal.style.setProperty("--project-accent", projectAccent);
         projectModal.dataset.projectType = data.filter || "";
+        if (imageLightbox) {
+            imageLightbox.style.setProperty("--project-accent", projectAccent);
+            imageLightbox.setAttribute("aria-label", `Galerie d’images — ${data.title}`);
+        }
 
         const titleTarget = pmTitle || document.getElementById("pm-title");
         const categoryTarget = pmCat || document.getElementById("pm-cat");
@@ -2809,6 +2929,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (galleryTarget) {
             galleryTarget.innerHTML = renderProjectModalMedia(data);
+            prepareProjectGalleryTriggers(galleryTarget);
 
             const video = galleryTarget.querySelector(".pm-video-player");
             if (video && !prefersReducedMotion && !navigator.connection?.saveData) {
@@ -2895,9 +3016,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 event.preventDefault();
                 event.stopPropagation();
 
-                imageLightboxImg.src = imageTrigger.dataset.src || "";
-                imageLightboxImg.alt = imageTrigger.dataset.alt || "Capture du projet";
-                imageLightboxCaption.textContent = imageTrigger.dataset.caption || "";
+                lightboxItems = collectLightboxItems();
+                const triggerIndex = lightboxItems.findIndex((item) => item.trigger === imageTrigger);
+                showLightboxImage(triggerIndex >= 0 ? triggerIndex : 0);
                 openLayer(imageLightbox, imageTrigger);
                 return;
             }
@@ -2911,11 +3032,47 @@ document.addEventListener("DOMContentLoaded", () => {
     if (imageLightbox && closeImageLightbox) {
         closeImageLightbox.addEventListener("click", () => closeLayer(imageLightbox));
 
-        imageLightbox.addEventListener("click", (event) => {
-            const clickedImage = event.target.closest?.("#image-lightbox-img");
-            const clickedCloseButton = event.target.closest?.("#close-image-lightbox");
+        imageLightboxPrev?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            showLightboxImage(lightboxIndex - 1);
+        });
 
-            if (!clickedImage && !clickedCloseButton) {
+        imageLightboxNext?.addEventListener("click", (event) => {
+            event.stopPropagation();
+            showLightboxImage(lightboxIndex + 1);
+        });
+
+        imageLightboxImg?.addEventListener("animationend", () => {
+            imageLightboxImg.classList.remove("is-changing");
+        });
+
+        imageLightboxContent?.addEventListener("pointerdown", (event) => {
+            if (!event.isPrimary || event.pointerType === "mouse") return;
+            lightboxSwipeStart = {
+                pointerId: event.pointerId,
+                x: event.clientX,
+                y: event.clientY
+            };
+        }, { passive: true });
+
+        imageLightboxContent?.addEventListener("pointerup", (event) => {
+            if (!lightboxSwipeStart || event.pointerId !== lightboxSwipeStart.pointerId) return;
+
+            const deltaX = event.clientX - lightboxSwipeStart.x;
+            const deltaY = event.clientY - lightboxSwipeStart.y;
+            lightboxSwipeStart = null;
+
+            if (Math.abs(deltaX) < 48 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+            event.preventDefault();
+            showLightboxImage(lightboxIndex + (deltaX < 0 ? 1 : -1));
+        });
+
+        imageLightboxContent?.addEventListener("pointercancel", () => {
+            lightboxSwipeStart = null;
+        }, { passive: true });
+
+        imageLightbox.addEventListener("click", (event) => {
+            if (event.target === imageLightbox) {
                 closeLayer(imageLightbox);
             }
         });
@@ -2962,10 +3119,26 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        if (event.key !== "Escape") return;
-
         const topLayer = getTopLayer();
         if (!topLayer) return;
+
+        if (topLayer === imageLightbox) {
+            const galleryKeys = {
+                ArrowLeft: () => showLightboxImage(lightboxIndex - 1),
+                ArrowRight: () => showLightboxImage(lightboxIndex + 1),
+                Home: () => showLightboxImage(0),
+                End: () => showLightboxImage(lightboxItems.length - 1)
+            };
+            const galleryAction = galleryKeys[event.key];
+
+            if (galleryAction) {
+                event.preventDefault();
+                galleryAction();
+                return;
+            }
+        }
+
+        if (event.key !== "Escape") return;
 
         event.preventDefault();
         if (topLayer === fsMenu) {

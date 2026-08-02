@@ -74,7 +74,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=ux-mobile-demos-20260802">
+    <link rel="stylesheet" href="style.css?v=ux-gallery-20260802">
     <link rel="stylesheet" href="cinematic.css?v=ux-mobile-demos-20260802">
 </head>
 <body>
@@ -1041,14 +1041,34 @@
         </div>
     </div>
 
-    <div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Aperçu de la capture" inert>
-        <button class="image-lightbox-close" id="close-image-lightbox" type="button" aria-label="Fermer l'aperçu">
+    <div class="image-lightbox" id="image-lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galerie d’images du projet" inert>
+        <button class="image-lightbox-close" id="close-image-lightbox" type="button" aria-label="Fermer la galerie" data-autofocus>
             <i class="fas fa-times"></i>
         </button>
+
+        <button class="image-lightbox-nav image-lightbox-prev" id="image-lightbox-prev" type="button" aria-label="Image précédente" aria-controls="image-lightbox-img" aria-keyshortcuts="ArrowLeft">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </button>
+
         <figure class="image-lightbox-content">
-            <img id="image-lightbox-img" src="" alt="">
-            <figcaption id="image-lightbox-caption"></figcaption>
+            <div class="image-lightbox-frame">
+                <img id="image-lightbox-img" src="" alt="" draggable="false">
+            </div>
+            <figcaption>
+                <span class="image-lightbox-counter" aria-hidden="true">
+                    <strong id="image-lightbox-current">01</strong>
+                    <span>/</span>
+                    <span id="image-lightbox-total">01</span>
+                </span>
+                <span id="image-lightbox-caption"></span>
+            </figcaption>
         </figure>
+
+        <button class="image-lightbox-nav image-lightbox-next" id="image-lightbox-next" type="button" aria-label="Image suivante" aria-controls="image-lightbox-img" aria-keyshortcuts="ArrowRight">
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+
+        <p class="sr-only" id="image-lightbox-status" aria-live="polite" aria-atomic="true"></p>
     </div>
 
     <div class="modal-overlay" id="modal-skills" role="dialog" aria-modal="true" aria-labelledby="modal-skills-title" aria-hidden="true" inert>
@@ -1150,7 +1170,7 @@
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
     <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=ux-mobile-demos-20260802"></script>
+    <script src="script.js?v=ux-gallery-20260802"></script>
     <script src="cinematic.js?v=ux-mobile-demos-20260802"></script>
 </body>
 </html>
