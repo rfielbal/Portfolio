@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Wheello · Habitat Insertion",
             category: "Application métier · Client",
             year: "2026",
-            created: "24 mai - 4 juillet 2026",
+            created: "24 mai – 4 juillet 2026",
             role: "Conception full-stack",
             status: "Livré",
             accent: "#43dfff",
@@ -105,9 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
             logoAlt: "Logo Wheello",
             logoMark: "WH",
             description:
-                "Projet réalisé dans le cadre de mon stage de première année de BTS SIO option SLAM, pour l'association Habitat Insertion.\n\nWheello est une solution métier complète pensée pour gérer une flotte de véhicules: utilisateurs, réservations, départs immédiats, retours, constats, signalements, bilans kilométriques, notifications, archivage et conformité RGPD.\n\nLe projet combine un back-office Symfony/API sécurisé, une application mobile Flutter pour les utilisateurs terrain, une logique JWT côté API, une gestion des rôles admin/super admin, des documents de livraison et une procédure de mise en production claire.",
+                "Projet réalisé dans le cadre de mon stage de première année de BTS SIO option SLAM, pour l'association Habitat Insertion.\n\nWheello est une solution métier complète pensée pour gérer une flotte de véhicules\u00a0: utilisateurs, réservations, départs immédiats, retours, constats, signalements, bilans kilométriques, notifications, archivage et conformité RGPD.\n\nLe projet combine un back-office Symfony/API sécurisé, une application mobile Flutter pour les utilisateurs sur le terrain, une logique JWT côté API, une gestion des rôles administrateur et super-administrateur, des documents de livraison et une procédure de mise en production claire.",
             summary: "Application métier complète pour piloter les véhicules, réservations et usages internes d'une association.",
-            impact: "Back-office, API sécurisée, app mobile, RGPD, bilans et livraison documentée.",
+            impact: "Back-office, API sécurisée, application mobile, RGPD, bilans et livraison documentée.",
             techs: ["Symfony", "PHP", "API", "JWT", "Flutter", "Dart", "MySQL", "Doctrine", "Stimulus", "AssetMapper", "Docker", "PHPUnit"],
             cover: "./images/projects/wheello/cover.webp",
             coverLabel: "Back-office + application mobile",
@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Application Flutter pour consulter les véhicules, réserver, déclarer un départ/retour et signaler un problème.",
                 "Gestion des utilisateurs, sites, pôles, dispositifs, véhicules, constats, réservations et notifications.",
                 "Archivage, anonymisation, conservation des données et documentation RGPD intégrée.",
-                "Livraison structurée: docs admin, docs utilisateur, procédure de déploiement, tests et base prête."
+                "Livraison structurée\u00a0: documentation d'administration, documentation utilisateur, procédure de déploiement, tests et base prête."
             ],
             vlog: [
                 {
@@ -193,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
             videoSpot: {
                 title: "Épisode 1 : le défi de l'association",
-                description: "Premier épisode du suivi de stage réalisé chez Habitat Insertion. La vidéo présente le besoin client, l'organisation du projet et les premières bases techniques mises en place pour créer une application mobile et un panel d'administration web de A à Z.",
+                description: "Premier épisode du suivi de stage réalisé chez Habitat Insertion. La vidéo présente le besoin client, l'organisation du projet et les premières bases techniques mises en place pour créer une application mobile et une interface d'administration web de A à Z.",
                 highlights: [
                     "Mise en place de la méthode Agile Scrum avec des sprints courts.",
                     "Modélisation des données et construction du MCD.",
@@ -223,9 +223,9 @@ document.addEventListener("DOMContentLoaded", () => {
             logoAlt: "Symbole StreamCorner",
             logoMark: "SC",
             description:
-                "Création d'un site e-commerce avec Symfony 6.4 dans le cadre du projet de fin d'année.\n\nStreamCorner est une boutique spécialisée dans le matériel de streaming. Le projet présente un parcours e-commerce complet: consultation d'une page d'accueil orientée produit, navigation dans un catalogue filtrable, accès aux fiches produits détaillées, gestion du panier, favoris, commandes et compte client.\n\nLe back-office permet d'administrer les produits, catégories, utilisateurs, commandes, contacts et contenus liés à la boutique.\n\nCompte admin visiteur:\nEmail: visiteur@streamcorner.com\nMot de passe: streamcorner",
+                "Création d'un site e-commerce avec Symfony 6.4 dans le cadre du projet de fin d'année.\n\nStreamCorner est une boutique spécialisée dans le matériel de streaming. Le projet présente un parcours e-commerce complet\u00a0: consultation d'une page d'accueil orientée produit, navigation dans un catalogue filtrable, accès aux fiches produits détaillées, gestion du panier, favoris, commandes et compte client.\n\nLe back-office permet d'administrer les produits, catégories, utilisateurs, commandes, contacts et contenus liés à la boutique.\n\nCompte administrateur visiteur\u00a0:\nE-mail\u00a0: visiteur@streamcorner.com\nMot de passe\u00a0: streamcorner",
             summary: "Boutique Symfony complète pour vendre du matériel de streaming, avec catalogue, panier, compte client et back-office.",
-            impact: "Parcours e-commerce complet, administration produit et base Symfony structurée.",
+            impact: "Parcours e-commerce complet, administration des produits et base Symfony structurée.",
             techs: ["Symfony 6.4", "PHP 8.2", "Doctrine", "MySQL", "Docker", "Apache", "Twig", "HTML", "CSS", "JavaScript"],
             cover: "./images/projects/streamcorner/cover.webp",
             images: [
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", () => {
             logoAlt: "Logo de Revaloop",
             logoMark: "R",
             description:
-                "Revaloop transforme une preview de développement en véritable espace de collaboration entre le développeur et son client. Au lieu de disperser les retours entre e-mails, captures et messages, chaque version dispose d'un environnement de recette dédié, avec son historique et son état de validation.\n\nLe développeur publie une version HTTPS, puis crée une invitation cliente temporaire, à usage unique et révocable. Le client explore le produit sur plusieurs formats, ajoute des retours généraux ou des annotations visuelles et échange dans une discussion persistante. Le workflow suit ensuite chaque remarque de « signalé » à « validé », bloque l'approbation tant qu'un point reste ouvert et conserve la boucle de correction dans le même espace.\n\nRevaloop est toujours en développement, au stade alpha 0.3 pour pilote contrôlé. Je le construis comme un produit : cadrage du besoin, arbitrages UX et sécurité, développement assisté par IA, audits et validation des parcours. Son compagnon Electron sait déjà sélectionner, lancer et surveiller un projet local avec un consentement explicite ; le partage distant automatique de ce localhost reste volontairement présenté comme une prochaine étape, pas comme une fonction terminée.",
+                "Revaloop transforme une prévisualisation de développement en véritable espace de collaboration entre le développeur et son client. Au lieu de disperser les retours entre e-mails, captures et messages, chaque version dispose d'un environnement de recette dédié, avec son historique et son état de validation.\n\nLe développeur publie une version HTTPS, puis crée une invitation temporaire destinée au client, à usage unique et révocable. Le client explore le produit sur plusieurs formats, ajoute des retours généraux ou des annotations visuelles et échange dans une discussion persistante. Le workflow suit ensuite chaque remarque de « signalé » à « validé », bloque l'approbation tant qu'un point reste ouvert et conserve la boucle de correction dans le même espace.\n\nRevaloop est toujours en développement, au stade alpha 0.3 pour un pilote contrôlé. Je le construis comme un produit : cadrage du besoin, arbitrages UX et sécurité, développement assisté par IA, audits et validation des parcours. Son compagnon Electron sait déjà sélectionner, lancer et surveiller un projet local avec un consentement explicite ; le partage distant automatique de ce serveur local reste volontairement présenté comme une prochaine étape, pas comme une fonction terminée.",
             summary: "Espace de recette client pour partager une version, centraliser les retours et piloter sa validation.",
             impact: "Une boucle claire et sécurisée entre développeur et client, de l'invitation à l'approbation finale.",
             techs: ["Next.js", "React", "TypeScript", "Cloudflare Workers", "D1", "Drizzle ORM", "Electron", "Vite"],
@@ -312,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
             features: [
                 "Projets et versions de recette avec historique des retours, messages et décisions.",
-                "Invitations clientes à usage unique, expirantes et révocables, échangées contre une session sécurisée.",
+                "Invitations destinées aux clients, à usage unique, expirantes et révocables, échangées contre une session sécurisée.",
                 "Preview HTTPS responsive, retours généraux, annotations visuelles et discussion persistante.",
                 "Workflow signalé, en cours, à revalider puis validé, avec approbation bloquée tant qu'un retour reste ouvert.",
                 "Compagnon Electron sandboxé pour sélectionner, lancer, surveiller et arrêter explicitement un projet local.",
@@ -329,16 +329,16 @@ document.addEventListener("DOMContentLoaded", () => {
             category: "Inspecteur 3D multimodal · Projet perso",
             year: "2026",
             created: "11 février 2026",
-            role: "Prototype 3D & WebGL",
+            role: "Prototype 3D et WebGL",
             status: "Prototype jouable",
             accent: "#ff5f57",
             logo: "./images/projects/aethercore/logo.png",
             logoAlt: "Symbole AetherCore",
             logoMark: "AC",
             description:
-                "AetherCore est un prototype personnel de visualiseur STL 3D dans le navigateur, pensé pour inspecter une pièce avec un rendu WebGL clair, des mesures utiles et une interaction sans contact optionnelle.\n\nLa version intégrée au portfolio charge un modèle de démonstration, permet d'importer un fichier STL, de passer entre plusieurs modes de rendu et d'afficher des estimations de dimensions, surface et volume. Le suivi de main via MediaPipe reste optionnel : l'application fonctionne aussi avec la souris, le tactile, l'import fichier et le glisser-déposer.\n\nLe projet a été restructuré en application Vite avec build de production, assets propres et fallback explicite si la caméra ou les modèles de vision ne sont pas disponibles.",
-            summary: "Visualiseur STL 3D en WebGL avec import de modèle, modes de rendu, mesures et contrôle main optionnel.",
-            impact: "Prototype industriel jouable, build Vite propre, rendu Three.js et fallback sans caméra.",
+                "AetherCore est un prototype personnel de visualiseur STL 3D dans le navigateur, pensé pour inspecter une pièce avec un rendu WebGL clair, des mesures utiles et une interaction sans contact optionnelle.\n\nLa version intégrée au portfolio charge un modèle de démonstration, permet d'importer un fichier STL, de passer entre plusieurs modes de rendu et d'afficher des estimations de dimensions, de surface et de volume. Le suivi de la main via MediaPipe reste optionnel : l'application fonctionne aussi avec la souris, le tactile, l'import de fichiers et le glisser-déposer.\n\nLe projet a été restructuré en application Vite avec un build de production, des ressources propres et une solution de repli explicite si la caméra ou les modèles de vision ne sont pas disponibles.",
+            summary: "Visualiseur STL 3D en WebGL avec import de modèle, modes de rendu, mesures et contrôle gestuel optionnel.",
+            impact: "Prototype industriel jouable, build Vite propre, rendu Three.js et solution de repli sans caméra.",
             techs: ["Vite", "JavaScript", "Three.js", "MediaPipe", "WebGL", "STLLoader", "STL", "UX temps réel"],
             cover: "./images/projects/aethercore/cover.webp",
             demoPreview: "./images/projects/aethercore/cover.webp",
@@ -350,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 { label: "Entrée", value: "STL local" },
                 { label: "Rendus", value: "3 modes" },
                 { label: "Mesures", value: "Dimensions · surface · volume" },
-                { label: "Contrôle", value: "Souris · tactile · main" }
+                { label: "Contrôle", value: "Souris · tactile · gestes" }
             ],
             images: [
                 {
@@ -373,13 +373,13 @@ document.addEventListener("DOMContentLoaded", () => {
             demoEmbed: "./demos/aether-core/index.html",
             demoPublicUrl: "https://rfielbal.fr/demos/aether-core/index.html",
             demoTitle: "DÉMO INTERACTIVE 3D",
-            demoDescription: "La démo charge un modèle STL et reste utilisable sans caméra. Le suivi de main peut être activé dans l'application si le navigateur l'autorise.",
+            demoDescription: "La démo charge un modèle STL et reste utilisable sans caméra. Le suivi de la main peut être activé dans l'application si le navigateur l'autorise.",
             features: [
                 "Rendu 3D temps réel avec Three.js et modèle STL de démonstration.",
                 "Import de fichiers STL par bouton ou glisser-déposer.",
                 "Modes hybride, points et surface pour adapter la lecture du modèle.",
                 "Dimensions, surface et volume estimés pour la pièce chargée.",
-                "Contrôle main optionnel via MediaPipe avec fallback souris/tactile."
+                "Contrôle gestuel optionnel via MediaPipe avec solution de repli à la souris ou au tactile."
             ],
             repoLink: null,
             liveLink: "./demos/aether-core/index.html",
@@ -458,9 +458,9 @@ document.addEventListener("DOMContentLoaded", () => {
             filter: "client",
             title: "Jessica Dew · Passion Photographie",
             category: "Site vitrine & parcours de contact · Client",
-            year: "2025 - 2026",
+            year: "2025–2026",
             dateLabel: "Création",
-            created: "Juillet - Août 2026",
+            created: "Juillet – août 2026",
             role: "Conception, développement & exploitation",
             status: "Livré",
             accent: "#43dfff",
@@ -632,7 +632,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
             features: [
                 "Ouverture d'un projet local, d'un localhost ou d'une URL publique avec des niveaux d'accès clairement séparés.",
-                "Studio de un à cinq écrans synchronisés et catalogue local de plus de 60 profils d'appareils.",
+                "Studio d'un à cinq écrans synchronisés et catalogue local de plus de 60 profils d'appareils.",
                 "Audit responsive statique et runtime, inspection de la cascade CSS et restitution des constats avec leurs preuves.",
                 "Atelier visuel, édition Monaco, aperçu temporaire, diff, undo/redo et écritures atomiques après validation.",
                 "Matrice routes × tailles × états pour vérifier qu'une correction ne crée pas de nouvelle régression.",
@@ -829,23 +829,23 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         delivery: {
             accent: "#ff5f57",
-            status: "Jessica livré · Revaloop alpha",
+            status: "Site Jessica Dew livré · Revaloop en alpha",
             index: "04 / 04",
             context: "Client + produit · Qualité continue",
-            mediaType: "Recette & validation",
+            mediaType: "Recette et validation",
             project: "Revaloop",
             title: "Mettre la qualité sous contrôle, jusqu'après la mise en ligne.",
             summary: "Un produit fiable ne se résume pas à une version terminée\u00a0: sa recette, sa sécurité, sa livraison et son exploitation doivent rester maîtrisées.",
             need: "Livrer Jessica Dew en production tout en structurant, avec Revaloop, une boucle de validation claire entre développeur et client.",
             decision: "Industrialiser les releases, la recette, le monitoring et le retour arrière côté Jessica\u00a0; versionner les retours, sécuriser les invitations et bloquer l'approbation tant qu'un point reste ouvert côté Revaloop.",
-            proof: "Jessica Dew est déployé et maintenu sur OVHcloud. Revaloop centralise déjà versions, annotations, discussions et décisions dans une alpha à accès contrôlé.",
+            proof: "Le site Jessica Dew est déployé et maintenu sur OVHcloud. Revaloop centralise déjà versions, annotations, discussions et décisions dans une alpha à accès contrôlé.",
             techs: ["Recette versionnée", "Accès sécurisés", "Monitoring", "Rollback"],
             image: "./images/projects/revaloop/cover.webp",
             imageAlt: "Tableau de bord de recette du projet Revaloop",
             imagePosition: "center",
             projectId: "9",
             action: "Examiner Revaloop",
-            role: "Qualité produit & exploitation",
+            role: "Qualité produit et exploitation",
             nodes: [
                 { label: "Publier", value: "Release contrôlée", icon: "fas fa-code-branch" },
                 { label: "Inviter", value: "Accès temporaire", icon: "fas fa-user-lock" },
@@ -1525,39 +1525,39 @@ document.addEventListener("DOMContentLoaded", () => {
         const terminalCommands = {
             "/help": {
                 lines: [
-                    "Je peux répondre comme un mini assistant de portfolio.",
-                    "Commandes: /about, /skills, /projects, /revaloop, /responsiver, /minecraft, /formation, /veille, /personality, /goals, /contact, /cv, /clear.",
-                    "Tu peux aussi écrire: qui es-tu, quels projets, quelle stack, quelle veille, objectif, contact..."
+                    "Je peux répondre comme un mini-assistant de portfolio.",
+                    "Commandes\u00a0: /about, /skills, /projects, /revaloop, /responsiver, /minecraft, /formation, /veille, /personality, /goals, /contact, /cv, /clear.",
+                    "Tu peux aussi écrire\u00a0: qui es-tu, quels projets, quelle stack, quelle veille, objectif, contact..."
                 ]
             },
             "/about": {
                 lines: [
                     "Raphaël Coursier, étudiant en BTS SIO option SLAM au lycée Guy Mollet.",
                     "Je construis des interfaces web avec une vraie direction visuelle, mais je garde en priorité la clarté, l'ergonomie et une base technique maintenable.",
-                    "Mon cap: évoluer vers un profil d'ingénieur capable de cadrer un besoin, structurer une architecture propre et livrer un produit durable."
+                    "Mon cap\u00a0: évoluer vers un profil d'ingénieur capable de cadrer un besoin, structurer une architecture propre et livrer un produit durable."
                 ],
                 action: { label: "Voir la section À propos", target: "#manifesto" }
             },
             "/skills": {
                 lines: [
-                    "Stack actuelle: Symfony, PHP, API REST, JWT, Flutter, MySQL, Doctrine, JavaScript, Stimulus, HTML/CSS et Git.",
-                    "Mes points forts: interfaces propres, logique métier, sécurité API, organisation de code, documentation et livraison client.",
-                    "Wheello m'a fait progresser sur un vrai périmètre full-stack: back-office, mobile, données, RGPD, tests et mise en production."
+                    "Stack actuelle\u00a0: Symfony, PHP, API REST, JWT, Flutter, MySQL, Doctrine, JavaScript, Stimulus, HTML/CSS et Git.",
+                    "Mes points forts\u00a0: interfaces propres, logique métier, sécurité API, organisation de code, documentation et livraison client.",
+                    "Wheello m'a fait progresser sur un vrai périmètre full-stack\u00a0: back-office, mobile, données, RGPD, tests et mise en production."
                 ],
                 action: { label: "Voir le savoir-faire", target: "#savoir-faire" }
             },
             "/projects": {
                 lines: [
                     "Le portfolio présente 9 projets, avec Wheello comme réalisation client principale et Revaloop comme nouvelle plateforme open source en développement.",
-                    "On y retrouve des projets client, des projets académiques, deux produits Electron, un jeu web jouable, une démo 3D et une map Minecraft automatisée.",
-                    "La logique: montrer ma progression, pas juste empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
+                    "On y retrouve des projets clients, des projets académiques, deux produits Electron, un jeu web jouable, une démo 3D et une carte Minecraft automatisée.",
+                    "La logique\u00a0: montrer ma progression, sans seulement empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
                 ],
                 action: { label: "Voir les projets", target: "#projects" }
             },
             "/revaloop": {
                 lines: [
                     "Revaloop est une plateforme open source de recette client actuellement en alpha.",
-                    "Elle rassemble une preview HTTPS, des invitations temporaires, des annotations visuelles, une discussion et un workflow de revalidation jusqu'à l'approbation finale.",
+                    "Elle rassemble une prévisualisation HTTPS, des invitations temporaires, des annotations visuelles, une discussion et un workflow de revalidation jusqu'à l'approbation finale.",
                     "Son compagnon Electron lance et surveille déjà un projet local de façon explicite. Le tunnel de partage distant reste une étape à venir, clairement séparée des fonctions déjà opérationnelles."
                 ],
                 action: { label: "Ouvrir Revaloop", projectId: 9 }
@@ -1565,8 +1565,8 @@ document.addEventListener("DOMContentLoaded", () => {
             "/responsiver": {
                 lines: [
                     "Responsiver est une application desktop open source en cours de développement pour auditer, corriger et valider la responsivité d'un site.",
-                    "Son Studio compare jusqu'à cinq écrans synchronisés; l'Atelier visuel, Monaco et la Matrice anti-régression encadrent ensuite les corrections.",
-                    "Le projet repose sur Electron, React, TypeScript, Chromium et Playwright, avec une approche local-first: les sources restent sur la machine et rien n'est appliqué sans validation."
+                    "Son Studio compare jusqu'à cinq écrans synchronisés\u00a0; l'Atelier visuel, Monaco et la Matrice anti-régression encadrent ensuite les corrections.",
+                    "Le projet repose sur Electron, React, TypeScript, Chromium et Playwright, avec une approche local-first\u00a0: les sources restent sur la machine et rien n'est appliqué sans validation."
                 ],
                 action: { label: "Ouvrir Responsiver", projectId: 5 }
             },
@@ -1580,9 +1580,9 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/formation": {
                 lines: [
-                    "Parcours actuel: BTS SIO option SLAM au lycée Guy Mollet de 2025 à 2027, après une L1 SID LAS et une année de BTS Audiovisuel.",
-                    "Expérience: stage de première année chez Habitat Insertion de mai à juillet 2026; le stage de deuxième année est prévu en janvier et février 2027.",
-                    "Point de départ: baccalauréat obtenu avec mention assez bien au lycée La Malassise en juillet 2023."
+                    "Parcours actuel\u00a0: BTS SIO option SLAM au lycée Guy Mollet de 2025 à 2027, après une L1 SID LAS et une année de BTS Audiovisuel.",
+                    "Expérience\u00a0: stage de première année chez Habitat Insertion de mai à juillet 2026\u00a0; le stage de deuxième année est prévu en janvier et février 2027.",
+                    "Point de départ\u00a0: baccalauréat obtenu avec mention assez bien au lycée La Malassise en juillet 2023."
                 ],
                 action: { label: "Voir mon parcours", target: "#journey-timeline" }
             },
@@ -1596,16 +1596,16 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/personality": {
                 lines: [
-                    "Je suis orienté progression: je préfère livrer une base claire, puis l'améliorer par itération.",
-                    "J'aime les interfaces avec une identité forte, mais je garde une contrainte centrale: l'utilisateur doit comprendre vite et agir sans friction.",
-                    "Mes valeurs de travail: rigueur, créativité, cohérence et delivery concret."
+                    "Je suis orienté progression\u00a0: je préfère livrer une base claire, puis l'améliorer par itération.",
+                    "J'aime les interfaces avec une identité forte, mais je garde une contrainte centrale\u00a0: l'utilisateur doit comprendre vite et agir sans friction.",
+                    "Mes valeurs de travail\u00a0: rigueur, créativité, cohérence et livraison concrète."
                 ]
             },
             "/goals": {
                 lines: [
-                    "Objectif court terme: consolider mes compétences web, Symfony, SQL, JavaScript et UI/UX.",
-                    "Objectif moyen terme: intégrer des projets plus complets, avec architecture propre, logique métier et vraie maintenabilité.",
-                    "Objectif long terme: devenir ingénieur logiciel avec une culture produit solide."
+                    "Objectif à court terme\u00a0: consolider mes compétences web, Symfony, SQL, JavaScript et UI/UX.",
+                    "Objectif à moyen terme\u00a0: intégrer des projets plus complets, avec une architecture propre, une logique métier et une vraie maintenabilité.",
+                    "Objectif à long terme\u00a0: devenir ingénieur logiciel avec une culture produit solide."
                 ]
             },
             "/hello": {
@@ -1617,8 +1617,8 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/contact": {
                 lines: [
-                    "Contact: contact@rfielbal.fr",
-                    "LinkedIn et GitHub sont disponibles dans la section contact.",
+                    "Contact\u00a0: contact@rfielbal.fr",
+                    "LinkedIn et GitHub sont disponibles dans la section Contact.",
                     "Je suis ouvert aux projets web, stages, collaborations et opportunités liées au développement."
                 ],
                 action: { label: "Aller au contact", target: "#contact" }
@@ -1781,7 +1781,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const entry = terminalCommands[command];
 
             if (!entry) {
-                appendLine("error", `Commande inconnue: ${command}`);
+                appendLine("error", `Commande inconnue\u00a0: ${command}`);
                 appendLine("response", "Essaie /help, /about, /skills, /projects, /veille, /revaloop, /responsiver ou /contact.");
                 return;
             }
@@ -2803,7 +2803,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!visibleProjects.length) {
             projectGrid.classList.remove("is-compact");
-            projectGrid.innerHTML = '<p class="empty-projects">Aucun projet sur ce filtre pour le moment.</p>';
+            projectGrid.innerHTML = '<p class="empty-projects">Aucun projet ne correspond à ce filtre pour le moment.</p>';
             motionEngine.invalidateLayout();
             return;
         }

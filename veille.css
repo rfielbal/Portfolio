@@ -618,8 +618,13 @@ body.hovering .cursor-follower {
     font-family: var(--watch-head);
     font-size: 4.6rem;
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.07;
     text-transform: uppercase;
+    text-wrap: balance;
+}
+
+#library-title {
+    line-height: 1.16;
 }
 
 .section-heading > p:not(.section-kicker) {
@@ -713,7 +718,7 @@ body.hovering .cursor-follower {
     content: "";
     position: absolute;
     top: 34px;
-    left: calc(var(--method-axis-x) - var(--method-gutter));
+    left: calc(var(--method-axis-x) - var(--method-gutter) - 1px);
     z-index: 2;
     width: 14px;
     height: 14px;
@@ -923,31 +928,34 @@ body.hovering .cursor-follower {
 .signal-state {
     width: fit-content;
     margin-top: 24px;
-    padding: 6px 9px;
-    border: 1px solid var(--watch-line);
-    border-radius: 999px;
-    background: rgba(242, 238, 229, 0.025);
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
     color: var(--watch-muted);
     font-size: 0.6rem;
     font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
 
+.signal-state::before {
+    width: 18px;
+    height: 1px;
+    flex: 0 0 18px;
+    background: currentColor;
+    content: "";
+    opacity: 0.72;
+}
+
 .signal-state--tested {
-    border-color: var(--watch-violet-line);
-    background: var(--watch-violet-soft);
     color: #d8cffd;
 }
 
 .signal-state--verified {
-    border-color: var(--watch-line-strong);
     color: var(--watch-text);
 }
 
 .signal-state--watch {
-    border-color: rgba(159, 134, 255, 0.22);
-    border-style: dashed;
-    background: transparent;
     color: #c3b9dd;
 }
 
@@ -1072,7 +1080,7 @@ body.hovering .cursor-follower {
 .impact-visual {
     position: relative;
     min-width: 0;
-    padding: clamp(42px, 5vw, 76px);
+    padding: clamp(24px, 3vw, 44px);
     display: grid;
     place-items: center;
     border-right: 0;
@@ -1091,6 +1099,7 @@ body.hovering .cursor-follower {
 
 .impact-visual img {
     width: 100%;
+    height: auto;
     aspect-ratio: 16 / 9;
     object-fit: contain;
     border: 1px solid var(--watch-line-strong);
@@ -1101,15 +1110,15 @@ body.hovering .cursor-follower {
 
 .impact-visual > p {
     position: absolute;
-    right: clamp(42px, 5vw, 76px);
-    bottom: 24px;
+    right: clamp(24px, 3vw, 44px);
+    bottom: 18px;
     color: var(--watch-muted);
     font-size: 0.64rem;
     text-transform: uppercase;
 }
 
 .impact-copy {
-    padding: clamp(54px, 7vw, 108px);
+    padding: clamp(42px, 4.6vw, 72px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1135,7 +1144,7 @@ body.hovering .cursor-follower {
     margin-top: 22px;
     color: var(--watch-text);
     font-family: var(--watch-head);
-    font-size: 3.6rem;
+    font-size: clamp(2.8rem, 3.35vw, 3.35rem);
     line-height: 1;
     text-transform: uppercase;
 }
@@ -1408,22 +1417,25 @@ body.hovering .cursor-follower {
 
 .library-links {
     padding: 8px 14px 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 12px;
     list-style: none;
 }
 
 .library-links a {
     min-height: 68px;
-    padding: 0 10px 0 12px;
+    padding: 10px 8px 10px 10px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(130px, 0.7fr) 34px;
+    grid-template-columns: minmax(0, 1fr) 34px;
     align-items: center;
-    gap: 18px;
+    gap: 2px 10px;
     border-top: 1px solid var(--watch-line);
     border-radius: 14px;
     transition: background 180ms ease, border-color 180ms ease;
 }
 
-.library-links li:first-child a {
+.library-links li:nth-child(-n + 2) a {
     border-top-color: transparent;
 }
 
@@ -1440,6 +1452,8 @@ body.hovering .cursor-follower {
 }
 
 .library-links small {
+    grid-column: 1;
+    grid-row: 2;
     color: var(--watch-muted);
     font-size: 0.62rem;
 }
@@ -1448,6 +1462,8 @@ body.hovering .cursor-follower {
     width: 30px;
     height: 30px;
     display: grid;
+    grid-column: 2;
+    grid-row: 1 / 3;
     place-items: center;
     justify-self: end;
     border: 1px solid var(--watch-violet-line);
@@ -2035,6 +2051,11 @@ body.hovering .cursor-follower {
 
     .library-links {
         padding: 6px 8px 14px;
+        grid-template-columns: 1fr;
+    }
+
+    .library-links li:nth-child(2) a {
+        border-top-color: var(--watch-line);
     }
 
     .library-links a {
