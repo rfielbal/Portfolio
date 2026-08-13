@@ -108,7 +108,7 @@ h4 {
     z-index: 10000;
     display: grid;
     place-content: center;
-    padding: 24px;
+    gap: 12px;
     text-align: center;
     transition: opacity 0.6s ease, visibility 0.6s ease;
 }
@@ -118,85 +118,24 @@ h4 {
     visibility: hidden;
 }
 
-.preloader-panel {
-    position: relative;
-    width: min(440px, calc(100vw - 48px));
-    display: grid;
-    justify-items: stretch;
-    padding: clamp(28px, 5vw, 46px);
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 18px;
-    background: rgba(5, 8, 10, 0.9);
-    box-shadow:
-        0 30px 90px rgba(0, 0, 0, 0.48),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-}
-
-.preloader-panel::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 38%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--acid), transparent);
-}
-
-.preloader-brand {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    margin-bottom: clamp(32px, 7vw, 54px);
-    color: rgba(255, 255, 255, 0.52);
-    font-family: var(--font-code);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-}
-
-.preloader-brand strong {
-    color: var(--acid);
-    font-family: var(--font-head);
-    font-size: 1rem;
-    letter-spacing: 0.05em;
-}
-
 .preloader-tag {
     color: var(--muted);
     letter-spacing: 0.11em;
     text-transform: uppercase;
-    font-size: 0.64rem;
-    text-align: left;
-}
-
-.preloader-readout {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    margin: 8px 0 14px;
+    font-size: 0.72rem;
 }
 
 .preloader-counter {
     color: var(--acid);
     font-family: var(--font-head);
-    font-size: clamp(4.5rem, 14vw, 7.4rem);
+    font-size: clamp(3rem, 8vw, 8rem);
     font-weight: 700;
-    line-height: 0.88;
     font-variant-numeric: tabular-nums;
 }
 
-.preloader-readout > span {
-    color: rgba(255, 255, 255, 0.74);
-    font-family: var(--font-head);
-    font-size: clamp(1.6rem, 5vw, 2.35rem);
-    line-height: 1;
-}
-
 .preloader-line {
-    width: 100%;
-    height: 2px;
+    width: min(320px, 68vw);
+    height: 3px;
     background: rgba(255, 255, 255, 0.17);
     border-radius: 999px;
     overflow: hidden;
@@ -207,27 +146,6 @@ h4 {
     height: 100%;
     width: 0;
     background: linear-gradient(90deg, var(--acid), #f2ffbf);
-}
-
-.preloader-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-    color: rgba(255, 255, 255, 0.48);
-    font-size: 0.56rem;
-    letter-spacing: 0.09em;
-    text-align: left;
-    text-transform: uppercase;
-}
-
-.preloader-status i {
-    width: 6px;
-    height: 6px;
-    flex: 0 0 auto;
-    border-radius: 50%;
-    background: var(--acid);
-    box-shadow: 0 0 12px rgba(204, 255, 0, 0.46);
 }
 
 .cursor,
@@ -6455,7 +6373,7 @@ body::after {
     opacity: 0.16;
 }
 
-/* Loading screen: retain the current content, add only the V.0.5 grid and corners. */
+/* Preserve the original loader composition while keeping the V.0.5 grid and corners. */
 .preloader {
     isolation: isolate;
     background:
