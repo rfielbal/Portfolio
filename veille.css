@@ -307,8 +307,8 @@ body.hovering .cursor-follower {
 .watch-menu-button:hover,
 .watch-menu-button:focus-visible {
     border-color: var(--watch-violet);
-    background: var(--watch-violet);
-    color: #07060a;
+    background: transparent;
+    color: var(--watch-violet);
 }
 
 .watch-mobile-menu {
@@ -377,6 +377,13 @@ body.hovering .cursor-follower {
     color: var(--watch-text);
     font-size: 0.72rem;
     text-transform: uppercase;
+    transition: border-color 180ms ease, color 180ms ease;
+}
+
+.watch-menu-close:hover,
+.watch-menu-close:focus-visible {
+    border-color: var(--watch-violet);
+    color: var(--watch-violet);
 }
 
 .watch-hero {

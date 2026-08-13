@@ -6571,8 +6571,8 @@ header {
 .burger-menu:hover,
 .burger-menu:focus-visible {
     border-color: var(--acid);
-    background: var(--acid);
-    color: #05070a;
+    background: transparent;
+    color: var(--acid);
 }
 
 .burger-icon {
