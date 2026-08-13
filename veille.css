@@ -660,6 +660,8 @@ body.hovering .cursor-follower {
 .method-track {
     --method-axis-x: 10px;
     --method-gutter: 50px;
+    --method-dot-top: 34px;
+    --method-dot-size: 14px;
     position: relative;
     padding-left: var(--method-gutter);
 }
@@ -667,7 +669,7 @@ body.hovering .cursor-follower {
 .method-track::before,
 .method-progress {
     position: absolute;
-    top: 34px;
+    top: calc(var(--method-dot-top) + var(--method-dot-size) / 2);
     bottom: 34px;
     left: calc(var(--method-axis-x) - 1px);
     width: 2px;
@@ -717,11 +719,11 @@ body.hovering .cursor-follower {
 .method-track li::before {
     content: "";
     position: absolute;
-    top: 34px;
+    top: var(--method-dot-top);
     left: calc(var(--method-axis-x) - var(--method-gutter) - 1px);
     z-index: 2;
-    width: 14px;
-    height: 14px;
+    width: var(--method-dot-size);
+    height: var(--method-dot-size);
     border: 2px solid var(--watch-violet);
     border-radius: 50%;
     background: var(--watch-bg);
@@ -925,40 +927,6 @@ body.hovering .cursor-follower {
     color: var(--signal-accent);
 }
 
-.signal-state {
-    width: fit-content;
-    margin-top: 24px;
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    color: var(--watch-muted);
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.signal-state::before {
-    width: 18px;
-    height: 1px;
-    flex: 0 0 18px;
-    background: currentColor;
-    content: "";
-    opacity: 0.72;
-}
-
-.signal-state--tested {
-    color: #d8cffd;
-}
-
-.signal-state--verified {
-    color: var(--watch-text);
-}
-
-.signal-state--watch {
-    color: #c3b9dd;
-}
-
 .watch-signals code {
     color: #d8cffd;
 }
@@ -972,7 +940,7 @@ body.hovering .cursor-follower {
     text-transform: uppercase;
 }
 
-.signal-card > p:not(.signal-state) {
+.signal-card > p {
     margin-top: 16px;
     color: var(--watch-muted);
     font-family: var(--watch-sans);
@@ -1914,6 +1882,8 @@ body.hovering .cursor-follower {
     .method-track {
         --method-axis-x: 6px;
         --method-gutter: 32px;
+        --method-dot-top: 27px;
+        --method-dot-size: 12px;
     }
 
     .method-track li {
@@ -1927,12 +1897,6 @@ body.hovering .cursor-follower {
 
     .method-track li:nth-child(even) {
         border-radius: 22px 7px 22px 22px;
-    }
-
-    .method-track li::before {
-        top: 27px;
-        width: 12px;
-        height: 12px;
     }
 
     .method-track li > span {

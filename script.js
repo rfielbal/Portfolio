@@ -1532,9 +1532,9 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/about": {
                 lines: [
-                    "Raphaël Coursier, étudiant en BTS SIO option SLAM au lycée Guy Mollet.",
-                    "Je construis des interfaces web avec une vraie direction visuelle, mais je garde en priorité la clarté, l'ergonomie et une base technique maintenable.",
-                    "Mon cap\u00a0: évoluer vers un profil d'ingénieur capable de cadrer un besoin, structurer une architecture propre et livrer un produit durable."
+                    "Raphaël Coursier, 21 ans, actuellement en deuxième année de BTS SIO option SLAM au lycée Guy Mollet d'Arras.",
+                    "Déterminé et passionné, j'allie rigueur, curiosité et envie constante d'apprendre pour progresser vers un profil de développeur complet.",
+                    "Mon ambition\u00a0: devenir ingénieur, puis créer mon entreprise dans le développement web et la solution logicielle."
                 ],
                 action: { label: "Voir la section À propos", target: "#manifesto" }
             },
@@ -1580,8 +1580,8 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/formation": {
                 lines: [
-                    "Parcours actuel\u00a0: BTS SIO option SLAM au lycée Guy Mollet de 2025 à 2027, après une L1 SID LAS et une année de BTS Audiovisuel.",
-                    "Expérience\u00a0: stage de première année chez Habitat Insertion de mai à juillet 2026\u00a0; le stage de deuxième année est prévu en janvier et février 2027.",
+                    "Parcours actuel\u00a0: deuxième année de BTS SIO option SLAM au lycée Guy Mollet, après une L1 SID LAS et une année de BTS Audiovisuel.",
+                    "Expérience\u00a0: stage de première année chez Habitat Insertion de mai à juillet 2026\u00a0; je recherche désormais mon stage de deuxième année pour janvier et février 2027.",
                     "Point de départ\u00a0: baccalauréat obtenu avec mention assez bien au lycée La Malassise en juillet 2023."
                 ],
                 action: { label: "Voir mon parcours", target: "#journey-timeline" }
@@ -1619,7 +1619,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 lines: [
                     "Contact\u00a0: contact@rfielbal.fr",
                     "LinkedIn et GitHub sont disponibles dans la section Contact.",
-                    "Je suis ouvert aux projets web, stages, collaborations et opportunités liées au développement."
+                    "Je recherche un stage de deuxième année et reste ouvert aux projets web et aux collaborations."
                 ],
                 action: { label: "Aller au contact", target: "#contact" }
             },
