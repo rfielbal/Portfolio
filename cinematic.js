@@ -517,7 +517,8 @@
             const canvasAllowed = () => desktopCinema.matches
                 && !reducedMotion.matches
                 && !coarsePointer.matches
-                && !saveData;
+                && !saveData
+                && !document.body.classList.contains("preloader-active");
 
             const resizeCanvas = () => {
                 if (!canvasAllowed()) return;
@@ -635,6 +636,7 @@
                 if (document.hidden) stopCanvas();
                 else startCanvas();
             });
+            window.addEventListener("portfolio:preloader-exit", syncCanvas);
             reducedMotion.addEventListener?.("change", syncCanvas);
             coarsePointer.addEventListener?.("change", syncCanvas);
             desktopCinema.addEventListener?.("change", syncCanvas);

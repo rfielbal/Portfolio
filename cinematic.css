@@ -34,6 +34,12 @@ html.js-failed-open .reveal {
     transform: none !important;
 }
 
+html.js-failed-open .hero-left,
+html.js-failed-open .hero-right {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
 html.portfolio-ready .js-fallback-projects {
     display: none;
 }
@@ -215,6 +221,203 @@ html.js-failed-open .legal-fallback {
     background:
         radial-gradient(circle at 50% 46%, transparent 28%, rgba(0, 0, 0, 0.45) 100%),
         linear-gradient(90deg, rgba(3, 5, 7, 0.45), transparent 24%, transparent 74%, rgba(3, 5, 7, 0.35));
+}
+
+/* -------------------------------------------------------------------------- */
+/* Hero entrance — synchronized with the real preloader exit                  */
+/* -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+    html.hero-intro-pending body {
+        --hero-intro-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html.hero-intro-pending .navbar,
+    html.hero-intro-pending .story-rail,
+    html.hero-intro-pending .hero-kicker-row,
+    html.hero-intro-pending .hero-title-line > span,
+    html.hero-intro-pending .hero-intro,
+    html.hero-intro-pending .hero-signature,
+    html.hero-intro-pending .hero-actions,
+    html.hero-intro-pending .hero-facts,
+    html.hero-intro-pending .hero-right {
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    html.hero-intro-pending .cinematic-canvas,
+    html.hero-intro-pending .cinematic-vignette {
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    html.hero-intro-pending .navbar {
+        transform: translate3d(0, -18px, 0) scale(0.99);
+    }
+
+    html.hero-intro-pending .story-rail {
+        transform: translate3d(14px, -50%, 0);
+    }
+
+    html.hero-intro-pending .cinematic-canvas {
+        transform: scale(1.035);
+    }
+
+    html.hero-intro-pending .cinematic-vignette {
+        transform: scale(1.018);
+    }
+
+    html.hero-intro-pending .hero-kicker-row {
+        transform: translate3d(0, 16px, 0);
+    }
+
+    html.hero-intro-pending .hero-title-line > span {
+        display: inline-block;
+        transform: translate3d(0, 42px, 0);
+    }
+
+    html.hero-intro-pending .hero-intro,
+    html.hero-intro-pending .hero-signature,
+    html.hero-intro-pending .hero-actions,
+    html.hero-intro-pending .hero-facts {
+        transform: translate3d(0, 24px, 0);
+    }
+
+    html.hero-intro-pending .hero-right {
+        transform: translate3d(42px, 14px, 0) scale(0.965);
+        transform-origin: 46% 50%;
+    }
+
+    html.hero-intro-pending .hero.is-motion-near .terminal-border-orbit,
+    html.hero-intro-pending .terminal-border-orbit {
+        animation-play-state: paused !important;
+    }
+
+    html.hero-intro-pending.hero-intro-running .navbar,
+    html.hero-intro-pending.hero-intro-running .story-rail,
+    html.hero-intro-pending.hero-intro-running .cinematic-canvas,
+    html.hero-intro-pending.hero-intro-running .cinematic-vignette,
+    html.hero-intro-pending.hero-intro-running .hero-kicker-row,
+    html.hero-intro-pending.hero-intro-running .hero-title-line > span,
+    html.hero-intro-pending.hero-intro-running .hero-intro,
+    html.hero-intro-pending.hero-intro-running .hero-signature,
+    html.hero-intro-pending.hero-intro-running .hero-actions,
+    html.hero-intro-pending.hero-intro-running .hero-facts,
+    html.hero-intro-pending.hero-intro-running .hero-right {
+        opacity: 1;
+        transform: none;
+        transition-property: transform, opacity;
+        transition-duration: 920ms;
+        transition-timing-function: var(--hero-intro-ease);
+    }
+
+    html.hero-intro-pending.hero-intro-running .story-rail {
+        transform: translateY(-50%);
+    }
+
+    html.hero-intro-pending.hero-intro-running .cinematic-canvas,
+    html.hero-intro-pending.hero-intro-running .cinematic-vignette {
+        transition-duration: 1200ms;
+        transition-delay: 0ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .cinematic-canvas {
+        opacity: calc(0.78 - (var(--hero-progress) * 0.4));
+    }
+
+    html.hero-intro-pending.hero-intro-running .navbar {
+        transition-delay: 0ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-kicker-row {
+        transition-delay: 70ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-title-line--one > span {
+        transition-delay: 130ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-title-line--two > span {
+        transition-delay: 215ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-right {
+        transition-delay: 175ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-intro {
+        transition-delay: 315ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-signature {
+        transition-delay: 385ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-actions {
+        transition-delay: 455ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-facts,
+    html.hero-intro-pending.hero-intro-running .story-rail {
+        transition-delay: 525ms;
+    }
+}
+
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+    html.hero-intro-pending .navbar {
+        transform: translate3d(0, -12px, 0);
+    }
+
+    html.hero-intro-pending .hero-kicker-row {
+        transform: translate3d(0, 12px, 0);
+    }
+
+    html.hero-intro-pending .hero-title-line > span {
+        transform: translate3d(0, 24px, 0);
+    }
+
+    html.hero-intro-pending .hero-intro,
+    html.hero-intro-pending .hero-signature,
+    html.hero-intro-pending .hero-actions,
+    html.hero-intro-pending .hero-facts {
+        transform: translate3d(0, 16px, 0);
+    }
+
+    html.hero-intro-pending .hero-right {
+        transform: translate3d(18px, 10px, 0) scale(0.985);
+    }
+
+    html.hero-intro-pending.hero-intro-running .navbar,
+    html.hero-intro-pending.hero-intro-running .story-rail,
+    html.hero-intro-pending.hero-intro-running .hero-kicker-row,
+    html.hero-intro-pending.hero-intro-running .hero-title-line > span,
+    html.hero-intro-pending.hero-intro-running .hero-intro,
+    html.hero-intro-pending.hero-intro-running .hero-signature,
+    html.hero-intro-pending.hero-intro-running .hero-actions,
+    html.hero-intro-pending.hero-intro-running .hero-facts,
+    html.hero-intro-pending.hero-intro-running .hero-right {
+        transition-duration: 720ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-right {
+        transition-delay: 260ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-intro {
+        transition-delay: 280ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-signature {
+        transition-delay: 330ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-actions {
+        transition-delay: 380ms;
+    }
+
+    html.hero-intro-pending.hero-intro-running .hero-facts {
+        transition-delay: 430ms;
+    }
 }
 
 body .hero-grid {

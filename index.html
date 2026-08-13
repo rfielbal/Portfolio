@@ -119,12 +119,19 @@
                             ? "watch-return"
                             : "entry";
             root.classList.toggle("preloader-skip", !shouldPlayPreloader);
+            const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const isHeroDestination = !window.location.hash || window.location.hash === "#home";
+            const shouldPlayHeroIntro = shouldPlayPreloader && isHeroDestination && !reducedMotion;
+
+            window.__portfolioShouldPlayHeroIntro = shouldPlayHeroIntro;
+            root.classList.toggle("hero-intro-pending", shouldPlayHeroIntro);
             root.dataset.preloaderMode = window.__portfolioPreloaderReason;
         })();
 
         window.setTimeout(() => {
             if (!document.documentElement.classList.contains("portfolio-ready")) {
                 document.documentElement.classList.add("js-failed-open");
+                document.documentElement.classList.remove("hero-intro-pending", "hero-intro-running");
             }
         }, 4000);
     </script>
@@ -138,7 +145,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link rel="stylesheet" href="style.css?v=accessibilite-seo-20260813">
-    <link rel="stylesheet" href="cinematic.css?v=accessibilite-seo-20260813">
+    <link rel="stylesheet" href="cinematic.css?v=hero-intro-20260813">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Aller au contenu principal</a>
@@ -222,7 +229,7 @@
             <div class="cinematic-vignette" aria-hidden="true"></div>
 
             <div class="container hero-grid">
-                <div class="hero-left reveal">
+                <div class="hero-left">
                     <div class="hero-kicker-row">
                         <p class="hero-subtitle">BTS SIO — OPTION SLAM</p>
                     </div>
@@ -276,7 +283,7 @@
 
                 </div>
 
-                <div class="hero-right reveal delay-1" id="hero-right">
+                <div class="hero-right" id="hero-right">
                     <div class="project-orbit" id="project-orbit" aria-hidden="true">
                         <figure class="orbit-card orbit-card--wheello">
                             <img src="./images/projects/wheello/thumb.webp" alt="" width="480" height="274" loading="eager" fetchpriority="low" decoding="async">
@@ -1278,7 +1285,7 @@
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
     <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=profil-veille-20260813"></script>
-    <script src="cinematic.js?v=accessibilite-seo-20260813"></script>
+    <script src="script.js?v=hero-intro-20260813"></script>
+    <script src="cinematic.js?v=hero-intro-20260813"></script>
 </body>
 </html>

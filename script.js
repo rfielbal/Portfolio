@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let preloaderFrame = null;
     let preloaderExitTimer = null;
     let preloaderHideTimer = null;
+    let heroIntroStartTimer = null;
+    let heroIntroCompleteTimer = null;
+    let heroIntroIntentController = null;
 
     const navbar = document.getElementById("navbar");
     const homeSection = document.getElementById("home");
@@ -1110,6 +1113,58 @@ document.addEventListener("DOMContentLoaded", () => {
         preloaderHideTimer = null;
     };
 
+    const completeHeroIntro = ({ immediate = false } = {}) => {
+        if (heroIntroStartTimer !== null) window.clearTimeout(heroIntroStartTimer);
+        if (heroIntroCompleteTimer !== null) window.clearTimeout(heroIntroCompleteTimer);
+        heroIntroIntentController?.abort();
+        heroIntroStartTimer = null;
+        heroIntroCompleteTimer = null;
+        heroIntroIntentController = null;
+
+        const root = document.documentElement;
+        root.classList.remove("hero-intro-pending", "hero-intro-running");
+        window.requestAnimationFrame(() => motionEngine?.invalidateLayout());
+    };
+
+    const bindHeroIntroInterruptions = () => {
+        heroIntroIntentController?.abort();
+        heroIntroIntentController = new AbortController();
+        const { signal } = heroIntroIntentController;
+        const completeOnIntent = (event) => {
+            if (
+                event.type === "keydown"
+                && !["Tab", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)
+            ) return;
+
+            completeHeroIntro({ immediate: true });
+        };
+
+        window.addEventListener("pointerdown", completeOnIntent, { passive: true, signal });
+        window.addEventListener("keydown", completeOnIntent, { capture: true, signal });
+    };
+
+    const runHeroIntro = () => {
+        const root = document.documentElement;
+        if (
+            window.__portfolioShouldPlayHeroIntro !== true
+            || !root.classList.contains("hero-intro-pending")
+            || prefersReducedMotion
+        ) {
+            completeHeroIntro({ immediate: true });
+            return;
+        }
+
+        bindHeroIntroInterruptions();
+        heroIntroStartTimer = window.setTimeout(() => {
+            heroIntroStartTimer = null;
+            root.classList.add("hero-intro-running");
+            heroIntroCompleteTimer = window.setTimeout(() => {
+                heroIntroCompleteTimer = null;
+                completeHeroIntro();
+            }, 1500);
+        }, 110);
+    };
+
     const setPreloaderProgress = (value) => {
         const progress = Math.max(0, Math.min(100, Math.round(value)));
         preloaderCounter.textContent = String(progress);
@@ -1123,16 +1178,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { capture: true });
 
     const hidePreloader = ({ immediate = false } = {}) => {
-        if (!preloader) return;
+        if (!preloader) {
+            completeHeroIntro({ immediate: true });
+            return;
+        }
         clearPreloaderTimers();
         body.classList.remove("preloader-active");
         preloader.classList.add("hide");
         preloader.dataset.state = immediate ? "hidden" : "exiting";
+        window.dispatchEvent(new CustomEvent("portfolio:preloader-exit", {
+            detail: { immediate }
+        }));
 
         if (immediate) {
             preloader.hidden = true;
+            completeHeroIntro({ immediate: true });
             return;
         }
+
+        runHeroIntro();
 
         preloaderHideTimer = window.setTimeout(() => {
             preloader.hidden = true;
@@ -1194,6 +1258,12 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("pageshow", (event) => {
         if (!event.persisted) return;
         hidePreloader({ immediate: true });
+        motionEngine?.invalidateLayout();
+    });
+
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    reducedMotionQuery.addEventListener?.("change", (event) => {
+        if (event.matches) completeHeroIntro({ immediate: true });
     });
 
     const rotateSignature = () => {
