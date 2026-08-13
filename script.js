@@ -3332,12 +3332,23 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isInteractive(event.target)) {
                 body.classList.add("hovering");
             }
+
+            if (event.target?.closest(".watch-portal-link")) {
+                body.classList.add("hovering-watch");
+            }
         });
 
         document.addEventListener("pointerout", (event) => {
             if (!isInteractive(event.target)) return;
             if (!isInteractive(event.relatedTarget)) {
                 body.classList.remove("hovering");
+            }
+
+            if (
+                event.target?.closest(".watch-portal-link")
+                && !event.relatedTarget?.closest?.(".watch-portal-link")
+            ) {
+                body.classList.remove("hovering-watch");
             }
         });
 

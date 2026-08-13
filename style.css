@@ -209,6 +209,16 @@ body.hovering .cursor-follower {
     background-color: rgba(204, 255, 0, 0.08);
 }
 
+body.hovering-watch .cursor {
+    background-color: #9f86ff;
+    box-shadow: 0 0 18px rgba(159, 134, 255, 0.75);
+}
+
+body.hovering-watch .cursor-follower {
+    border-color: #9f86ff;
+    background-color: rgba(159, 134, 255, 0.1);
+}
+
 header {
     position: fixed;
     top: 0;
