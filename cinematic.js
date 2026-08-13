@@ -390,7 +390,8 @@
         };
 
         cinemaButtons.forEach((button) => {
-            button.addEventListener("click", () => {
+            button.addEventListener("click", (event) => {
+                event.preventDefault();
                 document.dispatchEvent(new CustomEvent("portfolio:open-project", {
                     detail: { id: button.dataset.cinemaOpen }
                 }));

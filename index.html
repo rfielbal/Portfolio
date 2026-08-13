@@ -3,9 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio de Raphaël Coursier. Développeur web et logiciel orienté architecture, design premium et delivery propre.">
+    <meta name="description" content="Portfolio de Raphaël Coursier, développeur web full-stack : applications métier, interfaces soignées, architecture maintenable et projets expérimentaux.">
     <meta name="theme-color" content="#050505">
-    <title>Portfolio Raphaël Coursier</title>
+    <link rel="canonical" href="https://rfielbal.fr/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Portfolio de Raphaël Coursier">
+    <meta property="og:title" content="Raphaël Coursier — Développeur web full-stack">
+    <meta property="og:description" content="Applications métier, interfaces soignées, architecture maintenable et projets expérimentaux.">
+    <meta property="og:url" content="https://rfielbal.fr/">
+    <meta property="og:image" content="https://rfielbal.fr/images/social/portfolio-raphael-coursier-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Portfolio de Raphaël Coursier, développeur web full-stack">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Raphaël Coursier — Développeur web full-stack">
+    <meta name="twitter:description" content="Applications métier, interfaces soignées, architecture maintenable et projets expérimentaux.">
+    <meta name="twitter:image" content="https://rfielbal.fr/images/social/portfolio-raphael-coursier-og.jpg">
+    <meta name="twitter:image:alt" content="Portfolio de Raphaël Coursier, développeur web full-stack">
+
+    <title>Raphaël Coursier — Développeur web full-stack</title>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebSite",
+                    "@id": "https://rfielbal.fr/#website",
+                    "url": "https://rfielbal.fr/",
+                    "name": "Portfolio de Raphaël Coursier",
+                    "inLanguage": "fr-FR"
+                },
+                {
+                    "@type": "ProfilePage",
+                    "@id": "https://rfielbal.fr/#profile",
+                    "url": "https://rfielbal.fr/",
+                    "name": "Raphaël Coursier — Développeur web full-stack",
+                    "description": "Portfolio de Raphaël Coursier, développeur web full-stack : applications métier, interfaces soignées, architecture maintenable et projets expérimentaux.",
+                    "inLanguage": "fr-FR",
+                    "isPartOf": {
+                        "@id": "https://rfielbal.fr/#website"
+                    },
+                    "mainEntity": {
+                        "@id": "https://rfielbal.fr/#raphael-coursier"
+                    }
+                },
+                {
+                    "@type": "Person",
+                    "@id": "https://rfielbal.fr/#raphael-coursier",
+                    "name": "Raphaël Coursier",
+                    "jobTitle": "Développeur web full-stack",
+                    "url": "https://rfielbal.fr/",
+                    "image": "https://rfielbal.fr/images/profile/raphael-coursier.webp",
+                    "email": "mailto:contact@rfielbal.fr",
+                    "sameAs": [
+                        "https://www.linkedin.com/in/raphaël-coursier",
+                        "https://github.com/rfielbal"
+                    ]
+                }
+            ]
+        }
+    </script>
 
     <script>
         (() => {
@@ -67,17 +129,20 @@
         }, 4000);
     </script>
 
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/webp" href="images/brand/brand-mark-128.webp">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=ux-loader-20260813">
-    <link rel="stylesheet" href="cinematic.css?v=ux-mobile-demos-20260802">
+    <link rel="stylesheet" href="style.css?v=accessibilite-seo-20260813">
+    <link rel="stylesheet" href="cinematic.css?v=accessibilite-seo-20260813">
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+
     <div class="preloader" id="preloader" aria-hidden="true">
         <p class="preloader-tag">Chargement du portfolio</p>
         <p class="preloader-counter" id="preloader-counter">0</p>
@@ -95,7 +160,7 @@
     <header>
         <nav class="navbar" id="navbar" aria-label="Navigation principale">
             <a href="#home" class="brand-link" data-magnetic>
-                <img src="favicon.png" alt="Logo Raphaël Coursier" class="nav-logo">
+                <img src="images/brand/brand-mark-128.webp" width="128" height="120" alt="Logo Raphaël Coursier" class="nav-logo" decoding="async">
                 <span>RAPHAËL COURSIER</span>
             </a>
 
@@ -131,6 +196,15 @@
         </div>
     </header>
 
+    <nav class="no-js-nav" aria-label="Navigation principale de secours">
+        <a href="#home">Accueil</a>
+        <a href="#manifesto">À propos</a>
+        <a href="#projects">Projets</a>
+        <a href="#savoir-faire">Savoir-faire</a>
+        <a href="veille.html">Veille</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
     <aside class="story-rail" id="story-rail" aria-label="Progression de section">
         <div class="story-track">
             <i id="story-rail-fill"></i>
@@ -142,7 +216,7 @@
         <a href="#contact" class="story-dot" data-target="contact">05</a>
     </aside>
 
-    <main>
+    <main id="main-content" tabindex="-1">
         <section id="home" class="hero">
             <canvas class="cinematic-canvas" id="cinematic-canvas" aria-hidden="true"></canvas>
             <div class="cinematic-vignette" aria-hidden="true"></div>
@@ -245,7 +319,10 @@
                             </div>
 
                             <div class="terminal-body interactive-terminal-body">
-                                <div class="terminal-output" id="terminal-output" aria-live="polite"></div>
+                                <div class="terminal-output" id="terminal-output" aria-live="polite">
+                                    <p class="terminal-line response terminal-static-fallback">Bienvenue. Retrouvez mon profil, mes projets et mon parcours dans les sections de cette page.</p>
+                                    <p class="terminal-line response terminal-static-fallback">Le terminal interactif nécessite JavaScript, mais tous les contenus essentiels restent accessibles.</p>
+                                </div>
 
                                 <form class="terminal-form" id="terminal-form" autocomplete="off">
                                     <label for="terminal-input" class="sr-only">Commande terminal</label>
@@ -422,15 +499,15 @@
                             </div>
 
                             <div class="buttons about-actions">
-                                <button class="btn-simple" id="btn-skills" data-magnetic type="button">
-                                    COMPÉTENCES <i class="fas fa-code"></i>
-                                </button>
-                                <button class="btn-simple" id="btn-diplomas" data-magnetic type="button">
-                                    DIPLÔMES / CERTIF. <i class="fas fa-graduation-cap"></i>
-                                </button>
-                                <button class="btn-simple" id="btn-school" data-magnetic type="button">
-                                    DOSSIER SCOLAIRE <i class="fas fa-folder-open"></i>
-                                </button>
+                                <a class="btn-simple" id="btn-skills" href="#savoir-faire" data-magnetic>
+                                    COMPÉTENCES <i class="fas fa-code" aria-hidden="true"></i>
+                                </a>
+                                <a class="btn-simple" id="btn-diplomas" href="./documents/cv-raphael-coursier.pdf" data-magnetic>
+                                    DIPLÔMES / CERTIF. <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                </a>
+                                <a class="btn-simple" id="btn-school" href="./documents/bulletins-public/bts-sio-semestre-1.pdf" data-magnetic>
+                                    DOSSIER SCOLAIRE <i class="fas fa-folder-open" aria-hidden="true"></i>
+                                </a>
                             </div>
                         </article>
 
@@ -468,9 +545,9 @@
                                             </div>
                                             <h4>Stage de première année</h4>
                                             <p>Habitat Insertion · Conception et développement de l'application métier Wheello.</p>
-                                            <button class="journey-project-link" type="button" data-journey-project="4" data-magnetic>
+                                            <a class="journey-project-link" href="#fallback-project-wheello" data-journey-project="4" data-magnetic>
                                                 Voir Wheello <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                            </button>
+                                            </a>
                                         </article>
                                     </li>
 
@@ -551,7 +628,7 @@
                                 <figure class="cinema-card-media">
                                     <picture>
                                         <source media="(max-width: 700px)" srcset="./images/projects/wheello/thumb.webp">
-                                        <img src="./images/projects/wheello/cover.webp" width="1600" height="1000" alt="Interfaces web et mobile de l’application métier Wheello" loading="lazy" decoding="async">
+                                        <img src="./images/projects/wheello/cover.webp" width="1600" height="911" alt="Interfaces web et mobile de l’application métier Wheello" loading="lazy" decoding="async">
                                     </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
@@ -562,9 +639,9 @@
                                     <div class="cinema-card-meta">
                                         <span>SYMFONY</span><span>FLUTTER</span><span>API</span>
                                     </div>
-                                    <button class="cinema-open project-cta" type="button" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="#fallback-project-wheello" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -574,7 +651,7 @@
                                 <figure class="cinema-card-media">
                                     <picture>
                                         <source media="(max-width: 700px)" srcset="./images/projects/jessica-dew/thumb.webp">
-                                        <img src="./images/projects/jessica-dew/cover.webp" width="1600" height="1000" alt="Accueil éditorial du site de la photographe Jessica Dew" loading="lazy" decoding="async">
+                                        <img src="./images/projects/jessica-dew/cover.webp" width="1440" height="810" alt="Accueil éditorial du site de la photographe Jessica Dew" loading="lazy" decoding="async">
                                     </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
@@ -585,9 +662,9 @@
                                     <div class="cinema-card-meta">
                                         <span>SYMFONY</span><span>UX</span><span>OVHCLOUD</span>
                                     </div>
-                                    <button class="cinema-open project-cta" type="button" data-cinema-open="1" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="#fallback-project-jessica-dew" data-cinema-open="1" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -597,7 +674,7 @@
                                 <figure class="cinema-card-media">
                                     <picture>
                                         <source media="(max-width: 700px)" srcset="./images/projects/streamcorner/thumb.webp">
-                                        <img src="./images/projects/streamcorner/cover.webp" width="1600" height="1000" alt="Accueil de la boutique e-commerce StreamCorner" loading="lazy" decoding="async">
+                                        <img src="./images/projects/streamcorner/cover.webp" width="1600" height="906" alt="Accueil de la boutique e-commerce StreamCorner" loading="lazy" decoding="async">
                                     </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
@@ -608,9 +685,9 @@
                                     <div class="cinema-card-meta">
                                         <span>SYMFONY</span><span>DOCTRINE</span><span>MYSQL</span>
                                     </div>
-                                    <button class="cinema-open project-cta" type="button" data-cinema-open="3" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="#fallback-project-streamcorner" data-cinema-open="3" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -620,7 +697,7 @@
                                 <figure class="cinema-card-media">
                                     <picture>
                                         <source media="(max-width: 700px)" srcset="./images/projects/revaloop/thumb.webp">
-                                        <img src="./images/projects/revaloop/cover.webp" width="1600" height="1000" alt="Interface de la plateforme de recette client Revaloop" loading="lazy" decoding="async">
+                                        <img src="./images/projects/revaloop/cover.webp" width="1440" height="810" alt="Interface de la plateforme de recette client Revaloop" loading="lazy" decoding="async">
                                     </picture>
                                     <span class="cinema-media-scan" aria-hidden="true"></span>
                                 </figure>
@@ -631,9 +708,9 @@
                                     <div class="cinema-card-meta">
                                         <span>NEXT.JS</span><span>CLOUDFLARE</span><span>ELECTRON</span>
                                     </div>
-                                    <button class="cinema-open project-cta" type="button" data-cinema-open="9" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="#fallback-project-revaloop" data-cinema-open="9" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -666,12 +743,13 @@
                         et projets personnels orientés produit.
                     </p>
 
-                    <div class="project-filters" id="project-filters">
-                        <button class="filter-btn active" data-filter="all" data-magnetic type="button">Tous</button>
-                        <button class="filter-btn" data-filter="client" data-magnetic type="button">Client</button>
-                        <button class="filter-btn" data-filter="academique" data-magnetic type="button">Académique</button>
-                        <button class="filter-btn" data-filter="perso" data-magnetic type="button">Perso</button>
+                    <div class="project-filters" id="project-filters" role="group" aria-label="Filtrer les projets">
+                        <button class="filter-btn active" data-filter="all" data-magnetic type="button" aria-pressed="true" aria-controls="projects-grid">Tous</button>
+                        <button class="filter-btn" data-filter="client" data-magnetic type="button" aria-pressed="false" aria-controls="projects-grid">Client</button>
+                        <button class="filter-btn" data-filter="academique" data-magnetic type="button" aria-pressed="false" aria-controls="projects-grid">Académique</button>
+                        <button class="filter-btn" data-filter="perso" data-magnetic type="button" aria-pressed="false" aria-controls="projects-grid">Perso</button>
                     </div>
+                    <p class="project-results-status" id="project-results-status" role="status" aria-live="polite" aria-atomic="true">9 projets affichés</p>
                 </div>
 
                 <div class="project-legend reveal delay-1" aria-label="Lecture des projets">
@@ -681,15 +759,19 @@
                 </div>
 
                 <div class="no-js-projects js-fallback-projects">
-                    <h3>Projets sélectionnés</h3>
+                    <h3>Les 9 projets</h3>
                     <ul>
-                        <li><strong>Wheello</strong> — application métier Symfony et Flutter livrée à Habitat Insertion.</li>
-                        <li><strong>Revaloop</strong> — plateforme open source de recette et de validation client.</li>
-                        <li><strong>Jessica Dew</strong> — expérience photographique conçue, déployée et maintenue de bout en bout.</li>
-                        <li><strong>Responsiver</strong> — laboratoire desktop local-first pour auditer et corriger le responsive.</li>
-                        <li><strong>AetherCore</strong> — inspecteur de modèles 3D WebGL avec mesures et interactions optionnelles.</li>
+                        <li id="fallback-project-wheello"><a href="https://www.linkedin.com/posts/rapha%C3%ABl-coursier_stage-btssio-daezveloppementweb-activity-7466384911877242881-9ZZc/" target="_blank" rel="noopener noreferrer"><strong>Wheello</strong></a> — application métier Symfony et Flutter livrée à Habitat Insertion.</li>
+                        <li id="fallback-project-streamcorner"><a href="https://stream-corner.rfielbal.fr" target="_blank" rel="noopener noreferrer"><strong>StreamCorner</strong></a> — boutique Symfony avec catalogue, panier, compte client et back-office.</li>
+                        <li id="fallback-project-revaloop"><a href="https://github.com/rfielbal/Revaloop" target="_blank" rel="noopener noreferrer"><strong>Revaloop</strong></a> — plateforme open source de recette et de validation client.</li>
+                        <li id="fallback-project-secret-conservateur"><a href="./demos/escape-game/index.html"><strong>Le Secret du Conservateur</strong></a> — escape game web académique autour de l'histoire de l'art.</li>
+                        <li id="fallback-project-jessica-dew"><a href="https://jessicadewerdt.fr" target="_blank" rel="noopener noreferrer"><strong>Jessica Dew</strong></a> — expérience photographique conçue, déployée et maintenue de bout en bout.</li>
+                        <li id="fallback-project-responsiver"><a href="https://github.com/rfielbal/Responsiver" target="_blank" rel="noopener noreferrer"><strong>Responsiver</strong></a> — laboratoire desktop local-first pour auditer et corriger le responsive.</li>
+                        <li id="fallback-project-chicken-louisiane"><a href="https://4719.s3.nuage-peda.fr/Chicken%20Louisiane/index.html" target="_blank" rel="noopener noreferrer"><strong>Chicken Louisiane Steakhouse</strong></a> — premier site académique d'intégration HTML et CSS.</li>
+                        <li id="fallback-project-aethercore"><a href="./demos/aether-core/index.html"><strong>AetherCore</strong></a> — inspecteur de modèles 3D WebGL avec mesures et interactions optionnelles.</li>
+                        <li id="fallback-project-citadelle-rouge"><a href="./images/projects/citadelle-rouge/cover.webp"><strong>La Citadelle Rouge</strong></a> — aventure Minecraft Bedrock automatisée par Redstone et blocs de commande.</li>
                     </ul>
-                    <p>Activez JavaScript pour filtrer les neuf projets et ouvrir leurs études de cas complètes.</p>
+                    <p>Ces liens restent utilisables sans JavaScript. L'expérience enrichie ajoute les filtres, galeries et études de cas détaillées.</p>
                 </div>
 
                 <div class="projects-grid" id="projects-grid"></div>
@@ -785,7 +867,7 @@
                         <div class="capability-workspace">
                             <div class="capability-visual" id="capability-visual">
                                 <figure class="capability-media">
-                                    <img id="capability-image" src="./images/projects/wheello/cover.webp" alt="Aperçu de l'application métier Wheello">
+                                    <img id="capability-image" src="./images/projects/wheello/cover.webp" width="1600" height="911" alt="Aperçu de l'application métier Wheello" loading="lazy" decoding="async">
                                     <figcaption>
                                         <span id="capability-media-type">PROJET CLIENT</span>
                                         <strong id="capability-media-project">WHEELLO</strong>
@@ -854,9 +936,9 @@
                                 </div>
 
                                 <div class="capability-actions">
-                                    <button class="capability-open-project" id="capability-open-project" type="button" data-capability-project="4" data-magnetic>
+                                    <a class="capability-open-project" id="capability-open-project" href="#fallback-project-wheello" data-capability-project="4" data-magnetic>
                                         Examiner Wheello <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                                    </button>
+                                    </a>
                                     <p><span>Rôle</span><strong id="capability-role">Conception full-stack</strong></p>
                                 </div>
                             </article>
@@ -899,11 +981,11 @@
 
                         <div class="social-links">
                             <div class="networks">
-                                <a href="https://www.linkedin.com/in/raphaël-coursier" target="_blank" rel="noopener noreferrer" data-magnetic>
-                                    <i class="fab fa-linkedin-in"></i>
+                                <a href="https://www.linkedin.com/in/raphaël-coursier" target="_blank" rel="noopener noreferrer" data-magnetic aria-label="Profil LinkedIn de Raphaël Coursier — nouvel onglet">
+                                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                                 </a>
-                                <a href="https://github.com/rfielbal" target="_blank" rel="noopener noreferrer" data-magnetic>
-                                    <i class="fab fa-github"></i>
+                                <a href="https://github.com/rfielbal" target="_blank" rel="noopener noreferrer" data-magnetic aria-label="Profil GitHub de Raphaël Coursier — nouvel onglet">
+                                    <i class="fab fa-github" aria-hidden="true"></i>
                                 </a>
                             </div>
 
@@ -913,12 +995,38 @@
                         </div>
 
                         <p class="copyright">© Coursier Raphaël · <time data-current-year datetime="2026">2026</time></p>
-                        <button class="legal-trigger" id="btn-licenses" type="button">Mentions légales</button>
+                        <a class="legal-trigger" id="btn-licenses" href="#legal-fallback">Mentions légales</a>
                     </article>
                 </div>
             </div>
         </section>
     </main>
+
+    <section class="legal-fallback" id="legal-fallback" aria-labelledby="legal-fallback-title">
+        <div class="container">
+            <h2 id="legal-fallback-title">Mentions légales</h2>
+            <div class="legal-fallback-grid">
+                <article>
+                    <h3>Éditeur du site</h3>
+                    <p>Ce portfolio est édité par Raphaël Coursier, responsable de publication.</p>
+                    <p>Contact : <a href="mailto:contact@rfielbal.fr">contact@rfielbal.fr</a>.</p>
+                </article>
+                <article>
+                    <h3>Hébergement</h3>
+                    <p>OVH SAS · 2 rue Kellermann, 59100 Roubaix, France · RCS Lille Métropole 424 761 419 00045.</p>
+                </article>
+                <article>
+                    <h3>Données et cookies</h3>
+                    <p>Le site ne stocke pas directement de données personnelles et ne dépose aucun cookie publicitaire, de mesure d'audience ou de suivi.</p>
+                </article>
+                <article>
+                    <h3>Propriété intellectuelle</h3>
+                    <p>Les textes, interfaces, images, vidéos et créations présentés sont protégés. Toute réutilisation substantielle nécessite une autorisation préalable.</p>
+                </article>
+            </div>
+            <p>Dernière mise à jour des mentions légales : <time datetime="2026-08-13">13/08/2026</time>.</p>
+        </div>
+    </section>
 
     <div class="modal-overlay" id="modal-licenses" role="dialog" aria-modal="true" aria-labelledby="modal-licenses-title" aria-hidden="true" inert>
         <div class="modal-content md legal-modal">
@@ -975,7 +1083,7 @@
                         <li>Design et développement : Raphaël Coursier.</li>
                         <li>Polices : Oswald et Fira Code.</li>
                         <li>Icônes : Font Awesome Free 6.6.0.</li>
-                        <li>Dernière mise à jour : 26/07/2026.</li>
+                        <li>Dernière mise à jour des mentions légales : <time datetime="2026-08-13">13/08/2026</time>.</li>
                     </ul>
                 </div>
             </div>
@@ -1163,7 +1271,7 @@
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
     <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=ux-loader-20260813"></script>
-    <script src="cinematic.js?v=ux-mobile-demos-20260802"></script>
+    <script src="script.js?v=accessibilite-seo-20260813"></script>
+    <script src="cinematic.js?v=accessibilite-seo-20260813"></script>
 </body>
 </html>

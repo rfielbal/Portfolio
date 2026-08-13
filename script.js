@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const projectGrid = document.getElementById("projects-grid");
     const filterButtons = document.querySelectorAll(".filter-btn");
+    const projectResultsStatus = document.getElementById("project-results-status");
 
     const projectModal = document.getElementById("modal-project");
     const closeProjectModal = document.getElementById("close-pm");
@@ -113,42 +114,42 @@ document.addEventListener("DOMContentLoaded", () => {
             galleryLayout: "case-study",
             images: [
                 {
-                    src: "./images/projects/wheello/gallery/back-office/accueil.png",
+                    src: "./images/projects/wheello/gallery/back-office/accueil.webp",
                     alt: "Accueil du back-office Wheello Manager",
                     caption: "Accueil du back-office Symfony",
                     group: "Back-office web",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/wheello/gallery/back-office/vehicules.png",
+                    src: "./images/projects/wheello/gallery/back-office/vehicules.webp",
                     alt: "Liste des véhicules dans le back-office Wheello",
                     caption: "Gestion des véhicules et disponibilités",
                     group: "Back-office web",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/wheello/gallery/back-office/bilan-kilometrique.png",
+                    src: "./images/projects/wheello/gallery/back-office/bilan-kilometrique.webp",
                     alt: "Bilan kilométrique dans l'administration Wheello",
                     caption: "Bilans kilométriques avec filtres métier",
                     group: "Back-office web",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/wheello/gallery/mobile/accueil.png",
+                    src: "./images/projects/wheello/gallery/mobile/accueil.webp",
                     alt: "Accueil de l'application mobile Wheello",
                     caption: "Accueil mobile et actions principales",
                     group: "Application mobile",
                     orientation: "portrait"
                 },
                 {
-                    src: "./images/projects/wheello/gallery/mobile/reservations.png",
+                    src: "./images/projects/wheello/gallery/mobile/reservations.webp",
                     alt: "Calendrier des réservations dans l'application mobile Wheello",
                     caption: "Suivi des réservations utilisateur",
                     group: "Application mobile",
                     orientation: "portrait"
                 },
                 {
-                    src: "./images/projects/wheello/gallery/mobile/modification-reservation.png",
+                    src: "./images/projects/wheello/gallery/mobile/modification-reservation.webp",
                     alt: "Modification d'une réservation dans l'application mobile Wheello",
                     caption: "Modification de période avec disponibilités",
                     group: "Application mobile",
@@ -228,9 +229,9 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["Symfony 6.4", "PHP 8.2", "Doctrine", "MySQL", "Docker", "Apache", "Twig", "HTML", "CSS", "JavaScript"],
             cover: "./images/projects/streamcorner/cover.webp",
             images: [
-                "./images/projects/streamcorner/gallery/accueil-boutique.png",
-                "./images/projects/streamcorner/gallery/catalogue-produits.png",
-                "./images/projects/streamcorner/gallery/back-office-produits.png"
+                "./images/projects/streamcorner/gallery/accueil-boutique.webp",
+                "./images/projects/streamcorner/gallery/catalogue-produits.webp",
+                "./images/projects/streamcorner/gallery/back-office-produits.webp"
             ],
             features: [
                 "Catalogue filtrable avec fiches produits détaillées.",
@@ -353,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
             images: [
                 {
-                    src: "./images/projects/aethercore/gallery/interface-principale.png",
+                    src: "./images/projects/aethercore/gallery/interface-principale.webp",
                     alt: "Interface principale d'AetherCore avec modèle STL en rendu hybride",
                     caption: "Vue principale : modèle, modes de rendu, mesures et état du suivi réunis dans un poste unique",
                     label: "SCAN / 01",
@@ -361,7 +362,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/aethercore/gallery/mode-surface.png",
+                    src: "./images/projects/aethercore/gallery/mode-surface.webp",
                     alt: "Mode surface du visualiseur STL AetherCore",
                     caption: "Le mode surface complète les lectures hybride et points pour contrôler la géométrie",
                     label: "SCAN / 02",
@@ -411,7 +412,7 @@ document.addEventListener("DOMContentLoaded", () => {
             gallerySummary: "Les captures suivent la progression du joueur : découvrir les trois salles, révéler certains indices en mode UV puis examiner une œuvre pour résoudre l'énigme.",
             images: [
                 {
-                    src: "./images/projects/secret-conservateur/gallery/exploration-musee.png?v=day-20260727",
+                    src: "./images/projects/secret-conservateur/gallery/exploration-musee.webp?v=day-20260727",
                     alt: "Vue principale des trois salles du musée dans Le Secret du Conservateur",
                     caption: "La vue principale présente les trois salles et leurs œuvres avant l'activation des modes d'observation",
                     label: "SALLE 01",
@@ -419,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/secret-conservateur/gallery/vue-generale-musee.png",
+                    src: "./images/projects/secret-conservateur/gallery/vue-generale-musee.webp",
                     alt: "Mode UV nocturne dans les trois salles du Secret du Conservateur",
                     caption: "Le mode UV nocturne modifie l'éclairage du musée pour faire apparaître certains indices dissimulés",
                     label: "SALLE 02",
@@ -427,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/secret-conservateur/gallery/detail-oeuvre-le-cri.png",
+                    src: "./images/projects/secret-conservateur/gallery/detail-oeuvre-le-cri.webp",
                     alt: "Analyse de l'œuvre Le Cri dans Le Secret du Conservateur",
                     caption: "Chaque œuvre devient une pièce de l'énigme grâce à une lecture contextualisée",
                     label: "SALLE 03",
@@ -557,8 +558,8 @@ document.addEventListener("DOMContentLoaded", () => {
             techs: ["HTML", "CSS"],
             cover: "./images/projects/chicken-louisiane/cover.webp",
             images: [
-                "./images/projects/chicken-louisiane/gallery/accueil.png",
-                "./images/projects/chicken-louisiane/gallery/contenu.png"
+                "./images/projects/chicken-louisiane/gallery/accueil.webp",
+                "./images/projects/chicken-louisiane/gallery/contenu.webp"
             ],
             repoLink: "https://github.com/coursierap/AP-Chicken-Louisiane",
             liveLink: "https://4719.s3.nuage-peda.fr/Chicken%20Louisiane/index.html"
@@ -671,7 +672,7 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             images: [
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/citadelle-en-ruine.png",
+                    src: "./images/projects/citadelle-rouge/gallery/citadelle-en-ruine.webp",
                     alt: "Forteresse en ruine de la map La Citadelle Rouge",
                     caption: "La citadelle en ruine, point de départ de l'aventure",
                     group: "Expérience joueur",
@@ -679,7 +680,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/salle-epreuves.png",
+                    src: "./images/projects/citadelle-rouge/gallery/salle-epreuves.webp",
                     alt: "Salle d'épreuves décorée de La Citadelle Rouge",
                     caption: "Une salle scénarisée mêlant exploration, indices et accès verrouillés",
                     group: "Expérience joueur",
@@ -687,7 +688,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/architecture-redstone.png",
+                    src: "./images/projects/citadelle-rouge/gallery/architecture-redstone.webp",
                     alt: "Vue d'ensemble des circuits Redstone et blocs de commande",
                     caption: "Architecture générale du système caché sous la map",
                     group: "Automatisation Redstone",
@@ -695,7 +696,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/reseau-redstone-principal.png",
+                    src: "./images/projects/citadelle-rouge/gallery/reseau-redstone-principal.webp",
                     alt: "Réseau de Redstone reliant les blocs de commande",
                     caption: "Circuit principal reliant déclencheurs, séquences et réinitialisations",
                     group: "Automatisation Redstone",
@@ -703,7 +704,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/automatisation-command-blocks.png",
+                    src: "./images/projects/citadelle-rouge/gallery/automatisation-command-blocks.webp",
                     alt: "Matrice de blocs de commande de La Citadelle Rouge",
                     caption: "Blocs de commande enchaînés pour automatiser les mécaniques de jeu",
                     group: "Automatisation Redstone",
@@ -711,7 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/commande-restauration-clone.png",
+                    src: "./images/projects/citadelle-rouge/gallery/commande-restauration-clone.webp",
                     alt: "Commande clone utilisée pour restaurer une zone Minecraft",
                     caption: "Commande /clone pour remettre une zone dans son état de référence",
                     group: "Commandes Bedrock",
@@ -719,7 +720,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/citadelle-rouge/gallery/commande-recompense-give.png",
+                    src: "./images/projects/citadelle-rouge/gallery/commande-recompense-give.webp",
                     alt: "Commande give utilisée pour distribuer un objet Minecraft",
                     caption: "Commande /give pour distribuer l'équipement au joueur",
                     group: "Commandes Bedrock",
@@ -1519,6 +1520,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const setupInteractiveTerminal = () => {
         if (!terminalOutput || !terminalForm || !terminalInput) return;
 
+        terminalOutput.querySelectorAll(".terminal-static-fallback").forEach((line) => line.remove());
+
         const terminalCommands = {
             "/help": {
                 lines: [
@@ -1936,7 +1939,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         if (capabilityOpenProject) {
-            capabilityOpenProject.addEventListener("click", () => {
+            capabilityOpenProject.addEventListener("click", (event) => {
+                event.preventDefault();
                 openProject(capabilityOpenProject.dataset.capabilityProject);
             });
         }
@@ -2792,6 +2796,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? orderedProjects
                 : orderedProjects.filter((project) => project.filter === filter);
 
+        if (projectResultsStatus) {
+            const resultCount = visibleProjects.length;
+            projectResultsStatus.textContent = `${resultCount} ${resultCount > 1 ? "projets affichés" : "projet affiché"}`;
+        }
+
         if (!visibleProjects.length) {
             projectGrid.classList.remove("is-compact");
             projectGrid.innerHTML = '<p class="empty-projects">Aucun projet sur ce filtre pour le moment.</p>';
@@ -3002,7 +3011,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     journeyProjectLinks.forEach((button) => {
-        button.addEventListener("click", () => {
+        button.addEventListener("click", (event) => {
+            event.preventDefault();
             openProject(button.dataset.journeyProject);
         });
     });
@@ -3107,8 +3117,11 @@ document.addEventListener("DOMContentLoaded", () => {
     filterButtons.forEach((button) => {
         button.addEventListener("click", () => {
             const filter = button.dataset.filter || "all";
-            filterButtons.forEach((btn) => btn.classList.remove("active"));
-            button.classList.add("active");
+            filterButtons.forEach((btn) => {
+                const isActive = btn === button;
+                btn.classList.toggle("active", isActive);
+                btn.setAttribute("aria-pressed", String(isActive));
+            });
             renderProjects(filter);
         });
     });
@@ -3273,5 +3286,6 @@ document.addEventListener("DOMContentLoaded", () => {
     setupMarqueeVisibility();
     renderProjects("all");
     motionEngine.invalidateLayout();
+    document.documentElement.classList.remove("js-failed-open");
     document.documentElement.classList.add("portfolio-ready");
 });

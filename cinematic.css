@@ -38,6 +38,122 @@ html.portfolio-ready .js-fallback-projects {
     display: none;
 }
 
+html:not(.js) *,
+html.js-failed-open * {
+    cursor: auto !important;
+}
+
+html:not(.js) .cursor,
+html:not(.js) .cursor-follower,
+html.js-failed-open .cursor,
+html.js-failed-open .cursor-follower,
+html:not(.js) .burger-menu,
+html:not(.js) .fs-menu,
+html:not(.js) .story-rail,
+html:not(.js) .terminal-form,
+html:not(.js) .terminal-suggestions,
+html:not(.js) .cinema-direct-open,
+html:not(.js) .project-filters,
+html:not(.js) .project-results-status,
+html:not(.js) .capability-tabs,
+html.js-failed-open .burger-menu,
+html.js-failed-open .fs-menu,
+html.js-failed-open .story-rail,
+html.js-failed-open .terminal-form,
+html.js-failed-open .terminal-suggestions,
+html.js-failed-open .cinema-direct-open,
+html.js-failed-open .project-filters,
+html.js-failed-open .project-results-status,
+html.js-failed-open .capability-tabs {
+    display: none !important;
+}
+
+.no-js-nav {
+    position: relative;
+    z-index: 20;
+    display: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 18px;
+    width: min(94vw, 760px);
+    margin: 90px auto 0;
+    padding: 14px 18px;
+    border: 1px solid rgba(204, 255, 0, 0.28);
+    border-radius: 18px;
+    background: rgba(7, 9, 13, 0.92);
+}
+
+html:not(.js) .no-js-nav,
+html.js-failed-open .no-js-nav {
+    display: flex;
+}
+
+.no-js-nav a {
+    color: var(--cinema-ink);
+    font: 600 0.68rem/1.4 "Fira Code", monospace;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.no-js-nav a:focus-visible,
+.no-js-nav a:hover {
+    color: var(--cinema-acid);
+}
+
+.legal-fallback {
+    position: relative;
+    z-index: 10;
+    display: none;
+    padding: clamp(72px, 10vw, 120px) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: #05070a;
+}
+
+html:not(.js) .legal-fallback,
+html.js-failed-open .legal-fallback {
+    display: block;
+}
+
+.legal-fallback h2 {
+    margin-bottom: 28px;
+    color: var(--cinema-ink);
+    font-size: clamp(2.6rem, 6vw, 5rem);
+}
+
+.legal-fallback-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.legal-fallback article {
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.legal-fallback h3 {
+    margin-bottom: 8px;
+    color: var(--cinema-acid);
+    font-size: 1.2rem;
+}
+
+.legal-fallback p {
+    color: rgba(243, 240, 232, 0.68);
+}
+
+.legal-fallback a {
+    color: var(--cinema-acid);
+}
+
+@media (max-width: 700px) {
+    .legal-fallback-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* -------------------------------------------------------------------------- */
 /* Hero / spatial introduction                                                 */
 /* -------------------------------------------------------------------------- */
@@ -733,6 +849,7 @@ body .hero-right > .command-grid {
     background: rgba(10, 14, 19, 0.94);
     font: 600 0.7rem/1 "Space Grotesk", sans-serif;
     letter-spacing: 0.04em;
+    text-decoration: none;
     cursor: pointer;
     transition: color 0.35s ease, background 0.35s ease, border-color 0.35s ease, transform 0.35s var(--cinema-ease);
 }
@@ -985,6 +1102,16 @@ html.cinematic-ready .cinema-scroll-hint {
 
 .no-js-projects strong {
     color: var(--cinema-ink);
+}
+
+.no-js-projects a {
+    text-decoration-color: rgba(204, 255, 0, 0.52);
+    text-underline-offset: 4px;
+}
+
+.no-js-projects a:hover strong,
+.no-js-projects a:focus-visible strong {
+    color: var(--cinema-acid);
 }
 
 /* -------------------------------------------------------------------------- */

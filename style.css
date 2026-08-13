@@ -34,6 +34,34 @@ html {
     scroll-padding-top: 96px;
 }
 
+.skip-link {
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    z-index: 11000;
+    padding: 11px 16px;
+    border: 2px solid var(--acid);
+    border-radius: 999px;
+    color: #05070a;
+    background: var(--acid);
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(calc(-100% - 28px));
+    transition: transform 180ms ease;
+}
+
+.skip-link:focus-visible {
+    transform: translateY(0);
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+#main-content:focus {
+    outline: none;
+}
+
 @media (max-width: 980px) {
     html {
         scroll-padding-top: 82px;
@@ -1049,6 +1077,17 @@ header {
     display: inline-flex;
     flex-wrap: wrap;
     gap: 8px;
+}
+
+.project-results-status {
+    flex-basis: 100%;
+    margin-top: 2px;
+    color: #9faab4;
+    font-family: var(--font-code);
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-align: right;
+    text-transform: uppercase;
 }
 
 .filter-btn {
@@ -2733,6 +2772,7 @@ header {
     font-family: var(--font-code);
     font-size: 0.58rem;
     font-weight: 800;
+    text-decoration: none;
     text-transform: uppercase;
     transform: translate3d(var(--mx, 0), var(--my, 0), 0);
     transition:
@@ -4967,6 +5007,20 @@ h4,
     color: #f4f6f7;
     font-family: var(--font-code);
     font-size: 0.78rem;
+}
+
+.terminal-form:focus-within {
+    border-color: var(--acid);
+    box-shadow:
+        0 0 0 3px rgba(204, 255, 0, 0.16),
+        0 0 22px rgba(204, 255, 0, 0.1);
+}
+
+@media (forced-colors: active) {
+    .terminal-form:focus-within {
+        outline: 2px solid Highlight;
+        outline-offset: 3px;
+    }
 }
 
 .terminal-form input::placeholder {
@@ -7681,6 +7735,7 @@ header {
     font-size: 0.65rem;
     font-weight: 800;
     line-height: 1;
+    text-decoration: none;
     text-transform: uppercase;
     transform: translate3d(var(--mx, 0), var(--my, 0), 0);
     transition:
