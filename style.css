@@ -7,6 +7,7 @@
     --muted: #9a9a9a;
     --acid: #ccff00;
     --acid-soft: #dcff4e;
+    --cursor-accent: var(--acid);
     --gray: #333333;
     --line: rgba(255, 255, 255, 0.15);
 
@@ -192,7 +193,8 @@ h4 {
 .cursor {
     width: 8px;
     height: 8px;
-    background-color: var(--acid);
+    background-color: var(--cursor-accent);
+    transition: background-color 0.2s ease;
 }
 
 .cursor-follower {
@@ -205,8 +207,17 @@ h4 {
 body.hovering .cursor-follower {
     width: 78px;
     height: 78px;
-    border-color: var(--acid);
-    background-color: rgba(204, 255, 0, 0.08);
+    border-color: var(--cursor-accent);
+    background-color: color-mix(in srgb, var(--cursor-accent) 9%, transparent);
+}
+
+body.project-cursor-active .cursor-follower {
+    border-color: color-mix(in srgb, var(--cursor-accent) 58%, rgba(255, 255, 255, 0.35));
+}
+
+body.project-cursor-active.hovering .cursor-follower {
+    border-color: var(--cursor-accent);
+    background-color: color-mix(in srgb, var(--cursor-accent) 9%, transparent);
 }
 
 body.hovering-watch .cursor {
@@ -1252,6 +1263,8 @@ header {
     overflow: hidden;
     min-height: 280px;
     border-left: 1px solid var(--gray);
+    color: inherit;
+    text-decoration: none;
     z-index: 2;
 }
 
@@ -5672,6 +5685,7 @@ h4,
 }
 
 .pm-video-frame.has-video {
+    position: relative;
     width: min(320px, 100%);
     min-height: 0;
     max-height: none;
@@ -5679,6 +5693,33 @@ h4,
     overflow: hidden;
     place-content: stretch;
     background: #05070b;
+}
+
+.pm-video-start {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 10px;
+    width: 100%;
+    border: 0;
+    background: linear-gradient(180deg, rgba(5, 7, 11, 0.18), rgba(5, 7, 11, 0.78));
+    color: #fff;
+    font: 700 0.72rem/1 var(--font-code);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: background 180ms ease;
+}
+
+.pm-video-start:hover,
+.pm-video-start:focus-visible {
+    background: linear-gradient(180deg, rgba(5, 7, 11, 0.08), rgba(5, 7, 11, 0.64));
+}
+
+.pm-video-start[hidden] {
+    display: none;
 }
 
 .pm-video-player {

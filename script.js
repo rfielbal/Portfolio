@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const projects = [
         {
             id: 4,
+            slug: "wheello",
             index: "01",
             filter: "client",
             title: "Wheello · Habitat Insertion",
@@ -213,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 3,
+            slug: "streamcorner",
             index: "02",
             filter: "academique",
             title: "StreamCorner",
@@ -247,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 9,
+            slug: "revaloop",
             index: "03",
             filter: "perso",
             title: "Revaloop",
@@ -326,6 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 7,
+            slug: "aethercore",
             index: "08",
             filter: "perso",
             title: "AetherCore",
@@ -390,6 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 6,
+            slug: "secret-du-conservateur",
             index: "04",
             filter: "academique",
             title: "Le Secret du Conservateur",
@@ -457,6 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 1,
+            slug: "jessica-dew",
             index: "05",
             filter: "client",
             title: "Jessica Dew · Passion Photographie",
@@ -542,6 +548,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 2,
+            slug: "chicken-louisiane",
             index: "07",
             filter: "academique",
             title: "Chicken Louisiane Steakhouse",
@@ -569,6 +576,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 5,
+            slug: "responsiver",
             index: "06",
             filter: "perso",
             title: "Responsiver",
@@ -646,6 +654,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 8,
+            slug: "citadelle-rouge",
             index: "09",
             filter: "perso",
             title: "La Citadelle Rouge",
@@ -743,6 +752,33 @@ document.addEventListener("DOMContentLoaded", () => {
             liveLink: null
         }
     ];
+
+    const projectQueryParam = "projet";
+    const projectHistoryMarker = "portfolioProjectEntry";
+    const portfolioDocumentTitle = document.title;
+
+    const getProjectByReference = (reference) => {
+        const normalizedReference = String(reference ?? "").trim().toLowerCase();
+        const numericReference = Number(normalizedReference);
+
+        return projects.find((project) =>
+            project.slug === normalizedReference
+            || (Number.isFinite(numericReference) && project.id === numericReference)
+        );
+    };
+
+    const getProjectHref = (reference, hash = window.location.hash) => {
+        const project = getProjectByReference(reference);
+        if (!project) return window.location.pathname || "/";
+
+        const url = new URL(window.location.href);
+        url.searchParams.set(projectQueryParam, project.slug);
+        url.hash = hash || "";
+        return `${url.pathname}${url.search}${url.hash}`;
+    };
+
+    const isModifiedLinkActivation = (event) =>
+        event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 
     const signatureWords = [
         "Architecture clean",
@@ -863,6 +899,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const isFinePointer = window.matchMedia("(pointer: fine)").matches;
 
     const motionEngine = window.portfolioMotionEngine;
+    const getRenderTier = () => document.documentElement.dataset.renderTier || "high";
+    const pointerEffectsAllowed = () => getRenderTier() === "high";
 
     let lockedScrollY = 0;
     let restoreScrollBehaviorFrame = null;
@@ -871,6 +909,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let lightboxItems = [];
     let lightboxIndex = 0;
     let lightboxSwipeStart = null;
+    let activeProjectSlug = "";
+    let projectGalleryCleanupTimer = null;
+    let projectGridRendered = false;
+    let projectGridObserver = null;
 
     const managedLayers = Array.from(
         document.querySelectorAll(".modal-overlay, .project-modal-wrap, .image-lightbox, .fs-menu")
@@ -1356,7 +1398,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const readPageMotion = (state) => {
-        const pointerFrame = state.pointer && lightField
+        const highQualityFrame = getRenderTier() === "high";
+        const pointerFrame = state.pointer && lightField && highQualityFrame
             ? {
                 x: ((state.pointerX / Math.max(1, state.viewportWidth)) - 0.5) * 16,
                 y: ((state.pointerY / Math.max(1, state.viewportHeight)) - 0.5) * 12
@@ -1410,7 +1453,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return {
             pointerFrame,
             navbarSticky: state.scrollY > 20,
-            gridOffset: isFinePointer ? -((state.scrollY * 0.025) % 72) : 0,
+            gridOffset: isFinePointer && highQualityFrame ? -((state.scrollY * 0.025) % 72) : 0,
             activeId,
             storyRatio,
             titles,
@@ -1798,7 +1841,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const wrapper = document.createElement("div");
             wrapper.className = "terminal-actions";
 
-            const control = document.createElement(action.href || action.target ? "a" : "button");
+            const control = document.createElement(action.href || action.target || action.projectId ? "a" : "button");
             control.className = "terminal-action";
             control.textContent = action.label;
 
@@ -1813,8 +1856,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     goToTarget(action.target);
                 });
             } else if (action.projectId) {
-                control.type = "button";
-                control.addEventListener("click", () => openProject(action.projectId));
+                control.href = getProjectHref(action.projectId, "#projects-index");
+                control.setAttribute("aria-haspopup", "dialog");
+                control.setAttribute("aria-controls", "modal-project");
+                control.addEventListener("click", (event) => {
+                    if (isModifiedLinkActivation(event)) return;
+                    event.preventDefault();
+                    openProject(action.projectId, { opener: control });
+                });
             } else {
                 control.type = "button";
             }
@@ -1963,6 +2012,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     icon.className = "fas fa-arrow-right";
                     icon.setAttribute("aria-hidden", "true");
                     capabilityOpenProject.dataset.capabilityProject = data.projectId;
+                    capabilityOpenProject.href = getProjectHref(data.projectId, "#savoir-faire");
                     capabilityOpenProject.setAttribute("aria-label", `${data.action} dans la fenêtre projet`);
                     capabilityOpenProject.replaceChildren(document.createTextNode(data.action), icon);
                 }
@@ -2010,8 +2060,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (capabilityOpenProject) {
             capabilityOpenProject.addEventListener("click", (event) => {
+                if (isModifiedLinkActivation(event)) return;
                 event.preventDefault();
-                openProject(capabilityOpenProject.dataset.capabilityProject);
+                openProject(capabilityOpenProject.dataset.capabilityProject, { opener: capabilityOpenProject });
             });
         }
 
@@ -2111,8 +2162,9 @@ document.addEventListener("DOMContentLoaded", () => {
             motionEngine.request();
         };
 
-        if (isFinePointer) {
+        if (isFinePointer && pointerEffectsAllowed()) {
             aboutLanyardStage.addEventListener("pointerenter", () => {
+                if (!pointerEffectsAllowed()) return;
                 pointerBounds = aboutLanyardStage.getBoundingClientRect();
                 pointerInside = true;
                 motionEngine.request();
@@ -2126,12 +2178,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const scrollDelta = state.scroll ? state.scrollY - lastScrollY : 0;
                 lastScrollY = state.scrollY;
                 if (!isActive) return null;
-                if (!state.scroll && !state.force && !(pointerInside && state.pointer)) return null;
+                const pointerActive = pointerEffectsAllowed() && pointerInside && state.pointer;
+                if (!state.scroll && !state.force && !pointerActive) return null;
 
                 let localX = 0;
                 let localY = 0;
 
-                if (pointerInside && pointerBounds && (state.pointer || state.force)) {
+                if (pointerEffectsAllowed() && pointerInside && pointerBounds && (state.pointer || state.force)) {
                     const ratioX = clamp((state.pointerX - pointerBounds.left) / Math.max(1, pointerBounds.width), 0, 1);
                     const ratioY = clamp((state.pointerY - pointerBounds.top) / Math.max(1, pointerBounds.height), 0, 1);
                     localX = (ratioX - 0.5) * 2;
@@ -2179,7 +2232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const bindMagnetic = (scope = document) => {
-        if (!isFinePointer || prefersReducedMotion) return;
+        if (!isFinePointer || prefersReducedMotion || !pointerEffectsAllowed()) return;
 
         scope.querySelectorAll("[data-magnetic]").forEach((element) => {
             if (element.dataset.magneticBound === "1") return;
@@ -2199,6 +2252,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             element.addEventListener("mousemove", (event) => {
+                if (!pointerEffectsAllowed()) return;
                 lastEvent = event;
                 if (magneticFrame) return;
 
@@ -2226,7 +2280,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const bindProjectTilt = () => {
-        if (!isFinePointer || prefersReducedMotion) return;
+        if (!isFinePointer || prefersReducedMotion || !pointerEffectsAllowed()) return;
 
         document.querySelectorAll(".project-card").forEach((card) => {
             if (card.dataset.tiltBound === "1") return;
@@ -2248,6 +2302,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             card.addEventListener("mousemove", (event) => {
+                if (!pointerEffectsAllowed()) return;
                 lastEvent = event;
                 if (tiltFrame) return;
 
@@ -2740,10 +2795,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const videoFrameMarkup = data.videoSpot?.localSource
             ? `
                 <div class="pm-video-frame has-video">
-                    <video class="pm-video-player" controls preload="metadata" playsinline muted>
-                        <source src="${data.videoSpot.localSource}" type="video/mp4">
+                    <video class="pm-video-player" controls preload="none" playsinline muted poster="${data.videoSpot.poster || data.cover || ""}" data-source="${data.videoSpot.localSource}" aria-label="${data.videoSpot.title}">
                         Votre navigateur ne peut pas lire cette vidéo.
                     </video>
+                    <button class="pm-video-start" type="button" aria-label="Lire ${data.videoSpot.title}">
+                        <i class="fas fa-play" aria-hidden="true"></i>
+                        <span>Lire la vidéo</span>
+                    </button>
                 </div>
             `
             : `
@@ -2856,6 +2914,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderProjects = (filter = "all") => {
         if (!projectGrid) return;
 
+        projectGridRendered = true;
+        projectGridObserver?.disconnect();
+        projectGridObserver = null;
+        projectGrid.classList.remove("is-deferred");
+        projectGrid.removeAttribute("aria-busy");
+
         const isCompact = filter === "all";
         const orderedProjects = [...projects].sort(
             (first, second) => Number.parseInt(first.index, 10) - Number.parseInt(second.index, 10)
@@ -2885,6 +2949,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const reverseClass = !isCompact && idx % 2 === 1 ? "reverse" : "";
                 const buttonContent = '<span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>';
                 const visualContent = renderProjectVisual(project, isCompact);
+                const projectHref = getProjectHref(project.slug, "#projects-index");
 
                 return `
                     <article class="project-card reveal ${reverseClass}" data-id="${project.id}" style="--project-accent: ${project.accent}">
@@ -2915,16 +2980,16 @@ document.addEventListener("DOMContentLoaded", () => {
                             </ul>
 
                             <div class="project-actions">
-                                <button class="btn-simple open-project project-cta" data-id="${project.id}" type="button">
+                                <a class="btn-simple open-project project-cta" href="${projectHref}" data-id="${project.id}" aria-haspopup="dialog" aria-controls="modal-project">
                                     ${buttonContent}
-                                </button>
+                                </a>
                             </div>
                         </div>
 
-                        <div class="project-visual open-project" data-id="${project.id}" role="button" tabindex="0" aria-label="Voir ${project.title}">
+                        <a class="project-visual open-project" href="${projectHref}" data-id="${project.id}" aria-haspopup="dialog" aria-controls="modal-project" aria-label="Voir ${project.title}">
                             ${visualContent}
                             <span class="project-status"><i></i>${project.status}</span>
-                        </div>
+                        </a>
                     </article>
                 `;
             })
@@ -2936,13 +3001,129 @@ document.addEventListener("DOMContentLoaded", () => {
         motionEngine.invalidateLayout();
     };
 
-    const openProject = (id) => {
+    const ensureProjectGrid = () => {
+        if (!projectGridRendered) renderProjects("all");
+    };
+
+    const armProjectGrid = () => {
+        if (!projectGrid) return;
+
+        const deferGrid = getRenderTier() !== "high"
+            && window.matchMedia("(min-width: 1181px)").matches
+            && "IntersectionObserver" in window;
+
+        if (!deferGrid || window.location.hash === "#projects-index") {
+            renderProjects("all");
+            return;
+        }
+
+        projectGrid.classList.add("is-deferred");
+        projectGrid.setAttribute("aria-busy", "true");
+        if (projectResultsStatus) projectResultsStatus.textContent = `${projects.length} projets disponibles`;
+        projectGridObserver = new IntersectionObserver((entries) => {
+            if (entries.some((entry) => entry.isIntersecting)) ensureProjectGrid();
+        }, {
+            rootMargin: "900px 0px",
+            threshold: 0
+        });
+        projectGridObserver.observe(projectGrid);
+
+        document.getElementById("projects-index")?.addEventListener("focusin", ensureProjectGrid, { once: true });
+        document.querySelector(".cinema-skip")?.addEventListener("click", ensureProjectGrid, { once: true });
+    };
+
+    const updateProjectLocation = (project, mode = "push") => {
+        if (!project?.slug) return;
+
+        const url = new URL(window.location.href);
+        const currentSlug = url.searchParams.get(projectQueryParam);
+        if (currentSlug === project.slug && mode === "push") return;
+
+        url.searchParams.set(projectQueryParam, project.slug);
+        const currentState = history.state && typeof history.state === "object"
+            ? { ...history.state }
+            : {};
+        const nextState = {
+            ...currentState,
+            portfolioProject: project.slug,
+            [projectHistoryMarker]: mode === "push" ? true : Boolean(currentState[projectHistoryMarker])
+        };
+        const method = mode === "replace" ? "replaceState" : "pushState";
+        history[method](nextState, "", `${url.pathname}${url.search}${url.hash}`);
+    };
+
+    const clearProjectLocation = () => {
+        const url = new URL(window.location.href);
+        url.searchParams.delete(projectQueryParam);
+
+        const nextState = history.state && typeof history.state === "object"
+            ? { ...history.state }
+            : {};
+        delete nextState.portfolioProject;
+        delete nextState[projectHistoryMarker];
+        history.replaceState(nextState, "", `${url.pathname}${url.search}${url.hash}`);
+    };
+
+    const setProjectCursorAccent = (accent = "") => {
+        if (accent) {
+            const safeAccent = /^#[0-9a-f]{6}$/i.test(accent) ? accent : "#ccff00";
+            const systemCursorSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="#05080c" fill-opacity=".86"/><circle cx="9" cy="9" r="4.5" fill="${safeAccent}"/><circle cx="9" cy="9" r="7" fill="none" stroke="${safeAccent}" stroke-opacity=".78"/></svg>`;
+            body.style.setProperty("--cursor-accent", safeAccent);
+            body.style.setProperty(
+                "--project-system-cursor",
+                `url("data:image/svg+xml,${encodeURIComponent(systemCursorSvg)}") 9 9, auto`
+            );
+            body.classList.remove("hovering-watch");
+            body.classList.add("project-cursor-active");
+            return;
+        }
+
+        body.style.removeProperty("--cursor-accent");
+        body.style.removeProperty("--project-system-cursor");
+        body.classList.remove("project-cursor-active");
+    };
+
+    const releaseProjectModalMedia = ({ clear = false } = {}) => {
+        if (!pmGallery) return;
+
+        pmGallery.querySelectorAll("video").forEach((video) => {
+            video.pause();
+            video.removeAttribute("src");
+            video.querySelectorAll("source").forEach((source) => source.removeAttribute("src"));
+            video.load();
+        });
+
+        if (clear) pmGallery.replaceChildren();
+    };
+
+    const scheduleProjectMediaCleanup = () => {
+        window.clearTimeout(projectGalleryCleanupTimer);
+        releaseProjectModalMedia();
+        projectGalleryCleanupTimer = window.setTimeout(() => {
+            projectGalleryCleanupTimer = null;
+            if (!projectModal?.classList.contains("active") && !activeProjectSlug) {
+                releaseProjectModalMedia({ clear: true });
+            }
+        }, 540);
+    };
+
+    const openProject = (reference, { updateUrl = true, opener = document.activeElement } = {}) => {
         if (!projectModal) return;
 
-        const data = projects.find((project) => project.id === Number(id));
+        const data = getProjectByReference(reference);
         if (!data) return;
 
+        window.clearTimeout(projectGalleryCleanupTimer);
+        projectGalleryCleanupTimer = null;
+        releaseProjectModalMedia({ clear: true });
+
+        if (updateUrl) updateProjectLocation(data);
+        activeProjectSlug = data.slug;
+        projectModal.dataset.projectSlug = data.slug;
+        document.title = `${data.title} — Portfolio de Raphaël Coursier`;
+
         const projectAccent = data.accent || "#ccff00";
+        setProjectCursorAccent(projectAccent);
         projectModal.style.setProperty("--project-accent", projectAccent);
         projectModal.dataset.projectType = data.filter || "";
         if (imageLightbox) {
@@ -3011,11 +3192,27 @@ document.addEventListener("DOMContentLoaded", () => {
             prepareProjectGalleryTriggers(galleryTarget);
 
             const video = galleryTarget.querySelector(".pm-video-player");
-            if (video && !prefersReducedMotion && !navigator.connection?.saveData) {
-                video.muted = true;
-                video.volume = 1;
-                video.play().catch(() => {
-                    // Les contrôles restent disponibles si le navigateur bloque l'autoplay.
+            const videoStart = galleryTarget.querySelector(".pm-video-start");
+            if (video && videoStart) {
+                const startVideo = () => {
+                    const source = video.dataset.source;
+                    if (!source) return;
+
+                    if (!video.currentSrc && !video.getAttribute("src")) {
+                        video.src = source;
+                        video.preload = "metadata";
+                        video.load();
+                    }
+
+                    videoStart.hidden = true;
+                    video.play().catch(() => {
+                        videoStart.hidden = false;
+                    });
+                };
+
+                videoStart.addEventListener("click", startVideo);
+                video.addEventListener("play", () => {
+                    videoStart.hidden = true;
                 });
             }
         }
@@ -3051,44 +3248,85 @@ document.addEventListener("DOMContentLoaded", () => {
 
         projectModal.classList.toggle("has-project-actions", Boolean(data.liveLink || data.repoLink));
 
-        openLayer(projectModal);
+        openLayer(projectModal, opener);
+    };
+
+    const closeProject = ({ fromHistory = false } = {}) => {
+        if (!projectModal) return;
+
+        activeProjectSlug = "";
+        projectModal.removeAttribute("data-project-slug");
+        document.title = portfolioDocumentTitle;
+        setProjectCursorAccent();
+        scheduleProjectMediaCleanup();
+
+        if (!fromHistory) {
+            const currentUrl = new URL(window.location.href);
+            const isSiteCreatedEntry = Boolean(history.state?.[projectHistoryMarker]);
+
+            if (currentUrl.searchParams.has(projectQueryParam) && isSiteCreatedEntry) {
+                closeLayer(projectModal);
+                history.back();
+                return;
+            }
+
+            clearProjectLocation();
+        }
+
+        closeLayer(projectModal);
+    };
+
+    const syncProjectFromLocation = () => {
+        const url = new URL(window.location.href);
+        const requestedReference = url.searchParams.get(projectQueryParam);
+
+        if (!requestedReference) {
+            if (projectModal?.classList.contains("active")) closeProject({ fromHistory: true });
+            return;
+        }
+
+        const project = getProjectByReference(requestedReference);
+        if (!project) {
+            clearProjectLocation();
+            if (projectModal?.classList.contains("active")) closeProject({ fromHistory: true });
+            return;
+        }
+
+        if (requestedReference !== project.slug) updateProjectLocation(project, "replace");
+        if (activeProjectSlug !== project.slug || !projectModal?.classList.contains("active")) {
+            openProject(project.slug, { updateUrl: false, opener: null });
+        }
     };
 
     document.addEventListener("portfolio:open-project", (event) => {
-        openProject(event.detail?.id);
+        openProject(event.detail?.id, { opener: event.detail?.opener || document.activeElement });
     });
+
+    window.addEventListener("popstate", syncProjectFromLocation);
 
     if (projectGrid) {
         projectGrid.addEventListener("click", (event) => {
             const trigger = event.target.closest(".open-project");
             if (!trigger) return;
+            if (trigger instanceof HTMLAnchorElement && isModifiedLinkActivation(event)) return;
 
+            event.preventDefault();
             event.stopPropagation();
             const id = trigger.getAttribute("data-id");
-            openProject(id);
-        });
-
-        projectGrid.addEventListener("keydown", (event) => {
-            const trigger = event.target.closest(".open-project");
-            if (!trigger) return;
-
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                const id = trigger.getAttribute("data-id");
-                openProject(id);
-            }
+            openProject(id, { opener: trigger });
         });
     }
 
     journeyProjectLinks.forEach((button) => {
         button.addEventListener("click", (event) => {
+            if (isModifiedLinkActivation(event)) return;
             event.preventDefault();
-            openProject(button.dataset.journeyProject);
+            openProject(button.dataset.journeyProject, { opener: button });
         });
     });
 
     if (closeProjectModal && projectModal) {
-        closeProjectModal.addEventListener("click", () => closeLayer(projectModal));
+        closeProjectModal.addEventListener("click", () => closeProject());
 
         projectModal.addEventListener("click", (event) => {
             const imageTrigger = event.target.closest(".js-image-zoom");
@@ -3104,7 +3342,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (event.target === projectModal) {
-                closeLayer(projectModal);
+                closeProject();
             }
         });
     }
@@ -3229,10 +3467,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        if (topLayer === projectModal) {
+            closeProject();
+            return;
+        }
+
         closeLayer(topLayer);
     });
 
-    if (contactBox && isFinePointer && !prefersReducedMotion) {
+    if (contactBox && isFinePointer && !prefersReducedMotion && pointerEffectsAllowed()) {
         let contactFrame = null;
         let lastContactEvent = null;
 
@@ -3247,6 +3490,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         contactBox.addEventListener("mousemove", (event) => {
+            if (!pointerEffectsAllowed()) return;
             lastContactEvent = event;
             if (contactFrame) return;
 
@@ -3271,7 +3515,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cursor = document.getElementById("cursor");
     const follower = document.getElementById("cursor-follower");
 
-    if (cursor && follower && isFinePointer && !prefersReducedMotion) {
+    if (cursor && follower && isFinePointer && !prefersReducedMotion && pointerEffectsAllowed()) {
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
         let followerX = mouseX;
@@ -3281,6 +3525,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const renderCursor = (timestamp) => {
             cursorFrame = null;
+            if (!pointerEffectsAllowed()) {
+                lastCursorTimestamp = 0;
+                return;
+            }
             const deltaSeconds = lastCursorTimestamp
                 ? Math.min(0.05, (timestamp - lastCursorTimestamp) / 1000)
                 : 1 / 60;
@@ -3300,12 +3548,13 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const scheduleCursor = () => {
-            if (!cursorFrame && !document.hidden) {
+            if (!cursorFrame && !document.hidden && pointerEffectsAllowed()) {
                 cursorFrame = requestAnimationFrame(renderCursor);
             }
         };
 
         window.addEventListener("mousemove", (event) => {
+            if (!pointerEffectsAllowed()) return;
             mouseX = event.clientX;
             mouseY = event.clientY;
             scheduleCursor();
@@ -3319,6 +3568,18 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             scheduleCursor();
+        });
+
+        window.addEventListener("portfolio:render-tier-change", () => {
+            if (pointerEffectsAllowed()) {
+                scheduleCursor();
+                return;
+            }
+
+            if (cursorFrame) cancelAnimationFrame(cursorFrame);
+            cursorFrame = null;
+            lastCursorTimestamp = 0;
+            body.classList.remove("hovering", "hovering-watch");
         });
 
         const isInteractive = (element) =>
@@ -3355,6 +3616,16 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleCursor();
     }
 
+    let initialProjectSyncScheduled = false;
+    const scheduleInitialProjectSync = (event) => {
+        if (initialProjectSyncScheduled) return;
+        initialProjectSyncScheduled = true;
+        const delay = event?.detail?.immediate === false ? 220 : 0;
+        window.setTimeout(syncProjectFromLocation, delay);
+    };
+
+    window.addEventListener("portfolio:preloader-exit", scheduleInitialProjectSync, { once: true });
+
     runPreloader();
     rotateSignature();
     setupTerminalBorderOrbit();
@@ -3365,8 +3636,12 @@ document.addEventListener("DOMContentLoaded", () => {
     bindMagnetic();
     bindManifestoFlow();
     setupMarqueeVisibility();
-    renderProjects("all");
+    armProjectGrid();
     motionEngine.invalidateLayout();
     document.documentElement.classList.remove("js-failed-open");
     document.documentElement.classList.add("portfolio-ready");
+
+    if (!body.classList.contains("preloader-active")) {
+        scheduleInitialProjectSync();
+    }
 });

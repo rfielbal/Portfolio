@@ -1201,6 +1201,7 @@ html.cinematic-ready .cinema-controls {
     box-shadow: none;
     font: 700 0.68rem/1 "Space Grotesk", sans-serif;
     letter-spacing: 0.04em;
+    text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
     transition: transform 220ms var(--cinema-ease), box-shadow 220ms ease;
@@ -2466,5 +2467,275 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
     .watch-radar-sweep,
     .watch-portal-radar b::after {
         animation: none !important;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Adaptive rendering budget                                                   */
+/* -------------------------------------------------------------------------- */
+
+/* The secondary index is far below the fold. Let Chromium skip its paint work
+   without changing the geometry used by the sticky chapters above it. */
+.projects-grid .project-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 410px;
+}
+
+@media (min-width: 1181px) {
+    html[data-render-tier="balanced"] .projects-grid.is-deferred,
+    html[data-render-tier="lite"] .projects-grid.is-deferred {
+        min-height: clamp(1330px, calc(100vw + 50px), 1620px);
+    }
+}
+
+/* Pseudo-elements own their animations; pausing the parent did not pause the
+   terminal scan. Keep paint-bound work idle outside the hero and during scroll. */
+.hero:not(.is-motion-near) .terminal-card::before,
+html.is-scrolling .terminal-card::before,
+html.is-scrolling .terminal-border-orbit {
+    animation-play-state: paused !important;
+}
+
+.hero.is-motion-near .terminal-card::before {
+    animation-play-state: running;
+}
+
+html[data-render-tier="balanced"] .cinematic-canvas,
+html[data-render-tier="lite"] .cinematic-canvas {
+    display: none !important;
+}
+
+html[data-render-tier="balanced"] .grain-effect,
+html[data-render-tier="lite"] .grain-effect {
+    display: none;
+}
+
+html[data-render-tier="balanced"] .ambient-grid,
+html[data-render-tier="balanced"] .light-field {
+    transform: none !important;
+    will-change: auto;
+}
+
+html[data-render-tier="lite"] .ambient-grid,
+html[data-render-tier="lite"] .light-field {
+    display: none;
+}
+
+html[data-render-tier="balanced"] body .hero-title,
+html[data-render-tier="lite"] body .hero-title {
+    filter: none;
+}
+
+/* Replace the paint-bound SVG dash + two shadows by one static conic rim.
+   The existing inner panel masks the centre, so only the 3 px rim is visible. */
+html[data-render-tier="balanced"] .terminal-border-track,
+html[data-render-tier="lite"] .terminal-border-track {
+    display: none;
+}
+
+html[data-render-tier="balanced"] .profile-stage::after,
+html[data-render-tier="lite"] .profile-stage::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    display: block;
+    width: 132%;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    opacity: 0.82;
+    background: conic-gradient(
+        from 0turn,
+        transparent 0 73%,
+        rgba(67, 223, 255, 0.68) 82%,
+        rgba(204, 255, 0, 0.96) 88%,
+        rgba(255, 255, 255, 0.72) 91%,
+        transparent 98%
+    );
+    animation: none;
+    pointer-events: none;
+    will-change: auto;
+    transform: translate(-50%, -50%) rotate(0.86turn);
+}
+
+html[data-render-tier="lite"] .profile-stage::after {
+    opacity: 0.58;
+    animation: none;
+    transform: translate(-50%, -50%) rotate(0.86turn);
+    will-change: auto;
+}
+
+html[data-render-tier="balanced"] .terminal-card::before,
+html[data-render-tier="lite"] .terminal-card::before {
+    mix-blend-mode: normal;
+    opacity: 0.16;
+    animation: none;
+}
+
+/* Keep the hero depth, but avoid perspective layers on constrained desktop
+   compositors. Pointer motion remains available in the high tier only. */
+html[data-render-tier="balanced"] .project-orbit,
+html[data-render-tier="lite"] .project-orbit,
+html[data-render-tier="balanced"] body .hero-right .profile-stage,
+html[data-render-tier="lite"] body .hero-right .profile-stage {
+    transform-style: flat;
+}
+
+html[data-render-tier="balanced"] body .hero-right .profile-stage {
+    transform: translate3d(
+        -50%,
+        calc(-50% + (var(--hero-progress) * -18px)),
+        0
+    ) scale(calc(1 - (var(--hero-progress) * 0.035)));
+}
+
+html[data-render-tier="lite"] body .hero-right .profile-stage {
+    transform: translate3d(-50%, -50%, 0);
+}
+
+html[data-render-tier="balanced"] .orbit-card--wheello,
+html[data-render-tier="lite"] .orbit-card--wheello {
+    transform: translate3d(
+        calc(var(--hero-progress) * -52px),
+        calc(var(--hero-progress) * -24px),
+        0
+    ) rotate(-7deg);
+}
+
+html[data-render-tier="balanced"] .orbit-card--jessica,
+html[data-render-tier="lite"] .orbit-card--jessica {
+    transform: translate3d(
+        calc(var(--hero-progress) * 60px),
+        calc(var(--hero-progress) * -30px),
+        0
+    ) rotate(7deg);
+}
+
+html[data-render-tier="balanced"] .orbit-card--streamcorner,
+html[data-render-tier="lite"] .orbit-card--streamcorner {
+    transform: translate3d(
+        calc(var(--hero-progress) * 54px),
+        calc(var(--hero-progress) * 34px),
+        0
+    ) rotate(-5deg);
+}
+
+html[data-render-tier="balanced"] .orbit-card--revaloop,
+html[data-render-tier="lite"] .orbit-card--revaloop {
+    transform: translate3d(
+        calc(var(--hero-progress) * -58px),
+        calc(var(--hero-progress) * 40px),
+        0
+    ) rotate(6deg);
+}
+
+/* Preserve the pinned narrative while keeping at most the active card and its
+   neighbours in the GPU layer tree. */
+html[data-render-tier="balanced"] .cinema-stage,
+html[data-render-tier="lite"] .cinema-stage,
+html[data-render-tier="balanced"] .cinema-card,
+html[data-render-tier="lite"] .cinema-card {
+    perspective: none;
+    transform-style: flat;
+}
+
+html[data-render-tier="balanced"] .cinematic-projects.is-motion-near .cinema-card:not(.is-front):not(.is-adjacent),
+html[data-render-tier="lite"] .cinematic-projects.is-motion-near .cinema-card:not(.is-front):not(.is-adjacent) {
+    visibility: hidden;
+}
+
+html[data-render-tier="balanced"] .cinema-card,
+html[data-render-tier="lite"] .cinema-card,
+html[data-render-tier="balanced"] .cinema-card-media img,
+html[data-render-tier="balanced"] .cinema-card-copy,
+html[data-render-tier="lite"] .cinema-card-media img,
+html[data-render-tier="lite"] .cinema-card-copy {
+    will-change: auto;
+}
+
+html[data-render-tier="balanced"] .cinema-card.is-front,
+html[data-render-tier="balanced"] .cinema-card.is-adjacent,
+html[data-render-tier="lite"] .cinema-card.is-front,
+html[data-render-tier="lite"] .cinema-card.is-adjacent {
+    will-change: transform, opacity;
+}
+
+html[data-render-tier="balanced"] .cinema-card::before,
+html[data-render-tier="balanced"] .cinema-card::after,
+html[data-render-tier="lite"] .cinema-card::before,
+html[data-render-tier="lite"] .cinema-card::after,
+html[data-render-tier="balanced"] .cinema-media-scan,
+html[data-render-tier="lite"] .cinema-media-scan {
+    display: none;
+}
+
+html[data-render-tier="balanced"] .cinema-card-shell,
+html[data-render-tier="balanced"] .cinema-card.is-front .cinema-card-shell,
+html[data-render-tier="lite"] .cinema-card-shell,
+html[data-render-tier="lite"] .cinema-card.is-front .cinema-card-shell {
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+}
+
+/* Constrained desktop tiers keep every interaction and sticky chapter while
+   delegating pointer rendering to the browser. */
+html[data-render-tier="balanced"] *,
+html[data-render-tier="balanced"] *::before,
+html[data-render-tier="balanced"] *::after,
+html[data-render-tier="lite"] *,
+html[data-render-tier="lite"] *::before,
+html[data-render-tier="lite"] *::after {
+    cursor: auto;
+}
+
+html[data-render-tier="balanced"] .cursor,
+html[data-render-tier="balanced"] .cursor-follower,
+html[data-render-tier="lite"] .cursor,
+html[data-render-tier="lite"] .cursor-follower {
+    display: none;
+}
+
+html[data-render-tier="balanced"] [data-magnetic],
+html[data-render-tier="lite"] [data-magnetic] {
+    transform: none !important;
+    will-change: auto;
+}
+
+html[data-render-tier="balanced"] .project-card,
+html[data-render-tier="lite"] .project-card {
+    transform: none;
+    transform-style: flat;
+    will-change: auto;
+}
+
+/* Project accents remain visible without a JavaScript follower: the browser
+   draws this tiny SVG cursor on its own compositor/system cursor path. */
+html[data-render-tier="balanced"] body.project-cursor-active .project-modal-wrap.active,
+html[data-render-tier="balanced"] body.project-cursor-active .project-modal-wrap.active *,
+html[data-render-tier="balanced"] body.project-cursor-active .image-lightbox.active,
+html[data-render-tier="balanced"] body.project-cursor-active .image-lightbox.active *,
+html[data-render-tier="lite"] body.project-cursor-active .project-modal-wrap.active,
+html[data-render-tier="lite"] body.project-cursor-active .project-modal-wrap.active *,
+html[data-render-tier="lite"] body.project-cursor-active .image-lightbox.active,
+html[data-render-tier="lite"] body.project-cursor-active .image-lightbox.active * {
+    cursor: var(--project-system-cursor, auto) !important;
+}
+
+html[data-render-tier="lite"] .capability-media-scan::before,
+html[data-render-tier="lite"] .capability-flow path,
+html[data-render-tier="lite"] .watch-radar-sweep,
+html[data-render-tier="lite"] .watch-portal-radar b::after,
+html[data-render-tier="lite"] .status-pill i,
+html[data-render-tier="lite"] .contact-status i {
+    animation: none !important;
+}
+
+@media (max-width: 1180px) {
+    /* Mobile already uses the compact compositor-only path. Do not override its
+       carefully tuned terminal geometry with desktop fallback rules. */
+    html[data-render-tier="balanced"] .profile-stage::after,
+    html[data-render-tier="lite"] .profile-stage::after {
+        display: none;
     }
 }

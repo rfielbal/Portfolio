@@ -120,12 +120,56 @@
                             : "entry";
             root.classList.toggle("preloader-skip", !shouldPlayPreloader);
             const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            const isHeroDestination = !window.location.hash || window.location.hash === "#home";
+            const hasProjectDestination = new URLSearchParams(window.location.search).has("projet");
+            const isHeroDestination = !hasProjectDestination && (!window.location.hash || window.location.hash === "#home");
             const shouldPlayHeroIntro = shouldPlayPreloader && isHeroDestination && !reducedMotion;
 
             window.__portfolioShouldPlayHeroIntro = shouldPlayHeroIntro;
             root.classList.toggle("hero-intro-pending", shouldPlayHeroIntro);
             root.dataset.preloaderMode = window.__portfolioPreloaderReason;
+
+            /*
+             * Choose a safe rendering budget before the styles are parsed.
+             * The desktop experience is paint-heavy; Windows laptops often expose
+             * enough CPU/RAM while still relying on a constrained integrated GPU.
+             */
+            const renderTierKey = "rfielbal:render-tier:v1";
+            const platform = String(
+                navigator.userAgentData?.platform
+                || navigator.platform
+                || ""
+            ).toLowerCase();
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            const hardwareConcurrency = navigator.hardwareConcurrency || 8;
+            const deviceMemory = navigator.deviceMemory || 8;
+            const desktopEffects = window.matchMedia("(min-width: 1181px) and (hover: hover) and (pointer: fine)").matches;
+            const constrainedDevice = reducedMotion
+                || Boolean(connection?.saveData)
+                || hardwareConcurrency <= 4
+                || deviceMemory <= 4;
+            let rememberedTier = "";
+
+            try {
+                rememberedTier = window.sessionStorage.getItem(renderTierKey) || "";
+            } catch {
+                rememberedTier = "";
+            }
+
+            let renderTier = !desktopEffects
+                ? "high"
+                : constrainedDevice
+                    ? "lite"
+                    : platform.includes("win")
+                        ? "balanced"
+                        : "high";
+
+            if (desktopEffects && (rememberedTier === "lite" || (rememberedTier === "balanced" && renderTier === "high"))) {
+                renderTier = rememberedTier;
+            }
+
+            root.dataset.renderTier = renderTier;
+            root.dataset.renderPlatform = platform.includes("win") ? "windows" : "other";
+            window.__portfolioRenderTier = renderTier;
         })();
 
         window.setTimeout(() => {
@@ -144,8 +188,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=nav-controls-20260813">
-    <link rel="stylesheet" href="cinematic.css?v=hero-intro-20260813">
+    <link rel="stylesheet" href="style.css?v=windows-fluidity-20260822">
+    <link rel="stylesheet" href="cinematic.css?v=windows-fluidity-20260822">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Aller au contenu principal</a>
@@ -559,7 +603,7 @@
                                             </div>
                                             <h4>Stage de première année</h4>
                                             <p>Habitat Insertion · Conception et développement de l'application métier Wheello.</p>
-                                            <a class="journey-project-link" href="#fallback-project-wheello" data-journey-project="4" data-magnetic>
+                                            <a class="journey-project-link" href="?projet=wheello#about" data-journey-project="4" data-magnetic aria-haspopup="dialog" aria-controls="modal-project">
                                                 Voir Wheello <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                             </a>
                                         </article>
@@ -653,7 +697,7 @@
                                     <div class="cinema-card-meta">
                                         <span>SYMFONY</span><span>FLUTTER</span><span>API</span>
                                     </div>
-                                    <a class="cinema-open project-cta" href="#fallback-project-wheello" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="?projet=wheello#projects" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -676,7 +720,7 @@
                                     <div class="cinema-card-meta">
                                         <span>SYMFONY</span><span>UX</span><span>OVHCLOUD</span>
                                     </div>
-                                    <a class="cinema-open project-cta" href="#fallback-project-jessica-dew" data-cinema-open="1" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="?projet=jessica-dew#projects" data-cinema-open="1" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -699,7 +743,7 @@
                                     <div class="cinema-card-meta">
                                         <span>SYMFONY</span><span>DOCTRINE</span><span>MYSQL</span>
                                     </div>
-                                    <a class="cinema-open project-cta" href="#fallback-project-streamcorner" data-cinema-open="3" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="?projet=streamcorner#projects" data-cinema-open="3" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -722,7 +766,7 @@
                                     <div class="cinema-card-meta">
                                         <span>NEXT.JS</span><span>CLOUDFLARE</span><span>ELECTRON</span>
                                     </div>
-                                    <a class="cinema-open project-cta" href="#fallback-project-revaloop" data-cinema-open="9" aria-haspopup="dialog" aria-controls="modal-project">
+                                    <a class="cinema-open project-cta" href="?projet=revaloop#projects" data-cinema-open="9" aria-haspopup="dialog" aria-controls="modal-project">
                                         <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
                                     </a>
                                 </div>
@@ -734,9 +778,9 @@
                         <p><span id="cinema-current">01</span> / 04</p>
                         <div class="cinema-progress"><i id="cinema-progress-fill"></i></div>
                         <p id="cinema-status">WHEELLO / CLIENT SYSTEM</p>
-                        <button class="cinema-direct-open project-cta" id="cinema-direct-open" type="button" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
+                        <a class="cinema-direct-open project-cta" id="cinema-direct-open" href="?projet=wheello#projects" data-cinema-open="4" aria-haspopup="dialog" aria-controls="modal-project">
                             <span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
-                        </button>
+                        </a>
                     </div>
 
                     <p class="cinema-scroll-hint" aria-hidden="true">
@@ -950,7 +994,7 @@
                                 </div>
 
                                 <div class="capability-actions">
-                                    <a class="capability-open-project" id="capability-open-project" href="#fallback-project-wheello" data-capability-project="4" data-magnetic>
+                                    <a class="capability-open-project" id="capability-open-project" href="?projet=wheello#savoir-faire" data-capability-project="4" data-magnetic aria-haspopup="dialog" aria-controls="modal-project">
                                         Examiner Wheello <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                     </a>
                                     <p><span>Rôle</span><strong id="capability-role">Conception full-stack</strong></p>
@@ -1284,8 +1328,8 @@
     </div>
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
-    <script src="motion-engine.js?v=ux-refine-20260801"></script>
-    <script src="script.js?v=watch-cursor-20260813"></script>
-    <script src="cinematic.js?v=hero-intro-20260813"></script>
+    <script src="motion-engine.js?v=windows-fluidity-20260822"></script>
+    <script src="script.js?v=windows-fluidity-20260822"></script>
+    <script src="cinematic.js?v=windows-fluidity-20260822"></script>
 </body>
 </html>

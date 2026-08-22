@@ -31,6 +31,7 @@
         const desktopCinema = window.matchMedia("(min-width: 1181px) and (hover: hover) and (pointer: fine)");
         const compactCinema = window.matchMedia("(max-width: 1180px), (hover: none), (pointer: coarse)");
         const saveData = Boolean(navigator.connection?.saveData);
+        let renderTier = root.dataset.renderTier || "high";
         const cardStatus = [
             "WHEELLO / CLIENT SYSTEM",
             "JESSICA DEW / CLIENT EXPERIENCE",
@@ -50,18 +51,65 @@
         let cinemaMediaPrepared = false;
         let cinemaMediaObserver = null;
 
+        const configureCinemaMediaBudget = () => {
+            if (renderTier === "high") return;
+
+            cards.forEach(({ image }) => {
+                const fullSource = image?.getAttribute("src");
+                if (!image || !fullSource || image.dataset.cinemaFullSource) return;
+
+                image.dataset.cinemaFullSource = fullSource;
+                image.loading = "lazy";
+                image.fetchPriority = "low";
+                image.setAttribute(
+                    "src",
+                    fullSource.replace(/cover\.webp(?=([?#]|$))/, "thumb.webp")
+                );
+            });
+        };
+
+        const promoteCinemaMedia = (activeIndex) => {
+            if (renderTier === "high") return;
+
+            [activeIndex, activeIndex + 1].forEach((index) => {
+                const image = cards[index]?.image;
+                const fullSource = image?.dataset.cinemaFullSource;
+                if (!image || !fullSource || image.getAttribute("src") === fullSource) return;
+
+                image.setAttribute("src", fullSource);
+            });
+        };
+
+        configureCinemaMediaBudget();
+
         const prepareCinemaMedia = () => {
-            if (cinemaMediaPrepared || saveData) return;
+            if (cinemaMediaPrepared || saveData || renderTier !== "high") return;
             cinemaMediaPrepared = true;
             cinemaMediaObserver?.disconnect();
             cinemaMediaObserver = null;
 
-            cards.forEach(({ image }) => {
+            const images = cards.map(({ image }) => image).filter(Boolean);
+            const prepareNextImage = async (index = 0) => {
+                const image = images[index];
                 if (!image) return;
+
                 image.loading = "eager";
                 image.fetchPriority = "low";
-                image.decode?.().catch(() => {});
-            });
+                try {
+                    await image.decode?.();
+                } catch {
+                    // The browser can still paint the image through its normal load path.
+                }
+
+                if (index + 1 >= images.length) return;
+                if ("requestIdleCallback" in window) {
+                    window.requestIdleCallback(() => prepareNextImage(index + 1), { timeout: 700 });
+                } else {
+                    window.setTimeout(() => prepareNextImage(index + 1), 40);
+                }
+            };
+
+            prepareNextImage();
         };
 
         const armCinemaMedia = () => {
@@ -69,6 +117,7 @@
                 cinemaMediaPrepared ||
                 cinemaMediaObserver ||
                 saveData ||
+                renderTier !== "high" ||
                 reducedMotion.matches ||
                 (!desktopCinema.matches && !compactCinema.matches)
             ) return;
@@ -81,7 +130,7 @@
             cinemaMediaObserver = new IntersectionObserver((entries) => {
                 if (entries.some((entry) => entry.isIntersecting)) prepareCinemaMedia();
             }, {
-                rootMargin: "180% 0px",
+                rootMargin: "90% 0px",
                 threshold: 0
             });
             cinemaMediaObserver.observe(cinemaSection || projectCinema);
@@ -200,6 +249,30 @@
                 };
             }
 
+            if (renderTier !== "high") {
+                const exit = clamp(-delta, 0, 1.15);
+                const depth = clamp(delta, 0, 2.2);
+                const copyDistance = Math.abs(delta);
+                const lite = renderTier === "lite";
+                const travel = Math.min(state.viewportWidth * (lite ? 0.2 : 0.34), lite ? 260 : 520);
+                const x = (-travel * exit) + (depth * (lite ? 6 : 14));
+                const y = (-state.viewportHeight * 0.035 * exit) + (depth * (lite ? 7 : 12));
+                const scale = Math.max(lite ? 0.92 : 0.87, 1 - (exit * 0.025) - (depth * (lite ? 0.02 : 0.032)));
+                const opacity = delta < 0
+                    ? clamp(1 - (exit * 1.5))
+                    : Math.max(lite ? 0.06 : 0.16, 1 - (depth * (lite ? 0.52 : 0.34)));
+                const copyOpacity = 1 - clamp((copyDistance - 0.1) / (lite ? 0.42 : 0.54));
+
+                return {
+                    transform: `translate3d(-50%, -50%, 0) translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`,
+                    opacity: opacity.toFixed(4),
+                    zIndex: String(delta < 0 ? 800 - index : 1000 - index),
+                    imageTransform: `scale(${(1.025 + Math.min(copyDistance, 1) * 0.018).toFixed(4)})`,
+                    copyOpacity: copyOpacity.toFixed(4),
+                    copyTransform: `translate3d(0, ${Math.min(copyDistance, 1) * 8}px, 0)`
+                };
+            }
+
             const visualDelta = clamp(delta, -1.05, 2.2);
             let x = 0;
             let y = 0;
@@ -222,7 +295,7 @@
                 rotateZ = -4 * exit;
                 scale = 1 - (0.08 * exit);
                 opacity = clamp(1 - (exit * 1.42));
-                zIndex = 800 - Math.round(exit * 20);
+                zIndex = 800 - index;
             } else {
                 const depth = visualDelta;
                 x = depth * 34;
@@ -233,7 +306,7 @@
                 rotateZ = depth * 1.1;
                 scale = Math.max(0.81, 1 - (depth * 0.052));
                 opacity = Math.max(0.24, 1 - (depth * 0.2));
-                zIndex = 1000 - Math.round(depth * 12);
+                zIndex = 1000 - index;
             }
 
             const copyDistance = Math.abs(delta);
@@ -262,6 +335,7 @@
                 && state.scrollY < geometry.cinema.bottom + (state.viewportHeight * 0.9)
                 && state.scrollY + (state.viewportHeight * 1.2) > geometry.cinema.top;
             const pointerFrame = state.pointer && heroNear && !reducedMotion.matches
+                && renderTier === "high"
                 ? {
                     x: clamp((((state.pointerX - geometry.hero.left) / Math.max(1, geometry.hero.width)) * 2) - 1, -1, 1),
                     y: clamp(((state.pointerY / Math.max(1, state.viewportHeight)) * 2) - 1, -1, 1)
@@ -358,6 +432,7 @@
             }
 
             cards.forEach((record, index) => {
+                if (renderTier !== "high" && Math.abs(index - activeIndex) > 1) return;
                 const cardFrame = cardFrames[index];
                 writeCachedStyle(record, "transform", record.element, "transform", cardFrame.transform);
                 writeCachedStyle(record, "opacity", record.element, "opacity", cardFrame.opacity);
@@ -369,6 +444,7 @@
 
             if (activeIndex !== activeCardIndex) {
                 activeCardIndex = activeIndex;
+                promoteCinemaMedia(activeCardIndex);
                 const activeCard = cards[activeCardIndex]?.element;
                 const rgb = activeCard?.style.getPropertyValue("--card-rgb").trim() || "67, 223, 255";
 
@@ -384,6 +460,7 @@
                 if (cinemaDirectOpen) {
                     const activeRecord = cards[activeCardIndex];
                     cinemaDirectOpen.dataset.cinemaOpen = activeRecord?.element.dataset.projectId || "";
+                    cinemaDirectOpen.href = activeRecord?.button?.getAttribute("href") || "#projects-index";
                     cinemaDirectOpen.setAttribute("aria-label", `Voir le projet ${activeRecord?.title || "sélectionné"}`);
                 }
             }
@@ -391,9 +468,14 @@
 
         cinemaButtons.forEach((button) => {
             button.addEventListener("click", (event) => {
+                if (
+                    button instanceof HTMLAnchorElement
+                    && (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+                ) return;
+
                 event.preventDefault();
                 document.dispatchEvent(new CustomEvent("portfolio:open-project", {
-                    detail: { id: button.dataset.cinemaOpen }
+                    detail: { id: button.dataset.cinemaOpen, opener: button }
                 }));
             });
         });
@@ -436,7 +518,7 @@
             reducedMotion.addEventListener?.("change", syncRadarMotion);
             document.addEventListener("visibilitychange", syncRadarMotion);
 
-            if (!watchArrowLink) return;
+            if (!watchArrowLink || renderTier !== "high") return;
 
             let arrowFrame = 0;
             let arrowRect = null;
@@ -462,13 +544,13 @@
             };
 
             watchArrowLink.addEventListener("pointerenter", () => {
-                if (reducedMotion.matches || coarsePointer.matches) return;
+                if (renderTier !== "high" || reducedMotion.matches || coarsePointer.matches) return;
                 arrowRect = watchArrowLink.getBoundingClientRect();
                 watchArrowLink.classList.add("is-arrow-tracking");
             }, { passive: true });
 
             watchArrowLink.addEventListener("pointermove", (event) => {
-                if (reducedMotion.matches || coarsePointer.matches) return;
+                if (renderTier !== "high" || reducedMotion.matches || coarsePointer.matches) return;
                 arrowRect ||= watchArrowLink.getBoundingClientRect();
                 const normalizedX = clamp(((event.clientX - arrowRect.left) / Math.max(1, arrowRect.width)) * 2 - 1, -1, 1);
                 const normalizedY = clamp(((event.clientY - arrowRect.top) / Math.max(1, arrowRect.height)) * 2 - 1, -1, 1);
@@ -484,6 +566,7 @@
             }, { passive: true });
             reducedMotion.addEventListener?.("change", resetArrow);
             coarsePointer.addEventListener?.("change", resetArrow);
+            window.addEventListener("portfolio:render-tier-change", resetArrow);
         };
 
         const setupCanvas = () => {
@@ -515,6 +598,7 @@
             let lastDrawTime = 0;
 
             const canvasAllowed = () => desktopCinema.matches
+                && renderTier === "high"
                 && !reducedMotion.matches
                 && !coarsePointer.matches
                 && !saveData
@@ -637,6 +721,10 @@
                 else startCanvas();
             });
             window.addEventListener("portfolio:preloader-exit", syncCanvas);
+            window.addEventListener("portfolio:render-tier-change", (event) => {
+                renderTier = event.detail?.tier || root.dataset.renderTier || "high";
+                syncCanvas();
+            });
             reducedMotion.addEventListener?.("change", syncCanvas);
             coarsePointer.addEventListener?.("change", syncCanvas);
             desktopCinema.addEventListener?.("change", syncCanvas);
@@ -654,6 +742,23 @@
         reducedMotion.addEventListener?.("change", armCinemaMedia);
         desktopCinema.addEventListener?.("change", armCinemaMedia);
         compactCinema.addEventListener?.("change", armCinemaMedia);
+        window.addEventListener("portfolio:render-tier-change", (event) => {
+            renderTier = event.detail?.tier || root.dataset.renderTier || "high";
+            if (renderTier !== "high") {
+                cinemaMediaObserver?.disconnect();
+                cinemaMediaObserver = null;
+                configureCinemaMediaBudget();
+                promoteCinemaMedia(Math.max(0, activeCardIndex));
+            } else {
+                armCinemaMedia();
+            }
+            cards.forEach(({ rendered }) => {
+                Object.keys(rendered).forEach((key) => delete rendered[key]);
+            });
+            renderedCinemaProgress = -1;
+            cachedLayoutVersion = -1;
+            motionEngine.invalidateLayout();
+        });
         syncCinemaMode();
         armCinemaMedia();
         setupWatchPortalMotion();
