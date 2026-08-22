@@ -27,7 +27,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none;
 }
 
 html {
@@ -182,12 +181,26 @@ h4 {
     position: fixed;
     top: 0;
     left: 0;
+    display: none;
     transform: translate(-50%, -50%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     will-change: transform;
     contain: layout paint;
+}
+
+@media (min-width: 981px) and (hover: hover) and (pointer: fine) {
+    html.portfolio-cursor-enabled *,
+    html.portfolio-cursor-enabled *::before,
+    html.portfolio-cursor-enabled *::after {
+        cursor: none !important;
+    }
+
+    html.portfolio-cursor-enabled .cursor,
+    html.portfolio-cursor-enabled .cursor-follower {
+        display: block !important;
+    }
 }
 
 .cursor {
@@ -220,12 +233,12 @@ body.project-cursor-active.hovering .cursor-follower {
     background-color: color-mix(in srgb, var(--cursor-accent) 9%, transparent);
 }
 
-body.hovering-watch .cursor {
+body:not(.project-cursor-active).hovering-watch .cursor {
     background-color: #9f86ff;
     box-shadow: 0 0 18px rgba(159, 134, 255, 0.75);
 }
 
-body.hovering-watch .cursor-follower {
+body:not(.project-cursor-active).hovering-watch .cursor-follower {
     border-color: #9f86ff;
     background-color: rgba(159, 134, 255, 0.1);
 }
@@ -1594,14 +1607,19 @@ header {
     justify-content: center;
     padding: 20px;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    transition: opacity 0.25s ease, backdrop-filter 0.25s ease, visibility 0s linear 0.25s;
 }
 
 .modal-overlay.active,
 .project-modal-wrap.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
+    transition-delay: 0s;
 }
 
 .modal-content {
@@ -4005,7 +4023,6 @@ h4,
 .project-visual {
     border-left-color: rgba(255, 255, 255, 0.12);
     min-height: 410px;
-    cursor: none;
 }
 
 .project-visual::before {
@@ -4266,6 +4283,11 @@ h4,
     background:
         linear-gradient(135deg, rgba(67, 223, 255, 0.12), rgba(5, 7, 10, 0.95) 32%, rgba(var(--personal-rgb), 0.1)),
         rgba(5, 7, 10, 0.96);
+}
+
+.project-modal-wrap.active,
+.modal-overlay.active {
+    -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
 }
 
@@ -6018,14 +6040,20 @@ h4,
         radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--project-accent, var(--cyan)) 14%, transparent), transparent 42%),
         rgba(3, 5, 8, 0.94);
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.22s ease;
-    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    transition: opacity 0.22s ease, backdrop-filter 0.22s ease, visibility 0s linear 0.22s;
 }
 
 .image-lightbox.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
+    transition-delay: 0s;
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
 }
 
 .image-lightbox-content {
@@ -7561,6 +7589,12 @@ header {
     *,
     *::before,
     *::after {
+        cursor: auto !important;
+    }
+
+    html.portfolio-cursor-enabled *,
+    html.portfolio-cursor-enabled *::before,
+    html.portfolio-cursor-enabled *::after {
         cursor: auto !important;
     }
 

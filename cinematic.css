@@ -2500,6 +2500,21 @@ html.is-scrolling .terminal-border-orbit {
     animation-play-state: running;
 }
 
+/* Let scrolling own the frame budget. Decorative loops resume as soon as the
+   user stops, so their visual language is preserved without competing with
+   layout, sticky chapters or the pointer on integrated GPUs. */
+html.is-scrolling .marquee-wrap .track,
+html.is-scrolling .about-lanyard-stage.is-lanyard-visible .lanyard-entry,
+html.is-scrolling .capability-stage.is-ready.is-in-view .capability-media-scan::before,
+html.is-scrolling .capability-stage.is-ready.is-in-view .capability-flow,
+html.is-scrolling .watch-radar-sweep,
+html.is-scrolling .watch-portal-radar b::after,
+html.is-scrolling .radar-widget b,
+html.is-scrolling .status-pill i,
+html.is-scrolling .contact-status i {
+    animation-play-state: paused !important;
+}
+
 html[data-render-tier="balanced"] .cinematic-canvas,
 html[data-render-tier="lite"] .cinematic-canvas {
     display: none !important;
@@ -2508,6 +2523,18 @@ html[data-render-tier="lite"] .cinematic-canvas {
 html[data-render-tier="balanced"] .grain-effect,
 html[data-render-tier="lite"] .grain-effect {
     display: none;
+}
+
+/* Fixed backdrop filters are disproportionately expensive on several Windows
+   and Linux compositors. A nearly opaque surface preserves the navbar contrast
+   without forcing the page behind it to be re-sampled while scrolling. */
+html[data-render-tier="balanced"] .navbar,
+html[data-render-tier="lite"] .navbar,
+html[data-render-tier="balanced"] .navbar.sticky,
+html[data-render-tier="lite"] .navbar.sticky {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(7, 9, 13, 0.94);
 }
 
 html[data-render-tier="balanced"] .ambient-grid,
@@ -2641,8 +2668,14 @@ html[data-render-tier="lite"] .cinema-card {
     transform-style: flat;
 }
 
-html[data-render-tier="balanced"] .cinematic-projects.is-motion-near .cinema-card:not(.is-front):not(.is-adjacent),
-html[data-render-tier="lite"] .cinematic-projects.is-motion-near .cinema-card:not(.is-front):not(.is-adjacent) {
+html[data-render-tier="balanced"] .cinema-grid,
+html[data-render-tier="lite"] .cinema-grid {
+    transform: none;
+    mask-image: none;
+}
+
+html[data-render-tier="balanced"] .cinema-card:not(.is-front):not(.is-adjacent),
+html[data-render-tier="lite"] .cinema-card:not(.is-front):not(.is-adjacent) {
     visibility: hidden;
 }
 
@@ -2655,10 +2688,10 @@ html[data-render-tier="lite"] .cinema-card-copy {
     will-change: auto;
 }
 
-html[data-render-tier="balanced"] .cinema-card.is-front,
-html[data-render-tier="balanced"] .cinema-card.is-adjacent,
-html[data-render-tier="lite"] .cinema-card.is-front,
-html[data-render-tier="lite"] .cinema-card.is-adjacent {
+html[data-render-tier="balanced"] .cinematic-projects.is-motion-near .cinema-card.is-front,
+html[data-render-tier="balanced"] .cinematic-projects.is-motion-near .cinema-card.is-adjacent,
+html[data-render-tier="lite"] .cinematic-projects.is-motion-near .cinema-card.is-front,
+html[data-render-tier="lite"] .cinematic-projects.is-motion-near .cinema-card.is-adjacent {
     will-change: transform, opacity;
 }
 
@@ -2678,8 +2711,9 @@ html[data-render-tier="lite"] .cinema-card.is-front .cinema-card-shell {
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.055);
 }
 
-/* Constrained desktop tiers keep every interaction and sticky chapter while
-   delegating pointer rendering to the browser. */
+/* Constrained desktop tiers keep the sticky chapters but leave the expensive
+   magnetic/tilt effects disabled. The lightweight cursor is shared by every
+   desktop tier and stays independent from the motion engine. */
 html[data-render-tier="balanced"] *,
 html[data-render-tier="balanced"] *::before,
 html[data-render-tier="balanced"] *::after,
@@ -2687,13 +2721,6 @@ html[data-render-tier="lite"] *,
 html[data-render-tier="lite"] *::before,
 html[data-render-tier="lite"] *::after {
     cursor: auto;
-}
-
-html[data-render-tier="balanced"] .cursor,
-html[data-render-tier="balanced"] .cursor-follower,
-html[data-render-tier="lite"] .cursor,
-html[data-render-tier="lite"] .cursor-follower {
-    display: none;
 }
 
 html[data-render-tier="balanced"] [data-magnetic],
@@ -2707,19 +2734,6 @@ html[data-render-tier="lite"] .project-card {
     transform: none;
     transform-style: flat;
     will-change: auto;
-}
-
-/* Project accents remain visible without a JavaScript follower: the browser
-   draws this tiny SVG cursor on its own compositor/system cursor path. */
-html[data-render-tier="balanced"] body.project-cursor-active .project-modal-wrap.active,
-html[data-render-tier="balanced"] body.project-cursor-active .project-modal-wrap.active *,
-html[data-render-tier="balanced"] body.project-cursor-active .image-lightbox.active,
-html[data-render-tier="balanced"] body.project-cursor-active .image-lightbox.active *,
-html[data-render-tier="lite"] body.project-cursor-active .project-modal-wrap.active,
-html[data-render-tier="lite"] body.project-cursor-active .project-modal-wrap.active *,
-html[data-render-tier="lite"] body.project-cursor-active .image-lightbox.active,
-html[data-render-tier="lite"] body.project-cursor-active .image-lightbox.active * {
-    cursor: var(--project-system-cursor, auto) !important;
 }
 
 html[data-render-tier="lite"] .capability-media-scan::before,

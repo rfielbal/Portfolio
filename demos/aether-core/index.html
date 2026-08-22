@@ -71,21 +71,7 @@
         font: 700 14px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       }
     </style>
-    <script>
-      window.__AETHERCORE_BOOTED__ = false;
-
-      if (window.location.protocol === "file:") {
-        document.documentElement.classList.add("is-direct-file");
-      }
-
-      window.addEventListener("DOMContentLoaded", () => {
-        window.setTimeout(() => {
-          if (!window.__AETHERCORE_BOOTED__) {
-            document.documentElement.classList.add("is-boot-failed");
-          }
-        }, 4000);
-      });
-    </script>
+    <script src="./boot.js"></script>
     <script type="module" crossorigin src="./assets/index-7_KtFsj7.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-Cc2K5F3M.css">
   </head>

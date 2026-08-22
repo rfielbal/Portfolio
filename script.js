@@ -1309,13 +1309,47 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const rotateSignature = () => {
-        if (!signatureWord || prefersReducedMotion) return;
+        if (!signatureWord) return;
 
         let signatureIndex = 0;
-        setInterval(() => {
-            signatureIndex = (signatureIndex + 1) % signatureWords.length;
-            signatureWord.textContent = signatureWords[signatureIndex];
-        }, 1800);
+        let signatureTimer = null;
+        let signatureInView = !("IntersectionObserver" in window);
+
+        const stopSignature = () => {
+            if (signatureTimer === null) return;
+            window.clearInterval(signatureTimer);
+            signatureTimer = null;
+        };
+
+        const syncSignature = () => {
+            if (document.hidden || !signatureInView || reducedMotionQuery.matches) {
+                stopSignature();
+                return;
+            }
+
+            if (signatureTimer !== null) return;
+            signatureTimer = window.setInterval(() => {
+                signatureIndex = (signatureIndex + 1) % signatureWords.length;
+                signatureWord.textContent = signatureWords[signatureIndex];
+            }, 1800);
+        };
+
+        if ("IntersectionObserver" in window) {
+            const signatureObserver = new IntersectionObserver(([entry]) => {
+                signatureInView = Boolean(entry?.isIntersecting);
+                syncSignature();
+            }, {
+                rootMargin: "160px 0px",
+                threshold: 0.01
+            });
+            signatureObserver.observe(signatureWord);
+        }
+
+        document.addEventListener("visibilitychange", syncSignature);
+        reducedMotionQuery.addEventListener?.("change", syncSignature);
+        window.addEventListener("pagehide", stopSignature);
+        window.addEventListener("pageshow", syncSignature);
+        syncSignature();
     };
 
     const setActiveNavById = (id) => {
@@ -1635,6 +1669,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         terminalOutput.querySelectorAll(".terminal-static-fallback").forEach((line) => line.remove());
 
+        const maxTerminalEntries = 48;
+        const terminalReplyTimers = new Set();
+
+        const trimTerminalHistory = () => {
+            while (terminalOutput.childElementCount > maxTerminalEntries) {
+                terminalOutput.firstElementChild?.remove();
+            }
+        };
+
+        const cancelPendingTerminalReplies = () => {
+            terminalReplyTimers.forEach((timer) => window.clearTimeout(timer));
+            terminalReplyTimers.clear();
+        };
+
+        const scheduleTerminalReply = (callback, delay) => {
+            const timer = window.setTimeout(() => {
+                terminalReplyTimers.delete(timer);
+                callback();
+            }, delay);
+            terminalReplyTimers.add(timer);
+        };
+
         const terminalCommands = {
             "/help": {
                 lines: [
@@ -1832,6 +1888,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             terminalOutput.appendChild(line);
+            trimTerminalHistory();
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
         };
 
@@ -1870,6 +1927,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             wrapper.appendChild(control);
             terminalOutput.appendChild(wrapper);
+            trimTerminalHistory();
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
         };
 
@@ -1889,6 +1947,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const command = normalizeCommand(rawValue);
             if (!command) return;
 
+            cancelPendingTerminalReplies();
             if (echo) appendLine("command", rawValue.trim());
 
             if (command === "/clear") {
@@ -1906,11 +1965,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             entry.lines.forEach((line, index) => {
-                setTimeout(() => appendLine("response", line), index * 70);
+                scheduleTerminalReply(() => appendLine("response", line), index * 70);
             });
 
             if (entry.action) {
-                setTimeout(() => appendAction(entry.action), entry.lines.length * 70 + 90);
+                scheduleTerminalReply(() => appendAction(entry.action), entry.lines.length * 70 + 90);
             }
         };
 
@@ -1929,6 +1988,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 terminalInput.focus();
             });
         });
+
+        window.addEventListener("pagehide", cancelPendingTerminalReplies);
 
         appendLine("response", "Bienvenue. Je peux répondre sur mon profil, ma stack, mes projets et mon parcours.");
         appendLine("response", "Tape /help pour commencer");
@@ -3067,19 +3128,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const setProjectCursorAccent = (accent = "") => {
         if (accent) {
             const safeAccent = /^#[0-9a-f]{6}$/i.test(accent) ? accent : "#ccff00";
-            const systemCursorSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="#05080c" fill-opacity=".86"/><circle cx="9" cy="9" r="4.5" fill="${safeAccent}"/><circle cx="9" cy="9" r="7" fill="none" stroke="${safeAccent}" stroke-opacity=".78"/></svg>`;
             body.style.setProperty("--cursor-accent", safeAccent);
-            body.style.setProperty(
-                "--project-system-cursor",
-                `url("data:image/svg+xml,${encodeURIComponent(systemCursorSvg)}") 9 9, auto`
-            );
             body.classList.remove("hovering-watch");
             body.classList.add("project-cursor-active");
             return;
         }
 
         body.style.removeProperty("--cursor-accent");
-        body.style.removeProperty("--project-system-cursor");
         body.classList.remove("project-cursor-active");
     };
 
@@ -3222,6 +3277,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const liveUrl = window.location.protocol === "file:" && data.demoPublicUrl
                     ? data.demoPublicUrl
                     : data.liveLink;
+                liveTarget.hidden = false;
+                liveTarget.removeAttribute("aria-disabled");
                 liveTarget.style.display = "inline-flex";
                 liveTarget.href = liveUrl;
                 liveTarget.setAttribute("href", liveUrl);
@@ -3229,20 +3286,32 @@ document.addEventListener("DOMContentLoaded", () => {
                 liveTarget.setAttribute("rel", "noopener noreferrer");
                 liveTarget.innerHTML = `<span>${data.liveLabel || "Voir le site"}</span><i class="fas fa-external-link-alt"></i>`;
             } else {
+                liveTarget.hidden = true;
+                liveTarget.setAttribute("aria-disabled", "true");
                 liveTarget.style.display = "none";
                 liveTarget.removeAttribute("href");
+                liveTarget.removeAttribute("target");
+                liveTarget.removeAttribute("rel");
                 liveTarget.innerHTML = '<span>Voir le site</span><i class="fas fa-external-link-alt"></i>';
             }
         }
 
         if (linkTarget) {
             if (data.repoLink) {
+                linkTarget.hidden = false;
+                linkTarget.removeAttribute("aria-disabled");
                 linkTarget.style.display = "inline-flex";
                 linkTarget.href = data.repoLink;
                 linkTarget.setAttribute("href", data.repoLink);
+                linkTarget.setAttribute("target", "_blank");
+                linkTarget.setAttribute("rel", "noopener noreferrer");
             } else {
+                linkTarget.hidden = true;
+                linkTarget.setAttribute("aria-disabled", "true");
                 linkTarget.style.display = "none";
-                linkTarget.setAttribute("href", "javascript:void(0);");
+                linkTarget.removeAttribute("href");
+                linkTarget.removeAttribute("target");
+                linkTarget.removeAttribute("rel");
             }
         }
 
@@ -3514,33 +3583,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cursor = document.getElementById("cursor");
     const follower = document.getElementById("cursor-follower");
+    const portfolioCursorQuery = window.matchMedia(
+        "(min-width: 981px) and (hover: hover) and (pointer: fine)"
+    );
+    const cursorReducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (cursor && follower && isFinePointer && !prefersReducedMotion && pointerEffectsAllowed()) {
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let followerX = mouseX;
-        let followerY = mouseY;
+    if (cursor && follower) {
+        let cursorActivated = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        let followerX = 0;
+        let followerY = 0;
         let cursorFrame = null;
         let lastCursorTimestamp = 0;
 
         const renderCursor = (timestamp) => {
             cursorFrame = null;
-            if (!pointerEffectsAllowed()) {
+            if (!cursorActivated || !portfolioCursorQuery.matches || cursorReducedMotionQuery.matches) {
                 lastCursorTimestamp = 0;
                 return;
             }
+            const snapFollower = getRenderTier() !== "high";
             const deltaSeconds = lastCursorTimestamp
                 ? Math.min(0.05, (timestamp - lastCursorTimestamp) / 1000)
                 : 1 / 60;
             const followAlpha = 1 - Math.exp(-10.5 * deltaSeconds);
             lastCursorTimestamp = timestamp;
-            followerX += (mouseX - followerX) * followAlpha;
-            followerY += (mouseY - followerY) * followAlpha;
+            followerX = snapFollower ? mouseX : followerX + (mouseX - followerX) * followAlpha;
+            followerY = snapFollower ? mouseY : followerY + (mouseY - followerY) * followAlpha;
 
             cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
             follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
 
-            if (Math.abs(mouseX - followerX) > 0.1 || Math.abs(mouseY - followerY) > 0.1) {
+            if (!snapFollower && (Math.abs(mouseX - followerX) > 0.1 || Math.abs(mouseY - followerY) > 0.1)) {
                 cursorFrame = requestAnimationFrame(renderCursor);
             } else {
                 lastCursorTimestamp = 0;
@@ -3548,13 +3623,46 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         const scheduleCursor = () => {
-            if (!cursorFrame && !document.hidden && pointerEffectsAllowed()) {
+            if (
+                cursorActivated
+                && !cursorFrame
+                && !document.hidden
+                && portfolioCursorQuery.matches
+                && !cursorReducedMotionQuery.matches
+            ) {
                 cursorFrame = requestAnimationFrame(renderCursor);
             }
         };
 
+        const activateCursor = (event) => {
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+            followerX = mouseX;
+            followerY = mouseY;
+
+            const initialTransform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            cursor.style.transform = initialTransform;
+            follower.style.transform = initialTransform;
+            cursorActivated = true;
+            document.documentElement.classList.add("portfolio-cursor-enabled");
+        };
+
+        const deactivateCursor = () => {
+            if (cursorFrame) cancelAnimationFrame(cursorFrame);
+            cursorFrame = null;
+            cursorActivated = false;
+            lastCursorTimestamp = 0;
+            document.documentElement.classList.remove("portfolio-cursor-enabled");
+            body.classList.remove("hovering", "hovering-watch");
+        };
+
         window.addEventListener("mousemove", (event) => {
-            if (!pointerEffectsAllowed()) return;
+            if (!portfolioCursorQuery.matches || cursorReducedMotionQuery.matches) return;
+            if (!cursorActivated) {
+                activateCursor(event);
+                return;
+            }
+
             mouseX = event.clientX;
             mouseY = event.clientY;
             scheduleCursor();
@@ -3570,16 +3678,12 @@ document.addEventListener("DOMContentLoaded", () => {
             scheduleCursor();
         });
 
-        window.addEventListener("portfolio:render-tier-change", () => {
-            if (pointerEffectsAllowed()) {
-                scheduleCursor();
-                return;
-            }
+        portfolioCursorQuery.addEventListener?.("change", (event) => {
+            if (!event.matches) deactivateCursor();
+        });
 
-            if (cursorFrame) cancelAnimationFrame(cursorFrame);
-            cursorFrame = null;
-            lastCursorTimestamp = 0;
-            body.classList.remove("hovering", "hovering-watch");
+        cursorReducedMotionQuery.addEventListener?.("change", (event) => {
+            if (event.matches) deactivateCursor();
         });
 
         const isInteractive = (element) =>
@@ -3613,7 +3717,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        scheduleCursor();
     }
 
     let initialProjectSyncScheduled = false;

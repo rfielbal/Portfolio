@@ -68,18 +68,6 @@
             });
         };
 
-        const promoteCinemaMedia = (activeIndex) => {
-            if (renderTier === "high") return;
-
-            [activeIndex, activeIndex + 1].forEach((index) => {
-                const image = cards[index]?.image;
-                const fullSource = image?.dataset.cinemaFullSource;
-                if (!image || !fullSource || image.getAttribute("src") === fullSource) return;
-
-                image.setAttribute("src", fullSource);
-            });
-        };
-
         configureCinemaMediaBudget();
 
         const prepareCinemaMedia = () => {
@@ -264,12 +252,12 @@
                 const copyOpacity = 1 - clamp((copyDistance - 0.1) / (lite ? 0.42 : 0.54));
 
                 return {
-                    transform: `translate3d(-50%, -50%, 0) translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`,
+                    transform: `translate(-50%, -50%) translate(${x.toFixed(2)}px, ${y.toFixed(2)}px) scale(${scale.toFixed(4)})`,
                     opacity: opacity.toFixed(4),
                     zIndex: String(delta < 0 ? 800 - index : 1000 - index),
                     imageTransform: `scale(${(1.025 + Math.min(copyDistance, 1) * 0.018).toFixed(4)})`,
                     copyOpacity: copyOpacity.toFixed(4),
-                    copyTransform: `translate3d(0, ${Math.min(copyDistance, 1) * 8}px, 0)`
+                    copyTransform: `translateY(${Math.min(copyDistance, 1) * 8}px)`
                 };
             }
 
@@ -424,7 +412,10 @@
                         : 0.78 - (rawProgress * 0.38);
                     const headingTravel = cinemaCompact ? -8 : -34;
                     cinemaHeading.style.opacity = headingOpacity.toFixed(4);
-                    cinemaHeading.style.transform = `translate3d(0, ${(rawProgress * headingTravel).toFixed(2)}px, 0)`;
+                    const headingOffset = (rawProgress * headingTravel).toFixed(2);
+                    cinemaHeading.style.transform = renderTier === "high" || cinemaCompact
+                        ? `translate3d(0, ${headingOffset}px, 0)`
+                        : `translateY(${headingOffset}px)`;
                 }
                 if (cinemaProgressFill) {
                     cinemaProgressFill.style.transform = `scaleX(${rawProgress.toFixed(4)})`;
@@ -444,7 +435,6 @@
 
             if (activeIndex !== activeCardIndex) {
                 activeCardIndex = activeIndex;
-                promoteCinemaMedia(activeCardIndex);
                 const activeCard = cards[activeCardIndex]?.element;
                 const rgb = activeCard?.style.getPropertyValue("--card-rgb").trim() || "67, 223, 255";
 
@@ -748,7 +738,6 @@
                 cinemaMediaObserver?.disconnect();
                 cinemaMediaObserver = null;
                 configureCinemaMediaBudget();
-                promoteCinemaMedia(Math.max(0, activeCardIndex));
             } else {
                 armCinemaMedia();
             }

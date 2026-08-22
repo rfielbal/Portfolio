@@ -80,16 +80,17 @@
         slowFrameWindows = slowWindow ? slowFrameWindows + 1 : Math.max(0, slowFrameWindows - 1);
         scrollFrameDeltas = [];
 
-        if (slowFrameWindows < 2) return;
-        slowFrameWindows = 0;
         const currentTier = root.dataset.renderTier || "high";
+        const requiredSlowWindows = currentTier === "balanced" ? 1 : 2;
+        if (slowFrameWindows < requiredSlowWindows) return;
+        slowFrameWindows = 0;
         setRenderTier(currentTier === "high" ? "balanced" : "lite", "frame-budget");
     };
 
     const recordScrollFrame = (timestamp) => {
         if (lastScrollFrame > 0) {
             const delta = timestamp - lastScrollFrame;
-            if (delta >= 5 && delta < 180) scrollFrameDeltas.push(delta);
+            if (delta >= 5) scrollFrameDeltas.push(Math.min(delta, 250));
         }
         lastScrollFrame = timestamp;
 
@@ -168,11 +169,8 @@
 
     window.addEventListener("resize", invalidateLayout, { passive: true });
     window.addEventListener("pointermove", (event) => {
-        /*
-         * The custom pointer layers are part of the premium desktop tier only.
-         * On balanced/lite machines the operating-system cursor stays outside
-         * the main thread, so a busy frame can never make the pointer feel late.
-         */
+        /* Premium light, tilt and magnetic effects remain high-tier only. The
+           lightweight visual cursor has its own isolated animation loop. */
         if (!finePointer.matches || root.dataset.renderTier !== "high") return;
         pointerX = event.clientX;
         pointerY = event.clientY;
