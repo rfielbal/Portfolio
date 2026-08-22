@@ -4,6 +4,8 @@
 .playwright-cli/
 output/playwright/
 output/pdf/
+output/cv/
+tmp/
 
 *.log
 
