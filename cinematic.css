@@ -2738,11 +2738,17 @@ html[data-render-tier="lite"] .project-card {
 
 html[data-render-tier="lite"] .capability-media-scan::before,
 html[data-render-tier="lite"] .capability-flow path,
-html[data-render-tier="lite"] .watch-radar-sweep,
 html[data-render-tier="lite"] .watch-portal-radar b::after,
 html[data-render-tier="lite"] .status-pill i,
 html[data-render-tier="lite"] .contact-status i {
     animation: none !important;
+}
+
+/* The radar is a key part of the watch portal, including on constrained
+   desktops. Its sweep only animates a composited transform; keep it alive at a
+   calmer pace while the paint-heavy signal pulse remains disabled above. */
+html[data-render-tier="lite"] .watch-radar-sweep {
+    animation-duration: 7.2s;
 }
 
 @media (max-width: 1180px) {
