@@ -31,7 +31,7 @@
         const desktopCinema = window.matchMedia("(min-width: 1181px) and (hover: hover) and (pointer: fine)");
         const compactCinema = window.matchMedia("(max-width: 1180px), (hover: none), (pointer: coarse)");
         const saveData = Boolean(navigator.connection?.saveData);
-        let renderTier = root.dataset.renderTier || "high";
+        const renderTier = root.dataset.renderTier || "high";
         const cardStatus = [
             "WHEELLO / CLIENT SYSTEM",
             "JESSICA DEW / CLIENT EXPERIENCE",
@@ -556,7 +556,6 @@
             }, { passive: true });
             reducedMotion.addEventListener?.("change", resetArrow);
             coarsePointer.addEventListener?.("change", resetArrow);
-            window.addEventListener("portfolio:render-tier-change", resetArrow);
         };
 
         const setupCanvas = () => {
@@ -711,10 +710,6 @@
                 else startCanvas();
             });
             window.addEventListener("portfolio:preloader-exit", syncCanvas);
-            window.addEventListener("portfolio:render-tier-change", (event) => {
-                renderTier = event.detail?.tier || root.dataset.renderTier || "high";
-                syncCanvas();
-            });
             reducedMotion.addEventListener?.("change", syncCanvas);
             coarsePointer.addEventListener?.("change", syncCanvas);
             desktopCinema.addEventListener?.("change", syncCanvas);
@@ -732,22 +727,6 @@
         reducedMotion.addEventListener?.("change", armCinemaMedia);
         desktopCinema.addEventListener?.("change", armCinemaMedia);
         compactCinema.addEventListener?.("change", armCinemaMedia);
-        window.addEventListener("portfolio:render-tier-change", (event) => {
-            renderTier = event.detail?.tier || root.dataset.renderTier || "high";
-            if (renderTier !== "high") {
-                cinemaMediaObserver?.disconnect();
-                cinemaMediaObserver = null;
-                configureCinemaMediaBudget();
-            } else {
-                armCinemaMedia();
-            }
-            cards.forEach(({ rendered }) => {
-                Object.keys(rendered).forEach((key) => delete rendered[key]);
-            });
-            renderedCinemaProgress = -1;
-            cachedLayoutVersion = -1;
-            motionEngine.invalidateLayout();
-        });
         syncCinemaMode();
         armCinemaMedia();
         setupWatchPortalMotion();

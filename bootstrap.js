@@ -57,11 +57,10 @@
     root.dataset.preloaderMode = window.__portfolioPreloaderReason;
 
     /*
-     * Choose a safe rendering budget before the styles are parsed. The desktop
-     * experience is paint-heavy; Windows and Linux often expose enough CPU/RAM
-     * while still relying on a constrained integrated GPU or compositor.
+     * Choose a deterministic rendering budget before styles are parsed.
+     * Platform fallbacks protect constrained Windows/Linux compositors, while
+     * a transient scroll hitch must never downgrade a later page load.
      */
-    const renderTierKey = "rfielbal:render-tier:v1";
     const platform = String(
         navigator.userAgentData?.platform
         || navigator.platform
@@ -69,24 +68,21 @@
     ).toLowerCase();
     const isWindows = platform.includes("win");
     const isLinux = platform.includes("linux");
+    const isMacOS = platform.includes("mac");
     const conservativeDesktopPlatform = isWindows || isLinux;
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     const hardwareConcurrency = navigator.hardwareConcurrency || 8;
     const deviceMemory = navigator.deviceMemory || 8;
-    const desktopPointer = window.matchMedia("(min-width: 981px) and (hover: hover) and (pointer: fine)").matches;
-    const constrainedDevice = reducedMotion
-        || Boolean(connection?.saveData)
-        || hardwareConcurrency <= 4
-        || deviceMemory <= 4;
-    let rememberedTier = "";
+    const desktopPointer = window.matchMedia("(min-width: 1181px) and (hover: hover) and (pointer: fine)").matches;
+    const constrainedDevice = hardwareConcurrency <= 2
+        || (hardwareConcurrency <= 4 && deviceMemory <= 4);
 
     try {
-        rememberedTier = window.sessionStorage.getItem(renderTierKey) || "";
+        window.sessionStorage.removeItem("rfielbal:render-tier:v1");
     } catch {
-        rememberedTier = "";
+        // Rendering remains deterministic when storage is unavailable.
     }
 
-    let renderTier = !desktopPointer
+    const renderTier = !desktopPointer
         ? "high"
         : constrainedDevice
             ? "lite"
@@ -94,16 +90,21 @@
                 ? "balanced"
                 : "high";
 
-    if (desktopPointer && (rememberedTier === "lite" || (rememberedTier === "balanced" && renderTier === "high"))) {
-        renderTier = rememberedTier;
-    }
-
     root.dataset.renderTier = renderTier;
+    root.dataset.renderReason = !desktopPointer
+        ? "compact-layout"
+        : constrainedDevice
+            ? "constrained-device"
+            : conservativeDesktopPlatform
+                ? "platform-budget"
+                : "full-capability";
     root.dataset.renderPlatform = isWindows
         ? "windows"
         : isLinux
             ? "linux"
-            : "other";
+            : isMacOS
+                ? "macos"
+                : "other";
     window.__portfolioRenderTier = renderTier;
 })();
 

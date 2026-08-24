@@ -289,7 +289,9 @@ html.js-failed-open .legal-fallback {
     }
 
     html.hero-intro-pending .hero.is-motion-near .terminal-border-orbit,
-    html.hero-intro-pending .terminal-border-orbit {
+    html.hero-intro-pending .terminal-border-orbit,
+    html.hero-intro-pending .hero.is-motion-near .profile-stage::after,
+    html.hero-intro-pending .profile-stage::after {
         animation-play-state: paused !important;
     }
 
@@ -2299,6 +2301,7 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
 .cinema-media-scan,
 .cinema-scroll-hint span::after,
 .marquee-wrap .track,
+.hero:not(.is-motion-near) .profile-stage::after,
 .hero:not(.is-motion-near) .terminal-border-orbit,
 .hero:not(.is-motion-near) .terminal-card {
     animation-play-state: paused !important;
@@ -2307,6 +2310,7 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
 .cinematic-projects.is-motion-near .cinema-card.is-front .cinema-media-scan,
 .cinematic-projects.is-motion-near .cinema-scroll-hint span::after,
 .marquee-wrap.is-motion-visible .track,
+.hero.is-motion-near .profile-stage::after,
 .hero.is-motion-near .terminal-border-orbit,
 .hero.is-motion-near .terminal-card {
     animation-play-state: running !important;
@@ -2491,8 +2495,9 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
 /* Pseudo-elements own their animations; pausing the parent did not pause the
    terminal scan. Keep paint-bound work idle outside the hero and during scroll. */
 .hero:not(.is-motion-near) .terminal-card::before,
+html.is-scrolling .hero .profile-stage::after,
 html.is-scrolling .terminal-card::before,
-html.is-scrolling .terminal-border-orbit {
+html.is-scrolling .hero .terminal-border-orbit {
     animation-play-state: paused !important;
 }
 
@@ -2553,8 +2558,8 @@ html[data-render-tier="lite"] body .hero-title {
     filter: none;
 }
 
-/* Replace the paint-bound SVG dash + two shadows by one static conic rim.
-   The existing inner panel masks the centre, so only the 3 px rim is visible. */
+/* Replace the paint-bound SVG dash + two shadows by a conic rim. The existing
+   inner panel masks the centre, so only the 3 px rim is visible. */
 html[data-render-tier="balanced"] .terminal-border-track,
 html[data-render-tier="lite"] .terminal-border-track {
     display: none;
@@ -2589,9 +2594,24 @@ html[data-render-tier="lite"] .profile-stage::after {
 
 html[data-render-tier="lite"] .profile-stage::after {
     opacity: 0.58;
-    animation: none;
     transform: translate(-50%, -50%) rotate(0.86turn);
-    will-change: auto;
+}
+
+@keyframes terminalFallbackOrbit {
+    from { transform: translate(-50%, -50%) rotate(0.86turn); }
+    to { transform: translate(-50%, -50%) rotate(1.86turn); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html[data-render-tier="balanced"] .profile-stage::after,
+    html[data-render-tier="lite"] .profile-stage::after {
+        animation: terminalFallbackOrbit 9s linear infinite;
+        will-change: transform;
+    }
+
+    html[data-render-tier="lite"] .profile-stage::after {
+        animation-duration: 11s;
+    }
 }
 
 html[data-render-tier="balanced"] .terminal-card::before,
