@@ -19,6 +19,7 @@
         const cinemaDirectOpen = document.getElementById("cinema-direct-open");
         const watchPortal = document.querySelector(".watch-portal");
         const watchArrowLink = document.querySelector("[data-watch-arrow]");
+        const terminalStage = hero?.querySelector(".profile-stage");
 
         if (!motionEngine || !hero || !projectCinema) {
             if (canvas) canvas.hidden = true;
@@ -480,6 +481,34 @@
             });
         });
 
+        const setupTerminalMotion = () => {
+            if (!terminalStage) return;
+
+            let terminalVisible = !("IntersectionObserver" in window);
+
+            const syncTerminalMotion = () => {
+                hero.classList.toggle(
+                    "is-terminal-visible",
+                    terminalVisible && !document.hidden
+                );
+            };
+
+            if ("IntersectionObserver" in window) {
+                const terminalObserver = new IntersectionObserver(([entry]) => {
+                    terminalVisible = entry.isIntersecting;
+                    syncTerminalMotion();
+                }, {
+                    rootMargin: "0px",
+                    threshold: 0.01
+                });
+                terminalObserver.observe(terminalStage);
+            } else {
+                syncTerminalMotion();
+            }
+
+            document.addEventListener("visibilitychange", syncTerminalMotion);
+        };
+
         const setupWatchPortalMotion = () => {
             if (!watchPortal) return;
 
@@ -497,8 +526,8 @@
                     radarVisible = entry.isIntersecting;
                     syncRadarMotion();
                 }, {
-                    rootMargin: "120px 0px",
-                    threshold: 0.08
+                    rootMargin: "0px",
+                    threshold: 0.01
                 });
                 radarObserver.observe(watchPortal);
             } else {
@@ -729,6 +758,7 @@
         compactCinema.addEventListener?.("change", armCinemaMedia);
         syncCinemaMode();
         armCinemaMedia();
+        setupTerminalMotion();
         setupWatchPortalMotion();
         setupCanvas();
     };

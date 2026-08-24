@@ -288,9 +288,9 @@ html.js-failed-open .legal-fallback {
         transform-origin: 46% 50%;
     }
 
-    html.hero-intro-pending .hero.is-motion-near .terminal-border-orbit,
+    html.hero-intro-pending .hero.is-terminal-visible .terminal-border-orbit,
     html.hero-intro-pending .terminal-border-orbit,
-    html.hero-intro-pending .hero.is-motion-near .profile-stage::after,
+    html.hero-intro-pending .hero.is-terminal-visible .profile-stage::after,
     html.hero-intro-pending .profile-stage::after {
         animation-play-state: paused !important;
     }
@@ -2301,18 +2301,18 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
 .cinema-media-scan,
 .cinema-scroll-hint span::after,
 .marquee-wrap .track,
-.hero:not(.is-motion-near) .profile-stage::after,
-.hero:not(.is-motion-near) .terminal-border-orbit,
-.hero:not(.is-motion-near) .terminal-card {
+.hero:not(.is-terminal-visible) .profile-stage::after,
+.hero:not(.is-terminal-visible) .terminal-border-orbit,
+.hero:not(.is-terminal-visible) .terminal-card {
     animation-play-state: paused !important;
 }
 
 .cinematic-projects.is-motion-near .cinema-card.is-front .cinema-media-scan,
 .cinematic-projects.is-motion-near .cinema-scroll-hint span::after,
 .marquee-wrap.is-motion-visible .track,
-.hero.is-motion-near .profile-stage::after,
-.hero.is-motion-near .terminal-border-orbit,
-.hero.is-motion-near .terminal-card {
+.hero.is-terminal-visible .profile-stage::after,
+.hero.is-terminal-visible .terminal-border-orbit,
+.hero.is-terminal-visible .terminal-card {
     animation-play-state: running !important;
 }
 
@@ -2492,32 +2492,13 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
     }
 }
 
-/* Pseudo-elements own their animations; pausing the parent did not pause the
-   terminal scan. Keep paint-bound work idle outside the hero and during scroll. */
-.hero:not(.is-motion-near) .terminal-card::before,
-html.is-scrolling .hero .profile-stage::after,
-html.is-scrolling .terminal-card::before,
-html.is-scrolling .hero .terminal-border-orbit {
+/* Keep terminal work idle only while its card is outside the viewport. */
+.hero:not(.is-terminal-visible) .terminal-card::before {
     animation-play-state: paused !important;
 }
 
-.hero.is-motion-near .terminal-card::before {
+.hero.is-terminal-visible .terminal-card::before {
     animation-play-state: running;
-}
-
-/* Let scrolling own the frame budget. Decorative loops resume as soon as the
-   user stops, so their visual language is preserved without competing with
-   layout, sticky chapters or the pointer on integrated GPUs. */
-html.is-scrolling .marquee-wrap .track,
-html.is-scrolling .about-lanyard-stage.is-lanyard-visible .lanyard-entry,
-html.is-scrolling .capability-stage.is-ready.is-in-view .capability-media-scan::before,
-html.is-scrolling .capability-stage.is-ready.is-in-view .capability-flow,
-html.is-scrolling .watch-radar-sweep,
-html.is-scrolling .watch-portal-radar b::after,
-html.is-scrolling .radar-widget b,
-html.is-scrolling .status-pill i,
-html.is-scrolling .contact-status i {
-    animation-play-state: paused !important;
 }
 
 html[data-render-tier="balanced"] .cinematic-canvas,

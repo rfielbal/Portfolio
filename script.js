@@ -3167,6 +3167,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const data = getProjectByReference(reference);
         if (!data) return;
+        let startProjectVideo = null;
 
         window.clearTimeout(projectGalleryCleanupTimer);
         projectGalleryCleanupTimer = null;
@@ -3256,11 +3257,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (!video.currentSrc && !video.getAttribute("src")) {
                         video.src = source;
                         video.preload = "metadata";
+                        video.muted = true;
+                        video.defaultMuted = true;
+                        video.playsInline = true;
                         video.load();
                     }
 
                     videoStart.hidden = true;
-                    video.play().catch(() => {
+                    return video.play().catch(() => {
                         videoStart.hidden = false;
                     });
                 };
@@ -3269,6 +3273,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 video.addEventListener("play", () => {
                     videoStart.hidden = true;
                 });
+                video.addEventListener("error", () => {
+                    videoStart.hidden = false;
+                });
+
+                if (!prefersReducedMotion && !navigator.connection?.saveData) {
+                    startProjectVideo = startVideo;
+                }
             }
         }
 
@@ -3318,6 +3329,7 @@ document.addEventListener("DOMContentLoaded", () => {
         projectModal.classList.toggle("has-project-actions", Boolean(data.liveLink || data.repoLink));
 
         openLayer(projectModal, opener);
+        window.requestAnimationFrame(() => startProjectVideo?.());
     };
 
     const closeProject = ({ fromHistory = false } = {}) => {
