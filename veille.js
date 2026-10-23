@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let previousFocus = null;
     let scrollFrame = null;
 
+    if (menu) menu.inert = true;
+
     const clearRestoredSkipFocus = () => {
         if (document.activeElement === skipLink && !root.classList.contains("keyboard-navigation")) {
             skipLink.blur();
@@ -187,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         previousFocus = document.activeElement;
         menu.classList.add("is-open");
         menu.setAttribute("aria-hidden", "false");
+        menu.inert = false;
         menuButton.setAttribute("aria-expanded", "true");
         body.classList.add("menu-open");
         setBackgroundInert(true);
@@ -197,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!menu || !menuButton) return;
         menu.classList.remove("is-open");
         menu.setAttribute("aria-hidden", "true");
+        menu.inert = true;
         menuButton.setAttribute("aria-expanded", "false");
         body.classList.remove("menu-open");
         setBackgroundInert(false);

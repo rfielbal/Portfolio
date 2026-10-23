@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Veille technologique BTS SIO de Raphaël Coursier sur les applications Apple : méthode de collecte, sources officielles et trois rapports PDF sur le développement et la distribution.">
+    <meta name="theme-color" content="#050507">
+    <link rel="canonical" href="https://rfielbal.fr/veille-bts-sio.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Portfolio de Raphaël Coursier">
+    <meta property="og:title" content="Veille BTS SIO · Écosystème Apple · Raphaël Coursier">
+    <meta property="og:description" content="Une veille méthodique sur les applications Apple, avec trois rapports PDF sourcés et une collecte organisée chaque semaine.">
+    <meta property="og:url" content="https://rfielbal.fr/veille-bts-sio.html">
+    <meta property="og:image" content="https://rfielbal.fr/images/social/veille-technologique-og.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Couverture de la veille technologique de Raphaël Coursier">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Veille BTS SIO · Écosystème Apple · Raphaël Coursier">
+    <meta name="twitter:description" content="Veille sur les applications Apple : méthode, sources et trois rapports PDF sur le développement et la distribution.">
+    <meta name="twitter:image" content="https://rfielbal.fr/images/social/veille-technologique-og.jpg">
+    <meta name="twitter:image:alt" content="Couverture de la veille technologique de Raphaël Coursier">
+
+    <title>Veille BTS SIO · Écosystème Apple · Raphaël Coursier</title>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": "https://rfielbal.fr/veille-bts-sio.html#page",
+            "url": "https://rfielbal.fr/veille-bts-sio.html",
+            "name": "Veille BTS SIO · Le cycle de vie des applications dans l’écosystème Apple",
+            "description": "Veille technologique de Raphaël Coursier sur les applications Apple : méthode, sources officielles et trois rapports PDF sur les évolutions du développement et de la distribution.",
+            "inLanguage": "fr-FR",
+            "isPartOf": {
+                "@id": "https://rfielbal.fr/#website"
+            },
+            "author": {
+                "@id": "https://rfielbal.fr/#raphael-coursier"
+            },
+            "about": [
+                "Développement d’applications Apple",
+                "Swift et SwiftUI",
+                "Flutter et Dart sur les plateformes Apple",
+                "Tests et distribution d’applications",
+                "App Store Connect et TestFlight"
+            ],
+            "dateModified": "2026-10-23"
+        }
+    </script>
+
+    <link rel="icon" type="image/webp" href="images/brand/brand-mark-128.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="veille.css?v=nav-controls-20260813">
+    <link rel="stylesheet" href="veille-bts-sio.css?v=reports-20261023">
+    <link rel="stylesheet" href="watch-navigation.css?v=nav-align-20261023">
+    <script src="veille-bootstrap.js?v=production-hardening-20260823"></script>
+</head>
+<body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-follower" id="cursor-follower" aria-hidden="true"></div>
+
+    <div class="page-grid" aria-hidden="true"></div>
+    <div class="page-lines" aria-hidden="true"><i></i><i></i></div>
+
+    <header class="watch-header">
+        <nav class="watch-nav" id="watch-nav" aria-label="Navigation principale">
+            <a class="watch-brand" href="index.html#home" aria-label="Accueil — Raphaël Coursier">
+                <img src="images/brand/brand-mark-128.webp" width="128" height="120" alt="" decoding="async">
+                <span>RAPHAËL COURSIER</span>
+            </a>
+
+            <ul class="watch-nav-links">
+                <li><a href="index.html#home">Accueil</a></li>
+                <li><a href="index.html#manifesto">À propos</a></li>
+                <li><a href="index.html#projects">Projets</a></li>
+                <li><a href="index.html#savoir-faire">Savoir-faire</a></li>
+                <li class="watch-switcher" data-watch-switcher>
+                    <button class="watch-switcher-trigger is-current" type="button" aria-expanded="false" aria-controls="watch-switcher-panel-bts">
+                        <span>Veille</span>
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="watch-switcher-panel" id="watch-switcher-panel-bts" aria-hidden="true" inert>
+                        <p class="watch-switcher-kicker">Choisir un parcours</p>
+                        <a class="watch-switcher-option" href="veille.html">
+                            <span class="watch-switcher-index">01</span>
+                            <span class="watch-switcher-copy"><strong>Veille générale</strong><small>IA, Web, interfaces et outils</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="watch-switcher-option" href="veille-bts-sio.html" aria-current="page">
+                            <span class="watch-switcher-index">02</span>
+                            <span class="watch-switcher-copy"><strong>Veille BTS SIO</strong><small>Cycle de vie des applications Apple</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+
+            <button class="watch-menu-button" id="watch-menu-button" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="watch-mobile-menu">
+                <span>Menu</span>
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+        </nav>
+
+        <div class="watch-mobile-menu" id="watch-mobile-menu" role="dialog" aria-modal="true" aria-label="Menu principal" aria-hidden="true">
+            <button class="watch-menu-close" id="watch-menu-close" type="button" aria-label="Fermer le menu">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                <span>Fermer</span>
+            </button>
+            <nav aria-label="Navigation mobile">
+                <a href="index.html#home">01. Accueil</a>
+                <a href="index.html#manifesto">02. À propos</a>
+                <a href="index.html#projects">03. Projets</a>
+                <a href="index.html#savoir-faire">04. Savoir-faire</a>
+                <a href="veille.html">05. Veille générale</a>
+                <a href="#top" aria-current="page">06. Veille BTS SIO</a>
+                <a href="index.html#contact">07. Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <nav class="watch-no-js-nav" aria-label="Navigation alternative">
+        <a href="index.html#home">Accueil</a>
+        <a href="veille.html">Veille générale</a>
+        <a href="#top" aria-current="page">Veille BTS SIO</a>
+        <a href="index.html#contact">Contact</a>
+    </nav>
+
+    <main id="contenu">
+        <section class="bts-hero" id="top" aria-labelledby="bts-title">
+            <div class="bts-container bts-hero-layout">
+                <div class="bts-hero-copy">
+                    <div class="bts-hero-meta">
+                        <p><span class="status-light" aria-hidden="true"></span> Dossier BTS SIO</p>
+                        <p>3 éditions disponibles · septembre–octobre 2026</p>
+                    </div>
+
+                    <p class="bts-overline">Sujet unique · Développement mobile</p>
+                    <h1 id="bts-title">
+                        LE CYCLE DE VIE
+                        <span>DES APPLICATIONS APPLE.</span>
+                    </h1>
+                    <p class="bts-hero-lead">
+                        Une veille centrée sur la manière dont les plateformes Apple font évoluer
+                        la conception, le développement, les tests et la distribution des applications
+                        natives et multiplateformes.
+                    </p>
+                    <div class="bts-hero-actions">
+                        <a class="button-primary" href="documents/veille/Veille-Apple-2026-10-16.pdf" target="_blank" rel="noopener noreferrer">Lire la dernière édition <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        <a class="button-secondary" href="veille.html">Voir la veille générale <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+
+                <aside class="bts-hero-console" aria-label="État du dossier de veille">
+                    <div class="console-head">
+                        <span></span><span></span><span></span>
+                        <p>veille_bts_sio.config</p>
+                    </div>
+                    <dl>
+                        <div><dt>Sujet</dt><dd>Écosystème Apple</dd></div>
+                        <div><dt>Angle</dt><dd>Cycle de vie applicatif</dd></div>
+                        <div><dt>Méthode</dt><dd>Source → analyse → synthèse</dd></div>
+                        <div><dt>État</dt><dd><span>3 rapports PDF disponibles</span></dd></div>
+                    </dl>
+                    <p class="console-note">Dernière édition : 16 octobre 2026. Chaque rapport conserve sa période d’analyse, ses sources et ses limites.</p>
+                </aside>
+            </div>
+
+            <div class="bts-orbit" data-watch-hero-radar aria-hidden="true">
+                <span class="orbit-sweep"></span>
+                <span class="orbit-ring orbit-ring--one"></span>
+                <span class="orbit-ring orbit-ring--two"></span>
+                <i class="orbit-axis orbit-axis--x"></i>
+                <i class="orbit-axis orbit-axis--y"></i>
+                <b class="orbit-core"><i class="fa-brands fa-apple"></i></b>
+                <b class="orbit-signal"></b>
+            </div>
+        </section>
+
+        <section class="bts-section bts-framing" id="cadrage" aria-labelledby="framing-title">
+            <div class="bts-container">
+                <div class="section-heading">
+                    <p class="section-kicker">01 / Cadrage</p>
+                    <h2 id="framing-title">UN SUJET PRÉCIS, PAS TOUTE L’ACTUALITÉ APPLE.</h2>
+                    <p>
+                        Le nom Apple définit l’écosystème observé. La veille, elle, reste centrée sur
+                        les conséquences concrètes des évolutions de plateforme pour un développeur.
+                    </p>
+                    <p>
+                        Mon intérêt pour cet écosystème et mon travail sur une application Flutter
+                        pendant mon stage donnent un contexte concret à cette veille : adaptation
+                        des interfaces, dépendances et contraintes de publication.
+                    </p>
+                </div>
+
+                <blockquote class="research-question">
+                    <p>Problématique</p>
+                    <strong>Comment les évolutions des plateformes Apple transforment-elles la conception, le développement, les tests et la distribution d’applications natives et multiplateformes&nbsp;?</strong>
+                </blockquote>
+
+                <div class="scope-grid">
+                    <article class="scope-card scope-card--in">
+                        <header>
+                            <span>Dans le périmètre</span>
+                            <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                        </header>
+                        <ul>
+                            <li><span>01</span><p>Évolutions d’iOS, d’iPadOS et de macOS ayant un impact applicatif.</p></li>
+                            <li><span>02</span><p>Swift, SwiftUI, Xcode, SDK et outils de test Apple.</p></li>
+                            <li><span>03</span><p>Adaptation des applications Flutter et Dart aux plateformes Apple.</p></li>
+                            <li><span>04</span><p>TestFlight, App Store Connect, règles de publication et conformité.</p></li>
+                            <li><span>05</span><p>Notifications, confidentialité, sécurité, performance et accessibilité.</p></li>
+                        </ul>
+                    </article>
+
+                    <article class="scope-card scope-card--out">
+                        <header>
+                            <span>Hors périmètre</span>
+                            <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                        </header>
+                        <ul>
+                            <li><span>01</span><p>Rumeurs, fuites et informations sans source vérifiable.</p></li>
+                            <li><span>02</span><p>Comparatifs grand public, promotions et conseils d’achat.</p></li>
+                            <li><span>03</span><p>Annonces produit sans conséquence sur le développement.</p></li>
+                            <li><span>04</span><p>Reprises d’articles qui ne remontent pas à la source primaire.</p></li>
+                            <li><span>05</span><p>Accumulation de liens sans analyse ni mise en pratique.</p></li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="bts-section bts-system" id="dispositif" aria-labelledby="system-title">
+            <div class="bts-container">
+                <div class="section-heading section-heading--wide">
+                    <p class="section-kicker">02 / Dispositif de veille</p>
+                    <h2 id="system-title">AUTOMATISER LA COLLECTE, PAS LE JUGEMENT.</h2>
+                    <p>
+                        L’automatisation prépare la matière et préserve le temps d’analyse. La relecture
+                        vérifie les affirmations, distingue annonce, bêta et version disponible,
+                        conserve les incertitudes et permet de corriger l’analyse.
+                    </p>
+                </div>
+
+                <ol class="process-list">
+                    <li>
+                        <span>01</span>
+                        <div><p>Collecter</p><h3>Sources officielles</h3><p>Flux et pages Apple, Swift et Flutter alimentent une file de lecture sans publication automatique.</p></div>
+                    </li>
+                    <li>
+                        <span>02</span>
+                        <div><p>Qualifier</p><h3>Filtrer le signal</h3><p>Origine, date, portée, compatibilité et impact potentiel permettent d’écarter le bruit.</p></div>
+                    </li>
+                    <li>
+                        <span>03</span>
+                        <div><p>Analyser</p><h3>Comparer les évolutions</h3><p>Identifier ce qui a changé depuis la collecte précédente et ses conséquences concrètes pour le développement.</p></div>
+                    </li>
+                    <li>
+                        <span>04</span>
+                        <div><p>Capitaliser</p><h3>Synthétiser et corriger</h3><p>Produire un rapport sourcé, le relire et conserver les corrections. Une compatibilité annoncée reste distincte d’un test personnel.</p></div>
+                    </li>
+                </ol>
+
+                <div class="system-dashboard">
+                    <article class="automation-plan">
+                        <p class="mini-kicker">Organisation de la veille</p>
+                        <h3>UNE MÉTHODE RÉGULIÈRE, UNE ANALYSE PERSONNELLE.</h3>
+                        <div class="automation-flow" aria-label="De la collecte à la relecture">
+                            <span>Flux officiels</span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            <span>Tri et dédoublonnage</span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            <span>Obsidian</span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            <span>Validation humaine</span>
+                        </div>
+                        <p>
+                            Inoreader rassemble les sources. Le coffre Obsidian « Veille Apple » organise
+                            les notes, les références et les rapports. Les PDF offrent une lecture autonome ;
+                            les notes restent modifiables pour apporter des correctifs.
+                        </p>
+                    </article>
+
+                    <article class="cadence-card">
+                        <p class="mini-kicker">Organisation prévue</p>
+                        <dl>
+                            <div><dt>Collecte</dt><dd>Chaque vendredi à 19 h, heure de Paris</dd></div>
+                            <div><dt>Tri</dt><dd>Vérification des sources et retrait des doublons</dd></div>
+                            <div><dt>Synthèse</dt><dd>Un rapport toutes les deux semaines</dd></div>
+                            <div><dt>Publication</dt><dd>Ajout au portfolio après validation</dd></div>
+                        </dl>
+                    </article>
+                </div>
+
+                <aside class="human-gate">
+                    <i class="fa-solid fa-fingerprint" aria-hidden="true"></i>
+                    <div>
+                        <p>Point de contrôle</p>
+                        <h3>Les synthèses sont préparées avec une assistance IA et restent soumises à ma relecture. La présence des PDF ne prouve pas, à elle seule, le bon fonctionnement de chaque collecte programmée.</h3>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section class="bts-section bts-first-cycle" id="syntheses" aria-labelledby="cycle-title">
+            <div class="bts-container first-cycle-layout">
+                <div class="section-heading">
+                    <p class="section-kicker">03 / Éditions documentées</p>
+                    <h2 id="cycle-title">LES RAPPORTS DE VEILLE.</h2>
+                    <p>
+                        Chaque édition conserve sa période d’analyse, ses sources et ses limites.
+                        Les rapports disposent d’un sommaire et de références cliquables.
+                        Les liens ouvrent les PDF dans un nouvel onglet.
+                    </p>
+                    <p>
+                        Le premier rapport correspond au rattrapage du 19 septembre à partir des sources
+                        publiques originales. Il ne constitue pas une lecture exhaustive du compte
+                        Inoreader. Une compatibilité annoncée ne vaut pas un test réalisé dans mon application.
+                    </p>
+                </div>
+
+                <article class="cycle-status">
+                    <header>
+                        <p><span aria-hidden="true"></span> Dernière édition</p>
+                        <time datetime="2026-10-16">16 octobre 2026</time>
+                    </header>
+                    <h3>3 ÉDITIONS DISPONIBLES</h3>
+                    <p>
+                        Développement et distribution des applications Apple : les évolutions,
+                        leurs conséquences et les points qui restent à vérifier.
+                    </p>
+                    <ol class="cycle-roadmap">
+                        <li>
+                            <span>03</span>
+                            <div><strong>Écosystème Apple — évolutions et conséquences pour le développement</strong><p>Du 3 au 16 octobre 2026 · Synthèse de 12 pages avec sources et sommaire cliquables.</p></div>
+                            <a class="report-link" href="documents/veille/Veille-Apple-2026-10-16.pdf" target="_blank" rel="noopener noreferrer" aria-label="Lire le rapport 03 du 16 octobre 2026, PDF de 12 pages, nouvel onglet">PDF · 12 p. <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <span>02</span>
+                            <div><strong>Veille Apple — 2 octobre 2026</strong><p>Du 20 septembre au 2 octobre 2026 · Versions stables et bêta, distribution des applications et sécurité.</p></div>
+                            <a class="report-link" href="documents/veille/Veille-Apple-2026-10-02.pdf" target="_blank" rel="noopener noreferrer" aria-label="Lire le rapport 02 du 2 octobre 2026, PDF de 13 pages, nouvel onglet">PDF · 13 p. <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </li>
+                        <li>
+                            <span>01</span>
+                            <div><strong>Développement &amp; distribution des applications Apple</strong><p>Du 5 au 19 septembre 2026 · Situation au 19 septembre, rapport de 12 pages avec sommaire et références cliquables.</p></div>
+                            <a class="report-link" href="documents/veille/Veille-Apple-2026-09-19.pdf" target="_blank" rel="noopener noreferrer" aria-label="Lire le rapport 01 du 19 septembre 2026, PDF de 12 pages, nouvel onglet">PDF · 12 p. <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                        </li>
+                    </ol>
+                </article>
+            </div>
+        </section>
+
+        <section class="bts-section bts-sources" id="sources" aria-labelledby="sources-title">
+            <div class="bts-container">
+                <div class="section-heading section-heading--wide">
+                    <p class="section-kicker">04 / Sources primaires</p>
+                    <h2 id="sources-title">REMONTER À L’ORIGINE DU CHANGEMENT.</h2>
+                    <p>
+                        Les réseaux et articles spécialisés peuvent signaler un sujet. Les conclusions
+                        reposent en priorité sur les éditeurs, la documentation et les notes de version.
+                    </p>
+                    <p>
+                        Au départ, X représentait environ 90 % de mes découvertes, complétées par les
+                        notifications Apple Developer. Inoreader regroupe les flux officiels ; une
+                        information repérée sur X doit être recoupée avec sa source d’origine.
+                    </p>
+                </div>
+
+                <div class="source-grid">
+                    <a href="https://developer.apple.com/news/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-apple" aria-hidden="true"></i>
+                        <span><small>Actualités</small><strong>Apple Developer News</strong><em>Annonces destinées aux développeurs</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://developer.apple.com/news/releases/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-code-branch" aria-hidden="true"></i>
+                        <span><small>Versions</small><strong>Apple Developer Releases</strong><em>Bêtas, SDK et outils disponibles</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://developer.apple.com/wwdc/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-clapperboard" aria-hidden="true"></i>
+                        <span><small>Conférence</small><strong>WWDC</strong><em>Sessions et nouveautés de plateforme</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://developer.apple.com/documentation/updates" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-book-open" aria-hidden="true"></i>
+                        <span><small>Documentation</small><strong>Documentation Updates</strong><em>Évolutions des API et frameworks</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                        <span><small>Distribution</small><strong>App Review Guidelines</strong><em>Règles de validation de l’App Store</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://www.swift.org/blog/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-swift" aria-hidden="true"></i>
+                        <span><small>Langage</small><strong>Swift.org</strong><em>Évolutions officielles de Swift</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://webkit.org/blog/" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-safari" aria-hidden="true"></i>
+                        <span><small>Web</small><strong>WebKit Blog</strong><em>Moteur, standards et plateforme web Apple</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://docs.flutter.dev/platform-integration/ios" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i>
+                        <span><small>Multiplateforme</small><strong>Flutter sur iOS</strong><em>Intégration et contraintes de plateforme</em></span>
+                        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="bts-section bts-future" id="analyses" aria-labelledby="future-title">
+            <div class="bts-container">
+                <div class="section-heading section-heading--wide">
+                    <p class="section-kicker">05 / Futures analyses</p>
+                    <h2 id="future-title">DES QUESTIONS À ÉPROUVER, PAS DES CONCLUSIONS ANTICIPÉES.</h2>
+                    <p>
+                        Ces axes constituent une feuille de route éditoriale. Ils deviendront des
+                        articles uniquement lorsqu’un changement observable et un test pertinent le justifieront.
+                    </p>
+                </div>
+
+                <div class="future-grid">
+                    <article>
+                        <header><span>01</span><small>Piste d’analyse</small></header>
+                        <p class="future-icon"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i></p>
+                        <h3>NOTIFICATIONS ET SERVICES APPLE</h3>
+                        <p>Comment les exigences d’APNs influencent-elles la fiabilité et l’architecture d’une application Flutter&nbsp;?</p>
+                        <footer><span>À expérimenter</span><p>APNs · Flutter · iOS</p></footer>
+                    </article>
+                    <article>
+                        <header><span>02</span><small>Piste d’analyse</small></header>
+                        <p class="future-icon"><i class="fa-solid fa-vial-circle-check" aria-hidden="true"></i></p>
+                        <h3>DU TEST À LA DISTRIBUTION</h3>
+                        <p>Comment TestFlight et App Store Connect structurent-ils la recette, la conformité et la publication&nbsp;?</p>
+                        <footer><span>À documenter</span><p>TestFlight · App Store</p></footer>
+                    </article>
+                    <article>
+                        <header><span>03</span><small>Piste d’analyse</small></header>
+                        <p class="future-icon"><i class="fa-solid fa-code-compare" aria-hidden="true"></i></p>
+                        <h3>NATIF ET MULTIPLATEFORME</h3>
+                        <p>À quel moment une évolution SwiftUI ou un nouveau SDK Apple impose-t-il une adaptation côté Flutter&nbsp;?</p>
+                        <footer><span>À comparer</span><p>SwiftUI · Flutter · SDK</p></footer>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="bts-closing" aria-labelledby="closing-title">
+            <div class="bts-container closing-panel">
+                <div>
+                    <p>// Deux veilles, deux objectifs, une même méthode.</p>
+                    <h2 id="closing-title">EXPLORER LE RADAR PROFESSIONNEL PLUS LARGE.</h2>
+                </div>
+                <a class="button-primary" href="veille.html">Découvrir la veille générale <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="watch-footer bts-footer">
+        <div class="bts-container">
+            <p>© Raphaël Coursier · <time datetime="2026">2026</time></p>
+            <div>
+                <a href="https://github.com/rfielbal" target="_blank" rel="noopener noreferrer" aria-label="Profil GitHub de Raphaël Coursier"><i class="fa-brands fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/raphaël-coursier" target="_blank" rel="noopener noreferrer" aria-label="Profil LinkedIn de Raphaël Coursier"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+            </div>
+            <a href="index.html#contact">Contact &amp; mentions légales</a>
+        </div>
+    </footer>
+
+    <script src="watch-navigation.js?v=watch-paths-20260905"></script>
+    <script src="veille.js?v=ux-radar-20260802"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+/* Shared selector for the two technology-watch paths. */
+.navbar,
+.watch-nav {
+    --watch-switcher-accent: var(--acid, #ccff00);
+    --watch-switcher-accent-rgb: 204, 255, 0;
+}
+
+.watch-nav {
+    --watch-switcher-accent: var(--watch-violet, #9f86ff);
+    --watch-switcher-accent-rgb: 159, 134, 255;
+}
+
+/* Give links and the watch button the same vertical alignment context. */
+.nav-links > li,
+.watch-nav-links > li {
+    display: flex;
+    align-items: center;
+}
+
+.watch-switcher {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.watch-switcher-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    padding: 8px 0;
+    border: 0;
+    border-radius: 0;
+    color: #cbd1d7;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.65rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    transition: color 180ms ease;
+}
+
+.watch-switcher-trigger:hover,
+.watch-switcher-trigger:focus-visible,
+.watch-switcher.is-open .watch-switcher-trigger {
+    color: #fff;
+}
+
+.watch-switcher-trigger.is-current {
+    color: var(--watch-switcher-accent);
+    text-shadow: 0 0 18px rgba(var(--watch-switcher-accent-rgb), 0.4);
+}
+
+.watch-switcher-trigger:focus-visible {
+    outline: 2px solid var(--watch-switcher-accent);
+    outline-offset: 5px;
+}
+
+.watch-switcher-trigger i {
+    font-size: 0.56rem;
+    transform: translateY(-1px);
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1), color 180ms ease;
+}
+
+.watch-switcher.is-open .watch-switcher-trigger i {
+    color: var(--watch-switcher-accent);
+    transform: translateY(-1px) rotate(180deg);
+}
+
+.watch-switcher-panel {
+    position: absolute;
+    top: calc(100% + 18px);
+    left: 50%;
+    z-index: 20;
+    width: min(340px, calc(100vw - 32px));
+    padding: 10px;
+    border: 1px solid rgba(var(--watch-switcher-accent-rgb), 0.28);
+    border-radius: 20px;
+    background:
+        radial-gradient(circle at 92% 8%, rgba(var(--watch-switcher-accent-rgb), 0.11), transparent 38%),
+        rgba(7, 9, 13, 0.98);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.055),
+        0 24px 70px rgba(0, 0, 0, 0.48),
+        0 0 34px rgba(var(--watch-switcher-accent-rgb), 0.07);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translate(-50%, -8px) scale(0.975);
+    transform-origin: 50% 0;
+    transition:
+        opacity 180ms ease,
+        transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0s linear 220ms;
+}
+
+.watch-switcher-panel::before {
+    content: "";
+    position: absolute;
+    inset: -19px 0 auto;
+    height: 20px;
+}
+
+.watch-switcher.is-open .watch-switcher-panel {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, 0) scale(1);
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+.watch-switcher-kicker {
+    margin: 3px 8px 8px;
+    color: rgba(235, 237, 241, 0.45);
+    font: 500 0.55rem/1.3 "Fira Code", monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.nav-links .watch-switcher-option,
+.watch-nav-links .watch-switcher-option {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 20px;
+    align-items: center;
+    gap: 11px;
+    min-height: 66px;
+    padding: 9px 10px;
+    border: 1px solid transparent;
+    border-radius: 14px;
+    color: #f0f1f3;
+    text-decoration: none;
+    text-transform: none;
+    transition: color 180ms ease, border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.nav-links .watch-switcher-option + .watch-switcher-option,
+.watch-nav-links .watch-switcher-option + .watch-switcher-option {
+    margin-top: 4px;
+}
+
+.nav-links .watch-switcher-option:hover,
+.nav-links .watch-switcher-option:focus-visible,
+.watch-nav-links .watch-switcher-option:hover,
+.watch-nav-links .watch-switcher-option:focus-visible,
+.nav-links .watch-switcher-option[aria-current="page"],
+.watch-nav-links .watch-switcher-option[aria-current="page"] {
+    color: #fff;
+    border-color: rgba(var(--watch-switcher-accent-rgb), 0.25);
+    background: rgba(var(--watch-switcher-accent-rgb), 0.075);
+    transform: translateX(2px);
+}
+
+.nav-links .watch-switcher-option:focus-visible,
+.watch-nav-links .watch-switcher-option:focus-visible {
+    outline: 2px solid var(--watch-switcher-accent);
+    outline-offset: 2px;
+}
+
+.watch-switcher-index {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(var(--watch-switcher-accent-rgb), 0.32);
+    border-radius: 50%;
+    color: var(--watch-switcher-accent);
+    font: 600 0.58rem/1 "Fira Code", monospace;
+}
+
+.watch-switcher-copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.watch-switcher-copy strong {
+    color: inherit;
+    font: 650 0.75rem/1.15 "Space Grotesk", sans-serif;
+}
+
+.watch-switcher-copy small {
+    overflow: hidden;
+    color: rgba(235, 237, 241, 0.48);
+    font: 400 0.57rem/1.3 "Fira Code", monospace;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.watch-switcher-option > i {
+    color: rgba(var(--watch-switcher-accent-rgb), 0.75);
+    font-size: 0.65rem;
+    transform: rotate(-35deg);
+    transition: transform 180ms ease;
+}
+
+.watch-switcher-option:hover > i,
+.watch-switcher-option:focus-visible > i,
+.watch-switcher-option[aria-current="page"] > i {
+    transform: rotate(0deg);
+}
+
+.watch-no-js-nav {
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto 0;
+    padding: 12px 16px;
+    width: min(920px, calc(100% - 32px));
+    border: 1px solid rgba(159, 134, 255, 0.28);
+    border-radius: 16px;
+    background: #08090d;
+}
+
+.js .watch-no-js-nav {
+    display: none;
+}
+
+.watch-no-js-nav a {
+    color: #f2eee5;
+    text-underline-offset: 4px;
+}
+
+.watch-no-js-nav a:hover,
+.watch-no-js-nav a:focus-visible,
+.watch-no-js-nav a[aria-current="page"] {
+    color: #9f86ff;
+}
+
+@media (max-width: 980px) {
+    .watch-switcher {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .watch-switcher-trigger,
+    .watch-switcher-trigger i,
+    .watch-switcher-panel,
+    .watch-switcher-option,
+    .watch-switcher-option > i {
+        transition: none !important;
+    }
+}

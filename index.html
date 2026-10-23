@@ -79,8 +79,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" referrerpolicy="no-referrer">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="style.css?v=production-hardening-20260823">
-    <link rel="stylesheet" href="cinematic.css?v=visible-motion-20260824">
+    <link rel="stylesheet" href="style.css?v=interaction-perf-20261023">
+    <link rel="stylesheet" href="cinematic.css?v=content-hover-20261023">
+    <link rel="stylesheet" href="watch-navigation.css?v=nav-align-20261023">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Aller au contenu principal</a>
@@ -111,7 +112,25 @@
                 <li><a href="#manifesto">À propos</a></li>
                 <li><a href="#projects">Projets</a></li>
                 <li><a href="#savoir-faire">Savoir-faire</a></li>
-                <li><a href="veille.html">Veille</a></li>
+                <li class="watch-switcher" data-watch-switcher>
+                    <button class="watch-switcher-trigger" type="button" aria-expanded="false" aria-controls="watch-switcher-panel-home">
+                        <span>Veille</span>
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="watch-switcher-panel" id="watch-switcher-panel-home" aria-hidden="true" inert>
+                        <p class="watch-switcher-kicker">Choisir un parcours</p>
+                        <a class="watch-switcher-option" href="veille.html">
+                            <span class="watch-switcher-index">01</span>
+                            <span class="watch-switcher-copy"><strong>Veille générale</strong><small>IA, web, interfaces et outils</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="watch-switcher-option" href="veille-bts-sio.html">
+                            <span class="watch-switcher-index">02</span>
+                            <span class="watch-switcher-copy"><strong>Veille BTS SIO</strong><small>Cycle de vie des applications Apple</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
 
@@ -132,8 +151,9 @@
                 <li><a href="#manifesto" data-text="02. À propos">02. À propos</a></li>
                 <li><a href="#projects" data-text="03. Projets">03. Projets</a></li>
                 <li><a href="#savoir-faire" data-text="04. Savoir-faire">04. Savoir-faire</a></li>
-                <li><a href="veille.html" data-text="05. Veille">05. Veille</a></li>
-                <li><a href="#contact" data-text="06. Contact">06. Contact</a></li>
+                <li><a href="veille.html" data-text="05. Veille générale">05. Veille générale</a></li>
+                <li><a href="veille-bts-sio.html" data-text="06. Veille BTS SIO">06. Veille BTS SIO</a></li>
+                <li><a href="#contact" data-text="07. Contact">07. Contact</a></li>
             </ul>
         </div>
     </header>
@@ -143,7 +163,8 @@
         <a href="#manifesto">À propos</a>
         <a href="#projects">Projets</a>
         <a href="#savoir-faire">Savoir-faire</a>
-        <a href="veille.html">Veille</a>
+        <a href="veille.html">Veille générale</a>
+        <a href="veille-bts-sio.html">Veille BTS SIO</a>
         <a href="#contact">Contact</a>
     </nav>
 
@@ -448,14 +469,14 @@
                             </div>
 
                             <div class="buttons about-actions">
-                                <a class="btn-simple" id="btn-skills" href="#savoir-faire" data-magnetic>
-                                    COMPÉTENCES <i class="fas fa-code" aria-hidden="true"></i>
+                                <a class="btn-simple project-cta" id="btn-skills" href="#savoir-faire">
+                                    <span>COMPÉTENCES</span> <i class="fas fa-code" aria-hidden="true"></i>
                                 </a>
-                                <a class="btn-simple" id="btn-diplomas" href="./documents/cv-raphael-coursier.pdf" data-magnetic>
-                                    DIPLÔMES / CERTIF. <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                                <a class="btn-simple project-cta" id="btn-diplomas" href="./documents/cv-raphael-coursier.pdf">
+                                    <span>DIPLÔMES / CERTIF.</span> <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                                 </a>
-                                <a class="btn-simple" id="btn-school" href="./documents/bulletins-public/bts-sio-semestre-1.pdf" data-magnetic>
-                                    DOSSIER SCOLAIRE <i class="fas fa-folder-open" aria-hidden="true"></i>
+                                <a class="btn-simple project-cta" id="btn-school" href="./documents/bulletins-public/bts-sio-semestre-1.pdf">
+                                    <span>DOSSIER SCOLAIRE</span> <i class="fas fa-folder-open" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </article>
@@ -698,7 +719,7 @@
                         <button class="filter-btn" data-filter="academique" data-magnetic type="button" aria-pressed="false" aria-controls="projects-grid">Académique</button>
                         <button class="filter-btn" data-filter="perso" data-magnetic type="button" aria-pressed="false" aria-controls="projects-grid">Perso</button>
                     </div>
-                    <p class="project-results-status" id="project-results-status" role="status" aria-live="polite" aria-atomic="true">9 projets affichés</p>
+                    <p class="project-results-status" id="project-results-status" role="status" aria-live="polite" aria-atomic="true">11 projets affichés</p>
                 </div>
 
                 <div class="project-legend reveal delay-1" aria-label="Lecture des projets">
@@ -708,7 +729,7 @@
                 </div>
 
                 <div class="no-js-projects js-fallback-projects">
-                    <h3>Les 9 projets</h3>
+                    <h3>Les 11 projets</h3>
                     <ul>
                         <li id="fallback-project-wheello"><a href="https://www.linkedin.com/posts/rapha%C3%ABl-coursier_stage-btssio-daezveloppementweb-activity-7466384911877242881-9ZZc/" target="_blank" rel="noopener noreferrer"><strong>Wheello</strong></a> — application métier Symfony et Flutter livrée à Habitat Insertion.</li>
                         <li id="fallback-project-streamcorner"><a href="https://stream-corner.rfielbal.fr" target="_blank" rel="noopener noreferrer"><strong>StreamCorner</strong></a> — boutique Symfony avec catalogue, panier, compte client et back-office.</li>
@@ -719,6 +740,8 @@
                         <li id="fallback-project-chicken-louisiane"><a href="https://4719.s3.nuage-peda.fr/Chicken%20Louisiane/index.html" target="_blank" rel="noopener noreferrer"><strong>Chicken Louisiane Steakhouse</strong></a> — premier site académique d'intégration HTML et CSS.</li>
                         <li id="fallback-project-aethercore"><a href="./demos/aether-core/index.html"><strong>AetherCore</strong></a> — inspecteur de modèles 3D WebGL avec mesures et interactions optionnelles.</li>
                         <li id="fallback-project-citadelle-rouge"><a href="./images/projects/citadelle-rouge/cover.webp"><strong>La Citadelle Rouge</strong></a> — aventure Minecraft Bedrock automatisée par Redstone et blocs de commande.</li>
+                        <li id="fallback-project-cyber-1-sauvegarde"><a href="./cyber-1-sauvegarde.html"><strong>Cyber 1 — Sauvegarde sécurisée</strong></a> — sauvegarde MariaDB chiffrée, stockage SFTP et restauration documentée.</li>
+                        <li id="fallback-project-cyber-2-authentification"><a href="./cyber-2-authentification.html"><strong>Cyber 2 — SymfonyType</strong></a> — gestion des comptes Symfony, pull requests et déploiement GitHub Actions.</li>
                     </ul>
                     <p>Ces liens restent utilisables sans JavaScript. L'expérience enrichie ajoute les filtres, galeries et études de cas détaillées.</p>
                 </div>
@@ -732,8 +755,9 @@
                             <em>Je les mets à l’épreuve.</em>
                         </h3>
                         <p class="watch-portal-intro">
-                            IA, web, interfaces et écosystème Apple&nbsp;: je transforme les signaux repérés
-                            en sources vérifiées, tests personnels et décisions utiles.
+                            IA, web, interfaces et outils d’un côté&nbsp;; un dossier BTS SIO consacré au
+                            développement dans l’écosystème Apple de l’autre. Dans les deux cas&nbsp;:
+                            sources vérifiées, tests personnels et décisions utiles.
                         </p>
                         <ul class="watch-portal-topics" aria-label="Sujets de veille suivis">
                             <li>IA &amp; agents</li>
@@ -752,10 +776,22 @@
                         <b></b>
                     </div>
 
-                    <a class="watch-portal-link" href="./veille.html" data-watch-arrow>
-                        <strong>Explorer ma veille technologique</strong>
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
+                    <div class="watch-portal-actions" role="group" aria-label="Choisir une veille technologique">
+                        <a class="watch-portal-link watch-portal-link--general" href="./veille.html" data-watch-arrow>
+                            <span class="watch-portal-link-copy">
+                                <small>Veille technologique</small>
+                                <strong>Explorer ma veille générale</strong>
+                            </span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="watch-portal-link watch-portal-link--bts" href="./veille-bts-sio.html" data-watch-arrow>
+                            <span class="watch-portal-link-copy">
+                                <small>Dossier BTS SIO · Apple</small>
+                                <strong>Découvrir ma veille BTS</strong>
+                            </span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
                 </aside>
             </div>
         </section>
@@ -1233,8 +1269,9 @@
     </div>
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
-    <script src="motion-engine.js?v=deterministic-rendering-20260824"></script>
-    <script src="script.js?v=visible-motion-20260824"></script>
-    <script src="cinematic.js?v=visible-motion-20260824"></script>
+    <script src="motion-engine.js?v=interaction-perf-20261023"></script>
+    <script src="watch-navigation.js?v=watch-paths-20260905"></script>
+    <script src="script.js?v=cyber-pages-20261023"></script>
+    <script src="cinematic.js?v=interaction-perf-20261023"></script>
 </body>
 </html>

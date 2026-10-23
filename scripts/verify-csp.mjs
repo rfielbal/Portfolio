@@ -6,7 +6,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const pages = ["index.html", "veille.html", "demos/aether-core/index.html"];
+const pages = ["index.html", "veille.html", "veille-bts-sio.html", "cyber-1-sauvegarde.html", "cyber-2-authentification.html", "demos/aether-core/index.html"];
 const expectedHashes = new Set();
 
 for (const relativePath of pages) {

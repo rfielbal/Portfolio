@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sauvegarder MariaDB, chiffrer les archives et préparer leur restauration depuis un serveur distant.">
+    <meta name="theme-color" content="#050507">
+    <title>Cyber 1 — Sauvegarde sécurisée — Raphaël Coursier</title>
+    <link rel="canonical" href="https://rfielbal.fr/cyber-1-sauvegarde.html">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Cyber 1 — Sauvegarde sécurisée">
+    <meta property="og:description" content="Sauvegarder MariaDB, chiffrer les archives et préparer leur restauration depuis un serveur distant.">
+    <meta property="og:url" content="https://rfielbal.fr/cyber-1-sauvegarde.html">
+    <meta property="og:image" content="https://rfielbal.fr/images/projects/cyber-1-sauvegarde/cover.png">
+    <link rel="icon" type="image/webp" href="images/brand/brand-mark-128.webp">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" referrerpolicy="no-referrer">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="style.css?v=interaction-perf-20261023">
+    <link rel="stylesheet" href="cinematic.css?v=content-hover-20261023">
+    <link rel="stylesheet" href="watch-navigation.css?v=nav-align-20261023">
+    <link rel="stylesheet" href="project-cyber.css?v=20261023">
+    <script src="project-cyber.js?v=20261023" defer></script>
+    <script src="watch-navigation.js?v=watch-paths-20260905" defer></script>
+</head>
+<body class="cyber-project-page">
+    <a class="skip-link" href="#main-content">Aller au contenu principal</a>
+    <div class="grain-effect" aria-hidden="true"></div>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="light-field" aria-hidden="true"></div>
+    <header>
+        <nav class="navbar" id="navbar" aria-label="Navigation principale">
+            <a href="./#home" class="brand-link">
+                <img src="images/brand/brand-mark-128.webp" width="128" height="120" alt="Logo Raphaël Coursier" class="nav-logo" decoding="async">
+                <span>RAPHAËL COURSIER</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="./#home">Accueil</a></li>
+                <li><a href="./#manifesto">À propos</a></li>
+                <li><a href="./#projects">Projets</a></li>
+                <li><a href="./#savoir-faire">Savoir-faire</a></li>
+                <li class="watch-switcher" data-watch-switcher>
+                    <button class="watch-switcher-trigger" type="button" aria-expanded="false" aria-controls="watch-switcher-panel-home">
+                        <span>Veille</span>
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="watch-switcher-panel" id="watch-switcher-panel-home" aria-hidden="true" inert>
+                        <p class="watch-switcher-kicker">Choisir un parcours</p>
+                        <a class="watch-switcher-option" href="veille.html">
+                            <span class="watch-switcher-index">01</span>
+                            <span class="watch-switcher-copy"><strong>Veille générale</strong><small>IA, web, interfaces et outils</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="watch-switcher-option" href="veille-bts-sio.html">
+                            <span class="watch-switcher-index">02</span>
+                            <span class="watch-switcher-copy"><strong>Veille BTS SIO</strong><small>Cycle de vie des applications Apple</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
+                <li><a href="./#contact">Contact</a></li>
+            </ul>
+
+            <button class="burger-menu" id="btn-open-menu" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="fs-menu" aria-haspopup="dialog">
+                <span>Menu</span>
+                <span class="burger-icon" aria-hidden="true"></span>
+            </button>
+        </nav>
+
+        <div class="fs-menu" id="fs-menu" role="dialog" aria-modal="true" aria-label="Menu de navigation" aria-hidden="true" inert>
+            <button class="close-fs-menu" id="btn-close-menu" aria-label="Fermer le menu">
+                <i class="fas fa-times"></i>
+                Fermer
+            </button>
+
+            <ul class="fs-links">
+                <li><a href="./#home" data-text="01. Accueil">01. Accueil</a></li>
+                <li><a href="./#manifesto" data-text="02. À propos">02. À propos</a></li>
+                <li><a href="./#projects" data-text="03. Projets">03. Projets</a></li>
+                <li><a href="./#savoir-faire" data-text="04. Savoir-faire">04. Savoir-faire</a></li>
+                <li><a href="veille.html" data-text="05. Veille générale">05. Veille générale</a></li>
+                <li><a href="veille-bts-sio.html" data-text="06. Veille BTS SIO">06. Veille BTS SIO</a></li>
+                <li><a href="./#contact" data-text="07. Contact">07. Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    <nav class="no-js-nav" aria-label="Navigation principale de secours">
+        <a href="./#home">Accueil</a>
+        <a href="./#manifesto">À propos</a>
+        <a href="./#projects">Projets</a>
+        <a href="./#savoir-faire">Savoir-faire</a>
+        <a href="veille.html">Veille générale</a>
+        <a href="veille-bts-sio.html">Veille BTS SIO</a>
+        <a href="./#contact">Contact</a>
+    </nav>
+<main id="main-content" class="pbt-document" tabindex="-1">
+<header class="pbt-page-heading">
+<p class="pbt-kicker">PROJET / BTS SIO SLAM</p>
+<h1>Cyber 1 — Sauvegarde sécurisée</h1>
+<p class="pbt-lead">Sauvegarder MariaDB, chiffrer les archives et préparer leur restauration depuis un serveur distant.</p>
+</header>
+<div class="pbt-cyber" style="--case-accent:#ccff00">
+<div class="pbt-cyber-intro">
+<div>
+<p class="pbt-kicker">CYBER 01 / DU BESOIN À LA SOLUTION</p>
+<h2>Pouvoir retrouver<br>ses données.</h2>
+<p>Projet pédagogique réalisé en binôme avec Vincent Rouget. La solution sépare un serveur source actif et un serveur de stockage passif. Elle produit une archive chiffrée, en contrôle l’intégrité et propose un parcours de restauration documenté.</p>
+<p class="pbt-cyber-team">BTS SIO SLAM · Semestre 3 · Travail en binôme<br>Raphaël Coursier & Vincent Rouget</p>
+<div class="pbt-case-techs">
+<span>Python</span>
+<span>MariaDB</span>
+<span>age</span>
+<span>SFTP</span>
+<span>Cron</span>
+</div>
+</div>
+<a class="pbt-cyber-cover" href="./documents/projets/cyber-1-sauvegarde.pdf" target="_blank" rel="noopener noreferrer">
+<img src="./images/projects/cyber-1-sauvegarde/cover.png" alt="Couverture du diaporama Cyber 1">
+<span>Parcourir le diaporama ↗</span>
+</a>
+</div>
+<section class="pbt-cyber-flow">
+<p class="pbt-kicker">ARCHITECTURE / DEUX SERVEURS, DES RESPONSABILITÉS DISTINCTES</p>
+<h2>Le parcours d’une sauvegarde.</h2>
+<ol>
+<li>
+<span class="pbt-flow-number">01</span>
+<h3>Exporter</h3>
+<code>MariaDB → dump SQL</code>
+<p>Le serveur A prépare une copie de la base. Le fichier SQL temporaire sert uniquement au chiffrement.</p>
+</li>
+<li>
+<span class="pbt-flow-number">02</span>
+<h3>Chiffrer</h3>
+<code>age → archive .sql.age</code>
+<p>Le contenu est chiffré avant son départ. Le serveur de stockage ne reçoit pas le dump SQL en clair.</p>
+</li>
+<li>
+<span class="pbt-flow-number">03</span>
+<h3>Transférer</h3>
+<code>SFTP → serveur B</code>
+<p>Le transfert utilise un fichier temporaire ; le marqueur .ready distingue une archive complète.</p>
+</li>
+<li>
+<span class="pbt-flow-number">04</span>
+<h3>Vérifier / restaurer</h3>
+<code>SHA-256 → base dédiée</code>
+<p>L’archive est récupérée et comparée à son empreinte. La restauration déchiffre puis importe dans la base prévue.</p>
+</li>
+</ol>
+</section>
+<section class="pbt-cyber-details">
+<div>
+<p class="pbt-kicker">CHOIX TECHNIQUES</p>
+<h2>A pilote.<br>B conserve.</h2>
+<p>Le serveur A conserve la configuration, les clés nécessaires, le catalogue et la planification Cron à 02 h. Le serveur B joue le rôle de stockage SFTP. Cette séparation évite de confier au stockage la logique de sauvegarde ou la clé privée de déchiffrement.</p>
+</div>
+<div class="pbt-cyber-notes">
+<article>
+<h3>Confidentialité ≠ intégrité</h3>
+<p>age protège le contenu ; SHA-256 détecte une modification par comparaison avec l’empreinte conservée. Une empreinte seule ne remplace ni le chiffrement ni la protection du catalogue.</p>
+</article>
+<article>
+<h3>Une restauration explicite</h3>
+<p>Le parcours de restauration récupère réellement l’archive distante, vérifie l’intégrité et cible une base dédiée. La documentation précise les prérequis des deux serveurs.</p>
+</article>
+</div>
+</section>
+<section class="pbt-cyber-delivery">
+<p class="pbt-kicker">RÉALISATION & SUPPORTS</p>
+<h2>Les livrables du projet.</h2>
+<ul>
+<li>Export SQL puis chiffrement age avant transfert.</li>
+<li>Stockage distant SFTP avec publication des fichiers complets.</li>
+<li>Empreinte SHA-256 pour vérifier l’intégrité de l’archive.</li>
+<li>Restauration vers une base dédiée, avec contrôle préalable.</li>
+<li>Planification quotidienne à 02 h et commandes documentées.</li>
+</ul>
+<div class="pbt-case-actions">
+<a class="pbt-button" href="./documents/projets/cyber-1-sauvegarde.pdf" target="_blank" rel="noopener noreferrer">Diaporama · 12 pages ↗</a>
+<a class="pbt-button pbt-secondary" href="https://github.com/rfielbal/Sauvegarde" target="_blank" rel="noopener noreferrer">Code & documentation ↗</a>
+</div>
+<p class="pbt-e5-note">Le diaporama présente la réalisation, son interface de commande et les vérifications documentées. Il sert de support pour expliquer le projet.</p>
+</section>
+</div>
+<section class="pbt-e5-block" aria-label="Compétences E5 mobilisées">
+<p class="pbt-kicker">REPÈRES E5 / Formation · projet en binôme</p>
+<h2>Ce que ce projet mobilise.</h2>
+<p class="pbt-e5-period">Septembre 2026</p>
+<div class="pbt-e5-items">
+<article>
+<span>C1</span>
+<div>
+<h3>Gérer le patrimoine informatique</h3>
+<p>Mettre en place la sauvegarde, le chiffrement et le contrôle d’intégrité des données.</p>
+</div>
+</article>
+<article>
+<span>C4</span>
+<div>
+<h3>Travailler en mode projet</h3>
+<p>Analyser un besoin et répartir le système entre un serveur actif et un stockage distant.</p>
+</div>
+</article>
+<article>
+<span>C5</span>
+<div>
+<h3>Mettre à disposition des utilisateurs un service informatique</h3>
+<p>Documenter les commandes de sauvegarde, vérification et restauration.</p>
+</div>
+</article>
+</div>
+<div class="pbt-e5-proof">
+<strong>À consulter</strong>
+<p>Diaporama du projet, schéma du flux et documentation du dépôt.</p>
+<a href="https://github.com/rfielbal/Sauvegarde">Voir la ressource ↗</a>
+</div>
+<a class="pbt-e5-all" href="https://4926.s3.nuage-peda.fr/competences/">Voir la synthèse de toutes les réalisations →</a>
+</section>
+</main>
+    <footer class="cyber-project-footer">
+        <a href="./#projects-index">← Retour aux projets</a>
+        <a href="./#contact">Contacter Raphaël Coursier</a>
+    </footer>
+</body>
+</html>

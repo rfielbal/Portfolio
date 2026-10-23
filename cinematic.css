@@ -164,10 +164,31 @@ html.js-failed-open .legal-fallback {
 /* Hero / spatial introduction                                                 */
 /* -------------------------------------------------------------------------- */
 
+/* Motion values do not cascade through the terminal and project contents.
+   JS writes the same value directly to each animated surface. Older engines
+   without @property keep the ordinary custom-property fallback. */
+@property --hero-progress {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --hero-pointer-x {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
+@property --hero-pointer-y {
+    syntax: "<number>";
+    inherits: false;
+    initial-value: 0;
+}
+
 .hero {
     --hero-progress: 0;
-    --pointer-x: 0;
-    --pointer-y: 0;
+    --hero-pointer-x: 0;
+    --hero-pointer-y: 0;
     position: relative;
     min-height: 152svh;
     padding: 0;
@@ -180,6 +201,7 @@ html.js-failed-open .legal-fallback {
 }
 
 .hero::before {
+    --hero-progress: inherit;
     inset: 0;
     background:
         linear-gradient(rgba(255, 255, 255, 0.023) 1px, transparent 1px),
@@ -498,8 +520,6 @@ body .hero-actions {
 }
 
 .hero-right {
-    --orbit-tilt-x: calc(var(--pointer-y) * -4deg);
-    --orbit-tilt-y: calc(var(--pointer-x) * 5deg);
     position: relative;
     z-index: 4;
     min-height: min(660px, 72svh);
@@ -511,7 +531,7 @@ body .hero-actions {
     position: absolute;
     inset: -7% -14%;
     z-index: 0;
-    transform: rotateX(var(--orbit-tilt-x)) rotateY(var(--orbit-tilt-y));
+    transform: rotateX(calc(var(--hero-pointer-y, 0) * -4deg)) rotateY(calc(var(--hero-pointer-x, 0) * 5deg));
     transform-style: preserve-3d;
     pointer-events: none;
 }
@@ -591,8 +611,8 @@ body .hero-actions {
     top: 2%;
     left: 3%;
     transform: translate3d(
-        calc((var(--hero-progress) * -76px) + (var(--pointer-x) * -8px)),
-        calc((var(--hero-progress) * -34px) + (var(--pointer-y) * -6px)),
+        calc((var(--hero-progress) * -76px) + (var(--hero-pointer-x, 0) * -8px)),
+        calc((var(--hero-progress) * -34px) + (var(--hero-pointer-y, 0) * -6px)),
         40px
     ) rotate(-7deg) rotateY(8deg);
 }
@@ -601,8 +621,8 @@ body .hero-actions {
     top: 10%;
     right: 0;
     transform: translate3d(
-        calc((var(--hero-progress) * 92px) + (var(--pointer-x) * 10px)),
-        calc((var(--hero-progress) * -48px) + (var(--pointer-y) * 8px)),
+        calc((var(--hero-progress) * 92px) + (var(--hero-pointer-x, 0) * 10px)),
+        calc((var(--hero-progress) * -48px) + (var(--hero-pointer-y, 0) * 8px)),
         -60px
     ) rotate(7deg) rotateY(-10deg);
 }
@@ -611,8 +631,8 @@ body .hero-actions {
     right: 4%;
     bottom: 7%;
     transform: translate3d(
-        calc((var(--hero-progress) * 84px) + (var(--pointer-x) * 7px)),
-        calc((var(--hero-progress) * 52px) + (var(--pointer-y) * 10px)),
+        calc((var(--hero-progress) * 84px) + (var(--hero-pointer-x, 0) * 7px)),
+        calc((var(--hero-progress) * 52px) + (var(--hero-pointer-y, 0) * 10px)),
         70px
     ) rotate(-5deg) rotateY(-7deg);
 }
@@ -621,8 +641,8 @@ body .hero-actions {
     bottom: 2%;
     left: 0;
     transform: translate3d(
-        calc((var(--hero-progress) * -88px) + (var(--pointer-x) * -12px)),
-        calc((var(--hero-progress) * 62px) + (var(--pointer-y) * -8px)),
+        calc((var(--hero-progress) * -88px) + (var(--hero-pointer-x, 0) * -12px)),
+        calc((var(--hero-progress) * 62px) + (var(--hero-pointer-y, 0) * -8px)),
         -30px
     ) rotate(6deg) rotateY(9deg);
 }
@@ -634,10 +654,10 @@ body .hero-right .profile-stage {
     z-index: 3;
     width: min(88%, 620px);
     transform: translate3d(
-        calc(-50% + (var(--pointer-x) * 7px)),
-        calc(-50% + (var(--pointer-y) * 5px) + (var(--hero-progress) * -26px)),
+        calc(-50% + (var(--hero-pointer-x, 0) * 7px)),
+        calc(-50% + (var(--hero-pointer-y, 0) * 5px) + (var(--hero-progress) * -26px)),
         calc(90px + (var(--hero-progress) * 80px))
-    ) rotateX(calc(var(--pointer-y) * -1.7deg)) rotateY(calc(var(--pointer-x) * 2deg)) scale(calc(1 - (var(--hero-progress) * 0.055)));
+    ) rotateX(calc(var(--hero-pointer-y, 0) * -1.7deg)) rotateY(calc(var(--hero-pointer-x, 0) * 2deg)) scale(calc(1 - (var(--hero-progress) * 0.055)));
     transform-style: preserve-3d;
 }
 
@@ -993,6 +1013,17 @@ body .hero-right > .command-grid {
 .project-cta > * {
     position: relative;
     z-index: 1;
+}
+
+.about-actions .project-cta:not(:hover):not(:focus-visible) {
+    border-color: rgba(255, 255, 255, 0.14) !important;
+    background: rgba(255, 255, 255, 0.035) !important;
+    color: var(--text) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.about-actions .project-cta:not(:hover):not(:focus-visible)::after {
+    opacity: 0;
 }
 
 .project-cta:hover,
@@ -1519,17 +1550,25 @@ html.cinematic-ready .cinema-scroll-hint {
     animation-play-state: running;
 }
 
-.watch-portal-link {
+.watch-portal-actions {
     grid-area: link;
     position: relative;
     z-index: 3;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: min(100%, 720px);
+}
+
+.watch-portal-link {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    gap: 28px;
-    width: min(100%, 520px);
-    min-height: 64px;
-    padding: 9px 12px 9px 20px;
+    gap: 16px;
+    width: 100%;
+    min-height: 76px;
+    padding: 9px 11px 9px 16px;
     overflow: hidden;
     border: 1px solid rgba(var(--watch-violet-rgb), 0.4);
     border-radius: 999px;
@@ -1538,6 +1577,24 @@ html.cinematic-ready .cinema-scroll-hint {
     text-decoration: none;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025), 0 14px 40px rgba(0, 0, 0, 0.14);
     transition: border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+
+.watch-portal-link--bts {
+    border-color: rgba(var(--watch-violet-rgb), 0.52);
+    background: rgba(var(--watch-violet-rgb), 0.075);
+}
+
+.watch-portal-link-copy {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+}
+
+.watch-portal-link-copy small {
+    color: rgba(var(--watch-violet-rgb), 0.78);
+    font: 600 0.54rem/1.2 "Fira Code", monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .watch-portal-link strong {
@@ -2409,6 +2466,13 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
     }
 }
 
+@media (max-width: 1180px) {
+    .watch-portal-actions {
+        grid-template-columns: 1fr;
+        width: min(100%, 520px);
+    }
+}
+
 @media (max-width: 900px) {
     .watch-portal {
         grid-template-columns: minmax(0, 1fr) minmax(210px, 0.58fr);
@@ -2457,7 +2521,7 @@ html.cinematic-ready .cinematic-projects.is-motion-near .cinema-card {
 
     .watch-portal-link {
         min-height: 60px;
-        padding-left: 16px;
+        padding: 8px 10px 8px 15px;
     }
 }
 

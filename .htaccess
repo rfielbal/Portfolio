@@ -7,7 +7,7 @@ Options -Indexes
     # them on the hosting account. The deployment manifest never sends them.
     RewriteRule ^(?:output|tmp|deploy|scripts)(?:/|$) - [R=404,L,NC]
     RewriteRule ^images/(?:profile|projects/[^/]+)/source(?:/|$) - [R=404,L,NC]
-    RewriteRule ^documents/(?!cv-raphael-coursier\.pdf$|bulletins-public/bts-sio-semestre-[12]\.pdf$) - [R=404,L,NC]
+    RewriteRule ^documents/(?!cv-raphael-coursier\.pdf$|bulletins-public/bts-sio-semestre-[12]\.pdf$|projets/(?:cyber-1-sauvegarde|cyber-2-symfonytype)\.pdf$|veille/Veille-Apple-2026-(?:09-19|10-02|10-16)\.pdf$) - [R=404,L,NC]
     RewriteRule ^demos/escape-game/assets/artworks/(?:basquiat-skull|kandinsky-comp8)\.jpg$ - [R=404,L,NC]
 
     # Mark direct or proxy-terminated HTTPS requests for the conditional HSTS header.
@@ -59,7 +59,7 @@ Options -Indexes
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=(), usb=()"
     Header always set X-Permitted-Cross-Domain-Policies "none"
-    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-mGiDN7pA4xv8fiWg3xIPxYSGztZFZ7hUeuAopf2GxO0=' 'sha256-VyEWDpLXUDcM7laI9n4blBM85jm1RtA4off3MK1bnkA=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://storage.googleapis.com; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; frame-src 'none'; form-action 'self'; script-src 'self' 'wasm-unsafe-eval' 'sha256-mGiDN7pA4xv8fiWg3xIPxYSGztZFZ7hUeuAopf2GxO0=' 'sha256-VyEWDpLXUDcM7laI9n4blBM85jm1RtA4off3MK1bnkA=' 'sha256-xmhuVM/wAgROv0lMd2v4WzUwq9NhLbuRxhOTAT/Nhcc=' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://storage.googleapis.com; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests"
 </IfModule>
 
 <IfModule mod_deflate.c>

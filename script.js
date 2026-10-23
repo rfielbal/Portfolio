@@ -1,5 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const body = document.body;
+    const cursor = document.getElementById("cursor");
+    const follower = document.getElementById("cursor-follower");
+    const cursorElements = [cursor, follower].filter(Boolean);
+    const setCursorState = (name, active) => {
+        cursorElements.forEach((element) => element.classList.toggle(name, active));
+    };
 
     const preloader = document.getElementById("preloader");
     const preloaderCounter = document.getElementById("preloader-counter");
@@ -750,6 +756,104 @@ document.addEventListener("DOMContentLoaded", () => {
             ],
             repoLink: null,
             liveLink: null
+        },
+        {
+            id: 10,
+            slug: "cyber-1-sauvegarde",
+            pageUrl: "./cyber-1-sauvegarde.html",
+            index: "10",
+            filter: "academique",
+            title: "Cyber 1 — Sauvegarde sécurisée",
+            category: "Projet pédagogique · Cybersécurité",
+            year: "2026",
+            created: "Semestre 3 · 2026",
+            role: "Réalisation en binôme · Raphaël Coursier & Vincent Rouget",
+            status: "Projet pédagogique documenté",
+            accent: "#ccff00",
+            logoMark: "C1",
+            summary: "Sauvegarder MariaDB, chiffrer les archives et préparer leur restauration depuis un serveur distant.",
+            impact: "Deux serveurs, une archive chiffrée et un parcours de restauration documenté.",
+            description: "Projet pédagogique réalisé en binôme avec Vincent Rouget. La solution sépare un serveur source actif et un serveur de stockage passif. Elle produit une archive chiffrée, en contrôle l’intégrité et propose un parcours de restauration documenté.\n\nLe serveur A exporte MariaDB, chiffre le dump SQL avec age et transfère l’archive par SFTP vers le serveur B. Un fichier temporaire puis un marqueur .ready permettent de distinguer une archive complète. A conserve la configuration, les clés nécessaires, le catalogue et la planification Cron à 02 h ; B assure le stockage distant.\n\nLa restauration récupère l’archive distante, vérifie son empreinte SHA-256, la déchiffre et l’importe dans une base dédiée. age protège la confidentialité ; SHA-256 sert à détecter une modification par comparaison avec l’empreinte conservée. Le diaporama présente l’interface de commande et les vérifications documentées.",
+            techs: ["Python", "MariaDB", "age", "SFTP", "Cron"],
+            cover: "./images/projects/cyber-1-sauvegarde/cover.png",
+            coverLabel: "Sauvegarde automatisée & sécurisée",
+            galleryLayout: "case-study",
+            images: [
+                {
+                    src: "./images/projects/cyber-1-sauvegarde/cover.png",
+                    alt: "Couverture du diaporama Cyber 1, sauvegarde sécurisée de MariaDB",
+                    caption: "Projet réalisé par Raphaël Coursier et Vincent Rouget",
+                    group: "Diaporama du projet",
+                    orientation: "landscape"
+                }
+            ],
+            features: [
+                "Export SQL puis chiffrement age avant transfert.",
+                "Stockage distant SFTP avec publication des fichiers complets.",
+                "Empreinte SHA-256 pour vérifier l’intégrité de l’archive.",
+                "Restauration vers une base dédiée, avec contrôle préalable.",
+                "Planification quotidienne à 02 h et commandes documentées."
+            ],
+            repoLink: "https://github.com/rfielbal/Sauvegarde",
+            liveLink: "./documents/projets/cyber-1-sauvegarde.pdf",
+            liveLabel: "Diaporama · 12 pages"
+        },
+        {
+            id: 11,
+            slug: "cyber-2-authentification",
+            pageUrl: "./cyber-2-authentification.html",
+            index: "11",
+            filter: "academique",
+            title: "Cyber 2 — SymfonyType",
+            category: "Projet pédagogique · Cybersécurité",
+            year: "2026",
+            created: "Semestre 3 · 2026",
+            role: "Réalisation en binôme",
+            status: "Projet pédagogique documenté",
+            accent: "#ccff00",
+            logoMark: "C2",
+            summary: "Sécurisation des comptes Symfony et déploiement en binôme avec pull requests et GitHub Actions.",
+            impact: "Contrôles d’accès côté serveur, relecture du code et déploiement documenté.",
+            description: "Dans ce projet réalisé en binôme, j’ai travaillé sur la sécurisation d’une application Symfony : inscription, authentification, administration des comptes et traçabilité des connexions. Le travail collaboratif s’appuie sur des branches, des pull requests et un workflow GitHub Actions pour déployer la version intégrée sur le serveur commun.\n\nLes règles sont vérifiées côté serveur : validation des données, mots de passe hachés, contrôle des mots de passe compromis, historique empêchant leur réutilisation, limitation des tentatives de connexion, rôles et protection CSRF. Les entités User, HistoriqueMdp et HistoriqueConnexion séparent le compte, les anciens hashes et les connexions réussies.\n\nUne approbation est demandée avant la fusion dans main. GitHub Actions se connecte ensuite au serveur par SSH pour récupérer le code, installer les dépendances, appliquer les migrations Doctrine et renouveler le cache Symfony. Les paramètres de connexion sont fournis par les secrets GitHub. Ce workflow assure le déploiement ; les tests restent locaux.",
+            techs: ["Symfony 7.4", "PHP", "Doctrine", "MariaDB", "Security", "GitHub Actions"],
+            cover: "./images/projects/cyber-2-authentification/cover.png",
+            coverLabel: "Gestion des accès & déploiement",
+            galleryLayout: "case-study",
+            images: [
+                {
+                    src: "./images/projects/cyber-2-authentification/modele-donnees.png",
+                    alt: "Modèle de données SymfonyType : User, HistoriqueMdp et HistoriqueConnexion",
+                    caption: "Trois entités pour les comptes, les anciens mots de passe hachés et les connexions réussies",
+                    group: "Sécurité des comptes",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/cyber-2-authentification/pull-requests.png",
+                    alt: "Diaporama SymfonyType : protection de main et approbation des pull requests",
+                    caption: "Une relecture du binôme avant l’intégration dans main",
+                    group: "Collaboration & déploiement",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/cyber-2-authentification/github-actions.png",
+                    alt: "Diaporama SymfonyType : déploiement du serveur commun avec GitHub Actions",
+                    caption: "Après la fusion : connexion SSH, dépendances, migrations et cache",
+                    group: "Collaboration & déploiement",
+                    orientation: "landscape"
+                }
+            ],
+            features: [
+                "Validation des informations et unicité de l’adresse e-mail.",
+                "Mots de passe hachés et contrôle des mots de passe compromis.",
+                "Historique empêchant la réutilisation d’un ancien mot de passe.",
+                "Limitation des tentatives de connexion et suspension de comptes.",
+                "Gestion des rôles et accès aux historiques réservés à l’administrateur.",
+                "Travail sur branches et pull requests avec approbation avant fusion.",
+                "Déploiement GitHub Actions après intégration dans main : SSH, Composer, migrations et cache."
+            ],
+            repoLink: "https://github.com/rfielbal/SymfonyType",
+            liveLink: "./documents/projets/cyber-2-symfonytype.pdf",
+            liveLabel: "Diaporama · 14 pages"
         }
     ];
 
@@ -770,6 +874,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const getProjectHref = (reference, hash = window.location.hash) => {
         const project = getProjectByReference(reference);
         if (!project) return window.location.pathname || "/";
+        if (project.pageUrl) return project.pageUrl;
 
         const url = new URL(window.location.href);
         url.searchParams.set(projectQueryParam, project.slug);
@@ -911,6 +1016,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let lightboxSwipeStart = null;
     let activeProjectSlug = "";
     let projectGalleryCleanupTimer = null;
+    let projectLightboxCleanupTimer = null;
+    let projectVideoAutoplayFrame = null;
     let projectGridRendered = false;
     let projectGridObserver = null;
 
@@ -1108,6 +1215,48 @@ document.addEventListener("DOMContentLoaded", () => {
         scheduleInitialFocus(layer);
     };
 
+    const resetProjectLightbox = () => {
+        lightboxItems = [];
+        lightboxIndex = 0;
+        lightboxSwipeStart = null;
+
+        if (imageLightboxImg) {
+            imageLightboxImg.classList.remove("is-changing");
+            imageLightboxImg.removeAttribute("src");
+            imageLightboxImg.alt = "";
+        }
+        if (imageLightboxCaption) imageLightboxCaption.textContent = "";
+        if (imageLightboxCurrent) imageLightboxCurrent.textContent = "01";
+        if (imageLightboxTotal) imageLightboxTotal.textContent = "01";
+        if (imageLightboxStatus) imageLightboxStatus.textContent = "";
+        if (imageLightboxPrev) {
+            imageLightboxPrev.hidden = true;
+            imageLightboxPrev.setAttribute("aria-label", "Image précédente");
+        }
+        if (imageLightboxNext) {
+            imageLightboxNext.hidden = true;
+            imageLightboxNext.setAttribute("aria-label", "Image suivante");
+        }
+        if (imageLightbox) {
+            imageLightbox.style.removeProperty("--project-accent");
+            imageLightbox.setAttribute("aria-label", "Galerie d’images du projet");
+        }
+    };
+
+    const cancelProjectLightboxCleanup = () => {
+        if (projectLightboxCleanupTimer === null) return;
+        window.clearTimeout(projectLightboxCleanupTimer);
+        projectLightboxCleanupTimer = null;
+    };
+
+    const scheduleProjectLightboxCleanup = () => {
+        cancelProjectLightboxCleanup();
+        projectLightboxCleanupTimer = window.setTimeout(() => {
+            projectLightboxCleanupTimer = null;
+            if (!imageLightbox?.classList.contains("active")) resetProjectLightbox();
+        }, 240);
+    };
+
     const closeLayer = (layer) => {
         if (!layer) return;
 
@@ -1130,6 +1279,10 @@ document.addEventListener("DOMContentLoaded", () => {
             entry.layer.setAttribute("aria-hidden", "true");
             entry.layer.inert = true;
         });
+
+        if (closingEntries.some((entry) => entry.layer === imageLightbox)) {
+            scheduleProjectLightboxCleanup();
+        }
 
         syncBackgroundInertState();
         syncScrollState();
@@ -1619,6 +1772,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!track || !orbit || borderRects.length === 0) return;
 
         let resizeFrame = null;
+        let renderedWidth = null;
+        let renderedHeight = null;
 
         const updateGeometry = () => {
             resizeFrame = null;
@@ -1626,6 +1781,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const inset = 2;
             const width = Math.max(1, track.clientWidth - inset * 2);
             const height = Math.max(1, track.clientHeight - inset * 2);
+            if (width === renderedWidth && height === renderedHeight) return;
             const radius = Math.min(18, width / 2, height / 2);
 
             borderRects.forEach((rect) => {
@@ -1647,6 +1803,8 @@ document.addEventListener("DOMContentLoaded", () => {
             track.style.setProperty("--terminal-orbit-distance", `${(-perimeter).toFixed(2)}px`);
             track.style.setProperty("--terminal-orbit-duration", `${duration.toFixed(2)}s`);
             track.classList.add("is-ready");
+            renderedWidth = width;
+            renderedHeight = height;
         };
 
         const scheduleGeometry = () => {
@@ -1717,8 +1875,9 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/projects": {
                 lines: [
-                    "Le portfolio présente 9 projets, avec Wheello comme réalisation client principale et Revaloop comme nouvelle plateforme open source en développement.",
+                    `Le portfolio présente ${projects.length} projets, avec Wheello comme réalisation client principale et Revaloop comme nouvelle plateforme open source en développement.`,
                     "On y retrouve des projets clients, des projets académiques, deux produits Electron, un jeu web jouable, une démo 3D et une carte Minecraft automatisée.",
+                    "Cyber 1 et Cyber 2 complètent les projets académiques : sauvegarde chiffrée de MariaDB et sécurisation des comptes Symfony avec déploiement GitHub Actions.",
                     "La logique\u00a0: montrer ma progression, sans seulement empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
                 ],
                 action: { label: "Voir les projets", target: "#projects" }
@@ -2533,6 +2692,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const showLightboxImage = (index) => {
+        cancelProjectLightboxCleanup();
         if (
             !lightboxItems.length
             || !imageLightbox
@@ -3011,6 +3171,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const buttonContent = '<span>Voir le projet</span><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>';
                 const visualContent = renderProjectVisual(project, isCompact);
                 const projectHref = getProjectHref(project.slug, "#projects-index");
+                const dialogAttributes = project.pageUrl ? "" : 'aria-haspopup="dialog" aria-controls="modal-project"';
 
                 return `
                     <article class="project-card reveal ${reverseClass}" data-id="${project.id}" style="--project-accent: ${project.accent}">
@@ -3041,13 +3202,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             </ul>
 
                             <div class="project-actions">
-                                <a class="btn-simple open-project project-cta" href="${projectHref}" data-id="${project.id}" aria-haspopup="dialog" aria-controls="modal-project">
+                                <a class="btn-simple open-project project-cta" href="${projectHref}" data-id="${project.id}" ${dialogAttributes}>
                                     ${buttonContent}
                                 </a>
                             </div>
                         </div>
 
-                        <a class="project-visual open-project" href="${projectHref}" data-id="${project.id}" aria-haspopup="dialog" aria-controls="modal-project" aria-label="Voir ${project.title}">
+                        <a class="project-visual open-project" href="${projectHref}" data-id="${project.id}" ${dialogAttributes} aria-label="Voir ${project.title}">
                             ${visualContent}
                             <span class="project-status"><i></i>${project.status}</span>
                         </a>
@@ -3128,17 +3289,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const setProjectCursorAccent = (accent = "") => {
         if (accent) {
             const safeAccent = /^#[0-9a-f]{6}$/i.test(accent) ? accent : "#ccff00";
-            body.style.setProperty("--cursor-accent", safeAccent);
-            body.classList.remove("hovering-watch");
-            body.classList.add("project-cursor-active");
+            cursorElements.forEach((element) => element.style.setProperty("--cursor-accent", safeAccent));
+            setCursorState("hovering-watch", false);
+            setCursorState("project-cursor-active", true);
             return;
         }
 
-        body.style.removeProperty("--cursor-accent");
-        body.classList.remove("project-cursor-active");
+        cursorElements.forEach((element) => element.style.removeProperty("--cursor-accent"));
+        setCursorState("project-cursor-active", false);
+    };
+
+    const cancelProjectVideoAutoplay = () => {
+        if (projectVideoAutoplayFrame === null) return;
+        window.cancelAnimationFrame(projectVideoAutoplayFrame);
+        projectVideoAutoplayFrame = null;
     };
 
     const releaseProjectModalMedia = ({ clear = false } = {}) => {
+        cancelProjectVideoAutoplay();
         if (!pmGallery) return;
 
         pmGallery.querySelectorAll("video").forEach((video) => {
@@ -3148,7 +3316,20 @@ document.addEventListener("DOMContentLoaded", () => {
             video.load();
         });
 
-        if (clear) pmGallery.replaceChildren();
+        if (!clear) return;
+
+        pmGallery.replaceChildren();
+        if (pmLogo) {
+            pmLogo.onload = null;
+            pmLogo.onerror = null;
+            pmLogo.removeAttribute("src");
+            pmLogo.alt = "";
+            pmLogo.hidden = true;
+        }
+        if (pmLogoFallback) {
+            pmLogoFallback.textContent = "";
+            pmLogoFallback.hidden = true;
+        }
     };
 
     const scheduleProjectMediaCleanup = () => {
@@ -3167,8 +3348,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const data = getProjectByReference(reference);
         if (!data) return;
+        if (data.pageUrl) {
+            window.location.assign(data.pageUrl);
+            return;
+        }
         let startProjectVideo = null;
 
+        if (imageLightbox?.classList.contains("active")) closeLayer(imageLightbox);
+        cancelProjectLightboxCleanup();
+        resetProjectLightbox();
         window.clearTimeout(projectGalleryCleanupTimer);
         projectGalleryCleanupTimer = null;
         releaseProjectModalMedia({ clear: true });
@@ -3251,6 +3439,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const videoStart = galleryTarget.querySelector(".pm-video-start");
             if (video && videoStart) {
                 const startVideo = () => {
+                    if (
+                        !video.isConnected
+                        || activeProjectSlug !== data.slug
+                        || !projectModal.classList.contains("active")
+                    ) return;
+
                     const source = video.dataset.source;
                     if (!source) return;
 
@@ -3265,7 +3459,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     videoStart.hidden = true;
                     return video.play().catch(() => {
-                        videoStart.hidden = false;
+                        if (videoStart.isConnected) videoStart.hidden = false;
                     });
                 };
 
@@ -3329,7 +3523,13 @@ document.addEventListener("DOMContentLoaded", () => {
         projectModal.classList.toggle("has-project-actions", Boolean(data.liveLink || data.repoLink));
 
         openLayer(projectModal, opener);
-        window.requestAnimationFrame(() => startProjectVideo?.());
+        if (startProjectVideo) {
+            projectVideoAutoplayFrame = window.requestAnimationFrame(() => {
+                projectVideoAutoplayFrame = null;
+                if (!projectModal.classList.contains("active") || activeProjectSlug !== data.slug) return;
+                startProjectVideo();
+            });
+        }
     };
 
     const closeProject = ({ fromHistory = false } = {}) => {
@@ -3373,6 +3573,10 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        if (project.pageUrl) {
+            window.location.replace(project.pageUrl);
+            return;
+        }
         if (requestedReference !== project.slug) updateProjectLocation(project, "replace");
         if (activeProjectSlug !== project.slug || !projectModal?.classList.contains("active")) {
             openProject(project.slug, { updateUrl: false, opener: null });
@@ -3390,6 +3594,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const trigger = event.target.closest(".open-project");
             if (!trigger) return;
             if (trigger instanceof HTMLAnchorElement && isModifiedLinkActivation(event)) return;
+            if (getProjectByReference(trigger.dataset.id)?.pageUrl) return;
 
             event.preventDefault();
             event.stopPropagation();
@@ -3593,8 +3798,6 @@ document.addEventListener("DOMContentLoaded", () => {
         contactBox.addEventListener("mouseleave", resetContactLight);
     }
 
-    const cursor = document.getElementById("cursor");
-    const follower = document.getElementById("cursor-follower");
     const portfolioCursorQuery = window.matchMedia(
         "(min-width: 981px) and (hover: hover) and (pointer: fine)"
     );
@@ -3608,6 +3811,8 @@ document.addEventListener("DOMContentLoaded", () => {
         let followerY = 0;
         let cursorFrame = null;
         let lastCursorTimestamp = 0;
+        let renderedCursorX = null;
+        let renderedCursorY = null;
 
         const renderCursor = (timestamp) => {
             cursorFrame = null;
@@ -3624,7 +3829,11 @@ document.addEventListener("DOMContentLoaded", () => {
             followerX = snapFollower ? mouseX : followerX + (mouseX - followerX) * followAlpha;
             followerY = snapFollower ? mouseY : followerY + (mouseY - followerY) * followAlpha;
 
-            cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            if (mouseX !== renderedCursorX || mouseY !== renderedCursorY) {
+                cursor.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+                renderedCursorX = mouseX;
+                renderedCursorY = mouseY;
+            }
             follower.style.transform = `translate3d(${followerX}px, ${followerY}px, 0) translate(-50%, -50%)`;
 
             if (!snapFollower && (Math.abs(mouseX - followerX) > 0.1 || Math.abs(mouseY - followerY) > 0.1)) {
@@ -3655,6 +3864,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const initialTransform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
             cursor.style.transform = initialTransform;
             follower.style.transform = initialTransform;
+            renderedCursorX = mouseX;
+            renderedCursorY = mouseY;
             cursorActivated = true;
             document.documentElement.classList.add("portfolio-cursor-enabled");
         };
@@ -3665,7 +3876,8 @@ document.addEventListener("DOMContentLoaded", () => {
             cursorActivated = false;
             lastCursorTimestamp = 0;
             document.documentElement.classList.remove("portfolio-cursor-enabled");
-            body.classList.remove("hovering", "hovering-watch");
+            setCursorState("hovering", false);
+            setCursorState("hovering-watch", false);
         };
 
         window.addEventListener("mousemove", (event) => {
@@ -3707,25 +3919,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.addEventListener("pointerover", (event) => {
             if (isInteractive(event.target)) {
-                body.classList.add("hovering");
+                setCursorState("hovering", true);
             }
 
             if (event.target?.closest(".watch-portal-link")) {
-                body.classList.add("hovering-watch");
+                setCursorState("hovering-watch", true);
             }
         });
 
         document.addEventListener("pointerout", (event) => {
             if (!isInteractive(event.target)) return;
             if (!isInteractive(event.relatedTarget)) {
-                body.classList.remove("hovering");
+                setCursorState("hovering", false);
             }
 
             if (
                 event.target?.closest(".watch-portal-link")
                 && !event.relatedTarget?.closest?.(".watch-portal-link")
             ) {
-                body.classList.remove("hovering-watch");
+                setCursorState("hovering-watch", false);
             }
         });
 

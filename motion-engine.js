@@ -16,7 +16,6 @@
     let pointerX = viewportWidth * 0.5;
     let pointerY = viewportHeight * 0.5;
     let scrollingUntil = 0;
-    let scrollEndTimer = null;
     const dirty = {
         scroll: true,
         layout: true,
@@ -97,11 +96,6 @@
 
     window.addEventListener("scroll", () => {
         scrollingUntil = performance.now() + 140;
-        root.classList.add("is-scrolling");
-        window.clearTimeout(scrollEndTimer);
-        scrollEndTimer = window.setTimeout(() => {
-            root.classList.remove("is-scrolling");
-        }, 180);
         mark("scroll");
     }, { passive: true });
 

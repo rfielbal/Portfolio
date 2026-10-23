@@ -2,10 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://rfielbal.fr/</loc>
-        <lastmod>2026-08-13</lastmod>
+        <lastmod>2026-10-23</lastmod>
     </url>
     <url>
         <loc>https://rfielbal.fr/veille.html</loc>
-        <lastmod>2026-08-13</lastmod>
+        <lastmod>2026-10-23</lastmod>
+    </url>
+    <url>
+        <loc>https://rfielbal.fr/veille-bts-sio.html</loc>
+        <lastmod>2026-10-23</lastmod>
+    </url>
+    <url>
+        <loc>https://rfielbal.fr/cyber-1-sauvegarde.html</loc>
+        <lastmod>2026-10-23</lastmod>
+    </url>
+    <url>
+        <loc>https://rfielbal.fr/cyber-2-authentification.html</loc>
+        <lastmod>2026-10-23</lastmod>
     </url>
 </urlset>

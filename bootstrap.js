@@ -32,7 +32,7 @@
     const isWatchReturn = Boolean(
         window.location.hash
         && referrerUrl?.origin === window.location.origin
-        && /\/veille(?:\.html)?\/?$/i.test(referrerUrl.pathname)
+        && /\/veille(?:-bts-sio)?(?:\.html)?\/?$/i.test(referrerUrl.pathname)
     );
     const shouldPlayPreloader = isReload || (!isHistoryRestore && !shouldSkipOnce && !isWatchReturn);
 

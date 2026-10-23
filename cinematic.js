@@ -18,8 +18,16 @@
         const cinemaStatus = document.getElementById("cinema-status");
         const cinemaDirectOpen = document.getElementById("cinema-direct-open");
         const watchPortal = document.querySelector(".watch-portal");
-        const watchArrowLink = document.querySelector("[data-watch-arrow]");
+        const watchArrowLinks = Array.from(document.querySelectorAll("[data-watch-arrow]"));
         const terminalStage = hero?.querySelector(".profile-stage");
+        // Only these surfaces consume the hero's motion values. Keeping the
+        // properties local avoids restyling all the terminal text on every input.
+        const heroProgressTargets = hero ? [hero, ...hero.querySelectorAll(
+            ".cinematic-canvas, .hero-left, .hero-title-line, .orbit-card, .profile-stage, .command-grid"
+        )] : [];
+        const heroPointerTargets = hero ? Array.from(hero.querySelectorAll(
+            ".project-orbit, .orbit-card, .profile-stage"
+        )) : [];
 
         if (!motionEngine || !hero || !projectCinema) {
             if (canvas) canvas.hidden = true;
@@ -376,11 +384,11 @@
                 const pointerY = frame.pointerFrame.y.toFixed(4);
                 if (pointerX !== renderedPointerX) {
                     renderedPointerX = pointerX;
-                    hero.style.setProperty("--pointer-x", pointerX);
+                    heroPointerTargets.forEach((element) => element.style.setProperty("--hero-pointer-x", pointerX));
                 }
                 if (pointerY !== renderedPointerY) {
                     renderedPointerY = pointerY;
-                    hero.style.setProperty("--pointer-y", pointerY);
+                    heroPointerTargets.forEach((element) => element.style.setProperty("--hero-pointer-y", pointerY));
                 }
             }
 
@@ -394,7 +402,8 @@
             if (Math.abs(frame.heroProgress - renderedHeroProgress) > 0.001) {
                 renderedHeroProgress = frame.heroProgress;
                 heroProgress = frame.heroProgress;
-                hero.style.setProperty("--hero-progress", frame.heroProgress.toFixed(4));
+                const progress = frame.heroProgress.toFixed(4);
+                heroProgressTargets.forEach((element) => element.style.setProperty("--hero-progress", progress));
             }
 
             if (frame.cinemaNear !== renderedCinemaNear) {
@@ -537,54 +546,56 @@
             reducedMotion.addEventListener?.("change", syncRadarMotion);
             document.addEventListener("visibilitychange", syncRadarMotion);
 
-            if (!watchArrowLink || renderTier !== "high") return;
+            if (!watchArrowLinks.length || renderTier !== "high") return;
 
-            let arrowFrame = 0;
-            let arrowRect = null;
-            let arrowX = 0;
-            let arrowY = 0;
+            watchArrowLinks.forEach((watchArrowLink) => {
+                let arrowFrame = 0;
+                let arrowRect = null;
+                let arrowX = 0;
+                let arrowY = 0;
 
-            const renderArrow = () => {
-                arrowFrame = 0;
-                watchArrowLink.style.setProperty("--watch-arrow-x", `${arrowX.toFixed(2)}px`);
-                watchArrowLink.style.setProperty("--watch-arrow-y", `${arrowY.toFixed(2)}px`);
-            };
+                const renderArrow = () => {
+                    arrowFrame = 0;
+                    watchArrowLink.style.setProperty("--watch-arrow-x", `${arrowX.toFixed(2)}px`);
+                    watchArrowLink.style.setProperty("--watch-arrow-y", `${arrowY.toFixed(2)}px`);
+                };
 
-            const scheduleArrow = () => {
-                if (!arrowFrame) arrowFrame = window.requestAnimationFrame(renderArrow);
-            };
+                const scheduleArrow = () => {
+                    if (!arrowFrame) arrowFrame = window.requestAnimationFrame(renderArrow);
+                };
 
-            const resetArrow = () => {
-                watchArrowLink.classList.remove("is-arrow-tracking");
-                arrowRect = null;
-                arrowX = 0;
-                arrowY = 0;
-                scheduleArrow();
-            };
+                const resetArrow = () => {
+                    watchArrowLink.classList.remove("is-arrow-tracking");
+                    arrowRect = null;
+                    arrowX = 0;
+                    arrowY = 0;
+                    scheduleArrow();
+                };
 
-            watchArrowLink.addEventListener("pointerenter", () => {
-                if (renderTier !== "high" || reducedMotion.matches || coarsePointer.matches) return;
-                arrowRect = watchArrowLink.getBoundingClientRect();
-                watchArrowLink.classList.add("is-arrow-tracking");
-            }, { passive: true });
+                watchArrowLink.addEventListener("pointerenter", () => {
+                    if (renderTier !== "high" || reducedMotion.matches || coarsePointer.matches) return;
+                    arrowRect = watchArrowLink.getBoundingClientRect();
+                    watchArrowLink.classList.add("is-arrow-tracking");
+                }, { passive: true });
 
-            watchArrowLink.addEventListener("pointermove", (event) => {
-                if (renderTier !== "high" || reducedMotion.matches || coarsePointer.matches) return;
-                arrowRect ||= watchArrowLink.getBoundingClientRect();
-                const normalizedX = clamp(((event.clientX - arrowRect.left) / Math.max(1, arrowRect.width)) * 2 - 1, -1, 1);
-                const normalizedY = clamp(((event.clientY - arrowRect.top) / Math.max(1, arrowRect.height)) * 2 - 1, -1, 1);
-                arrowX = normalizedX * 11;
-                arrowY = normalizedY * 7;
-                scheduleArrow();
-            }, { passive: true });
+                watchArrowLink.addEventListener("pointermove", (event) => {
+                    if (renderTier !== "high" || reducedMotion.matches || coarsePointer.matches) return;
+                    arrowRect ||= watchArrowLink.getBoundingClientRect();
+                    const normalizedX = clamp(((event.clientX - arrowRect.left) / Math.max(1, arrowRect.width)) * 2 - 1, -1, 1);
+                    const normalizedY = clamp(((event.clientY - arrowRect.top) / Math.max(1, arrowRect.height)) * 2 - 1, -1, 1);
+                    arrowX = normalizedX * 11;
+                    arrowY = normalizedY * 7;
+                    scheduleArrow();
+                }, { passive: true });
 
-            watchArrowLink.addEventListener("pointerleave", resetArrow, { passive: true });
-            watchArrowLink.addEventListener("blur", resetArrow);
-            window.addEventListener("resize", () => {
-                arrowRect = null;
-            }, { passive: true });
-            reducedMotion.addEventListener?.("change", resetArrow);
-            coarsePointer.addEventListener?.("change", resetArrow);
+                watchArrowLink.addEventListener("pointerleave", resetArrow, { passive: true });
+                watchArrowLink.addEventListener("blur", resetArrow);
+                window.addEventListener("resize", () => {
+                    arrowRect = null;
+                }, { passive: true });
+                reducedMotion.addEventListener?.("change", resetArrow);
+                coarsePointer.addEventListener?.("change", resetArrow);
+            });
         };
 
         const setupCanvas = () => {

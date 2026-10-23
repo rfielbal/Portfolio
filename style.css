@@ -7,7 +7,6 @@
     --muted: #9a9a9a;
     --acid: #ccff00;
     --acid-soft: #dcff4e;
-    --cursor-accent: var(--acid);
     --gray: #333333;
     --line: rgba(255, 255, 255, 0.15);
 
@@ -178,6 +177,7 @@ h4 {
 
 .cursor,
 .cursor-follower {
+    --cursor-accent: var(--acid);
     position: fixed;
     top: 0;
     left: 0;
@@ -217,28 +217,28 @@ h4 {
     transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
 
-body.hovering .cursor-follower {
+.cursor-follower.hovering {
     width: 78px;
     height: 78px;
     border-color: var(--cursor-accent);
     background-color: color-mix(in srgb, var(--cursor-accent) 9%, transparent);
 }
 
-body.project-cursor-active .cursor-follower {
+.cursor-follower.project-cursor-active {
     border-color: color-mix(in srgb, var(--cursor-accent) 58%, rgba(255, 255, 255, 0.35));
 }
 
-body.project-cursor-active.hovering .cursor-follower {
+.cursor-follower.project-cursor-active.hovering {
     border-color: var(--cursor-accent);
     background-color: color-mix(in srgb, var(--cursor-accent) 9%, transparent);
 }
 
-body:not(.project-cursor-active).hovering-watch .cursor {
+.cursor:not(.project-cursor-active).hovering-watch {
     background-color: #9f86ff;
     box-shadow: 0 0 18px rgba(159, 134, 255, 0.75);
 }
 
-body:not(.project-cursor-active).hovering-watch .cursor-follower {
+.cursor-follower:not(.project-cursor-active).hovering-watch {
     border-color: #9f86ff;
     background-color: rgba(159, 134, 255, 0.1);
 }

@@ -2,17 +2,24 @@
 **/.DS_Store
 
 .playwright-cli/
-output/playwright/
-output/pdf/
-output/cv/
+output/
 tmp/
 
 *.log
 
-# Seuls le CV et les copies anonymisées des bulletins sont livrés avec le portfolio.
+# Seuls les documents publics explicitement listés sont livrés avec le portfolio.
 documents/*
 !documents/cv-raphael-coursier.pdf
 !documents/bulletins-public/
 documents/bulletins-public/*
 !documents/bulletins-public/bts-sio-semestre-1.pdf
 !documents/bulletins-public/bts-sio-semestre-2.pdf
+!documents/projets/
+documents/projets/*
+!documents/projets/cyber-1-sauvegarde.pdf
+!documents/projets/cyber-2-symfonytype.pdf
+!documents/veille/
+documents/veille/*
+!documents/veille/Veille-Apple-2026-09-19.pdf
+!documents/veille/Veille-Apple-2026-10-02.pdf
+!documents/veille/Veille-Apple-2026-10-16.pdf

@@ -57,6 +57,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&amp;family=Oswald:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="veille.css?v=nav-controls-20260813">
+    <link rel="stylesheet" href="watch-navigation.css?v=nav-align-20261023">
     <script src="veille-bootstrap.js?v=production-hardening-20260823"></script>
 </head>
 <body>
@@ -83,7 +84,25 @@
                 <li><a href="index.html#manifesto">À propos</a></li>
                 <li><a href="index.html#projects">Projets</a></li>
                 <li><a href="index.html#savoir-faire">Savoir-faire</a></li>
-                <li><a href="#top" class="is-current" aria-current="page">Veille</a></li>
+                <li class="watch-switcher" data-watch-switcher>
+                    <button class="watch-switcher-trigger is-current" type="button" aria-expanded="false" aria-controls="watch-switcher-panel-general">
+                        <span>Veille</span>
+                        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="watch-switcher-panel" id="watch-switcher-panel-general" aria-hidden="true" inert>
+                        <p class="watch-switcher-kicker">Choisir un parcours</p>
+                        <a class="watch-switcher-option" href="veille.html" aria-current="page">
+                            <span class="watch-switcher-index">01</span>
+                            <span class="watch-switcher-copy"><strong>Veille générale</strong><small>IA, web, interfaces et outils</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                        <a class="watch-switcher-option" href="veille-bts-sio.html">
+                            <span class="watch-switcher-index">02</span>
+                            <span class="watch-switcher-copy"><strong>Veille BTS SIO</strong><small>Cycle de vie des applications Apple</small></span>
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </li>
                 <li><a href="index.html#contact">Contact</a></li>
             </ul>
 
@@ -103,11 +122,19 @@
                 <a href="index.html#manifesto">02. À propos</a>
                 <a href="index.html#projects">03. Projets</a>
                 <a href="index.html#savoir-faire">04. Savoir-faire</a>
-                <a href="#top" aria-current="page">05. Veille</a>
-                <a href="index.html#contact">06. Contact</a>
+                <a href="#top" aria-current="page">05. Veille générale</a>
+                <a href="veille-bts-sio.html">06. Veille BTS SIO</a>
+                <a href="index.html#contact">07. Contact</a>
             </nav>
         </div>
     </header>
+
+    <nav class="watch-no-js-nav" aria-label="Navigation alternative">
+        <a href="index.html#home">Accueil</a>
+        <a href="#top" aria-current="page">Veille générale</a>
+        <a href="veille-bts-sio.html">Veille BTS SIO</a>
+        <a href="index.html#contact">Contact</a>
+    </nav>
 
     <main id="contenu">
         <section class="watch-hero" id="top" aria-labelledby="watch-title">
@@ -216,7 +243,7 @@
                         <button type="button" class="is-active" data-signal-filter="all" aria-pressed="true">Tous</button>
                         <button type="button" data-signal-filter="ia" aria-pressed="false">IA &amp; agents</button>
                         <button type="button" data-signal-filter="web" aria-pressed="false">Web &amp; UI</button>
-                        <button type="button" data-signal-filter="apple" aria-pressed="false">Apple</button>
+                        <button type="button" data-signal-filter="apple" aria-pressed="false">Signaux Apple</button>
                         <button type="button" data-signal-filter="outils" aria-pressed="false">Outils</button>
                     </div>
                     <p id="signal-count" aria-live="polite">7 signaux affichés</p>
@@ -607,6 +634,7 @@
     </footer>
 
     <script src="smooth-scroll.js?v=ux-coherence-20260801"></script>
+    <script src="watch-navigation.js?v=watch-paths-20260905"></script>
     <script src="veille.js?v=ux-radar-20260802"></script>
 </body>
 </html>
