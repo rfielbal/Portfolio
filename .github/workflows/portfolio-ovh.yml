@@ -1,0 +1,83 @@
+name: Portfolio · Vérifier et publier OVH
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publier le commit de main sur rfielbal.fr
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Vérifications du Portfolio
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Installer le client SFTP vérifié
+        run: |
+          python3 -m venv "$RUNNER_TEMP/ovh-client"
+          "$RUNNER_TEMP/ovh-client/bin/pip" install --require-hashes -r scripts/deployment/requirements.txt
+      - name: Tester les règles de publication et le SFTP local
+        run: '"$RUNNER_TEMP/ovh-client/bin/python" -m unittest discover -s scripts/deployment -p "test_*.py" -v'
+      - name: Vérifier les scripts et la politique de sécurité
+        run: |
+          node scripts/verify-csp.mjs
+          python3 scripts/deployment/check.py
+      - name: Préparer les seuls fichiers publics
+        run: python3 scripts/deployment/deploy.py pack
+
+  publish:
+    name: Publier sur OVH
+    needs: validate
+    if: >-
+      github.repository == 'rfielbal/Portfolio' &&
+      github.ref == 'refs/heads/main' &&
+      vars.OVH_DEPLOY_ENABLED == 'true' &&
+      (github.event_name == 'push' ||
+       (github.event_name == 'workflow_dispatch' && inputs.publish))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      deployments: write
+    environment:
+      name: production
+      url: https://rfielbal.fr
+      deployment: false
+    concurrency:
+      group: portfolio-ovh-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Installer le client SFTP vérifié
+        run: |
+          python3 -m venv "$RUNNER_TEMP/ovh-client"
+          "$RUNNER_TEMP/ovh-client/bin/pip" install --require-hashes -r scripts/deployment/requirements.txt
+      - name: Préparer les fichiers de ce commit
+        run: python3 scripts/deployment/deploy.py pack
+      - name: Sauvegarder, transférer et vérifier le site public
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OVH_DEPLOY_ENABLED: ${{ vars.OVH_DEPLOY_ENABLED }}
+          OVH_SFTP_HOST: ${{ vars.OVH_SFTP_HOST }}
+          OVH_SFTP_PORT: ${{ vars.OVH_SFTP_PORT }}
+          OVH_SFTP_USER: ${{ vars.OVH_SFTP_USER }}
+          OVH_WEB_ROOT: ${{ vars.OVH_WEB_ROOT }}
+          OVH_PRIVATE_ROOT: ${{ vars.OVH_PRIVATE_ROOT }}
+          SITE_URL: ${{ vars.SITE_URL }}
+          OVH_SFTP_PASSWORD: ${{ secrets.OVH_SFTP_PASSWORD }}
+          OVH_KNOWN_HOSTS: ${{ secrets.OVH_KNOWN_HOSTS }}
+        run: '"$RUNNER_TEMP/ovh-client/bin/python" scripts/deployment/deploy.py deploy'

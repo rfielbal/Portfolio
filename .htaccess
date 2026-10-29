@@ -44,6 +44,9 @@ Options -Indexes
 </IfModule>
 
 <IfModule mod_headers.c>
+    <Files "visionbuild-release.json">
+        Header set Cache-Control "no-store"
+    </Files>
     <FilesMatch "\.(?:html?|txt|xml)$">
         Header set Cache-Control "no-cache, must-revalidate"
     </FilesMatch>

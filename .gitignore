@@ -6,6 +6,8 @@ output/
 tmp/
 
 *.log
+__pycache__/
+*.py[cod]
 
 # Seuls les documents publics explicitement listés sont livrés avec le portfolio.
 documents/*
