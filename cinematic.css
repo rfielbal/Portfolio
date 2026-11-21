@@ -637,7 +637,7 @@ body .hero-actions {
     ) rotate(-5deg) rotateY(-7deg);
 }
 
-.orbit-card--revaloop {
+.orbit-card--visionbuild {
     bottom: 2%;
     left: 0;
     transform: translate3d(
@@ -1897,7 +1897,7 @@ html.cinematic-ready .cinema-scroll-hint {
         bottom: 10%;
     }
 
-    .orbit-card--revaloop {
+    .orbit-card--visionbuild {
         bottom: 8%;
         left: -1%;
     }
@@ -2714,8 +2714,8 @@ html[data-render-tier="lite"] .orbit-card--streamcorner {
     ) rotate(-5deg);
 }
 
-html[data-render-tier="balanced"] .orbit-card--revaloop,
-html[data-render-tier="lite"] .orbit-card--revaloop {
+html[data-render-tier="balanced"] .orbit-card--visionbuild,
+html[data-render-tier="lite"] .orbit-card--visionbuild {
     transform: translate3d(
         calc(var(--hero-progress) * -58px),
         calc(var(--hero-progress) * 40px),
@@ -2739,8 +2739,10 @@ html[data-render-tier="lite"] .cinema-grid {
     mask-image: none;
 }
 
-html[data-render-tier="balanced"] .cinema-card:not(.is-front):not(.is-adjacent),
-html[data-render-tier="lite"] .cinema-card:not(.is-front):not(.is-adjacent) {
+/* The static layout exposes every project when motion is reduced. Only cull
+   distant cards while the animated stack is active. */
+html.cinematic-ready[data-render-tier="balanced"] .cinema-card:not(.is-front):not(.is-adjacent),
+html.cinematic-ready[data-render-tier="lite"] .cinema-card:not(.is-front):not(.is-adjacent) {
     visibility: hidden;
 }
 

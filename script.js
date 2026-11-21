@@ -263,82 +263,100 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             id: 9,
-            slug: "revaloop",
+            slug: "visionbuild",
             index: "03",
             filter: "perso",
-            title: "Revaloop",
-            category: "Plateforme open source de recette client · Projet perso",
+            title: "VisionBuild",
+            category: "Espace de travail personnel · Application locale",
             year: "En cours",
             dateLabel: "Développement",
-            created: "Depuis juillet–août 2026 (en cours)",
-            role: "Conception produit & pilotage technique",
-            status: "Alpha en cours",
+            created: "Depuis octobre 2026",
+            role: "Conception produit & développement assisté par IA",
+            status: "En usage personnel",
             accent: "#ff5f57",
-            logo: "./images/projects/revaloop/logo.svg",
-            logoAlt: "Logo de Revaloop",
-            logoMark: "R",
+            logo: "./images/projects/visionbuild/logo.webp",
+            logoAlt: "Logo de VisionBuild",
+            logoMark: "VB",
             description:
-                "Revaloop transforme une prévisualisation de développement en véritable espace de collaboration entre le développeur et son client. Au lieu de disperser les retours entre e-mails, captures et messages, chaque version dispose d'un environnement de recette dédié, avec son historique et son état de validation.\n\nLe développeur publie une version HTTPS, puis crée une invitation temporaire destinée au client, à usage unique et révocable. Le client explore le produit sur plusieurs formats, ajoute des retours généraux ou des annotations visuelles et échange dans une discussion persistante. Le workflow suit ensuite chaque remarque de « signalé » à « validé », bloque l'approbation tant qu'un point reste ouvert et conserve la boucle de correction dans le même espace.\n\nRevaloop est toujours en développement, au stade alpha 0.3 pour un pilote contrôlé. Je le construis comme un produit : cadrage du besoin, arbitrages UX et sécurité, développement assisté par IA, audits et validation des parcours. Son compagnon Electron sait déjà sélectionner, lancer et surveiller un projet local avec un consentement explicite ; le partage distant automatique de ce serveur local reste volontairement présenté comme une prochaine étape, pas comme une fonction terminée.",
-            summary: "Espace de recette client pour partager une version, centraliser les retours et piloter sa validation.",
-            impact: "Une boucle claire et sécurisée entre développeur et client, de l'invitation à l'approbation finale.",
-            techs: ["Next.js", "React", "TypeScript", "Cloudflare Workers", "D1", "Drizzle ORM", "Electron", "Vite"],
-            cover: "./images/projects/revaloop/cover.webp",
-            coverLabel: "Boucle de recette client",
-            galleryLayout: "review-loop",
-            galleryEyebrow: "BOUCLE DE RECETTE",
-            galleryTitle: "Du partage de la version à la décision finale",
-            gallerySummary: "Le parcours matérialise chaque étape de la collaboration pour que le contexte, les corrections et la validation restent dans un seul espace.",
+                "J'ai conçu VisionBuild pour réunir les informations utiles à mes projets dans un espace de travail personnel : dossiers clients, prochaines étapes, tâches, notes, documents et échéances. Les données sont reliées entre elles pour retrouver le contexte d'un dossier et passer plus facilement du besoin à son suivi.\n\nL'application propose une interface classique et un Bureau en 3D qui ouvrent les mêmes fiches. Les clients prennent place dans une salle de réunion, les tâches sur un tableau de post-it et l'infrastructure dans une salle technique. La recette client issue du travail sur Revaloop est intégrée aux projets : versions à tester, checklist, retours, échanges et décisions.\n\nJe définis les besoins, les parcours et les choix de conception, puis je m'appuie sur le développement assisté par IA pour réaliser et faire évoluer l'application, avec relecture et vérification des parcours. VisionBuild est utilisé sur mon ordinateur et reste un projet personnel en évolution, avec une base SQLite locale. Son assistant via Ollama prépare des actions à valider ; le chat Codex et les connexions externes sont des intégrations distinctes.",
+            summary: "Mon espace de travail personnel pour réunir clients, projets, tâches, documents et suivi technique, avec un bureau visuel et un assistant IA local.",
+            impact: "Des dossiers reliés, une recette client intégrée et deux présentations pour organiser le travail au quotidien.",
+            techs: ["React", "TypeScript", "Node.js", "Express", "SQLite", "Three.js", "Vite", "Ollama"],
+            cover: "./images/projects/visionbuild/cover.webp",
+            thumbnail: "./images/projects/visionbuild/thumb.webp",
+            coverLabel: "Bureau personnel",
+            galleryLayout: "workspace-tour",
+            galleryEyebrow: "ESPACE DE TRAVAIL",
+            galleryTitle: "Un bureau, tous mes projets.",
+            gallerySummary: "Du bureau visuel au suivi des dossiers, chaque vue aide à retrouver le contexte et à choisir la prochaine action.",
+            galleryNotice: "Captures réalisées dans l'espace de démonstration, avec des données fictives.",
             images: [
                 {
-                    src: "./images/projects/revaloop/gallery/tableau-de-bord.webp",
-                    alt: "Tableau de bord développeur de Revaloop",
-                    caption: "Tableau de bord : versions, invitations, retours et décisions réunis dans un seul espace",
-                    label: "01 / Préparer",
-                    title: "Cadrer la version",
+                    src: "./images/projects/visionbuild/gallery/bureau.webp",
+                    alt: "Bureau visuel de VisionBuild dans l'espace de démonstration",
+                    caption: "Le bureau donne accès aux rubriques et aux dossiers à reprendre, sans quitter le même espace de travail.",
+                    label: "01 / Se repérer",
+                    title: "Entrer dans mon espace",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/revaloop/gallery/espace-revue-client.webp",
-                    alt: "Espace de revue client Revaloop avec une preview intégrée",
-                    caption: "Espace client : exploration de la preview et accès direct aux retours et à la discussion",
-                    label: "02 / Explorer",
-                    title: "Ouvrir la recette",
+                    src: "./images/projects/visionbuild/gallery/tableau-de-bord.webp",
+                    alt: "Tableau de bord classique de VisionBuild avec des données fictives",
+                    caption: "La présentation classique rassemble les rubriques, le journal de bord et les prochaines tâches.",
+                    label: "02 / Prioriser",
+                    title: "Voir ce qui demande mon attention",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/revaloop/gallery/annotation-visuelle.webp",
-                    alt: "Mode d'annotation visuelle de Revaloop",
-                    caption: "Annotation visuelle : le retour reste associé à un repère précis dans le viewport testé",
-                    label: "03 / Signaler",
-                    title: "Conserver le contexte",
+                    src: "./images/projects/visionbuild/gallery/tableau-des-taches.webp",
+                    alt: "Tableau de tâches de VisionBuild présenté sous forme de post-it",
+                    caption: "Chaque tâche conserve son intitulé, son dossier et son échéance pour garder le contexte à portée de main.",
+                    label: "03 / Organiser",
+                    title: "Garder les prochaines actions visibles",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/revaloop/gallery/discussion-projet.webp",
-                    alt: "Discussion entre développeur et client dans Revaloop",
-                    caption: "Discussion persistante au niveau de la version, sans imposer la création d'un retour",
-                    label: "04 / Décider",
-                    title: "Arbitrer ensemble",
+                    src: "./images/projects/visionbuild/gallery/infrastructure.webp",
+                    alt: "Espace Infrastructure de VisionBuild avec des hébergements fictifs",
+                    caption: "Les hébergements, domaines et services retrouvent leur place dans les dossiers, avec les échéances à suivre.",
+                    label: "04 / Suivre",
+                    title: "Retrouver les services d'un projet",
                     orientation: "landscape"
                 },
                 {
-                    src: "./images/projects/revaloop/gallery/compagnon-local.webp",
-                    alt: "Compagnon desktop Electron de Revaloop",
-                    caption: "Compagnon local : sélection, lancement et surveillance explicites du projet sur la machine du développeur",
-                    label: "05 / Connecter",
-                    title: "Relier le projet local",
+                    src: "./images/projects/visionbuild/gallery/developpement.webp",
+                    alt: "Suivi de développement de VisionBuild dans l'espace de démonstration",
+                    caption: "Les demandes GitHub, les vérifications et le suivi du code restent associés au dossier du projet.",
+                    label: "05 / Développer",
+                    title: "Conserver le fil du travail technique",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/visionbuild/gallery/recette-client.webp",
+                    alt: "Recette client intégrée à VisionBuild avec une version de démonstration",
+                    caption: "Versions, points à vérifier, retours et décisions composent une recette intégrée au dossier du projet.",
+                    label: "06 / Vérifier",
+                    title: "Relier les retours aux corrections",
+                    orientation: "landscape"
+                },
+                {
+                    src: "./images/projects/visionbuild/gallery/assistant.webp",
+                    alt: "Assistant de VisionBuild ouvert sur l'espace de démonstration",
+                    caption: "L'assistant aide à retrouver les informations et à préparer des actions qui restent soumises à relecture.",
+                    label: "07 / Préparer",
+                    title: "Avancer avec un assistant encadré",
                     orientation: "landscape"
                 }
             ],
             features: [
-                "Projets et versions de recette avec historique des retours, messages et décisions.",
-                "Invitations destinées aux clients, à usage unique, expirantes et révocables, échangées contre une session sécurisée.",
-                "Preview HTTPS responsive, retours généraux, annotations visuelles et discussion persistante.",
-                "Workflow signalé, en cours, à revalider puis validé, avec approbation bloquée tant qu'un retour reste ouvert.",
-                "Compagnon Electron sandboxé pour sélectionner, lancer, surveiller et arrêter explicitement un projet local.",
-                "Architecture Cloudflare Workers et D1 avec isolation des organisations, limites de débit et migrations versionnées."
+                "Dossiers clients et projets reliés : notes, fichiers, état d'avancement et prochaine étape.",
+                "Tâches, calendrier, idées et rappels regroupés pour organiser le travail quotidien.",
+                "Comptes rendus, cadrages, devis préparatoires et suivi financier manuel, avec exports PDF et Excel.",
+                "Recette client intégrée : versions, checklist, retours, décisions et conversion des problèmes en tâches.",
+                "Assistant local via Ollama pour rechercher, résumer et préparer des modifications à valider.",
+                "Suivi technique avec GitHub et Codex, inventaire des hébergements et transferts SFTP/FTPS explicites."
             ],
-            repoLink: "https://github.com/rfielbal/Revaloop",
+            repoLink: null,
             liveLink: null
         },
         {
@@ -998,10 +1016,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const getProjectByReference = (reference) => {
         const normalizedReference = String(reference ?? "").trim().toLowerCase();
-        const numericReference = Number(normalizedReference);
+        const canonicalReference = normalizedReference === "revaloop" ? "visionbuild" : normalizedReference;
+        const numericReference = Number(canonicalReference);
 
         return projects.find((project) =>
-            project.slug === normalizedReference
+            project.slug === canonicalReference
             || (Number.isFinite(numericReference) && project.id === numericReference)
         );
     };
@@ -1108,28 +1127,28 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         delivery: {
             accent: "#ff5f57",
-            status: "Site Jessica Dew livré · Revaloop en alpha",
+            status: "Jessica Dew en production · VisionBuild en local",
             index: "04 / 04",
             context: "Client + produit · Qualité continue",
-            mediaType: "Recette et validation",
-            project: "Revaloop",
+            mediaType: "Suivi technique et recette",
+            project: "VisionBuild",
             title: "Mettre la qualité sous contrôle, jusqu'après la mise en ligne.",
             summary: "Un produit fiable ne se résume pas à une version terminée\u00a0: sa recette, sa sécurité, sa livraison et son exploitation doivent rester maîtrisées.",
-            need: "Livrer Jessica Dew en production tout en structurant, avec Revaloop, une boucle de validation claire entre développeur et client.",
-            decision: "Industrialiser les releases, la recette, le monitoring et le retour arrière côté Jessica\u00a0; versionner les retours, sécuriser les invitations et bloquer l'approbation tant qu'un point reste ouvert côté Revaloop.",
-            proof: "Le site Jessica Dew est déployé et maintenu sur OVHcloud. Revaloop centralise déjà versions, annotations, discussions et décisions dans une alpha à accès contrôlé.",
-            techs: ["Recette versionnée", "Accès sécurisés", "Monitoring", "Rollback"],
-            image: "./images/projects/revaloop/cover.webp",
-            imageAlt: "Tableau de bord de recette du projet Revaloop",
+            need: "Maintenir Jessica Dew en production et disposer, avec VisionBuild, d'un espace personnel pour suivre les projets, leurs versions et les retours de recette.",
+            decision: "Encadrer les releases, la surveillance et le retour arrière de Jessica Dew ; réunir dans VisionBuild le suivi technique, la recette et les propositions d'un assistant soumises à validation.",
+            proof: "Jessica Dew est déployé et maintenu sur OVHcloud. VisionBuild fonctionne localement et relie les dossiers, le suivi de développement et la recette client ; les captures présentent des données de démonstration.",
+            techs: ["Suivi technique", "Recette client", "Assistant encadré", "Exploitation"],
+            image: "./images/projects/visionbuild/cover.webp",
+            imageAlt: "Bureau visuel de VisionBuild dans l'espace de démonstration",
             imagePosition: "center",
             projectId: "9",
-            action: "Examiner Revaloop",
-            role: "Qualité produit et exploitation",
+            action: "Examiner VisionBuild",
+            role: "Suivi produit et exploitation",
             nodes: [
-                { label: "Publier", value: "Release contrôlée", icon: "fas fa-code-branch" },
-                { label: "Inviter", value: "Accès temporaire", icon: "fas fa-user-lock" },
-                { label: "Valider", value: "Retours traçables", icon: "fas fa-list-check" },
-                { label: "Exploiter", value: "Monitoring + rollback", icon: "fas fa-shield-halved" }
+                { label: "Suivre", value: "Projet + code", icon: "fas fa-code-branch" },
+                { label: "Vérifier", value: "Recette intégrée", icon: "fas fa-list-check" },
+                { label: "Préparer", value: "IA sous contrôle", icon: "fas fa-user-check" },
+                { label: "Exploiter", value: "Jessica sur OVH", icon: "fas fa-shield-halved" }
             ]
         }
     };
@@ -1990,7 +2009,7 @@ document.addEventListener("DOMContentLoaded", () => {
             "/help": {
                 lines: [
                     "Je peux répondre comme un mini-assistant de portfolio.",
-                    "Commandes\u00a0: /about, /skills, /projects, /revaloop, /responsiver, /minecraft, /formation, /veille, /personality, /goals, /contact, /cv, /clear.",
+                    "Commandes\u00a0: /about, /skills, /projects, /visionbuild, /responsiver, /minecraft, /formation, /veille, /personality, /goals, /contact, /cv, /clear.",
                     "Tu peux aussi écrire\u00a0: qui es-tu, quels projets, quelle stack, quelle veille, objectif, contact..."
                 ]
             },
@@ -2012,20 +2031,20 @@ document.addEventListener("DOMContentLoaded", () => {
             },
             "/projects": {
                 lines: [
-                    `Le portfolio présente ${projects.length} projets, avec Wheello comme réalisation client principale et Revaloop comme nouvelle plateforme open source en développement.`,
-                    "On y retrouve des projets clients, des projets académiques, deux produits Electron, un jeu web jouable, une démo 3D et une carte Minecraft automatisée.",
+                    `Le portfolio présente ${projects.length} projets, avec Wheello comme réalisation client principale et VisionBuild comme espace de travail personnel en évolution.`,
+                    "On y retrouve des projets clients et académiques, des outils d'inspection 3D et de responsivité, un jeu web jouable, une démo 3D et une carte Minecraft automatisée.",
                     "Cyber 1, Cyber 2 et Cyber 3 couvrent la sauvegarde chiffrée, la sécurité Symfony et les tests en intégration continue. CookingNinja présente aussi un jeu de cuisine 3D conçu pour le salon de l’étudiant.",
                     "La logique\u00a0: montrer ma progression, sans seulement empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
                 ],
                 action: { label: "Voir les projets", target: "#projects" }
             },
-            "/revaloop": {
+            "/visionbuild": {
                 lines: [
-                    "Revaloop est une plateforme open source de recette client actuellement en alpha.",
-                    "Elle rassemble une prévisualisation HTTPS, des invitations temporaires, des annotations visuelles, une discussion et un workflow de revalidation jusqu'à l'approbation finale.",
-                    "Son compagnon Electron lance et surveille déjà un projet local de façon explicite. Le tunnel de partage distant reste une étape à venir, clairement séparée des fonctions déjà opérationnelles."
+                    "VisionBuild est mon espace de travail personnel pour réunir clients, projets, tâches, documents et suivi technique sur mon ordinateur.",
+                    "L'interface classique et le Bureau en 3D ouvrent les mêmes dossiers. La recette client issue de Revaloop est intégrée aux projets, avec versions, checklist, retours et décisions.",
+                    "Je conçois les parcours et fais évoluer l'application avec un développement assisté par IA. L'assistant local Ollama prépare des actions à valider ; le chat Codex reste une intégration distincte."
                 ],
-                action: { label: "Ouvrir Revaloop", projectId: 9 }
+                action: { label: "Ouvrir VisionBuild", projectId: 9 }
             },
             "/responsiver": {
                 lines: [
@@ -2055,7 +2074,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 lines: [
                     "Ma veille couvre l'IA et les agents, le développement web, les interfaces, l'écosystème Apple et les outils de conception.",
                     "Je pars de signaux repérés sur X ou dans ma bibliothèque Notion, puis je remonte aux sources officielles avant de tester l'idée dans un contexte maîtrisé.",
-                    "La page dédiée montre la méthode, les sujets récents et leur impact concret sur Revaloop, Responsiver et Jessica Dew."
+                    "La page dédiée montre la méthode, les sujets récents et leur impact concret sur VisionBuild, Responsiver et Jessica Dew."
                 ],
                 action: { label: "Ouvrir la veille technologique", href: "./veille.html" }
             },
@@ -2118,10 +2137,12 @@ document.addEventListener("DOMContentLoaded", () => {
             "/quels projets": "/projects",
             "/tes projets": "/projects",
             "/travaux": "/projects",
-            "/revaloop": "/revaloop",
-            "/recette": "/revaloop",
-            "/recette client": "/revaloop",
-            "/validation client": "/revaloop",
+            "/visionbuild": "/visionbuild",
+            "/vision build": "/visionbuild",
+            "/revaloop": "/visionbuild",
+            "/recette": "/visionbuild",
+            "/recette client": "/visionbuild",
+            "/validation client": "/visionbuild",
             "/responsiver": "/responsiver",
             "/responsive": "/responsiver",
             "/application responsiver": "/responsiver",
@@ -2256,7 +2277,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!entry) {
                 appendLine("error", `Commande inconnue\u00a0: ${command}`);
-                appendLine("response", "Essaie /help, /about, /skills, /projects, /veille, /revaloop, /responsiver ou /contact.");
+                appendLine("response", "Essaie /help, /about, /skills, /projects, /veille, /visionbuild, /responsiver ou /contact.");
                 return;
             }
 
@@ -2919,6 +2940,27 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <span>${image.label || `${String(index + 1).padStart(2, "0")} / Écran`}</span>
                                     <p>${image.caption || "Capture du projet"}</p>
                                 </figcaption>
+                            </figure>
+                        `).join("")}
+                    </div>
+                </section>
+            `;
+        } else if (data.galleryLayout === "workspace-tour") {
+            const workspaceImages = normalizeProjectGalleryImages(data);
+
+            imageMarkup = `
+                <section class="pm-project-gallery pm-workspace-tour">
+                    ${renderProjectGalleryHeading(data, "ESPACE DE TRAVAIL")}
+                    ${data.galleryNotice ? `<p class="pm-workspace-notice">${data.galleryNotice}</p>` : ""}
+                    <div class="pm-workspace-grid">
+                        ${workspaceImages.map((image, index) => `
+                            <figure class="pm-workspace-view${index === 0 ? " is-featured" : ""}">
+                                <div class="pm-workspace-view-head">
+                                    <span>${image.label}</span>
+                                    <strong>${image.title}</strong>
+                                </div>
+                                ${renderProjectGalleryImage(data, image)}
+                                <figcaption>${image.caption}</figcaption>
                             </figure>
                         `).join("")}
                     </div>
