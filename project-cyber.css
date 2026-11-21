@@ -687,3 +687,42 @@ body.cyber-project-page .pbt-cyber a:focus-visible {
 body.cyber-project-page .pbt-cyber {
     --case-accent: #ccff00!important;
 }
+
+/* Cyber 3 evidence layout, matching the published Portfolio BTS page. */
+body.cyber-project-page .pbt-cyber-proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 32px;
+}
+
+body.cyber-project-page .pbt-cyber-proof-grid .pbt-git-result {
+    padding: 16px;
+}
+
+body.cyber-project-page .pbt-cyber-proof-grid figcaption strong {
+    display: block;
+    color: #e6edca;
+    font-size: 16px;
+}
+
+body.cyber-project-page .pbt-cyber-proof-grid figcaption p {
+    font-size: 13px;
+    margin: 10px 0 0;
+}
+
+body.cyber-project-page .pbt-cyber-three code {
+    overflow-wrap: anywhere;
+    color: #e4eab9;
+}
+
+body.cyber-project-page .pbt-cyber-proof-grid img {
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+}
+
+@media (max-width: 1000px) {
+    body.cyber-project-page .pbt-cyber-proof-grid {
+        grid-template-columns: 1fr;
+    }
+}

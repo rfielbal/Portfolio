@@ -36,6 +36,9 @@ DOCUMENTS = {
     "documents/veille/Veille-Apple-2026-09-19.pdf",
     "documents/veille/Veille-Apple-2026-10-02.pdf",
     "documents/veille/Veille-Apple-2026-10-16.pdf",
+    "documents/projets/cyber-3-tests-integration.pdf",
+    "documents/veille/Veille-Apple-2026-10-30.pdf",
+    "documents/veille/Veille-Apple-2026-11-13.pdf",
 }
 
 
@@ -77,7 +80,18 @@ def allowed(path: str) -> bool:
     if parts[0] == "videos":
         return extension in {".mp4", ".webm"}
     if parts[0] == "demos":
-        return extension in {".html", ".css", ".js", ".json", ".wasm", ".stl", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".wav", ".mp3", ".woff2"}
+        if path in {
+            "demos/cooking-ninja/audio/kitchen/LICENSE-Kenney-impact.txt",
+            "demos/cooking-ninja/audio/kitchen/LICENSE-Kenney-rpg.txt",
+            "demos/cooking-ninja/audio/kitchen/PROVENANCE.md",
+        }:
+            return True
+        if parts[:3] == ("demos", "cooking-ninja", "licenses") and len(parts) == 4:
+            return parts[3] in {
+                "three.txt", "lucide-react.txt", "react.txt", "react-dom.txt",
+                "fontsource-dm-sans.txt", "fontsource-outfit.txt",
+            }
+        return extension in {".html", ".css", ".js", ".json", ".wasm", ".stl", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".wav", ".mp3", ".woff", ".woff2"}
     return False
 
 
