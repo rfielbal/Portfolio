@@ -164,6 +164,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     caption: "Modification de période avec disponibilités",
                     group: "Application mobile",
                     orientation: "portrait"
+                },
+                {
+                    src: "./images/projects/wheello/gallery/mcd.png",
+                    alt: "Modèle conceptuel de données Wheello : utilisateurs, véhicules, réservations, constats, signalements et notifications",
+                    caption: "Modèle conceptuel de données de Wheello",
+                    originalLinkLabel: "Ouvrir le MCD en taille réelle",
+                    group: "Modèle de données",
+                    orientation: "landscape"
                 }
             ],
             imageSlots: [],
@@ -262,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
             category: "Plateforme open source de recette client · Projet perso",
             year: "En cours",
             dateLabel: "Développement",
-            created: "En cours",
+            created: "Depuis juillet–août 2026 (en cours)",
             role: "Conception produit & pilotage technique",
             status: "Alpha en cours",
             accent: "#ff5f57",
@@ -589,7 +597,7 @@ document.addEventListener("DOMContentLoaded", () => {
             category: "Application desktop open source · Projet perso",
             year: "En cours",
             dateLabel: "Développement",
-            created: "En cours",
+            created: "Depuis juillet–août 2026 (en cours)",
             role: "Conception produit & pilotage technique",
             status: "Bêta en cours",
             accent: "#ff5f57",
@@ -766,7 +774,8 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Cyber 1 — Sauvegarde sécurisée",
             category: "Projet pédagogique · Cybersécurité",
             year: "2026",
-            created: "Semestre 3 · 2026",
+            dateLabel: "Période",
+            created: "du 26/09/26 au 23/10/26",
             role: "Réalisation en binôme · Raphaël Coursier & Vincent Rouget",
             status: "Projet pédagogique documenté",
             accent: "#ccff00",
@@ -807,7 +816,8 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Cyber 2 — SymfonyType",
             category: "Projet pédagogique · Cybersécurité",
             year: "2026",
-            created: "Semestre 3 · 2026",
+            dateLabel: "Période",
+            created: "du 28/09/26 au 12/10/26",
             role: "Réalisation en binôme",
             status: "Projet pédagogique documenté",
             accent: "#ccff00",
@@ -854,6 +864,131 @@ document.addEventListener("DOMContentLoaded", () => {
             repoLink: "https://github.com/rfielbal/SymfonyType",
             liveLink: "./documents/projets/cyber-2-symfonytype.pdf",
             liveLabel: "Diaporama · 14 pages"
+        },
+        {
+            "id": 12,
+            "index": "12",
+            "slug": "cyber-3-tests-integration",
+            "title": "Cyber 3 — Tests et intégration",
+            "summary": "Vérifier les protections de SymfonyType avec PHPUnit et bloquer une fusion tant que les tests GitHub Actions échouent.",
+            "filter": "academique",
+            "category": "PROJET PÉDAGOGIQUE · CYBERSÉCURITÉ",
+            "created": "du 07/11/26 au 14/11/26",
+            "role": "Travail en binôme · Tests et intégration continue",
+            "status": "Projet présenté · Résultats documentés",
+            "accent": "#ccff00",
+            "techs": [
+                "Symfony",
+                "PHPUnit",
+                "MariaDB",
+                "GitHub Actions",
+                "Pull requests"
+            ],
+            "description": "Dans la continuité de Cyber 2, nous avons automatisé la vérification des protections de SymfonyType. Les tests couvrent l’authentification, les profils, les habilitations et la validation des données. Une base dédiée isole les essais. GitHub Actions exécute la suite à chaque pull request, puis le déploiement intervient après validation et fusion.",
+            "features": [
+                "Tests fonctionnels des connexions, des profils et des droits administrateur.",
+                "Fixtures reproductibles et nettoyage limité à une base de test identifiée.",
+                "Contrôle du refus d’accès et de l’absence de modification en base.",
+                "Workflow PHPUnit sur les pull requests vers main, avec MariaDB temporaire.",
+                "Protection de main : tests réussis, approbation et branche à jour avant fusion.",
+                "Démonstration d’un échec volontaire, correction puis déploiement après la PR nº 7."
+            ],
+            "repoLink": "https://github.com/rfielbal/SymfonyType",
+            "liveLink": "./documents/projets/cyber-3-tests-integration.pdf",
+            "cover": "./images/projects/cyber-3-tests-integration/cyber3-diapo-01.webp",
+            "thumbnail": "./images/projects/cyber-3-tests-integration/cyber3-diapo-01.webp",
+            "slides": "./documents/projets/cyber-3-tests-integration.pdf",
+            "images": [
+                {
+                    "src": "./images/projects/cyber-3-tests-integration/cyber3-diapo-13.webp",
+                    "alt": "Résultat PHPUnit : 78 tests et 477 assertions, diapositive 13",
+                    "caption": "Résultats du job GitHub Actions présentés dans le diaporama."
+                },
+                {
+                    "src": "./images/projects/cyber-3-tests-integration/cyber3-diapo-16.webp",
+                    "alt": "Échec volontaire du test puis correction, pull request numéro 7",
+                    "caption": "PR nº 7 du 07/11/26 : une attente incorrecte rend le test rouge."
+                },
+                {
+                    "src": "./images/projects/cyber-3-tests-integration/cyber3-diapo-17.webp",
+                    "alt": "Déploiement réussi après fusion de la pull request numéro 7",
+                    "caption": "Exécution du workflow de déploiement après fusion."
+                }
+            ],
+            "dateLabel": "Période",
+            "year": "2026",
+            "impact": "Vérifier les protections de SymfonyType avec PHPUnit et bloquer une fusion tant que les tests GitHub Actions échouent.",
+            "pageUrl": "./cyber-3-tests-integration.html",
+            "logoMark": "C3",
+            "liveLabel": "Diaporama · 17 pages"
+        },
+        {
+            "id": 13,
+            "index": "13",
+            "slug": "cookingninja",
+            "title": "CookingNinja",
+            "summary": "Un jeu de cuisine en 3D présenté au salon de l’étudiant pour faire découvrir le BTS SIO par une expérience interactive.",
+            "filter": "academique",
+            "category": "PROJET ACADÉMIQUE · SALON DE L’ÉTUDIANT",
+            "created": "Octobre–novembre 2026 · Salon du 12/11/26",
+            "role": "Conception et développement · Présentation avec la classe",
+            "status": "Présenté au salon de l’étudiant",
+            "accent": "#ccff00",
+            "techs": [
+                "TypeScript",
+                "React",
+                "Three.js",
+                "Node.js",
+                "WebSocket"
+            ],
+            "description": "J’ai développé CookingNinja pour présenter notre formation de BTS SIO du lycée Guy Mollet, à Arras, au salon de l’étudiant du 12 novembre 2026. Le visiteur choisit une recette, coupe les bons ingrédients et termine par une phase de mélange. Son téléphone devient une manette grâce aux mouvements ou au tactile. Après la partie, un atelier en six étapes explique le trajet du geste jusqu’au jeu, avec des animations et des extraits du code. L’objectif est de rendre visibles les compétences apprises en formation et d’ouvrir la discussion sur le développement.",
+            "features": [
+                "Trois recettes, des ingrédients 3D procéduraux, des pièges, des vies, des combos et une phase de mélange.",
+                "Association PC–téléphone par QR code, calibration du gyroscope et commandes tactiles ou souris de secours.",
+                "Le téléphone transmet les gestes au relais Node.js par WebSocket ; le navigateur applique les règles et affiche la scène Three.js.",
+                "Mode salon : pseudo, tutoriel, retour au calme en cas de perte de commande et nouvel appairage pour le joueur suivant.",
+                "Classements conservés dans un fichier JSON avec écriture atomique et protection contre le double enregistrement d’une partie.",
+                "Atelier pédagogique en six étapes : geste, relais, aliments 3D, découpe, mélange et résultat ; ses animations illustrent le fonctionnement du code."
+            ],
+            "repoLink": "https://github.com/rfielbal/cookingNinja",
+            "liveLink": "https://www.linkedin.com/posts/rapha%C3%ABl-coursier_btssio-lycaezeguymollet-arras-ugcPost-7526653978135257088-59CL/",
+            "cover": "./images/projects/cookingninja/cookingninja-accueil.webp",
+            "thumbnail": "./images/projects/cookingninja/cookingninja-accueil.webp",
+            "galleryLayout": "case-study",
+            "images": [
+                {
+                    "src": "./images/projects/cookingninja/cookingninja-school-header-desktop.webp",
+                    "alt": "Accueil de CookingNinja aux couleurs du lycée Guy Mollet",
+                    "caption": "Le jeu accueille les visiteurs et propose trois recettes.",
+                    "group": "Une expérience pour découvrir le BTS",
+                    "orientation": "landscape"
+                },
+                {
+                    "src": "./images/projects/cookingninja/cookingninja-arcade-natural-final.webp",
+                    "alt": "Aliments et pièges en trois dimensions dans CookingNinja",
+                    "caption": "Le moteur distingue les ingrédients de la recette, les pièges et les bonus.",
+                    "group": "Une expérience pour découvrir le BTS",
+                    "orientation": "landscape"
+                },
+                {
+                    "src": "./images/projects/cookingninja/cookingninja-minute-production-atelier.webp",
+                    "alt": "Atelier pédagogique montrant le calcul du déplacement du viseur à partir des angles du téléphone",
+                    "caption": "Les coulisses relient une animation à un extrait du vrai code TypeScript.",
+                    "group": "Du geste au code",
+                    "orientation": "landscape"
+                }
+            ],
+            "logo": "./images/projects/cookingninja/logo.svg",
+            "logoAlt": "Logo CookingNinja",
+            "logoMark": "CN",
+            "liveLabel": "Retour sur le salon",
+            "demoEmbed": "./demos/cooking-ninja/",
+            "demoPreview": "./images/projects/cookingninja/cookingninja-accueil.webp",
+            "demoTitle": "JOUER À COOKINGNINJA",
+            "demoDescription": "Choisis une recette, coupe les bons ingrédients et termine le mélange. Cette démo autonome se joue à la souris ou au tactile, sans téléphone connecté ni classement partagé. Elle s’ouvre dans un onglet séparé.",
+            "demoLabel": "Lancer la démo",
+            "year": "2026",
+            "impact": "Un jeu de cuisine en 3D présenté au salon de l’étudiant pour faire découvrir le BTS SIO par une expérience interactive."
         }
     ];
 
@@ -1335,6 +1470,8 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         window.addEventListener("pointerdown", completeOnIntent, { passive: true, signal });
+        window.addEventListener("wheel", completeOnIntent, { passive: true, signal });
+        window.addEventListener("touchmove", completeOnIntent, { passive: true, signal });
         window.addEventListener("keydown", completeOnIntent, { capture: true, signal });
     };
 
@@ -1877,7 +2014,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 lines: [
                     `Le portfolio présente ${projects.length} projets, avec Wheello comme réalisation client principale et Revaloop comme nouvelle plateforme open source en développement.`,
                     "On y retrouve des projets clients, des projets académiques, deux produits Electron, un jeu web jouable, une démo 3D et une carte Minecraft automatisée.",
-                    "Cyber 1 et Cyber 2 complètent les projets académiques : sauvegarde chiffrée de MariaDB et sécurisation des comptes Symfony avec déploiement GitHub Actions.",
+                    "Cyber 1, Cyber 2 et Cyber 3 couvrent la sauvegarde chiffrée, la sécurité Symfony et les tests en intégration continue. CookingNinja présente aussi un jeu de cuisine 3D conçu pour le salon de l’étudiant.",
                     "La logique\u00a0: montrer ma progression, sans seulement empiler des maquettes. Chaque projet précise son rôle, son état et son impact."
                 ],
                 action: { label: "Voir les projets", target: "#projects" }
@@ -2965,7 +3102,10 @@ document.addEventListener("DOMContentLoaded", () => {
                                         <img src="${image.src}" alt="${image.alt || `Aperçu ${data.title}`}" loading="lazy" decoding="async">
                                         <span><i class="fas fa-up-right-and-down-left-from-center"></i> Agrandir</span>
                                     </button>
-                                    <figcaption>${image.caption || "Capture du projet"}</figcaption>
+                                    <figcaption>
+                                        ${image.caption || "Capture du projet"}
+                                        ${image.originalLinkLabel ? `<br><a href="${image.src}" target="_blank" rel="noopener noreferrer">${image.originalLinkLabel} ↗</a>` : ""}
+                                    </figcaption>
                                 </figure>
                             `).join("")}
                         </div>
@@ -3882,6 +4022,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.addEventListener("mousemove", (event) => {
             if (!portfolioCursorQuery.matches || cursorReducedMotionQuery.matches) return;
+            // Keep the native pointer until the overlay above the custom
+            // cursor is fully hidden, including its fade-out transition.
+            if (preloader && !preloader.hidden) return;
             if (!cursorActivated) {
                 activateCursor(event);
                 return;

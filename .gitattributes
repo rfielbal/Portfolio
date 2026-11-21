@@ -1,1 +1,5 @@
 *.pdf binary
+
+# Preserve generated shader strings and the blank context lines of the build patch.
+demos/cooking-ninja/assets/three-*.js whitespace=-blank-at-eol
+scripts/cooking-demo/portfolio-demo.patch whitespace=-blank-at-eol

@@ -1,0 +1,692 @@
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -1,3 +1,4 @@
++import { DEMO, ATELIER_URL } from './demo';
+ import {
+   useCallback,
+   useEffect,
+@@ -73,7 +74,7 @@
+ export default function App() {
+   const [view, setView] = useState<View>('home');
+   const [standActive, setStandActive] = useState(
+-    () => new URLSearchParams(window.location.search).get('stand') === '1',
++    () => !DEMO && new URLSearchParams(window.location.search).get('stand') === '1',
+   );
+   const standRef = useRef(standActive);
+   standRef.current = standActive;
+@@ -82,7 +83,7 @@
+   dialogRef.current = dialog;
+   const [recipe, setRecipe] = useState(RECIPES[0]);
+   const [state, setState] = useState<GameState | null>(null);
+-  const [mode, setMode] = useState<'mouse' | 'phone'>('phone');
++  const [mode, setMode] = useState<'mouse' | 'phone'>(DEMO ? 'mouse' : 'phone');
+   const [phoneReady, setPhoneReady] = useState(false);
+   const [pageVisible, setPageVisible] = useState(!document.hidden);
+   const [blade, setBlade] = useState<BladeId>(() => {
+@@ -355,6 +356,8 @@
+     let previousEvent: GameState['event'] = 'normal';
+     let previousCountdown = 0;
+     const loop = (now: number) => {
++      frame = 0;
++      if (DEMO && document.hidden) return;
+       const dt = Math.min((now - last) / 1000, 0.1);
+       last = now;
+       const game = engine.current;
+@@ -430,8 +433,20 @@
+       } else audio.setPhase('menu');
+       frame = requestAnimationFrame(loop);
+     };
++    const visibility = () => {
++      if (!DEMO) return;
++      if (document.hidden) {
++        cancelAnimationFrame(frame);
++        frame = 0;
++      } else if (!frame) {
++        last = performance.now();
++        frame = requestAnimationFrame(loop);
++      }
++    };
++    if (DEMO) document.addEventListener('visibilitychange', visibility);
+     frame = requestAnimationFrame(loop);
+     return () => {
++      if (DEMO) document.removeEventListener('visibilitychange', visibility);
+       cancelAnimationFrame(frame);
+       audio.stop();
+     };
+@@ -564,6 +579,15 @@
+       (mode === 'phone' && (!host.connected || performance.now() - lastPhoneInput.current >= 1500))
+     )
+       return;
++    if (DEMO) {
++      run.current = null;
++      setSaveStatus('Démo locale : score affiché ici, sans enregistrement ni classement partagé.');
++      scene.current?.setPaused(false);
++      setPractice(false);
++      game.start();
++      setState(game.snapshot());
++      return;
++    }
+     startingRef.current = true;
+     setStarting(true);
+     setSaveStatus('');
+@@ -629,6 +653,7 @@
+     }
+   };
+   const saveResult = useCallback(async () => {
++    if (DEMO) return;
+     const current = run.current;
+     const result = engine.current?.snapshot();
+     if (!current || !result || result.phase !== 'result' || current.finished) return;
+@@ -670,7 +695,7 @@
+     lastPhoneInput.current = -Infinity;
+     setPhoneReady(false);
+     setNickname(newNickname());
+-    setMode('phone');
++    setMode(DEMO ? 'mouse' : 'phone');
+     setPhoneSource('motion');
+     phoneSourceRef.current = 'motion';
+     sourceKnown.current = false;
+@@ -718,7 +743,10 @@
+           audio.play('select');
+       }}
+       style={
+-        { '--blade-color': bladeStyle.color, '--blade-glow': bladeStyle.glow } as CSSProperties
++        {
++          '--blade-color': bladeStyle.color,
++          '--blade-glow': bladeStyle.glow,
++        } as CSSProperties
+       }
+     >
+       <header className="site-header">
+@@ -741,22 +769,25 @@
+           </span>
+         </div>
+         <div className="header-actions">
+-          {view === 'home' && (
++          {!DEMO && view === 'home' && (
+             <button className="stand-mode-trigger" onClick={openStand}>
+               <Film size={17} /> Mode stand
+             </button>
+           )}
+-          <button
+-            className={`connect-button ${host.connected ? 'is-connected' : ''}`}
+-            onClick={() => {
+-              pause();
+-              setDialog(host.connected ? 'diagnostic' : 'pair');
+-            }}
+-          >
+-            <Smartphone size={17} />
+-            <span>{host.connected ? 'Téléphone connecté' : 'Connecter mon téléphone'}</span>
+-            <i />
+-          </button>
++          {DEMO && <span className="demo-label">Démo · souris ou écran tactile</span>}
++          {!DEMO && (
++            <button
++              className={`connect-button ${host.connected ? 'is-connected' : ''}`}
++              onClick={() => {
++                pause();
++                setDialog(host.connected ? 'diagnostic' : 'pair');
++              }}
++            >
++              <Smartphone size={17} />
++              <span>{host.connected ? 'Téléphone connecté' : 'Connecter mon téléphone'}</span>
++              <i />
++            </button>
++          )}
+           <button
+             className="icon-button settings-button"
+             aria-label="Réglages"
+@@ -791,7 +822,7 @@
+         />
+       )}
+ 
+-      {view === 'home' && (
++      {!DEMO && view === 'home' && (
+         <div className="home-leaderboards">
+           <Leaderboard
+             variant="home"
+@@ -951,7 +982,11 @@
+                         {completed} / {total} ingrédients
+                       </span>
+                       <div>
+-                        <i style={{ width: `${((completed || 0) / total) * 100}%` }} />
++                        <i
++                          style={{
++                            width: `${((completed || 0) / total) * 100}%`,
++                          }}
++                        />
+                       </div>
+                     </div>
+                     <div
+@@ -981,7 +1016,11 @@
+                       >
+                         <ShieldCheck size={21} />
+                         <strong>{Math.ceil(state.shieldRemaining)} s</strong>
+-                        <span style={{ transform: `scaleX(${state.shieldRemaining / 10})` }} />
++                        <span
++                          style={{
++                            transform: `scaleX(${state.shieldRemaining / 10})`,
++                          }}
++                        />
+                       </div>
+                     )}
+                     {state.event === 'rush' && (
+@@ -1022,12 +1061,20 @@
+                           </span>
+                         </div>
+                         <div className="focus-meter">
+-                          <i style={{ transform: `scaleX(${state.focus.remaining / 3})` }} />
++                          <i
++                            style={{
++                              transform: `scaleX(${state.focus.remaining / 3})`,
++                            }}
++                          />
+                         </div>
+                       </div>
+                     )}
+                     <div className="game-timeline">
+-                      <i style={{ width: `${(state.remaining / CUT_SECONDS) * 100}%` }} />
++                      <i
++                        style={{
++                          width: `${(state.remaining / CUT_SECONDS) * 100}%`,
++                        }}
++                      />
+                     </div>
+                   </>
+                 )}
+@@ -1046,20 +1093,28 @@
+                     <Heart size={17} /> 3 cœurs
+                   </span>
+                 </div>
+-                <div className="input-switch">
+-                  <button
+-                    className={mode === 'mouse' ? 'selected' : ''}
+-                    onClick={() => changeMode('mouse')}
+-                  >
+-                    <MousePointer2 size={16} /> Souris
+-                  </button>
+-                  <button
+-                    className={mode === 'phone' ? 'selected' : ''}
+-                    onClick={() => changeMode('phone')}
+-                  >
+-                    <Smartphone size={16} /> Téléphone
+-                  </button>
+-                </div>
++                {DEMO && (
++                  <p className="demo-controls">
++                    Maintenez le clic ou le doigt et glissez pour couper. Faites des cercles pour
++                    mélanger.
++                  </p>
++                )}
++                {!DEMO && (
++                  <div className="input-switch">
++                    <button
++                      className={mode === 'mouse' ? 'selected' : ''}
++                      onClick={() => changeMode('mouse')}
++                    >
++                      <MousePointer2 size={16} /> Souris
++                    </button>
++                    <button
++                      className={mode === 'phone' ? 'selected' : ''}
++                      onClick={() => changeMode('phone')}
++                    >
++                      <Smartphone size={16} /> Téléphone
++                    </button>
++                  </div>
++                )}
+                 {mode === 'phone' && !host.connected ? (
+                   <button className="button primary" onClick={() => setDialog('pair')}>
+                     Connecter mon téléphone <Smartphone size={19} />
+@@ -1262,9 +1317,11 @@
+                   <button className="button primary" onClick={nextVisitor}>
+                     Joueur suivant <ArrowRight size={17} />
+                   </button>
+-                  <button className="text-button" onClick={() => setDialog('board')}>
+-                    <Trophy size={17} /> Classement
+-                  </button>
++                  {!DEMO && (
++                    <button className="text-button" onClick={() => setDialog('board')}>
++                      <Trophy size={17} /> Classement
++                    </button>
++                  )}
+                 </div>
+                 <ResultDiscovery />
+               </div>
+@@ -1314,7 +1371,7 @@
+             </div>
+           )}
+           {notice && <p role="status">{notice}</p>}
+-          {state?.phase === 'result' && (
++          {!DEMO && state?.phase === 'result' && (
+             <div className="result-leaderboards">
+               <Leaderboard
+                 variant="result"
+@@ -1330,10 +1387,10 @@
+       {view !== 'game' && (
+         <footer className="arcade-footer">
+           <span>3 recettes · 3 cœurs · votre meilleur geste</span>
+-          <a href="/atelier" target="_blank" rel="noreferrer">
++          <a href={ATELIER_URL} target="_blank" rel="noopener noreferrer">
+             Dans les coulisses du projet ↗
+           </a>
+-          <span>ÉDITION SALON · V0.2</span>
++          <span>{DEMO ? 'DÉMO LOCALE · SANS CLASSEMENT PARTAGÉ' : 'ÉDITION SALON · V0.2'}</span>
+         </footer>
+       )}
+       {dialog && (
+@@ -1352,14 +1409,14 @@
+           onClose={() => setDialog(null)}
+           className={dialog === 'board' ? 'leaderboard-dialog' : undefined}
+         >
+-          {dialog === 'board' ? (
++          {!DEMO && dialog === 'board' ? (
+             <Leaderboard
+               variant={view === 'game' ? 'result' : 'home'}
+               recipe={recipe.id}
+               highlightEntryId={run.current?.eligible ? run.current.id : undefined}
+               refreshKey={boardRevision}
+             />
+-          ) : dialog === 'pair' || dialog === 'diagnostic' ? (
++          ) : !DEMO && (dialog === 'pair' || dialog === 'diagnostic') ? (
+             <PairDialog
+               code={host.code}
+               connected={host.connected}
+@@ -1382,14 +1439,18 @@
+               </h2>
+               {[
+                 {
+-                  icon: Smartphone,
+-                  title: 'Connectez votre sabre.',
+-                  text: 'Scannez le QR code. Autorisez le gyroscope, puis recentrez en tenant votre téléphone devant vous. La souris est aussi disponible.',
++                  icon: DEMO ? MousePointer2 : Smartphone,
++                  title: DEMO ? 'Préparez votre souris ou votre doigt.' : 'Connectez votre sabre.',
++                  text: DEMO
++                    ? 'Cette démo se joue directement sur cet écran. Maintenez le clic ou le doigt et glissez pour trancher.'
++                    : 'Scannez le QR code. Autorisez le gyroscope, puis recentrez en tenant votre téléphone devant vous. La souris est aussi disponible.',
+                 },
+                 {
+                   icon: Leaf,
+                   title: 'Coupez les bons ingrédients.',
+-                  text: `Inclinez le téléphone pour viser, puis faites un petit mouvement rapide pour couper. Préparez toute la liste en ${CUT_SECONDS} secondes. Un piège coûte un cœur : vous en avez trois.`,
++                  text: DEMO
++                    ? `Glissez sur les ingrédients demandés. Préparez toute la liste en ${CUT_SECONDS} secondes. Un piège coûte un cœur : vous en avez trois.`
++                    : `Inclinez le téléphone pour viser, puis faites un petit mouvement rapide pour couper. Préparez toute la liste en ${CUT_SECONDS} secondes. Un piège coûte un cœur : vous en avez trois.`,
+                 },
+                 {
+                   icon: RotateCcw,
+@@ -1411,8 +1472,9 @@
+               <div className="network-note">
+                 <ShieldCheck size={21} />
+                 <span>
+-                  Tenez fermement le téléphone et gardez de l’espace autour de vous. De petits
+-                  gestes suffisent.
++                  {DEMO
++                    ? 'Le téléphone comme manette et le classement du stand sont disponibles dans le projet complet, pas dans cette démo.'
++                    : 'Tenez fermement le téléphone et gardez de l’espace autour de vous. De petits gestes suffisent.'}
+                 </span>
+               </div>
+               <button
+@@ -1482,14 +1544,15 @@
+                 />
+               </label>
+               <p className="settings-footnote">
+-                Les records sont enregistrés sur le PC du stand. Les mouvements du téléphone sont
+-                relayés en direct, sans enregistrement.
++                {DEMO
++                  ? 'La partie reste dans cet onglet. Aucun pseudo, score ou geste n’est envoyé à un serveur. Seule votre lame choisie est mémorisée dans ce navigateur.'
++                  : 'Les records sont enregistrés sur le PC du stand. Les mouvements du téléphone sont relayés en direct, sans enregistrement.'}
+               </p>
+             </div>
+           )}
+         </Modal>
+       )}
+-      {standActive && <StandMode onClose={closeStand} />}
++      {!DEMO && standActive && <StandMode onClose={closeStand} />}
+     </div>
+   );
+ }
+--- a/src/Atelier.tsx
++++ b/src/Atelier.tsx
+@@ -1,3 +1,4 @@
++import { DEMO, GAME_HOME } from './demo';
+ import { useCallback, useEffect, useRef, useState } from 'react';
+ import {
+   ArrowLeft,
+@@ -352,7 +353,11 @@
+   return (
+     <div className="atelier-deck">
+       <header className="atelier-deck-header">
+-        <a className="atelier-deck-brand" href="/" aria-label="CookingNinja, ouvrir le jeu">
++        <a
++          className="atelier-deck-brand"
++          href={DEMO ? GAME_HOME : '/'}
++          aria-label="CookingNinja, ouvrir le jeu"
++        >
+           <span>
+             <ChefHat size={25} />
+           </span>
+@@ -361,11 +366,11 @@
+           </strong>
+         </a>
+         <div className="atelier-school">
+-          <span>UN PROJET DU</span>
++          <span>{DEMO ? 'LES COULISSES DU JEU COMPLET' : 'UN PROJET DU'}</span>
+           <strong>Lycée Guy Mollet</strong>
+           <span>ARRAS · BTS SIO</span>
+         </div>
+-        <a className="atelier-back-link" href="/">
++        <a className="atelier-back-link" href={DEMO ? GAME_HOME : '/'}>
+           <ArrowLeft size={17} />
+           <span>Le jeu</span>
+         </a>
+@@ -388,6 +393,12 @@
+             <div aria-live="polite" aria-atomic="true">
+               <h1>{current.title}</h1>
+               <p className="atelier-lead">{current.lead}</p>
++              {DEMO && (
++                <p className="demo-atelier-note">
++                  L’atelier explique le projet complet. Le téléphone et le classement nécessitent
++                  son serveur ; la démo se joue à la souris ou au doigt, sans connexion au stand.
++                </p>
++              )}
+             </div>
+             <div className="atelier-takeaway">
+               <StepIcon size={23} />
+--- a/src/main.tsx
++++ b/src/main.tsx
+@@ -1,3 +1,5 @@
++import './demo.css';
++import { DEMO } from './demo';
+ import React, { Suspense, lazy } from 'react';
+ import { createRoot } from 'react-dom/client';
+ import '@fontsource/outfit/400.css';
+@@ -11,13 +13,17 @@
+ import './styles.css';
+ 
+ const Screen = lazy(() =>
+-  location.pathname.startsWith('/controller')
+-    ? import('./Controller')
+-    : location.pathname === '/atelier'
++  DEMO
++    ? new URLSearchParams(location.search).get('atelier') === '1'
+       ? import('./Atelier')
+-      : location.pathname === '/film'
+-        ? import('./ShowcaseFilm')
+-        : import('./App'),
++      : import('./App')
++    : location.pathname.startsWith('/controller')
++      ? import('./Controller')
++      : location.pathname === '/atelier'
++        ? import('./Atelier')
++        : location.pathname === '/film'
++          ? import('./ShowcaseFilm')
++          : import('./App'),
+ );
+ 
+ createRoot(document.getElementById('root')!).render(
+--- a/src/net.ts
++++ b/src/net.ts
+@@ -1,3 +1,4 @@
++import { DEMO } from './demo';
+ import { useCallback, useEffect, useRef, useState } from 'react';
+ import {
+   parseClientMessage,
+@@ -25,6 +26,7 @@
+   receiveAction.current = onAction;
+   receiveSettings.current = onSettings;
+   useEffect(() => {
++    if (DEMO) return;
+     let stopped = false,
+       retry: ReturnType<typeof setTimeout>;
+     const connect = () => {
+@@ -95,6 +97,7 @@
+     };
+   }, [generation]);
+   const sendState = useCallback((state: GameStateUpdate) => {
++    if (DEMO) return;
+     const message = parseClientMessage({ ...state, type: 'game:state' });
+     if (message?.type !== 'game:state') {
+       setError('État de partie invalide.');
+--- a/src/stand.ts
++++ b/src/stand.ts
+@@ -1,3 +1,4 @@
++import { DEMO } from './demo';
+ import type { GameState } from './game/engine';
+ import type { RecipeId } from './game/recipes';
+ 
+@@ -27,6 +28,7 @@
+ }
+ 
+ async function request<T>(url: string, body?: unknown): Promise<T> {
++  if (DEMO) throw new Error('Démo locale : aucun classement partagé.');
+   const response = await fetch(url, {
+     ...(body
+       ? {
+--- /dev/null
++++ b/src/demo.ts
+@@ -0,0 +1,4 @@
++/** Portfolio-only build: never connects to the stand or stores a score. */
++export const DEMO = import.meta.env.MODE === 'portfolio-demo';
++export const GAME_HOME = import.meta.env.BASE_URL;
++export const ATELIER_URL = DEMO ? `${GAME_HOME}?atelier=1` : '/atelier';
+--- /dev/null
++++ b/src/demo.css
+@@ -0,0 +1,25 @@
++.demo-label {
++  max-width: 18rem;
++  color: #e7dec8;
++  font-size: 0.78rem;
++  font-weight: 600;
++  text-align: right;
++}
++.demo-controls {
++  max-width: 27rem;
++  color: #d3d6c9;
++  line-height: 1.5;
++  font-size: 0.9rem;
++}
++.demo-atelier-note {
++  color: #c0d2b8;
++  font-size: 0.75rem;
++  line-height: 1.5;
++  margin-top: 0.7rem;
++}
++@media (max-width: 600px) {
++  .demo-label {
++    max-width: 9rem;
++    font-size: 0.65rem;
++  }
++}
+--- a/src/components/ArcadeMenu.tsx
++++ b/src/components/ArcadeMenu.tsx
+@@ -1,3 +1,4 @@
++import { DEMO } from '../demo';
+ import { useEffect, type RefObject } from 'react';
+ import { ArrowLeft, ArrowRight, ChefHat, Heart, Play, Trophy } from 'lucide-react';
+ import { RECIPES, FOODS, type Recipe } from '../game/recipes';
+@@ -69,7 +70,9 @@
+               <em>chefs !</em>
+             </h1>
+             <p className="arcade-intro">
+-              Votre téléphone devient votre sabre.
++              {DEMO
++                ? 'Votre souris ou votre doigt devient votre sabre.'
++                : 'Votre téléphone devient votre sabre.'}
+               <br />
+               La bonne recette. Le bon geste. Le meilleur score.
+             </p>
+@@ -88,9 +91,11 @@
+               <Play fill="currentColor" size={24} /> Jouer <span>↵</span>
+             </button>
+             <div className="arcade-secondary">
+-              <button onClick={p.onBoard}>
+-                <Trophy size={18} /> Classement
+-              </button>
++              {!DEMO && (
++                <button onClick={p.onBoard}>
++                  <Trophy size={18} /> Classement
++                </button>
++              )}
+               <button onClick={p.onHelp}>Comment jouer ?</button>
+             </div>
+           </>
+@@ -107,7 +112,7 @@
+             <div className="dojo-steps" aria-label="Préparation de la partie">
+               <span className="active">01 · Recette & pseudo</span>
+               <span>02 · Préparez votre sabre</span>
+-              <span>03 · Lancez sur le téléphone</span>
++              <span>{DEMO ? '03 · Jouez sur cet écran' : '03 · Lancez sur le téléphone'}</span>
+             </div>
+             <label className="nickname-field">
+               Votre pseudo
+@@ -122,13 +127,17 @@
+               />
+             </label>
+             <small id="nickname-note">
+-              Visible au classement. 2–20 lettres ou chiffres, sans nom complet.
++              {DEMO
++                ? 'Pseudo local, non enregistré. 2–20 lettres ou chiffres.'
++                : 'Visible au classement. 2–20 lettres ou chiffres, sans nom complet.'}
+             </small>
+             <button className="arcade-start" disabled={!validNickname} onClick={p.onPlay}>
+               Préparer cette recette <ArrowRight size={22} />
+             </button>
+             <p className="arcade-small">
+-              Connectez votre téléphone, choisissez votre lame. À vous de lancer !
++              {DEMO
++                ? 'Choisissez votre lame. Maintenez le clic ou le doigt pour couper !'
++                : 'Connectez votre téléphone, choisissez votre lame. À vous de lancer !'}
+             </p>
+           </>
+         )}
+--- a/src/components/ResultDiscovery.tsx
++++ b/src/components/ResultDiscovery.tsx
+@@ -1,3 +1,4 @@
++import { ATELIER_URL } from '../demo';
+ import { ArrowUpRight, Code2 } from 'lucide-react';
+ import './result-discovery.css';
+ 
+@@ -5,7 +6,7 @@
+   return (
+     <a
+       className="result-discovery"
+-      href="/atelier#atelier-decouverte"
++      href={`${ATELIER_URL}#atelier-decouverte`}
+       target="_blank"
+       rel="noopener noreferrer"
+     >
+--- a/src/components/AtelierStage.tsx
++++ b/src/components/AtelierStage.tsx
+@@ -1,4 +1,5 @@
+ import { useEffect, useRef, useState } from 'react';
++import { DEMO } from '../demo';
+ import { AtelierScene, type AtelierFrame, type AtelierSceneState } from '../game/AtelierScene';
+ 
+ export interface AtelierStageProps extends AtelierSceneState {
+@@ -61,6 +62,12 @@
+       hidden = document.hidden;
+       last = performance.now();
+       dirty = true;
++      if (DEMO) {
++        if (hidden) {
++          cancelAnimationFrame(frame);
++          frame = 0;
++        } else if (!stopped && !lostContext && !frame) frame = requestAnimationFrame(loop);
++      }
+     };
+     const onContextLost = (event: Event) => {
+       event.preventDefault();
+@@ -72,7 +79,8 @@
+     document.addEventListener('visibilitychange', onVisibility);
+     scene.canvas.addEventListener('webglcontextlost', onContextLost);
+     const loop = (now: number) => {
+-      if (stopped || lostContext) return;
++      frame = 0;
++      if (stopped || lostContext || (DEMO && hidden)) return;
+       const config = current.current;
+       if (config !== renderedConfig) {
+         scene.configure(config);
+--- a/src/game/Scene.ts
++++ b/src/game/Scene.ts
+@@ -1,4 +1,5 @@
+ import * as THREE from 'three';
++import { DEMO } from '../demo';
+ import { BLADES, DEFAULT_BLADE, type BladeId } from '../../shared/blades';
+ import { FoodFactory, FOOD_COLORS, type RecipeKind } from './food';
+ import {
+@@ -286,6 +287,7 @@
+     this.observer = new ResizeObserver(() => this.resize());
+     this.observer.observe(container);
+     this.resize();
++    if (DEMO) document.addEventListener('visibilitychange', this.onVisibility);
+     this.frame = requestAnimationFrame(this.animate);
+   }
+ 
+@@ -1614,8 +1616,21 @@
+     ctx.restore();
+   }
+ 
++  private onVisibility = (): void => {
++    if (this.disposed) return;
++    if (document.hidden) {
++      cancelAnimationFrame(this.frame);
++      this.frame = 0;
++    } else if (!this.frame) {
++      this.last = 0;
++      this.frame = requestAnimationFrame(this.animate);
++    }
++  };
++
+   private animate = (now: number): void => {
+     if (this.disposed) return;
++    this.frame = 0;
++    if (DEMO && document.hidden) return;
+     this.frame = requestAnimationFrame(this.animate);
+     if (!this.last) this.last = now;
+     // Match the host engine's clamp so lower frame rates do not slow only the food.
+@@ -1639,6 +1654,7 @@
+   dispose(): void {
+     if (this.disposed) return;
+     this.disposed = true;
++    if (DEMO) document.removeEventListener('visibilitychange', this.onVisibility);
+     cancelAnimationFrame(this.frame);
+     this.observer.disconnect();
+     this.foods.forEach((food) => this.removeFood(food));
+--- a/src/game/kitchen-samples.ts
++++ b/src/game/kitchen-samples.ts
+@@ -29,7 +29,9 @@
+   try {
+     await Promise.allSettled(
+       KITCHEN_SAMPLES.map(async (id) => {
+-        const response = await fetch(`/audio/kitchen/${id}.wav`, { signal: controller.signal });
++        const response = await fetch(`${import.meta.env.BASE_URL}audio/kitchen/${id}.wav`, {
++          signal: controller.signal,
++        });
+         if (!response.ok) return;
+         const bytes = await response.arrayBuffer();
+         if (controller.signal.aborted) return;
+--- a/vite.config.ts
++++ b/vite.config.ts
+@@ -3,6 +3,8 @@
+ 
+ export default defineConfig({
+   plugins: [react()],
++  base: './',
++  cacheDir: '.vite-cache',
+   build: {
+     rollupOptions: { output: { manualChunks: { three: ['three'] } } },
+     chunkSizeWarningLimit: 650,
+--- a/index.html
++++ b/index.html
+@@ -4,9 +4,9 @@
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <meta name="theme-color" content="#234c35" />
+-    <meta name="description" content="Votre téléphone devient votre sabre de cuisine. Choisissez une recette, tranchez les bons ingrédients et réveillez le ninja qui cuisine en vous." />
++    <meta name="description" content="Démo CookingNinja : trois recettes en 3D, à la souris ou sur écran tactile, sans classement partagé." />
+     <title>CookingNinja — À vos gestes, prêts, cuisinez !</title>
+     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+   </head>
+-  <body><noscript>CookingNinja a besoin de JavaScript pour afficher la 3D et connecter votre téléphone. Activez JavaScript pour jouer.</noscript><div id="root"></div><script type="module" src="/src/main.tsx"></script></body>
++  <body><noscript>CookingNinja a besoin de JavaScript pour afficher la 3D et jouer sur cet écran. Activez JavaScript pour jouer.</noscript><div id="root"></div><script type="module" src="/src/main.tsx"></script></body>
+ </html>

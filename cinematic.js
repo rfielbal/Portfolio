@@ -635,10 +635,11 @@
 
             const resizeCanvas = () => {
                 if (!canvasAllowed()) return;
-                const rect = canvas.getBoundingClientRect();
                 const dpr = Math.min(window.devicePixelRatio || 1, lowPowerDevice ? 1 : 1.25);
-                const width = Math.max(1, Math.round(rect.width));
-                const height = Math.max(1, Math.round(rect.height));
+                // The entrance scales the canvas visually; its drawing buffer
+                // must follow the layout size, not that temporary transform.
+                const width = Math.max(1, canvas.clientWidth);
+                const height = Math.max(1, canvas.clientHeight);
                 const pixelWidth = Math.round(width * dpr);
                 const pixelHeight = Math.round(height * dpr);
 
