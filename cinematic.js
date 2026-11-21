@@ -45,7 +45,7 @@
             "WHEELLO / CLIENT SYSTEM",
             "JESSICA DEW / CLIENT EXPERIENCE",
             "STREAMCORNER / FULL-STACK COMMERCE",
-            "REVALOOP / PRODUCT SYSTEM"
+            "VISIONBUILD / ESPACE DE TRAVAIL PERSONNEL"
         ];
 
         const cards = cinemaCards.map((element) => ({
